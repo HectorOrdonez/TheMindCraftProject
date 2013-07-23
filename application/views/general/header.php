@@ -22,20 +22,19 @@
 </head>
 
 <div id='header'>
-    <div id='headerOptions'>
+    <div id='leftPanel'>
         <?php if ($this->userLogin == TRUE): ?>
-            Here, some options for you.
-        <?php else: ?>
-            No options for not logged-in users.
+            <a class='goAction brainstorm' href="<?php echo _SYSTEM_BASE_URL; ?>brainstorm"></a>
         <?php endif; ?>
     </div>
 
-    <div id='headerAccess'>
+    <div id='rightPanel'>
 <?php if ($this->userLogin == TRUE): ?>
-        <a id='loggedIn' href="<?php echo _SYSTEM_BASE_URL; ?>index/logout"></a>
+    <a class='goAction loggedIn' href="<?php echo _SYSTEM_BASE_URL; ?>index/logout"></a>
 <?php else: ?>
-        <a id='loggedOut' href="<?php echo _SYSTEM_BASE_URL; ?>index"></a>
+    <a class='goAction loggedOut' href="<?php echo _SYSTEM_BASE_URL; ?>index"></a>
 <?php endif; ?>
+        <a class='goAction about' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory"></a>
     </div>
 </div>
 <body>

@@ -26,6 +26,8 @@ class main extends Controller
 
     public function index()
     {
+        $this->_view->addLibrary('css', 'application/views/main/css/main.css');
 
+        $this->_view->addChunk('main/index');
     }
 }

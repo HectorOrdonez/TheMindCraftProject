@@ -4,7 +4,6 @@
    License: none (public domain)
 */
 
-
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -85,42 +84,41 @@ h3 {
     height: 20px;
 }
 
-#header #headerOptions {
-    background-color: #BBB;
-    display: inline;
-}
-
-#header #headerAccess {
-    background-color: #888;
-    display: inline;
-}
-
-#header #loggedIn {
-    background: url('./../../public/images/access.png');
-    background-position: 0px 0px;
+#header a {
+    margin-left: 5px;
+    background-position: 0px 0px !important;
     background-repeat: no-repeat;
-    float: right;
     width: 20px;
     height: 20px;
     display: block;
 }
-
-#header #loggedIn:hover {
-    background-position: 0px -20px;
+#header a:hover {
+    background-position: 0px -20px !important;
 }
 
-#header #loggedOut {
-    background: url('./../../public/images/access.png');
-    background-position: 0px -20px;
-    background-repeat: no-repeat;
+/** Right actions **/
+
+#header #rightPanel a {
     float: right;
-    width: 20px;
-    height: 20px;
-    display: block;
+}
+#header #rightPanel .loggedIn {
+    background: url('./../../public/images/access.png');
 }
 
-#header #loggedOut:hover {
-    background-position: 0px 0px;
+#header #rightPanel .loggedOut {
+    background: url('./../../public/images/access.png');
+}
+
+#header #rightPanel .about {
+    background: url('./../../public/images/access.png');
+}
+
+/** Left actions **/
+#header #leftPanel a {
+    float: left;
+}
+#header #leftPanel .brainstorm {
+    background: url('./../../public/images/access.png');
 }
 
 /** CONTENT CSS */
