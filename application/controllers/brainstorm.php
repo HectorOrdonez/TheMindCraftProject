@@ -75,8 +75,8 @@ class brainstorm extends Controller
             ->validate('Enum', array(
                 'availableOptions' => array(
                     'id',
-                    'name',
-                    'role'
+                    'title',
+                    'date_creation'
                 )
             ))
             ->requireItem('sord') // Get the direction of the sorting

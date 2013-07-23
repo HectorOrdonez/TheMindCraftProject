@@ -19,7 +19,7 @@ jQuery().ready(function () {
             //ColNames is the visual name of the column, which appears at the top.
             'Idea Id',
             'Title',
-            'Idea Actions'
+            'Added date'
         ],
         colModel: [
             //ColModel defines the columns and its names.
@@ -28,10 +28,12 @@ jQuery().ready(function () {
                 name: 'id', index: 'id', hidden: true
             },
             {
-                name: 'title', index: 'title', width: '90', editable: true, edittype: 'text', editrules: {required: true}
+                name: 'title', index: 'title', width: 80, editable: true, edittype: 'text', editrules: {required: true}
             },
             {
-                name: 'IdeaActions', width: '10', editable: false
+                name: "date_creation", width: 20, align: "center", sorttype: "date",
+                formatter: "date", formatoptions: { newformat: "Y-m-d" }, editable: false,
+                editoptions: { required: false}
             }
         ],
         //Toppager adds the pagination to the top of the form.
@@ -52,6 +54,7 @@ jQuery().ready(function () {
             repeatitems: false,
             id: "id"
         },
+        height: '100%',
         autowidth: true,
         loadComplete: function () {
             // Binding the resizing event.

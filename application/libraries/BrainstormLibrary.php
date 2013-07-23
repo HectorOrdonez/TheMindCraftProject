@@ -2,7 +2,7 @@
 /**
  * Project: Selfology
  * User: Hector Ordonez
- * Description: 
+ * Description:
  * Date: 23/07/13 12:59
  */
 
@@ -43,7 +43,7 @@ class BrainstormLibrary extends Library
         // Object response
         $response = new \stdClass ();
 
-        $totalRecords = count($this->_model->getAllUserIdeas($userId));
+        $totalRecords = ceil(count($this->_model->getAllUserIdeas($userId)) / $rows);
 
         // Defining the Start
         $start = $rows * $page - $rows;
@@ -67,7 +67,8 @@ class BrainstormLibrary extends Library
         foreach ($result as $idea) {
             $response->ideas[] = array(
                 'id' => $idea['id'],
-                'title' => $idea['title']
+                'title' => $idea['title'],
+                'date_creation' => $idea['date_creation']
             );
         }
 
@@ -82,7 +83,8 @@ class BrainstormLibrary extends Library
      */
     public function createIdea($userId, $title)
     {
-        $this->_model->insert($userId, $title);
+        $date_creation = date('Y-m-d');
+        $this->_model->insert($userId, $title, $date_creation);
     }
 
     /**

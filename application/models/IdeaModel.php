@@ -20,7 +20,8 @@ class IdeaModel extends Model
     protected $ideaFields = array(
         'id',
         'user_id',
-        'title'
+        'title',
+        'date_creation'
     );
 
     /**
@@ -45,11 +46,14 @@ class IdeaModel extends Model
     public function getUserIdeasList($parameters)
     {
         $sql = 'SELECT ' . implode(',', $this->ideaFields) . ' FROM idea';
-        $sql .= " WHERE `user_id` = {$parameters['user_id']}";
-        $sql .= " ORDER BY {$parameters['sidx']} {$parameters['sord']}";
-        $sql .= " LIMIT {$parameters['start']}, {$parameters['rows']}";
+        $sql .= ' WHERE `user_id` = :user_id';
+        $sql .= ' AND `date_todo` is NULL OR `date_todo` <= :today';
+        $sql .= ' ORDER BY :sidx :sord';
+        $sql .= ' LIMIT :start, :rows';
 
-        $result = $this->db->complexQuery($sql);
+        $parameters['today'] = date('Y-m-d');
+
+        $result = $this->db->complexQuery($sql, $parameters);
 
         return $result;
     }
@@ -66,13 +70,7 @@ class IdeaModel extends Model
             'user_id' => $userId
         );
 
-        $result = $this->db->select('idea', $this->ideaFields, $conditions);
-
-        if (count($result) > 0) {
-            return $result[0];
-        } else {
-            return FALSE;
-        }
+        return $this->db->select('idea', $this->ideaFields, $conditions);
     }
 
     /**
@@ -105,12 +103,14 @@ class IdeaModel extends Model
      *
      * @param int $userId owner of the idea
      * @param string $title
+     * @param string $date_creation
      */
-    public function insert($userId, $title)
+    public function insert($userId, $title, $date_creation)
     {
         $valuesArray = array(
             'user_id' => $userId,
-            'title' => $title
+            'title' => $title,
+            'date_creation' => $date_creation
         );
 
         $this->db->insert('idea', $valuesArray);

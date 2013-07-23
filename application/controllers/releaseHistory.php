@@ -33,12 +33,17 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.02', date('d-m-Y'), array(
-            '[Feature] - Created brainstorm page.',
-            '[Code Improvement] - Added JQuery and JQgrid external libraries.'
+        $this->_setDevelopmentVersion('0.03', date('d-m-Y'), array(
+            '[Debug] - Fixed little issue with the pagination of the Brainstorm page.',
+            '[Feature] - Created skeleton of IdeaToAction page. Its purpose is to manage the already conceived ideas and filter them; decided if they must be done, if user wants to hold them over, and with which priority do them. Functionality pending to be done.',
+            '[Feature upgrade] - Upgraded Brainstorm page; now the ideas have date of creation and, when listing the ideas, the system shows the ideas without to-do date and ideas with to-do date as today or previous.'
         ));
 
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.02', '23/07/2013', array(
+            '[Feature] - Created brainstorm page.',
+            '[Code Improvement] - Added JQuery and JQgrid external libraries.'
+        ));
         $this->_addHistoryLog('0.01', '23/07/2103', array(
             '[Feature] - New options in the top menu: release History, brainstorm',
             '[Feature] - Created release history page.',

@@ -25,6 +25,7 @@
     <div id='leftPanel'>
         <?php if ($this->userLogin == TRUE): ?>
             <a class='goAction brainstorm' href="<?php echo _SYSTEM_BASE_URL; ?>brainstorm"></a>
+            <a class='goAction ideaToAction' href="<?php echo _SYSTEM_BASE_URL; ?>ideaToAction"></a>
         <?php endif; ?>
     </div>
 
