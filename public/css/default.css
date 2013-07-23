@@ -1,0 +1,134 @@
+/** RESET CSS **/
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/** GENERAL CSS **/
+
+body {
+    /* background: url('./../images/Main_1.jpg'); */
+    font-family: arial, sans-serif;
+    font-size: 10px;
+}
+
+h1 {
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(194, 109, 0);
+}
+
+h2 {
+    font-size: 14px;
+    color: rgb(226, 154, 0);
+}
+
+h3 {
+    font-size: 10px;
+}
+
+.separation_1 {
+    background-color: #AAA;
+    height: 5px;
+    border: 1px solid #888888;
+}
+
+/** HEADER **/
+#header {
+    background-color: #000;
+    width: 100%;
+    height: 20px;
+}
+
+#header #headerOptions {
+    background-color: #BBB;
+    display: inline;
+}
+
+#header #headerAccess {
+    background-color: #888;
+    display: inline;
+}
+
+#header #loggedIn {
+    background: url('./../../public/images/access.png');
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    float: right;
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+#header #loggedIn:hover {
+    background-position: 0px -20px;
+}
+
+#header #loggedOut {
+    background: url('./../../public/images/access.png');
+    background-position: 0px -20px;
+    background-repeat: no-repeat;
+    float: right;
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+#header #loggedOut:hover {
+    background-position: 0px 0px;
+}
+
+/** CONTENT CSS */
+#content {
+    padding: 25px;
+    background: white;
+}
+
+/** FOOTER CSS */
+#footer {
+}
