@@ -33,13 +33,17 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.01', date("Y-m-d"), array(
+        $this->_setDevelopmentVersion('0.02', date('d-m-Y'), array(
+            '[Feature] - Created brainstorm page.',
+            '[Code Improvement] - Added JQuery and JQgrid external libraries.'
+        ));
+
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.01', '23/07/2103', array(
             '[Feature] - New options in the top menu: release History, brainstorm',
             '[Feature] - Created release history page.',
             '[Visual Improvement] - Created Styles for the header, optimizing the code. Right now using only one image for all options, but considering multiple images in near future.'
         ));
-
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.00', '23/07/2013', array(
             'Skeleton construction.'
         ));

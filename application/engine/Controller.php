@@ -35,7 +35,7 @@ class Controller extends engineController
         $this->_view->setTitle('Selfology');
         $this->_view->addLibrary('css' , 'public/css/default.css');
 
-        $this->_view->addLibrary('js' , 'public/js/jquery-1.10.1.js');
+        $this->_view->addLibrary('js' , 'public/js/external/jquery-1.10.1.js');
 
         $this->_view->setMeta('description', array(
             'name' => 'description',
