@@ -2,8 +2,10 @@
 /**
  * Project: Selfology
  * User: Hector Ordonez
- * Description: 
- * Date: 23/07/13 10:26
+ * Description:
+ * Controller of the page Main.
+ * This is just a welcoming page to the user.
+ * Date: 23/07/13 10:30
  */
 
 namespace application\controllers;
@@ -13,6 +15,9 @@ use engine\Session;
 
 class main extends Controller
 {
+    /**
+     * Controller constructor for the Main page.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -24,6 +29,9 @@ class main extends Controller
         }
     }
 
+    /**
+     * Main index page.
+     */
     public function index()
     {
         $this->_view->addLibrary('css', 'application/views/main/css/main.css');

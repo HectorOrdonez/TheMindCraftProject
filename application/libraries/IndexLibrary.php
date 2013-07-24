@@ -2,8 +2,9 @@
 /**
  * Project: Selfology
  * User: Hector Ordonez
- * Description: 
- * Date: 23/07/13 9:43
+ * Description:
+ * Library that manages the Index page's logic.
+ * Date: 23/07/13 10:00
  */
 
 namespace application\libraries;

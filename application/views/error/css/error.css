@@ -1,11 +1,18 @@
-/** HEADER **/
+/**
+ * Project: Organizator
+ * Description: Error CSS Library
+ * User: Hector Ordonez
+ * Date: 23/07/13 10:00
+ */
+
 #header, #footer {
     background: url(https://addons.cdn.mozilla.net/_files/111012/preview_small.jpg) repeat;
 }
+
 #header #mainTitle {
     font: 30px verdana;
     color: #D10;
-    text-align:center;
+    text-align: center;
 }
 
 #content {

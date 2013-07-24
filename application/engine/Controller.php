@@ -15,7 +15,7 @@ use engine\Session;
 class Controller extends engineController
 {
     /**
-     * Controller constructor.
+     * Controller constructor of the application engine.
      *
      * @param Library $library in which this Controller can search for the Model
      */
@@ -33,9 +33,9 @@ class Controller extends engineController
         parent::_setView();
 
         $this->_view->setTitle('Selfology');
-        $this->_view->addLibrary('css' , 'public/css/default.css');
+        $this->_view->addLibrary('css', 'public/css/default.css');
 
-        $this->_view->addLibrary('js' , 'public/js/external/jquery-1.10.1.js');
+        $this->_view->addLibrary('js', 'public/js/external/jquery-1.10.1.js');
 
         $this->_view->setMeta('description', array(
             'name' => 'description',

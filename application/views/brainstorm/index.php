@@ -2,7 +2,8 @@
 /**
  * Project: Selfology
  * User: Hector Ordonez
- * Description: 
+ * Description:
+ * View chunk for the Brainstorm content.
  * Date: 23/07/13 13:13
  */
 ?>

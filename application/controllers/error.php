@@ -2,7 +2,9 @@
 /**
  * Project: Selfology
  * User: Hector Ordonez
- * Date: 11/06/13 11:53
+ * Description:
+ * Error Controller. Here the errors are displayed.
+ * Date: 23/07/13 12:00
  */
 
 namespace application\controllers;
@@ -52,7 +54,7 @@ class Error extends Controller
      * Called when Bootstrap catches an Exception.
      * @param Exception $exception
      */
-    public function exception (Exception $exception)
+    public function exception(Exception $exception)
     {
         $this->_view->setParameter('exception', $exception->getMessage());
         $this->_view->setParameter('file', $exception->getRelativeFile());

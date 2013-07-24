@@ -1,8 +1,8 @@
 <?php
 /**
- * Project: Hecnel Framework
+ * Project: Selfology
  * User: Hector Ordonez
- * Date: 11/06/13 13:46
+ * Date: 23/07/13 14:00
  */
 
 // Base path of the website.

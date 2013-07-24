@@ -2,8 +2,9 @@
 /**
  * Project: Selfology
  * User: Hector Ordonez
- * Description: 
- * Date: 23/07/13 10:14
+ * Description:
+ * Model that manages the interactions to the table user.
+ * Date: 23/07/13 10:30
  */
 
 namespace application\models;

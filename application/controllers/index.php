@@ -2,6 +2,9 @@
 /**
  * Project: Selfology
  * User: Hector Ordonez
+ * Description:
+ * Controller of the page Index.
+ * This is the main page of Selfology, and displays a login panel that the User needs to fulfill if he or she wants to have access to the website.
  * Date: 11/06/13 11:00
  */
 
@@ -30,11 +33,17 @@ class Index extends Controller
         $this->_view->addLibrary('css', 'application/views/index/css/index.css');
     }
 
+    /**
+     * Index index page.
+     */
     public function index()
     {
         $this->_view->addChunk('index/index');
     }
 
+    /**
+     * Login verifier; checks if the user input is valid and, if so, redirects to the starting page for users.
+     */
     public function login()
     {
         // Validation
@@ -69,6 +78,9 @@ class Index extends Controller
         }
     }
 
+    /**
+     * Logout page. Destroys the user session and re
+     */
     public function logout()
     {
         Session::destroy();

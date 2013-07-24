@@ -2,12 +2,13 @@
 /**
  * Project: Selfology
  * User: Hector Ordonez
- * Description: 
- * Date: 23/07/13 12:06
+ * Description:
+ * Controller of the page releaseHistory.
+ * Here a historical log of the releases of this project will be displayed.
+ * Date: 23/07/13 12:00
  */
 
 namespace application\controllers;
-
 
 use application\engine\Controller;
 
@@ -26,20 +27,24 @@ class ReleaseHistory extends Controller
     private $_developmentVersion;
 
     /**
-     * Index constructor.
+     * Controller constructor for the Release History page.
      */
     public function __construct()
     {
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.03', date('d-m-Y'), array(
+        $this->_setDevelopmentVersion('0.04', date('d-m-Y'), array(
+            '[Code improvement] - Multiple minor changes in the comments and structure.',
+            '[Visual improvement] - Implemented new visual features, using Zuzanna\'s graphic designs.'
+        ));
+
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.03', date('23/07/2013'), array(
             '[Debug] - Fixed little issue with the pagination of the Brainstorm page.',
             '[Feature] - Created skeleton of IdeaToAction page. Its purpose is to manage the already conceived ideas and filter them; decided if they must be done, if user wants to hold them over, and with which priority do them. Functionality pending to be done.',
             '[Feature upgrade] - Upgraded Brainstorm page; now the ideas have date of creation and, when listing the ideas, the system shows the ideas without to-do date and ideas with to-do date as today or previous.'
         ));
-
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.02', '23/07/2013', array(
             '[Feature] - Created brainstorm page.',
             '[Code Improvement] - Added JQuery and JQgrid external libraries.'
@@ -55,11 +60,11 @@ class ReleaseHistory extends Controller
     }
 
     /**
-     * About main page.
+     * Release History index page.
      */
     public function index()
     {
-        $this->_view->addLibrary('css','application/views/releaseHistory/css/releaseHistory.css');
+        $this->_view->addLibrary('css', 'application/views/releaseHistory/css/releaseHistory.css');
 
         $this->_view->setParameter('developmentVersion', $this->_getDevelopmentVersion());
         $this->_view->setParameter('historicalLog', $this->_getHistoryLog());
@@ -68,6 +73,7 @@ class ReleaseHistory extends Controller
     }
 
     /**
+     * Adds an history log to its property array.
      * @param string $version
      * @param string $date
      * @param array $changes. Array of changes (strings)
@@ -81,11 +87,21 @@ class ReleaseHistory extends Controller
         );
     }
 
+    /**
+     * Gets the historical log array.
+     * @return array
+     */
     private function _getHistoryLog()
     {
         return $this->_releaseLogHistory;
     }
 
+    /**
+     * Sets the current development version details.
+     * @param $version
+     * @param $date
+     * @param $changes
+     */
     private function _setDevelopmentVersion($version, $date, $changes)
     {
         $this->_developmentVersion = array(
@@ -95,6 +111,10 @@ class ReleaseHistory extends Controller
         );
     }
 
+    /**
+     * Gets the current development version details.
+     * @return array
+     */
     private function _getDevelopmentVersion()
     {
         return $this->_developmentVersion;

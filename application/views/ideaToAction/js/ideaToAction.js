@@ -2,7 +2,7 @@
  * Project: Selfology
  * User: Hector Ordonez
  * Description: IdeaToAction JS Library
- * Date: 23/07/13 13:06
+ * Date: 23/07/13 13:00
  */
 
 jQuery().ready(function () {
@@ -19,6 +19,8 @@ jQuery().ready(function () {
             //ColNames is the visual name of the column, which appears at the top.
             'Idea Id',
             'Title',
+            'Added date',
+            'Hold over to date',
             'Idea Actions'
         ],
         colModel: [
@@ -28,7 +30,28 @@ jQuery().ready(function () {
                 name: 'id', index: 'id', hidden: true
             },
             {
-                name: 'title', index: 'title', width: '90', editable: true, edittype: 'text', editrules: {required: true}
+                name: 'title', index: 'title', width: 60, editable: true, edittype: 'text', editrules: {required: true}
+            },
+            {
+                name: "date_creation", width: 20, align: "center", sorttype: "date",
+                formatter: "date", formatoptions: { newformat: "Y-m-d" }, editable: false,
+                editoptions: { required: false}
+            },
+            {
+                name: "date_todo", hidden: true, width: 20, align: "center", sorttype: "date",
+                formatter: "date", formatoptions: { newformat: "Y-m-d" }, editable: false,
+                editoptions: { dataInit: function (elem) {
+                    jQuery(elem).datepicker({
+                        dateFormat: "yy-mm-dd"
+                    });
+                }},
+                searchoptions: { sopt: ["eq", "ne", "lt", "le", "gt", "ge"], dataInit: function () {
+                    setTimeout(function () {
+                        jQuery(elem).datepicker({
+                            dateFormat: "yy-mm-dd"
+                        });
+                    }, 100);
+                }}
             },
             {
                 name: 'ideaActions', width: '10', editable: false
@@ -111,7 +134,21 @@ jQuery().ready(function () {
  * @param rowId on the grid, which is the user Id.
  */
 function deleteIdea(rowId) {
-    alert('delete Idea ' + rowId);
+    var grid = '#grid';
+
+    jQuery(grid).jqGrid('delGridRow', rowId,
+        {
+            editCaption: 'Delete idea',
+            width: 500,
+            recreateForm: true,
+            reloadAfterSubmit: true,
+            closeAfterEdit: true,
+            url: "ideaToAction/deleteIdea",
+            errorTextFormat: function (data) {
+                return data.statusText;
+            }
+        }
+    );
 }
 /**
  * function holdOverIdea
@@ -119,7 +156,31 @@ function deleteIdea(rowId) {
  * @param rowId on the grid, which is the user Id.
  */
 function holdOverIdea(rowId) {
-    alert('hold overr Idea ' + rowId);
+    var grid = '#grid';
+
+    jQuery(grid).jqGrid('editGridRow', rowId,
+        {
+            editCaption: 'Postpone to date',
+            beforeInitData: function () {
+                //Redefine of the cols that need to be set for this special editing.
+                jQuery(grid).setColProp('title', {editable: false});
+                jQuery(grid).setColProp('date_todo', {hidden: false, editable: true});
+            },
+            afterShowForm: function () {
+                //Redefine of the cols to set them back to the normal state.
+                jQuery(grid).setColProp('title', {editable: true});
+                jQuery(grid).setColProp('date_todo', {editable: false});
+            },
+            width: 500,
+            recreateForm: true,
+            reloadAfterSubmit: true,
+            closeAfterEdit: true,
+            url: "ideaToAction/holdOverIdea",
+            errorTextFormat: function (data) {
+                return data.statusText;
+            }
+        }
+    );
 }
 /**
  * function increasePriority
@@ -127,7 +188,18 @@ function holdOverIdea(rowId) {
  * @param rowId on the grid, which is the user Id.
  */
 function increasePriority(rowId) {
-    alert('Increase Priority to Idea ' + rowId);
+    var grid = '#grid';
+    jQuery.ajax({
+        type: 'post',
+        url: 'ideaToAction/increasePriorityToIdea',
+        data: {
+            'idea_id': rowId
+        }
+    }).done(function (data) {
+            jQuery(grid).trigger('reloadGrid');
+        }).fail(function (data) {
+            alert('Oh noes...');
+        });
 }
 /**
  * function decreasePriority
@@ -135,5 +207,16 @@ function increasePriority(rowId) {
  * @param rowId on the grid, which is the user Id.
  */
 function decreasePriority(rowId) {
-    alert('Decrease Priority Idea ' + rowId);
+    var grid = '#grid';
+    jQuery.ajax({
+        type: 'post',
+        url: 'ideaToAction/decreasePriorityToIdea',
+        data: {
+            'idea_id': rowId
+        }
+    }).done(function (data) {
+            jQuery(grid).trigger('reloadGrid');
+        }).fail(function (data) {
+            alert('Oh noes...');
+        });
 }

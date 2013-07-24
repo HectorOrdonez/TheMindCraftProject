@@ -14,7 +14,7 @@ use engine\Database as engineDatabase;
 class Database extends engineDatabase
 {
     /**
-     * Database constructor.
+     * Database constructor of the application engine.
      *
      * @param string $dbType MySql
      * @param string $dbHost Localhost

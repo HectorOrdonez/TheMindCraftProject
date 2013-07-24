@@ -1,7 +1,35 @@
-/** Index Style **/
+/**
+ * Project: Organizator
+ * Description: Index CSS Library
+ * User: Hector Ordonez
+ * Date: 23/07/13 10:00
+ */
 
 .loginBlock {
+    padding-top: 100px;
     text-align: center;
+}
+
+.loginBlock input {
+    width: 500px;
+    height: 20px;
+    margin-bottom: 30px;
+    border: 1px solid #b2b2b1;
+    color: #b2b2b1;
+    text-align: center;
+}
+
+#loginSubmit {
+    background: url('./../../../../public/images/login.png') no-repeat;
+    height: 63px;
+    width: 128px;
+
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+#loginSubmit:hover {
+    background: url('./../../../../public/images/login_glow.png') no-repeat;
 }
 
 /** Error Style **/

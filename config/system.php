@@ -1,10 +1,9 @@
 <?php
 /**
- * Project: Hecnel Framework
+ * Project: Selfology
  * User: Hector Ordonez
- * Date: 11/06/13 13:47
+ * Date: 23/07/13 14:00
  */
-
 // Informs the System about which setup use
 define ('_PRODUCTION', FALSE);
 
@@ -12,7 +11,7 @@ define ('_PRODUCTION', FALSE);
 if (_PRODUCTION === TRUE) {
     define ('_SYSTEM_BASE_URL', 'unknown');
 } else {
-    define ('_SYSTEM_BASE_URL', 'http://localhost/projects/selfology/');
+    define ('_SYSTEM_BASE_URL', 'http://192.168.192.13/projects/selfology/');
 }
 
 // Root path of the project in the server.

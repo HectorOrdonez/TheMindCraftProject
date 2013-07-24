@@ -10,13 +10,13 @@
  * Function that initializes the Date Edition in JQGrid.
  * @param elem
  */
-function initDateEdit (elem) {
+function initDateEdit (elem, year_start, year_end) {
     jQuery(elem).datepicker({
         dateFormat: "yy-mm-dd",
         changeYear: true,
         changeMonth: true,
         showWeek: true,
-        yearRange: '1950: 2000'
+        yearRange: year_start + ': ' + year_end
     });
 
 }

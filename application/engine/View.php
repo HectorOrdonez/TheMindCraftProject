@@ -14,7 +14,7 @@ use engine\View as engineView;
 class View extends engineView
 {
     /**
-     * View constructor.
+     * View constructor of the application engine.
      */
     public function __construct()
     {

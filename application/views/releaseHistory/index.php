@@ -2,14 +2,16 @@
 /**
  * Project: Selfology
  * User: Hector Ordonez
- * Description: 
- * Date: 23/07/13 12:10
+ * Description:
+ * View chunk for the Release History content.
+ * Date: 23/07/13 12:00
  */
 ?>
 
 <div>
     <h1>
-        Version <?php echo $this->developmentVersion['version']; ?> released on <?php echo $this->developmentVersion['date']; ?>.
+        Version <?php echo $this->developmentVersion['version']; ?> released
+        on <?php echo $this->developmentVersion['date']; ?>.
     </h1>
 
     <ul>

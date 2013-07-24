@@ -14,7 +14,7 @@ use engine\Model as engineModel;
 class Model extends engineModel
 {
     /**
-     * Model constructor.
+     * Model constructor of the application engine.
      */
     public function __construct()
     {

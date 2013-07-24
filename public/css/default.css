@@ -48,89 +48,154 @@ table {
     border-spacing: 0;
 }
 
-/** GENERAL CSS **/
+/*********************************************/
+/**             DEFAULT CSS                 **/
+/*********************************************/
+/**                                         **/
+/** - Definitions for the header and the    **/
+/**   footer.                               **/
+/**                                         **/
+/** - Definitions for the fonts             **/
+/**                                         **/
+/** - General definitions for the body and  **/
+/**   the content.                          **/
+/*********************************************/
 
-body {
-    /* background: url('./../images/Main_1.jpg'); */
-    font-family: arial, sans-serif;
-    font-size: 10px;
+/*********************************************/
+/**             HEADER                      **/
+/*********************************************/
+
+#header {
+    background-color: #575756;
+    width: 100%;
+    height: 90px;
 }
 
-h1 {
-    font-size: 18px;
-    font-weight: bold;
-    color: rgb(194, 109, 0);
+#header #logo {
+    position: absolute;
+    top: 18px;
+    left: 50px;
+    background: url('./../../public/images/logo2.png');
+    width: 322px;
+    height: 135px;
+    float:left;
 }
 
-h2 {
-    font-size: 14px;
-    color: rgb(226, 154, 0);
+/** Left menu **/
+#header #leftPanel {
+    position: absolute;
+    top: 30px;
+    right: 150px;
+    /** background-color:#a9c1c9; **/
+}
+#header #leftPanel a {
+    display:block;
+    background-repeat: no-repeat;
+    float: left;
+}
+#header #leftPanel .brainstorm {
+    background: url('./../../public/images/idea_glow.png');
+    width: 53px;
+    height: 60px;
+}
+#header #leftPanel .ideaToAction {
+    background: url('./../../public/images/target_glow.png');
+    width: 53px;
+    height: 60px;
+}
+#header #leftPanel .brainstorm:hover {
+    background: url('./../../public/images/idea.png');
+}
+#header #leftPanel .ideaToAction:hover {
+    background: url('./../../public/images/target.png');
 }
 
-h3 {
-    font-size: 10px;
+/** Right menu **/
+#header #rightPanel {
+    position: absolute;
+    top: 30px;
+    right: 34px;
+}
+#header #rightPanel a {
+    display:block;
+    background-repeat: no-repeat;
+    float: left;
+}
+#header #rightPanel .loggedIn {
+    background: url('./../../public/images/brainstorming_glow.png');
+    width: 53px;
+    height: 60px;
+}
+#header #rightPanel .loggedOut {
+    background: url('./../../public/images/brainstorming2_glow.png');
+    width: 53px;
+    height: 60px;
+}
+#header #rightPanel .releaseHistory {
+    background: url('./../../public/images/brain_glow.png');
+    width: 53px;
+    height: 60px;
+}
+
+#header #rightPanel .loggedIn:hover {
+    background: url('./../../public/images/brainstorming.png');
+}
+#header #rightPanel .loggedOut:hover {
+    background: url('./../../public/images/brainstorming2.png');
+}
+#header #rightPanel .releaseHistory:hover {
+    background: url('./../../public/images/brain.png');
 }
 
 .separation_1 {
-    background-color: #AAA;
-    height: 5px;
-    border: 1px solid #888888;
-}
+background-color: #AAA;
+height: 5px;
+border: 1px solid #888888;
+    }
 
-/** HEADER **/
-#header {
-    background-color: #000;
-    width: 100%;
-    height: 20px;
-}
 
-#header a {
-    margin-left: 5px;
-    background-position: 0px 0px !important;
-    background-repeat: no-repeat;
-    width: 20px;
-    height: 20px;
-    display: block;
-}
-#header a:hover {
-    background-position: 0px -20px !important;
-}
+/*********************************************/
+/**             CONTENT                     **/
+/*********************************************/
 
-/** Right actions **/
-
-#header #rightPanel a {
-    float: right;
-}
-#header #rightPanel .loggedIn {
-    background: url('./../../public/images/access.png');
-}
-
-#header #rightPanel .loggedOut {
-    background: url('./../../public/images/access.png');
-}
-
-#header #rightPanel .about {
-    background: url('./../../public/images/access.png');
-}
-
-/** Left actions **/
-#header #leftPanel a {
-    float: left;
-}
-
-#header #leftPanel .brainstorm {
-    background: url('./../../public/images/access.png');
-}
-#header #leftPanel .ideaToAction {
-    background: url('./../../public/images/access.png');
-}
-
-/** CONTENT CSS */
 #content {
+    width: 80%;
+    margin: 0 auto;
     padding: 25px;
     background: white;
+
 }
 
-/** FOOTER CSS */
+/*********************************************/
+/**             FONTS                       **/
+/*********************************************/
+
+/** Font Style - Normal **/
+body {
+    font: 12px "Lucida Sans Unicode", Arial;
+    color: #222;
+}
+
+/** Font Style - Titles **/
+h1, .font1 {
+    font: bold 16px "Lucida Sans Unicode", Arial;
+    color: #575756;
+}
+
+/** Font Style - Sub Titles **/
+h2, .font2 {
+    font: bold 14px "Lucida Sans Unicode", Arial;
+    color: #B2b2B1;
+}
+
+/** Font Style - Normal Error **/
+.font_error {
+    font: italic 12px "Lucida Sans Unicode", Arial;
+    color: #c90600;
+}
+
+/*********************************************/
+/**             FOOTER                      **/
+/*********************************************/
 #footer {
 }

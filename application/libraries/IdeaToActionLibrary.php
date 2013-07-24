@@ -3,7 +3,8 @@
  * Project: Selfology
  * User: Hector Ordonez
  * Description:
- * Date: 23/07/13 12:59
+ * Library that manages the Idea To Action page's logic.
+ * Date: 23/07/13 13:00
  */
 
 namespace application\libraries;
@@ -21,7 +22,7 @@ class IdeaToActionLibrary extends Library
     protected $_model;
 
     /**
-     * Library constructor of Brainstorm logic.
+     * Library constructor of Idea To Action logic.
      */
     public function __construct()
     {

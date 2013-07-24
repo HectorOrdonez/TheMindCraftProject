@@ -2,8 +2,13 @@
 /**
  * Project: Selfology
  * User: Hector Ordonez
- * Description: 
- * Date: 23/07/13 12:56
+ * Description:
+ * Controller of the page Brainstorm.
+ * This page provides the user with a tool to brainstorm tasks and ideas, things he or she wants to do.
+ * These will be listed and displayed, giving the User the possibility to edit or delete them.
+ *
+ * The brainstormed ideas will be required when User wants to go from ideas to actions.
+ * Date: 23/07/13 13:00
  */
 
 namespace application\controllers;
@@ -37,6 +42,7 @@ class brainstorm extends Controller
 
     /**
      * Brainstorm index page.
+     * Loads the required JS libraries of this page, together with language and CSS styles for the grid and the page.
      */
     public function index()
     {

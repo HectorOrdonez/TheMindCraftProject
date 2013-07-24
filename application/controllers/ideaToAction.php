@@ -2,8 +2,10 @@
 /**
  * Project: Selfology
  * User: Hector Ordonez
- * Description: 
- * Date: 23/07/13 16:08
+ * Description:
+ * Controller of the page ideaToAction.
+ * Here the User can take the ideas that he or she brainstormed and manage them with the action possibilities provided through JQuery Grid.
+ * Date: 23/07/13 16:00
  */
 
 namespace application\controllers;
@@ -19,6 +21,7 @@ class ideaToAction extends Controller
      * @var IdeaToActionLibrary $_library
      */
     protected $_library;
+
     public function __construct()
     {
         parent::__construct(new IdeaToActionLibrary);

@@ -2,7 +2,8 @@
  * Project: Selfology
  * User: Hector Ordonez
  * Description:
- * Date: 23/07/13 13:06
+ * Description: Brainstorm JS Library
+ * Date: 23/07/13 13:00
  */
 
 jQuery().ready(function () {
