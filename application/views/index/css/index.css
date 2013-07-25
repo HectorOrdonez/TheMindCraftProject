@@ -21,19 +21,19 @@
 
 #loginSubmit {
     background: url('./../../../../public/images/login.png') no-repeat;
-    height: 63px;
-    width: 128px;
+    height: 50px;
+    width: 120px;
 
     margin: 0 auto;
     cursor: pointer;
 }
 
 #loginSubmit:hover {
-    background: url('./../../../../public/images/login_glow.png') no-repeat;
+    background-position: -120px 0px;
 }
 
 /** Error Style **/
 
-.loginError {
+.loginError, .inputError {
     text-align: center;
 }

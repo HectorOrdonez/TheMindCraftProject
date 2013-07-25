@@ -1,0 +1,172 @@
+<?php
+/**
+ * Project: Selfology
+ * User: Hector Ordonez
+ * Description:
+ * Controller of the page Work Out.
+ * Here the User can take the ideas that he or she brainstormed and manage them with the action possibilities provided through JQuery Grid.
+ * Date: 23/07/13 16:00
+ */
+
+namespace application\controllers;
+
+use application\engine\Controller;
+use application\libraries\WorkOutLibrary;
+use engine\Exception;
+use engine\Form;
+use engine\Session;
+
+class workOut extends Controller
+{
+    /**
+     * Defining $_library Library type.
+     * @var workOutLibrary $_library
+     */
+    protected $_library;
+
+    public function __construct()
+    {
+        parent::__construct(new WorkOutLibrary);
+
+        $logged = Session::get('isUserLoggedIn');
+        if ($logged == FALSE) {
+            Session::destroy();
+            header('location: ' . _SYSTEM_BASE_URL . 'error/accessForbidden');
+        }
+    }
+
+    /**
+     * Work out index page.
+     */
+    public function index()
+    {
+        $this->_view->addLibrary('js', 'public/js/external/grid.locale-en.js');
+        $this->_view->addLibrary('js', 'public/js/external/jquery.jqGrid.src.js');
+        $this->_view->addLibrary('js', 'public/js/external/jquery-ui-1.10.3.custom.js');
+        $this->_view->addLibrary('js', 'public/js/jqgridToolkit.js');
+        $this->_view->addLibrary('js', 'application/views/workOut/js/workOut.js');
+
+        $this->_view->addLibrary('css', 'public/css/jquery-ui-1.10.3.custom.css');
+        $this->_view->addLibrary('css', 'public/css/ui.jqgrid.css');
+        $this->_view->addLibrary('css', 'application/views/workOut/css/workOut.css');
+
+        $this->_view->addChunk('workOut/index');
+    }
+
+    /**
+     * Asynchronous Jquery Grid request for filling up the grid.
+     */
+    public function getIdeas()
+    {
+        // Disabling auto render as this is an asynchronous request.
+        $this->setAutoRender(FALSE);
+
+        $form = new Form;
+        $form
+            ->requireItem('page') //Get the page requested
+            ->validate('Int', array(
+                'min' => 1
+            ))
+            ->requireItem('rows') // Get how many rows are required in the grid
+            ->validate('Int', array(
+                'min' => 1
+            ))
+            ->requireItem('sidx') // Get the column the list needs to be sorted with
+            ->validate('Enum', array(
+                'availableOptions' => array(
+                    'id',
+                    'title'
+                )
+            ))
+            ->requireItem('sord') // Get the direction of the sorting
+            ->validate('Enum', array(
+                'availableOptions' => array(
+                    'asc',
+                    'desc'
+                )
+            ));
+
+        $response = $this->_library->getBrainstormedIdeas(
+            Session::get('userId'),
+            $form->fetch('page'),
+            (int)$form->fetch('rows'),
+            $form->fetch('sidx'),
+            $form->fetch('sord')
+        );
+
+        header("Content-type: application/json;charset=utf-8");
+        echo json_encode($response);
+    }
+
+    /**
+     * Asynchronous Jquery Grid request for holding over an idea.
+     */
+    public function holdOverIdea()
+    {
+        // Disabling auto render as this is an asynchronous request.
+        $this->setAutoRender(FALSE);
+
+        // Validating
+        $form = new Form();
+        $form
+            ->requireItem('id')
+            ->validate('Int', array(
+                'min' => 1
+            ))
+            ->requireItem('date_todo')
+            ->validate('String', array(
+                'minLength' => 10,
+                'maxLength' => 10
+            ));
+
+        if (count($form->getErrors()) > 0) {
+            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
+            exit;
+        }
+
+        // Executing
+        try {
+            $this->_library->holdOverIdea(
+                (int)$form->fetch('id'),
+                Session::get('userId'),
+                $form->fetch('date_todo')
+            );
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
+    /**
+     * Asynchronous Jquery Grid request for deleting an idea.
+     */
+    public function deleteIdea()
+    {
+        // Disabling auto render as this is an asynchronous request.
+        $this->setAutoRender(FALSE);
+
+        // Validating
+        $form = new Form();
+        $form
+            ->requireItem('id')
+            ->validate('Int', array(
+                'min' => 1
+            ));
+
+        if (count($form->getErrors()) > 0) {
+            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
+            exit;
+        }
+
+        // Executing
+        try {
+            $this->_library->deleteIdea(
+                $form->fetch('id'),
+                Session::get('userId')
+            );
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+}

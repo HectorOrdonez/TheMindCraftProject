@@ -68,8 +68,8 @@ class Index extends Controller
                 header('location: ' . _SYSTEM_BASE_URL . 'index');
             } else {
                 $this->_view->setParameter('loginError', 'Wrong username or Password.');
-                $this->_view->addChunk('index/loginError');
                 $this->_view->addChunk('index/index');
+                $this->_view->addChunk('index/loginError');
             }
         } else {
             $this->_view->setParameter('errors', $form->getErrors());

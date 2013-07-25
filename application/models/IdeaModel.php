@@ -22,7 +22,8 @@ class IdeaModel extends Model
         'id',
         'user_id',
         'title',
-        'date_creation'
+        'date_creation',
+        'date_todo'
     );
 
     /**
@@ -48,7 +49,7 @@ class IdeaModel extends Model
     {
         $sql = 'SELECT ' . implode(',', $this->ideaFields) . ' FROM idea';
         $sql .= ' WHERE `user_id` = :user_id';
-        $sql .= ' AND `date_todo` is NULL OR `date_todo` <= :today';
+        $sql .= ' AND (`date_todo` is NULL OR `date_todo` <= :today)';
         $sql .= ' ORDER BY :sidx :sord';
         $sql .= ' LIMIT :start, :rows';
 

@@ -7,6 +7,5 @@
  * Date: 23/07/13 13:30
  */
 ?>
-<div class='loginError font_error'>
-    <?php echo $this->loginError; ?>
-</div>
+
+    <div class='loginError font_error'><?php echo $this->loginError; ?></div>

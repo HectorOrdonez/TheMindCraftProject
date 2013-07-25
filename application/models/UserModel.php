@@ -21,7 +21,8 @@ class UserModel extends Model
     protected $userFields = array(
         'id',
         'name',
-        'password'
+        'password',
+        'role'
     );
 
     /**

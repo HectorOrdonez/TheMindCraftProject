@@ -68,17 +68,19 @@ table {
 #header {
     background-color: #575756;
     width: 100%;
-    height: 90px;
+    height: 100px;
 }
 
 #header #logo {
     position: absolute;
-    top: 18px;
+    top: 10px;
     left: 50px;
-    background: url('./../../public/images/logo2.png');
-    width: 322px;
-    height: 135px;
+    background: url('./../../public/images/logo.png');
+    width: 339px;
+    height: 134px;
     float:left;
+
+    cursor: pointer;
 }
 
 /** Left menu **/
@@ -92,59 +94,49 @@ table {
     display:block;
     background-repeat: no-repeat;
     float: left;
+
+    width: 50px;
+    height: 50px;
+}
+#header #leftPanel a:hover {
+    background-position: -50px 0px;
 }
 #header #leftPanel .brainstorm {
-    background: url('./../../public/images/idea_glow.png');
-    width: 53px;
-    height: 60px;
+    background: url('./../../public/images/brainstorm.png');
 }
-#header #leftPanel .ideaToAction {
-    background: url('./../../public/images/target_glow.png');
-    width: 53px;
-    height: 60px;
+#header #leftPanel .workOut {
+    background: url('./../../public/images/workOut.png');
 }
-#header #leftPanel .brainstorm:hover {
-    background: url('./../../public/images/idea.png');
+#header #leftPanel .action {
+    background: url('./../../public/images/action.png');
 }
-#header #leftPanel .ideaToAction:hover {
-    background: url('./../../public/images/target.png');
+#header #leftPanel .profile{
+    background: url('./../../public/images/profile.png');
 }
 
 /** Right menu **/
 #header #rightPanel {
     position: absolute;
-    top: 30px;
-    right: 34px;
+    top: 60px;
+    right: 15px;
 }
 #header #rightPanel a {
     display:block;
     background-repeat: no-repeat;
     float: left;
+
+    width: 30px;
+    height: 30px;
 }
-#header #rightPanel .loggedIn {
-    background: url('./../../public/images/brainstorming_glow.png');
-    width: 53px;
-    height: 60px;
-}
-#header #rightPanel .loggedOut {
-    background: url('./../../public/images/brainstorming2_glow.png');
-    width: 53px;
-    height: 60px;
-}
-#header #rightPanel .releaseHistory {
-    background: url('./../../public/images/brain_glow.png');
-    width: 53px;
-    height: 60px;
+#header #rightPanel a:hover {
+    background-position: 30px 0px;
 }
 
-#header #rightPanel .loggedIn:hover {
-    background: url('./../../public/images/brainstorming.png');
+#header #rightPanel .logIn, #header #rightPanel .logOut {
+    background: url('./../../public/images/access.png');
 }
-#header #rightPanel .loggedOut:hover {
-    background: url('./../../public/images/brainstorming2.png');
-}
-#header #rightPanel .releaseHistory:hover {
-    background: url('./../../public/images/brain.png');
+#header #rightPanel .settings {
+    background: url('./../../public/images/settings.png');
 }
 
 .separation_1 {
@@ -158,6 +150,9 @@ border: 1px solid #888888;
 /**             CONTENT                     **/
 /*********************************************/
 
+body {
+    overflow: hidden;
+}
 #content {
     width: 80%;
     margin: 0 auto;
@@ -197,5 +192,36 @@ h2, .font2 {
 /*********************************************/
 /**             FOOTER                      **/
 /*********************************************/
+
 #footer {
+}
+
+#admin_footer {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+
+    width: 100%;
+    height: 30px;
+    background-color: #000;
+}
+
+#admin_footer a {
+    display:block;
+    background-repeat: no-repeat;
+    float: left;
+
+    width: 50px;
+    height: 50px;
+}
+
+#admin_footer a:hover {
+    background-position: -50px 0px;
+}
+
+#admin_footer .usersManagement {
+    background: url('./../../public/images/action.png');
+}
+#admin_footer .releaseHistory {
+    background: url('./../../public/images/workOut.png');
 }

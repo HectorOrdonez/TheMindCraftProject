@@ -42,7 +42,7 @@ class Error extends Controller
     }
 
     /** General Error Page */
-    public function index($error = 'No error message specified.')
+    public function index($error = 'There is an error, but no message D:!! What should I do, what should I do!? WHAT SHOULD I DO DAMN!!.')
     {
         $this->_view->setParameter('msg', $error);
 
@@ -69,7 +69,7 @@ class Error extends Controller
      */
     public function authFailed()
     {
-        $this->_view->setParameter('msg', 'Authentication Failed');
+        $this->_view->setParameter('msg', 'Sorry dear, you are NOT authorized to see this. I fear I will have to send two missils to your location.');
 
         $this->_view->addChunk('error/index');
     }
@@ -79,7 +79,7 @@ class Error extends Controller
      */
     public function accessForbidden()
     {
-        $this->_view->setParameter('msg', 'Access Forbidden to this resource.');
+        $this->_view->setParameter('msg', 'MAAAAAAAAAAAAAN What the fuck are you doing here?!?.');
 
         $this->_view->addChunk('error/index');
     }
@@ -89,7 +89,7 @@ class Error extends Controller
      */
     public function internalServerError()
     {
-        $this->_view->setParameter('msg', 'Internal Server Error');
+        $this->_view->setParameter('msg', 'OH MY GOD, OH MY GOD, OH MY GOD, OH MY GOD, OH MY GOD, OH MY GOD, OH MY GOD, OH MY GOD, OH MY GOD SOMETHING IS WRONG.');
 
         $this->_view->addChunk('error/index');
     }
@@ -99,7 +99,7 @@ class Error extends Controller
      */
     public function resourceNotFound()
     {
-        $this->_view->setParameter('msg', 'Requested resource not found.');
+        $this->_view->setParameter('msg', 'The controller exist man, but the method does not seem like. Better luck next time :D');
 
         $this->_view->addChunk('error/index');
     }

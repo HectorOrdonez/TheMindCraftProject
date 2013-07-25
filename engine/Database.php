@@ -72,19 +72,20 @@ class Database extends \PDO
      */
     protected function _bindValue ($field, $value)
     {
-        $this->_lastQuery = str_replace($field, "'{$value}'", $this->_lastQuery);
-
         $valueType = gettype($value);
 
         switch ($valueType)
         {
             case 'string':
+                $this->_lastQuery = str_replace($field, "'{$value}'", $this->_lastQuery);
                 $this->_statement->bindValue($field, $value, \PDO::PARAM_STR);
                 break;
             case 'boolean':
+                $this->_lastQuery = str_replace($field, "{$value}", $this->_lastQuery);
                 $this->_statement->bindValue($field, $value, \PDO::PARAM_BOOL);
                 break;
             default:
+                $this->_lastQuery = str_replace($field, "{$value}", $this->_lastQuery);
                 $this->_statement->bindValue($field, $value, \PDO::PARAM_INT);
                 break;
         }

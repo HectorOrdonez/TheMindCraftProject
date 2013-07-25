@@ -36,6 +36,7 @@ class Controller extends engineController
         $this->_view->addLibrary('css', 'public/css/default.css');
 
         $this->_view->addLibrary('js', 'public/js/external/jquery-1.10.1.js');
+        $this->_view->addLibrary('js', 'public/js/general.js');
 
         $this->_view->setMeta('description', array(
             'name' => 'description',
@@ -56,6 +57,11 @@ class Controller extends engineController
             'name' => 'keywords',
             'content' => 'Selfology, PHP, JavaScript, OOP, MVC'
         ));
+
+        if (Session::get('userRole') == 'admin')
+        {
+            $this->_view->setFooterChunk('application/views/general/admin_footer.php');
+        }
 
         $this->_view->setParameter('userLogin', Session::get('isUserLoggedIn'));
         $this->_view->setParameter('userRole', Session::get('userRole'));

@@ -39,17 +39,19 @@
     <div id='leftPanel'>
         <?php if ($this->userLogin == TRUE): ?>
             <a class='option brainstorm' href="<?php echo _SYSTEM_BASE_URL; ?>brainstorm"></a>
-            <a class='option ideaToAction' href="<?php echo _SYSTEM_BASE_URL; ?>ideaToAction"></a>
+            <a class='option workOut' href="<?php echo _SYSTEM_BASE_URL; ?>workOut"></a>
+            <a class='option action' href="<?php echo _SYSTEM_BASE_URL; ?>action"></a>
+            <a class='option profile' href="<?php echo _SYSTEM_BASE_URL; ?>profile"></a>
         <?php endif; ?>
     </div>
 
     <div id='rightPanel'>
         <?php if ($this->userLogin == TRUE): ?>
-            <a class='option loggedIn' href="<?php echo _SYSTEM_BASE_URL; ?>index/logout"></a>
+            <a class='option settings' href="<?php echo _SYSTEM_BASE_URL; ?>settings"></a>
+            <a class='option logIn' href="<?php echo _SYSTEM_BASE_URL; ?>index/logout"></a>
         <?php else: ?>
-            <a class='option loggedOut' href="<?php echo _SYSTEM_BASE_URL; ?>index"></a>
+            <a class='option logOut' href="<?php echo _SYSTEM_BASE_URL; ?>index"></a>
         <?php endif; ?>
-        <a class='option releaseHistory' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory"></a>
     </div>
 </div>
 <body>

@@ -34,13 +34,21 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.04', date('d-m-Y'), array(
-            '[Code improvement] - Multiple minor changes in the comments and structure.',
-            '[Visual improvement] - Implemented new visual features, using Zuzanna\'s graphic designs.'
+        $this->_setDevelopmentVersion('0.05', date('d-m-Y'), array(
+            '[New design and architecture concept] - Changed names and images to add a new project model. Now the process starts at Brainstorm, IdeaToAction is the "Work Out" of the ideas, and the action list is shown in the Action stage.',
+            '[Feature] - Added skeleton of the following new features; Settings, Action and Profile.',
+            '[Feature] - Added an Admin Panel.',
+            '[Feature] - Added a Users Management tool for Admins.',
+            '[Feature] - Implemented the functionality to the "IdeaToAction" old page, which now is called "Work Out".',
+            '[Minor improvements] - Made the Logo clickable.'
         ));
 
         // Setting Historical Log of releases
-        $this->_addHistoryLog('0.03', date('23/07/2013'), array(
+        $this->_addHistoryLog('0.04', '24/07/2013', array(
+            '[Code improvement] - Multiple minor changes in the comments and structure.',
+            '[Visual improvement] - Implemented new visual features, using Zuzanna\'s graphic designs.'
+        ));
+        $this->_addHistoryLog('0.03', '23/07/2013', array(
             '[Debug] - Fixed little issue with the pagination of the Brainstorm page.',
             '[Feature] - Created skeleton of IdeaToAction page. Its purpose is to manage the already conceived ideas and filter them; decided if they must be done, if user wants to hold them over, and with which priority do them. Functionality pending to be done.',
             '[Feature upgrade] - Upgraded Brainstorm page; now the ideas have date of creation and, when listing the ideas, the system shows the ideas without to-do date and ideas with to-do date as today or previous.'

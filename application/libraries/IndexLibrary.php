@@ -44,6 +44,7 @@ class IndexLibrary extends Library
             Session::set('isUserLoggedIn', true);
             Session::set('userId', $result['id']);
             Session::set('userName', $result['name']);
+            Session::set('userRole', $result['role']);
             return TRUE;
         } else {
             return FALSE;
