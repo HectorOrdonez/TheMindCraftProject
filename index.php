@@ -24,7 +24,10 @@ function __autoload($class)
     }
     else
     {
-        exit('Fatal error on Autoload class : ' . $class . ' - not found.');
+        $msg = 'Fatal error on Autoload class : ' . $class . ' - not found.';
+
+        header("HTTP/1.1 500 " . $msg);
+        exit($msg);
     }
 
 }

@@ -2,5 +2,79 @@
  * Project: Organizator
  * Description: IdeaToAction CSS Library
  * User: Hector Ordonez
- * Date: 23/07/13 10:00
+ * Date: 25/07/13 21:00
  */
+
+/** Work Out Menu **/
+
+#workOutMenu {
+    background-color: #FFF;
+    width: 600px;
+    height: 29px;
+
+    margin: 0 auto;
+}
+
+#workOutMenu > a {
+    background-color: #b2b2b1;
+    width: 200px;
+    height: 23px;
+
+    float: left;
+    text-align: center;
+    text-decoration: none;
+}
+
+#workOutMenu > a:hover {
+    background-color: #575756;
+    color: #FFF;
+}
+
+#stepPointer {
+    position: relative;
+    top: 5px;
+
+    background-color: #000;
+    width: 200px;
+    height: 1px;
+
+    clear: both;
+
+    font-size: 0px;
+    display: none;
+}
+
+/** General Step Content **/
+
+#stepContent {
+    margin-bottom: 20px;
+}
+
+#chunkSelection {
+}
+
+#chunkTiming {
+}
+
+#chunkPrioritizing {
+}
+
+/** Next Button **/
+#nextStep {
+    background-color: #B2b2B1;
+    width: 100px;
+    height: 25px;
+
+    margin: 0 auto;
+    border-radius: 5px;
+    opacity: 1;
+
+    text-align: center;
+    text-decoration: none;
+    display: block;
+}
+
+#nextStep:hover {
+    background-color: #575756;
+    color: #FFF;
+}

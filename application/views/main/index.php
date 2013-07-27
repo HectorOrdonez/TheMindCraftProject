@@ -8,5 +8,5 @@
  */
 ?>
 <div class='welcome'>
-    Welcome!!
+    Welcome <?php echo $this->userName; ?>!!
 </div>

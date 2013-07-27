@@ -13,7 +13,7 @@ jQuery().ready(function () {
     // General creation of the Grid.
     jQuery(grid).jqGrid({
         //Url from where jqGrid gets the data. The columns will be filled in the order in which the definition in this url is done.
-        url: 'usersManagement/getUsers',
+        url: root_url + 'usersManagement/getUsers',
         datatype: 'json',
         mtype: 'post',
         colNames: [
@@ -81,7 +81,7 @@ jQuery().ready(function () {
     jQuery(grid).navGrid(pagination,
         {edit: true, add: true, del: true, search: false, refresh: true, cloneToTop: false}, // Pagination options
         { // Edit options
-            url: 'usersManagement/editUser',
+            url: root_url + 'usersManagement/editUser',
             editCaption: 'Edit User',
             closeAfterAdd: true,
             closeAfterEdit: true,
@@ -91,7 +91,7 @@ jQuery().ready(function () {
             }
         },
         { // Add options
-            url: 'usersManagement/createUser',
+            url: root_url + 'usersManagement/createUser',
             addCaption: 'Create new User',
             closeAfterAdd: true,
             closeAfterEdit: true,
@@ -109,7 +109,7 @@ jQuery().ready(function () {
             }
         },
         { // Delete options
-            url: 'usersManagement/deleteUser',
+            url: root_url + 'usersManagement/deleteUser',
             caption: 'Delete User',
             errorTextFormat: function (data) {
                 return data.statusText;
@@ -150,7 +150,7 @@ function editUserPassword(rowId) {
             recreateForm: true,
             reloadAfterSubmit: true,
             closeAfterEdit: true,
-            url: "usersManagement/editUserPassword",
+            url: root_url + 'usersManagement/editUserPassword',
             errorTextFormat: function (data) {
                 return data.statusText;
             }

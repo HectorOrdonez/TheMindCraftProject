@@ -38,25 +38,72 @@ class workOut extends Controller
     /**
      * Work out index page.
      */
-    public function index()
+    public function index($startingStep = 'stepSelection')
     {
         $this->_view->addLibrary('js', 'public/js/external/grid.locale-en.js');
         $this->_view->addLibrary('js', 'public/js/external/jquery.jqGrid.src.js');
         $this->_view->addLibrary('js', 'public/js/external/jquery-ui-1.10.3.custom.js');
         $this->_view->addLibrary('js', 'public/js/jqgridToolkit.js');
+
         $this->_view->addLibrary('js', 'application/views/workOut/js/workOut.js');
+        $this->_view->addLibrary('js', 'application/views/workOut/js/selection.js');
+        $this->_view->addLibrary('js', 'application/views/workOut/js/timing.js');
+        $this->_view->addLibrary('js', 'application/views/workOut/js/prioritizing.js');
 
         $this->_view->addLibrary('css', 'public/css/jquery-ui-1.10.3.custom.css');
         $this->_view->addLibrary('css', 'public/css/ui.jqgrid.css');
+
         $this->_view->addLibrary('css', 'application/views/workOut/css/workOut.css');
+
+        $this->_view->setParameter('startingStep', $startingStep);
 
         $this->_view->addChunk('workOut/index');
     }
 
+    public function loadStepChunk()
+    {
+        // Disabling auto render as this is an asynchronous request.
+        $this->setAutoRender(FALSE);
+
+        $form = new Form;
+        $form
+            ->requireItem('step') //Get the page requested
+            ->validate('Enum', array(
+                'availableOptions' => array(
+                    'stepSelection',
+                    'stepTiming',
+                    'stepPrioritizing'
+                )
+            ));
+
+        if (count($form->getErrors()) > 0) {
+            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
+            exit;
+        }
+
+        switch($form->fetch('step'))
+        {
+            case 'stepSelection':
+                require _SYSTEM_ROOT_PATH . 'application/views/workOut/selection.php';
+                break;
+            case 'stepTiming':
+                require _SYSTEM_ROOT_PATH . 'application/views/workOut/timing.php';
+                break;
+            case 'stepPrioritizing':
+                require _SYSTEM_ROOT_PATH . 'application/views/workOut/prioritizing.php';
+                break;
+            default:
+                header("HTTP/1.1 400 " . 'Fatal Error: unexpected step ' . $form->fetch('step') . '.');
+        }
+    }
+
     /**
      * Asynchronous Jquery Grid request for filling up the grid.
+     * The required parameter tells the Work Out Controller for which stage the ideas are requested, as every stage needs different info.
+     *
+     * @param string $step (stepSelection, stepTiming, stepPrioritizing)
      */
-    public function getIdeas()
+    public function getIdeas($step)
     {
         // Disabling auto render as this is an asynchronous request.
         $this->setAutoRender(FALSE);
@@ -86,8 +133,9 @@ class workOut extends Controller
                 )
             ));
 
-        $response = $this->_library->getBrainstormedIdeas(
+        $response = $this->_library->getIdeas(
             Session::get('userId'),
+            $step,
             $form->fetch('page'),
             (int)$form->fetch('rows'),
             $form->fetch('sidx'),
@@ -167,6 +215,21 @@ class workOut extends Controller
         } catch (Exception $e) {
             header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
             exit;
+        }
+    }
+
+    public function generateActionPlan()
+    {
+        // Disabling auto render as this is an asynchronous request.
+        $this->setAutoRender(FALSE);
+
+        try {
+        // Turning ideas into actions
+        $this->_library->generateActionPlan(Session::get('userId'));
+        } catch (Exception $e)
+        {
+            header("HTTP/1.1 500 " . $e->getMessage());
+            exit($e->getMessage());
         }
     }
 }

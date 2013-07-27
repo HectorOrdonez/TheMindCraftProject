@@ -1,168 +1,195 @@
 /**
  * Project: Selfology
  * User: Hector Ordonez
- * Description: IdeaToAction JS Library
+ * Description: WorkOut JS Library
  * Date: 23/07/13 13:00
  */
 
 jQuery().ready(function () {
-    var grid = '#grid';
-    var pagination = '#gridpager';
+    // Element definitions
+    var $stepPointer = jQuery('#stepPointer');
 
-    // General creation of the Grid.
-    jQuery(grid).jqGrid({
-        //Url from where jqGrid gets the data. The columns will be filled in the order in which the definition in this url is done.
-        url: 'workOut/getIdeas',
-        datatype: 'json',
-        mtype: 'post',
-        colNames: [
-            //ColNames is the visual name of the column, which appears at the top.
-            'Idea Id',
-            'Title',
-            'Added date',
-            'Hold over to date',
-            'Selection Tools'
-        ],
-        colModel: [
-            //ColModel defines the columns and its names.
-            //Name is the key of the column. Index is needed for sorting the grid.
-            {
-                name: 'id', index: 'id', hidden: true
-            },
-            {
-                name: 'title', index: 'title', width: 60, editable: true, edittype: 'text', editrules: {required: true}
-            },
-            {
-                name: "date_creation", width: 20, align: "center", sorttype: "date",
-                formatter: "date", formatoptions: { newformat: "Y-m-d" }, editable: false,
-                editoptions: { required: false}
-            },
-            {
-                name: "date_todo", hidden: true, width: 20, align: "center", sorttype: "date",
-                formatter: "date", formatoptions: { newformat: "Y-m-d" }, editable: false,
-                editoptions: { dataInit: function (elem) {
-                    jQuery(elem).datepicker({
-                        dateFormat: "yy-mm-dd"
-                    });
-                }},
-                searchoptions: { sopt: ["eq", "ne", "lt", "le", "gt", "ge"], dataInit: function () {
-                    setTimeout(function () {
-                        jQuery(elem).datepicker({
-                            dateFormat: "yy-mm-dd"
-                        });
-                    }, 100);
-                }}
-            },
-            {
-                name: 'selectionTools', width: '10', editable: false
-            }
-        ],
-        //Toppager adds the pagination to the top of the form.
-        //Besides is needed for allowing the option 'cloneToTop'. Without the toppager cloneToTop does nothing.
-        toppager: true,
-        rowNum: 40,
-        rowList: [10, 40, 100],
-        pager: pagination,
-        sortname: 'id',
-        sortorder: 'asc',
-        viewrecords: true,
-        caption: 'Ideas',
-        jsonReader: {
-            page: "page",
-            total: "total",
-            records: "records",
-            root: "ideas",
-            repeatitems: false,
-            id: "id"
-        },
-        height: '100%',
-        autowidth: true,
-        loadComplete: function () {
-            // Binding the resizing event.
-            resizeJQGridWidth('grid', 'grid_container', 400);
-            // Creating the actions per row.
-            var rowIds = jQuery(grid).getDataIDs();
-            for (var i = 0; i < rowIds.length; i++) {
-                var rowId = rowIds[i];
-                // Construction of the actions in this row
-                var actions = '<button class=\'deleteIdea\' onClick=\'deleteIdea( ' + rowId + ');\'></button>';
-                actions += '<button class=\'holdOverIdea\' onClick=\'holdOverIdea( ' + rowId + ');\'></button>';
-
-                // Adding the button to the action column in this row
-                jQuery(grid).setRowData(rowIds[i], {'selectionTools': actions});
-            }
-
-            //Construction of the visual features of the buttons.
-            $(".deleteIdea").button({
-                label: "deleteIdea",
-                icons: {
-                    primary: 'ui-icon-trash'
-                },
-                text: false
-            });
-            $(".holdOverIdea").button({
-                label: "holdOverIdea",
-                icons: {
-                    primary: 'ui-icon-calendar'
-                },
-                text: false
-            });
+    // Setting events
+    jQuery('.stepSelector').click(function () {
+        if ($stepPointer.html() != jQuery(this).attr('id')) {
+            changeStep(jQuery(this).attr('id'));
         }
     });
+    jQuery('#nextStep').click(function () {
+        switch ($stepPointer.html()) {
+            case 'stepSelection':
+                changeStep('stepTiming');
+                break;
+            case 'stepTiming':
+                changeStep('stepPrioritizing');
+                break;
+            case 'stepPrioritizing':
+                generateActionPlan();
+                break;
+        }
+    });
+
+    // Initializing step
+    var startingStep = $stepPointer.html();
+    changeStep(startingStep);
 });
 
-// Defining special functions for customized actions.
 /**
- * function deleteIdea
- * @uses jqGrid at click
- * @param rowId on the grid, which is the user Id.
+ * This function requests to the server the View Chunk related to this step.
+ * Afterwards the js script that initializes the related step functionality is called.
+ * @param {string} selectedStep
  */
-function deleteIdea(rowId) {
-    var grid = '#grid';
+function changeStep(selectedStep) {
+    // Element definitions
+    var $stepContent = jQuery('#stepContent');
+    var $stepPointer = jQuery('#stepPointer');
 
-    jQuery(grid).jqGrid('delGridRow', rowId,
-        {
-            editCaption: 'Delete idea',
-            width: 500,
-            recreateForm: true,
-            reloadAfterSubmit: true,
-            closeAfterEdit: true,
-            url: "workOut/deleteIdea",
-            errorTextFormat: function (data) {
-                return data.statusText;
+    // 1 - Set stepPointer to selected step
+    $stepPointer.html(selectedStep);
+
+    // 2 - Hide the current content and empty it.
+    triggerVisuals('hide');
+
+
+    // 3 - Make unique ajax request to fill the stepContent with the selected step content.
+    uniqueAjaxCall(function (callback) {
+        jQuery.ajax({
+            type: 'post',
+            url: root_url + '/workOut/loadStepChunk',
+            data: {
+                'step': selectedStep
             }
-        }
-    );
+        }).done(function (data) {
+                $stepContent.html(data);
+                triggerVisuals('show');
+                callback();
+            }).fail(function (data) {
+                alert('Something went wrong and the step ' + selectedStep + ' could not be load! Here why: ' + data.statusText);
+                callback();
+            });
+    });
 }
-/**
- * function holdOverIdea
- * @uses jqGrid at click
- * @param rowId on the grid, which is the user Id.
- */
-function holdOverIdea(rowId) {
-    var grid = '#grid';
 
-    jQuery(grid).jqGrid('editGridRow', rowId,
-        {
-            editCaption: 'Postpone to date',
-            beforeInitData: function () {
-                //Redefine of the cols that need to be set for this special editing.
-                jQuery(grid).setColProp('title', {editable: false});
-                jQuery(grid).setColProp('date_todo', {hidden: false, editable: true});
-            },
-            afterShowForm: function () {
-                //Redefine of the cols to set them back to the normal state.
-                jQuery(grid).setColProp('title', {editable: true});
-                jQuery(grid).setColProp('date_todo', {hidden: true, editable: false});
-            },
-            width: 500,
-            recreateForm: true,
-            reloadAfterSubmit: true,
-            closeAfterEdit: true,
-            url: "workOut/holdOverIdea",
-            errorTextFormat: function (data) {
-                return data.statusText;
+/**
+ * This function manages the visual effects of the Work Out page when selecting a new step.
+ * The triggering may happen in two situations:
+ * 1 - Start of the page with a starting step as default or clicked by the user directly (example; user clicks Prioritizing step of Work Out directly)
+ * 2 - User clicks 'Next' or another step button in the menu.
+ *
+ * In the first situation there is no step displayed, therefore there is nothing to close.
+ * In the second situation there is content displayed and therefore it must be closed.
+ *
+ * This function needs the parameter action to work; it can be 'open' or 'close'.
+ * When this function is called in the situation 1 with the parameter 'close' it must do nothing.
+ */
+function triggerVisuals(action) {
+    if (action == 'hide') {
+        toggleNextButton('hide');
+        moveStepPointer();
+        toggleStepContent('hide', function () {
+        });
+    } else {
+        loadGrid();
+        toggleNextButton('show');
+        toggleStepContent('show', function () {
+        });
+    }
+}
+
+/**
+ * Shows or hides the next button for the transitions between steps.
+ * @param action
+ */
+function toggleNextButton(action) {
+    var $nextButton = jQuery('#nextStep');
+
+    if (action == 'hide') {
+        $nextButton.animate({'opacity': 0});
+    } else {
+        $nextButton.animate({'opacity': 1, 'display': 'block'});
+    }
+}
+
+/**
+ * Moves the Step Pointer to the related position, depending on its content.
+ */
+function moveStepPointer() {
+    // Set required parameters
+    var $stepPointer = jQuery('#stepPointer');
+    var pointerPosition = $stepPointer.html();
+    var elemWidth = $stepPointer.width();
+
+    // Moving pointer
+    switch (pointerPosition) {
+        case 'stepSelection':
+            $stepPointer.animate({'left': 0 });
+            break;
+        case 'stepTiming':
+            $stepPointer.animate({'left': elemWidth });
+            break;
+        case 'stepPrioritizing':
+            $stepPointer.animate({'left': elemWidth * 2 });
+            break;
+    }
+
+    // Showing pointer (only on page load)
+    if ($stepPointer.css('display') == 'none') {
+        $stepPointer.css('display', 'block');
+    }
+}
+
+/**
+ * Shows or hides the step content depending on the passed variable action
+ * @param {string} action
+ */
+function toggleStepContent(action, callback) {
+    // Set required parameters
+    var $stepContent = jQuery('#stepContent');
+
+    if (action == 'hide') {
+        $stepContent.slideUp(function(){
+            callback();
+        });
+    } else {
+        $stepContent.slideDown(function(){
+            callback();
+        });
+    }
+}
+
+/**
+ * Loads the grid depending on the step pointer position.
+ */
+function loadGrid() {
+    // Gets which grid to load
+    var pointerPosition = jQuery('#stepPointer').html();
+
+    switch (pointerPosition) {
+        case 'stepSelection':
+            createSelectionGrid();
+            break;
+        case 'stepTiming':
+            createTimingGrid();
+            break;
+        case 'stepPrioritizing':
+            createPrioritizingGrid();
+            break;
+    }
+}
+
+function generateActionPlan() {
+    uniqueAjaxCall(function (callback) {
+        jQuery.ajax({
+            type: 'post',
+            url: root_url + '/workOut/generateActionPlan',
+            data: {
             }
-        }
-    );
+        }).done(function (data) {
+                callback();
+                window.location = root_url + 'action';
+            }).fail(function (data) {
+                alert('Something went wrong and your action plan could not be generated! Here is why: ' + data.statusText);
+                callback();
+            });
+    });
 }

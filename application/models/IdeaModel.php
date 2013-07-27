@@ -23,7 +23,10 @@ class IdeaModel extends Model
         'user_id',
         'title',
         'date_creation',
-        'date_todo'
+        'date_todo',
+        'time_todo',
+        'priority',
+        'frequency'
     );
 
     /**
@@ -68,11 +71,17 @@ class IdeaModel extends Model
      */
     public function getAllUserIdeas($userId)
     {
-        $conditions = array(
-            'user_id' => $userId
-        );
+        $sql = 'SELECT ' . implode(',', $this->ideaFields) . ' FROM idea';
+        $sql .= ' WHERE `user_id` = :user_id';
+        $sql .= ' AND (`date_todo` is NULL OR `date_todo` <= :today)';
 
-        return $this->db->select('idea', $this->ideaFields, $conditions);
+        $parameters = array();
+        $parameters['user_id'] = $userId;
+        $parameters['today'] = date('Y-m-d');
+
+        $result = $this->db->complexQuery($sql, $parameters);
+
+        return $result;
     }
 
     /**

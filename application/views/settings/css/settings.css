@@ -4,3 +4,39 @@
  * User: Hector Ordonez
  * Date: 25/07/13 01:30
  */
+
+#settingsSection > div {
+    margin: 10px;
+}
+
+#settingsSection .setting label {
+    display: inline-block;
+    width: 150px;
+}
+
+#settingsSection .setting .current{
+    display: inline-block;
+    width: 100px;
+}
+
+#settingsSection .setting form {
+    display: inline-block;
+}
+
+#settingsSection .setting .change {
+    position: relative;
+    top: 2px;
+
+    display: inline-block;
+
+    background: url('./../../../../public/images/TEMP_edit.png') no-repeat;
+    width: 16px;
+    height: 16px;
+}
+#settingsSection .setting .processing {
+    background: url('./../../../../public/images/TEMP_clock.gif') no-repeat;
+}
+
+#settingsSection .setting .info {
+    display: inline-block;
+}

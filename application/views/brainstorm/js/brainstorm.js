@@ -13,7 +13,7 @@ jQuery().ready(function () {
     // General creation of the Grid.
     jQuery(grid).jqGrid({
         //Url from where jqGrid gets the data. The columns will be filled in the order in which the definition in this url is done.
-        url: 'brainstorm/getIdeas',
+        url: root_url + 'brainstorm/getIdeas',
         datatype: 'json',
         mtype: 'post',
         colNames: [

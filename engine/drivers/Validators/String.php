@@ -43,7 +43,7 @@ class String extends Validator
     {
         if (strlen($parameter) < $value)
         {
-            throw new Exception ('Parameter [' . $parameter .'] does not have the minimum length of ' . $value .'.');
+            throw new Exception ('Parameter is too short; minimum length is ' . $value .'.');
         }
     }
 
@@ -57,7 +57,7 @@ class String extends Validator
     {
         if (strlen($parameter) > $value)
         {
-            throw new Exception ('Parameter [' . $parameter .'] exceeds the maximum length of ' . $value .'.');
+            throw new Exception ('Parameter is too long; exceeds the maximum length of ' . $value .'.');
         }
     }
 }

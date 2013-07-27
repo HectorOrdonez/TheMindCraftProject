@@ -34,16 +34,27 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.05', date('d-m-Y'), array(
+        $this->_setDevelopmentVersion('0.06', date('d-m-Y'), array(
+            '[Feature] - Added basic visual and functionality features to the Action tool',
+            '[New design and architecture concept] - As part of the new architecture designed in V0.05, the Work Out tool now is divided in three sections. Implemented the visual characteristics and navigation.',
+            '[Feature] - Refactored the old IdeaToAction tool to the new Selection tool, first part of Work Out section.',
+            '[Feature] - Created the basics of the Timing tool, second part of Work Out section.',
+            '[Feature] - Created the basics of the Prioritizing tool, second part of Work Out section.',
+            '[Feature] - Created the basics of the Settings section so User can change its name and password.',
+            '[Visual improvement] - Minor adjustments in the header and content css in order to avoid having the logo upon selectable content.',
+            '[Debug] - Fixed relative paths in JS; this was giving issues depending on whether the controller received or not Index as method. Now links will always be absolute.',
+            '[Visual improvement] - Moved Left Panel from header to the left of the body.'
+        ));
+
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.05', '25/07/2013', array(
             '[New design and architecture concept] - Changed names and images to add a new project model. Now the process starts at Brainstorm, IdeaToAction is the "Work Out" of the ideas, and the action list is shown in the Action stage.',
             '[Feature] - Added skeleton of the following new features; Settings, Action and Profile.',
             '[Feature] - Added an Admin Panel.',
             '[Feature] - Added a Users Management tool for Admins.',
             '[Feature] - Implemented the functionality to the "IdeaToAction" old page, which now is called "Work Out".',
-            '[Minor improvements] - Made the Logo clickable.'
+            '[Minor improvement] - Made the Logo clickable.'
         ));
-
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.04', '24/07/2013', array(
             '[Code improvement] - Multiple minor changes in the comments and structure.',
             '[Visual improvement] - Implemented new visual features, using Zuzanna\'s graphic designs.'

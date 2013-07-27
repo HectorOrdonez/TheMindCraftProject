@@ -16,7 +16,7 @@ table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+time, mark, audio, video, input {
     margin: 0;
     padding: 0;
     border: 0;
@@ -69,6 +69,7 @@ table {
     background-color: #575756;
     width: 100%;
     height: 100px;
+    margin-bottom: 45px;
 }
 
 #header #logo {
@@ -83,44 +84,13 @@ table {
     cursor: pointer;
 }
 
-/** Left menu **/
-#header #leftPanel {
-    position: absolute;
-    top: 30px;
-    right: 150px;
-    /** background-color:#a9c1c9; **/
-}
-#header #leftPanel a {
-    display:block;
-    background-repeat: no-repeat;
-    float: left;
-
-    width: 50px;
-    height: 50px;
-}
-#header #leftPanel a:hover {
-    background-position: -50px 0px;
-}
-#header #leftPanel .brainstorm {
-    background: url('./../../public/images/brainstorm.png');
-}
-#header #leftPanel .workOut {
-    background: url('./../../public/images/workOut.png');
-}
-#header #leftPanel .action {
-    background: url('./../../public/images/action.png');
-}
-#header #leftPanel .profile{
-    background: url('./../../public/images/profile.png');
-}
-
 /** Right menu **/
-#header #rightPanel {
+#header #headerPanel {
     position: absolute;
     top: 60px;
     right: 15px;
 }
-#header #rightPanel a {
+#header #headerPanel a {
     display:block;
     background-repeat: no-repeat;
     float: left;
@@ -128,23 +98,75 @@ table {
     width: 30px;
     height: 30px;
 }
-#header #rightPanel a:hover {
+#header #headerPanel a:hover {
     background-position: 30px 0px;
 }
 
-#header #rightPanel .logIn, #header #rightPanel .logOut {
+#header #headerPanel .logIn, #header #headerPanel .logOut {
     background: url('./../../public/images/access.png');
 }
-#header #rightPanel .settings {
+#header #headerPanel .settings {
     background: url('./../../public/images/settings.png');
 }
 
 .separation_1 {
-background-color: #AAA;
-height: 5px;
-border: 1px solid #888888;
-    }
+    background-color: #AAA;
+    height: 5px;
+    border: 1px solid #888888;
+}
 
+/*********************************************/
+/**             LEFT PANEL                  **/
+/*********************************************/
+
+/** Left panel **/
+#leftPanel {
+    margin-top: 80px;
+    margin-left: 135px;
+
+    width: 70px;
+    float:left;
+    /** background-color:#a9c1c9; **/
+}
+
+#leftPanel > a {
+    margin-bottom: 12px;
+}
+#leftPanel a {
+    display:block;
+    background-repeat: no-repeat;
+
+    width: 50px;
+    height: 50px;
+}
+#leftPanel a:hover {
+    background-position: -50px 0px;
+}
+
+#leftPanel .workOut_subOptions {
+    margin-left: 20px;
+}
+#leftPanel .brainstorm {
+    background: url('./../../public/images/brainstorm.png');
+}
+#leftPanel .workOut {
+    background: url('./../../public/images/workOut.png');
+}
+#leftPanel .stepSelection {
+    background: url('./../../public/images/selection.png');
+}
+#leftPanel .stepTiming {
+    background: url('./../../public/images/timing.png');
+}
+#leftPanel .stepPrioritizing {
+    background: url('./../../public/images/prioritizing.png');
+}
+#leftPanel .action {
+    background: url('./../../public/images/action.png');
+}
+#leftPanel .profile{
+    background: url('./../../public/images/profile.png');
+}
 
 /*********************************************/
 /**             CONTENT                     **/
@@ -154,11 +176,16 @@ body {
     overflow: hidden;
 }
 #content {
+    float:left;
     width: 80%;
     margin: 0 auto;
-    padding: 25px;
     background: white;
+}
 
+input {
+    border: 1px solid #b2b2b1;
+    color: #b2b2b1;
+    text-align: center;
 }
 
 /*********************************************/
@@ -166,19 +193,19 @@ body {
 /*********************************************/
 
 /** Font Style - Normal **/
-body {
+body, .font_normal {
     font: 12px "Lucida Sans Unicode", Arial;
     color: #222;
 }
 
 /** Font Style - Titles **/
-h1, .font1 {
+h1, .font_title {
     font: bold 16px "Lucida Sans Unicode", Arial;
     color: #575756;
 }
 
 /** Font Style - Sub Titles **/
-h2, .font2 {
+h2, .font_subTitle {
     font: bold 14px "Lucida Sans Unicode", Arial;
     color: #B2b2B1;
 }
@@ -187,6 +214,11 @@ h2, .font2 {
 .font_error {
     font: italic 12px "Lucida Sans Unicode", Arial;
     color: #c90600;
+}
+/** Font Style - Normal Success **/
+.font_success {
+    font: italic 12px "Lucida Sans Unicode", Arial;
+    color: #008b33;
 }
 
 /*********************************************/
