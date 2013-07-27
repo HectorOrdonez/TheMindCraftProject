@@ -24,25 +24,31 @@ time, mark, audio, video, input {
     font: inherit;
     vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
 }
+
 body {
     line-height: 1;
 }
+
 ol, ul {
     list-style: none;
 }
+
 blockquote, q {
     quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
     content: '';
     content: none;
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -68,6 +74,7 @@ table {
 #header {
     background-color: #575756;
     width: 100%;
+    min-width: 1025px;
     height: 100px;
     margin-bottom: 45px;
 }
@@ -79,32 +86,35 @@ table {
     background: url('./../../public/images/logo.png');
     width: 339px;
     height: 134px;
-    float:left;
+    float: left;
 
     cursor: pointer;
 }
 
 /** Right menu **/
 #header #headerPanel {
-    position: absolute;
-    top: 60px;
-    right: 15px;
+    float: right;
+    margin-top: 60px;
+    margin-right: 15px;
 }
+
 #header #headerPanel a {
-    display:block;
+    display: block;
     background-repeat: no-repeat;
     float: left;
 
     width: 30px;
     height: 30px;
 }
+
 #header #headerPanel a:hover {
-    background-position: 30px 0px;
+    background-position: 30px 0;
 }
 
 #header #headerPanel .logIn, #header #headerPanel .logOut {
     background: url('./../../public/images/access.png');
 }
+
 #header #headerPanel .settings {
     background: url('./../../public/images/settings.png');
 }
@@ -121,50 +131,54 @@ table {
 
 /** Left panel **/
 #leftPanel {
-    margin-top: 80px;
-    margin-left: 135px;
-
-    width: 70px;
-    float:left;
     /** background-color:#a9c1c9; **/
 }
 
 #leftPanel > a {
     margin-bottom: 12px;
 }
+
 #leftPanel a {
-    display:block;
+    display: block;
     background-repeat: no-repeat;
 
     width: 50px;
     height: 50px;
 }
+
 #leftPanel a:hover {
-    background-position: -50px 0px;
+    background-position: -50px 0;
 }
 
 #leftPanel .workOut_subOptions {
     margin-left: 20px;
 }
+
 #leftPanel .brainstorm {
     background: url('./../../public/images/brainstorm.png');
 }
+
 #leftPanel .workOut {
     background: url('./../../public/images/workOut.png');
 }
+
 #leftPanel .stepSelection {
     background: url('./../../public/images/selection.png');
 }
+
 #leftPanel .stepTiming {
     background: url('./../../public/images/timing.png');
 }
+
 #leftPanel .stepPrioritizing {
     background: url('./../../public/images/prioritizing.png');
 }
+
 #leftPanel .action {
     background: url('./../../public/images/action.png');
 }
-#leftPanel .profile{
+
+#leftPanel .profile {
     background: url('./../../public/images/profile.png');
 }
 
@@ -173,10 +187,37 @@ table {
 /*********************************************/
 
 body {
+    min-width: 1025px;
+    min-height: 550px;
     overflow: hidden;
 }
+
+#contentWrapper {
+}
+
+#wrappedContentLeft {
+    margin-top: 80px;
+    margin-left: 135px;
+
+    min-height: 1px;
+    width: 70px;
+    float: left;
+}
+#wrappedContentMain {
+    float: left;
+    width: 80%;
+}
+
 #content {
-    float:left;
+    position: absolute;
+    height: 80%;
+    width: 80%;
+    overflow: auto;
+    margin: 0 auto;
+    padding: 2px;
+    background: white;
+}
+#nonLogged_content {
     width: 80%;
     margin: 0 auto;
     background: white;
@@ -215,6 +256,7 @@ h2, .font_subTitle {
     font: italic 12px "Lucida Sans Unicode", Arial;
     color: #c90600;
 }
+
 /** Font Style - Normal Success **/
 .font_success {
     font: italic 12px "Lucida Sans Unicode", Arial;
@@ -226,34 +268,61 @@ h2, .font_subTitle {
 /*********************************************/
 
 #footer {
+    min-width: 1025px;
 }
 
 #admin_footer {
     position: fixed;
-    bottom: 0px;
-    left: 0px;
+    bottom: 0;
+    left: 0;
 
     width: 100%;
-    height: 30px;
+    min-width: 1025px;
+    height: 60px;
     background-color: #000;
 }
 
 #admin_footer a {
-    display:block;
+    display: block;
     background-repeat: no-repeat;
     float: left;
+    margin-top: 15px;
 
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
 }
 
 #admin_footer a:hover {
-    background-position: -50px 0px;
+    background-position: -30px 0;
 }
 
 #admin_footer .usersManagement {
-    background: url('./../../public/images/action.png');
+    background: url('./../../public/images/userManagement.png');
 }
+
 #admin_footer .releaseHistory {
-    background: url('./../../public/images/workOut.png');
+    background: url('./../../public/images/settings.png');
+}
+
+#admin_footer #captainAdminHere {
+    background: url('./../../public/images/admin.png') no-repeat;
+
+    margin-left: 20px;
+    margin-right: 40px;
+
+    display: block;
+    width: 62px;
+    height: 56px;
+    float: left;
+}
+
+#admin_footer #stayFocused {
+    background: url('./../../public/images/footer.png') no-repeat;
+    float: right;
+    margin-top: 2px;
+    margin-right: 15px;
+
+    display: block;
+    width: 255px;
+    height: 57px;
 }

@@ -128,10 +128,15 @@ class UsersManagementLibrary extends Library
             throw new Exception('The User you are trying to modify does not exist.');
         }
 
-        $this->_model->update($userId, array(
-            'id' => $userId,
-            'password' => $newPassword
-        ));
+        try {
+            $this->_model->update($userId, array(
+                'password' => $newPassword
+            ));
+        }
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessage());
+        }
     }
 
     /**

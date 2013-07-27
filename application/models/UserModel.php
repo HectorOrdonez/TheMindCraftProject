@@ -11,6 +11,7 @@ namespace application\models;
 
 use application\engine\Model;
 use engine\Encrypter;
+use engine\Exception;
 
 class UserModel extends Model
 {

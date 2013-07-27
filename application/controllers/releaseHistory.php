@@ -34,7 +34,14 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.06', date('d-m-Y'), array(
+        $this->_setDevelopmentVersion('0.07', date('d-m-Y'), array(
+            '[Debug] - Content was getting messy when the width of the browser was too narrow. Set min-width in the header, content and footer, so now there is a minimum width.',
+            '[Debug] - When not logged in the header and the footer were not suppose to be as in a logged in situation. Created special header and footer for non logged in users and logged in ones. This is a workaround meanwhile the Hecnel Framework does not works a way to use multiple headers and footers.',
+            '[Debug] - Fixed UserManagemenetLibrary; was trying to update the User Id.'
+        ));
+
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.06', '27/07/2013', array(
             '[Feature] - Added basic visual and functionality features to the Action tool',
             '[New design and architecture concept] - As part of the new architecture designed in V0.05, the Work Out tool now is divided in three sections. Implemented the visual characteristics and navigation.',
             '[Feature] - Refactored the old IdeaToAction tool to the new Selection tool, first part of Work Out section.',
@@ -43,10 +50,24 @@ class ReleaseHistory extends Controller
             '[Feature] - Created the basics of the Settings section so User can change its name and password.',
             '[Visual improvement] - Minor adjustments in the header and content css in order to avoid having the logo upon selectable content.',
             '[Debug] - Fixed relative paths in JS; this was giving issues depending on whether the controller received or not Index as method. Now links will always be absolute.',
-            '[Visual improvement] - Moved Left Panel from header to the left of the body.'
+            '[Visual improvement] - Moved Left Panel from header to the left of the body.',
+            '[Feature] - Created the basics of the Prioritizing tool, second part of Work Out section.',
+            '[Feature] - Created the basics of the Settings section so User can change its name and password.',
+            '[Visual improvement] - Minor adjustments in the header and content css in order to avoid having the logo upon selectable content.',
+            '[Debug] - Fixed relative paths in JS; this was giving issues depending on whether the controller received or not Index as method. Now links will always be absolute.',
+            '[Visual improvement] - Moved Left Panel from header to the left of the body.',
+            '[Feature] - Created the basics of the Prioritizing tool, second part of Work Out section.',
+            '[Feature] - Created the basics of the Settings section so User can change its name and password.',
+            '[Visual improvement] - Minor adjustments in the header and content css in order to avoid having the logo upon selectable content.',
+            '[Debug] - Fixed relative paths in JS; this was giving issues depending on whether the controller received or not Index as method. Now links will always be absolute.',
+            '[Visual improvement] - Moved Left Panel from header to the left of the body.',
+            '[Feature] - Created the basics of the Prioritizing tool, second part of Work Out section.',
+            '[Feature] - Created the basics of the Settings section so User can change its name and password.',
+            '[Visual improvement] - Minor adjustments in the header and content css in order to avoid having the logo upon selectable content.',
+            '[Debug] - Fixed relative paths in JS; this was giving issues depending on whether the controller received or not Index as method. Now links will always be absolute.',
+            '[Visual improvement] - Moved Left Panel from header to the left of the body.',
+            '[Visual improvement] - New buttons for the Work Out steps .'
         ));
-
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.05', '25/07/2013', array(
             '[New design and architecture concept] - Changed names and images to add a new project model. Now the process starts at Brainstorm, IdeaToAction is the "Work Out" of the ideas, and the action list is shown in the Action stage.',
             '[Feature] - Added skeleton of the following new features; Settings, Action and Profile.',

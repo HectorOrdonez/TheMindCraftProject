@@ -59,7 +59,7 @@ jQuery().ready(function () {
         autowidth: true,
         loadComplete: function () {
             // Binding the resizing event.
-            resizeJQGridWidth('grid', 'grid_container', 400);
+            resizeJQGridWidth('grid', 'content', 400);
         }
     });
 

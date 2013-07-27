@@ -58,6 +58,15 @@ class Controller extends engineController
             'content' => 'Selfology, PHP, JavaScript, OOP, MVC'
         ));
 
+        if (Session::get('isUserLoggedIn') == TRUE)
+        {
+            $this->_view->setHeaderChunk('application/views/general/logged_header.php');
+            $this->_view->setFooterChunk('application/views/general/logged_footer.php');
+        } else {
+            $this->_view->setHeaderChunk('application/views/general/nonLogged_header.php');
+            $this->_view->setFooterChunk('application/views/general/nonLogged_footer.php');
+        }
+
         if (Session::get('userRole') == 'admin')
         {
             $this->_view->setFooterChunk('application/views/general/admin_footer.php');
