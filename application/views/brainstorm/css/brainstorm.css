@@ -4,3 +4,37 @@
  * User: Hector Ordonez
  * Date: 23/07/13 10:00
  */
+
+#gridWrapper {
+    width: 95%;
+    min-width: 600px;
+    margin: 0 auto;
+}
+
+#gridWrapper #formNewIdea {
+    display: inline;
+}
+
+#gridWrapper #linkNewIdea {
+    background: url('./../../../../public/images/TMP_add.png');
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-right: 5px;
+
+    text-decoration: none;
+}
+
+#gridWrapper .inputNewIdea {
+    height: 20px;
+    width: 95%;
+    display: inline-block;
+    border: 0px;
+    text-align: left;
+}
+
+#errorDisplayer {
+    width: 95%;
+    min-width: 600px;
+    margin: 0 auto;
+}

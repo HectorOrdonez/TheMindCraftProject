@@ -33,40 +33,18 @@ class BrainstormLibrary extends Library
      * Asynchronous request to get all ideas in Brainstorm in an Object that JQuery Grid can understand.
      *
      * @param int $userId User Id requesting ideas.
-     * @param int $page Page requested
-     * @param int $rows Amount of maximum rows the grid needs
-     * @param string $sidx Column the list needs to be sorted with
-     * @param string $sord (asc/desc) Direction of the sorting
      * @return \stdClass
      */
-    public function getIdeas($userId, $page, $rows, $sidx, $sord)
+    public function getIdeas($userId)
     {
         // Object response
-        $response = new \stdClass ();
-
-        $totalRecords = ceil(count($this->_model->getAllUserIdeas($userId)) / $rows);
-
-        // Defining the Start
-        $start = $rows * $page - $rows;
+        $response = array();
 
         // Getting Data from DB
-        $parameters = array(
-            'user_id' => $userId,
-            'sidx' => $sidx,
-            'sord' => $sord,
-            'start' => $start,
-            'rows' => $rows
-        );
-        $result = $this->_model->getUserIdeasList($parameters);
-
-        // Defining parameters required
-        $response->page = $page;
-        $response->total = $totalRecords;
-        $response->records = count($result);
-        $response->ideas = array();
+        $result = $this->_model->getAllUserIdeas($userId);
 
         foreach ($result as $idea) {
-            $response->ideas[] = array(
+            $response[] = array(
                 'id' => $idea['id'],
                 'title' => $idea['title'],
                 'date_creation' => $idea['date_creation']
@@ -81,11 +59,16 @@ class BrainstormLibrary extends Library
      *
      * @param string $userId
      * @param string $title
+     * @return array
      */
     public function createIdea($userId, $title)
     {
         $date_creation = date('Y-m-d');
         $this->_model->insert($userId, $title, $date_creation);
+
+        return array(
+            'title'=>$title,
+            'date_creation' => $date_creation);
     }
 
     /**

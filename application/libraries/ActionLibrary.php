@@ -33,40 +33,19 @@ class ActionLibrary extends Library
      * Asynchronous request to get all actions from user in an Object that JQuery Grid can understand.
      *
      * @param int $userId User Id requesting actions.
-     * @param int $page Page requested
-     * @param int $rows Amount of maximum rows the grid needs
-     * @param string $sidx Column the list needs to be sorted with
-     * @param string $sord (asc/desc) Direction of the sorting
      * @return \stdClass
      */
-    public function getActions($userId, $page, $rows, $sidx, $sord)
+    public function getActions($userId)
     {
         // Object response
-        $response = new \stdClass ();
+        $response = array();
 
-        $totalRecords = ceil(count($this->_model->getAllUserActions($userId)) / $rows);
-
-        // Defining the Start
-        $start = $rows * $page - $rows;
-
-        // Getting Data from DB
-        $parameters = array(
-            'user_id' => $userId,
-            'sidx' => $sidx,
-            'sord' => $sord,
-            'start' => $start,
-            'rows' => $rows
-        );
-        $result = $this->_model->getUserActionsList($parameters);
+        $result = $this->_model->getAllUserActions($userId);
 
         // Defining parameters required
-        $response->page = $page;
-        $response->total = $totalRecords;
-        $response->records = count($result);
-        $response->ideas = array();
 
         foreach ($result as $action) {
-            $response->actions[] = array(
+            $response[] = array(
                 'id' => $action['id'],
                 'title' => $action['title'],
                 'date_creation' => $action['date_creation']

@@ -34,13 +34,18 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.07', date('d-m-Y'), array(
+        $this->_setDevelopmentVersion('0.08', date('d-m-Y'), array (
+            '[Feature] - New Grid construction system, used Javascript OOP. Refactored Brainstorm, selection, timing, prioritizing and action grids.',
+            '[Visual improvement] - New styles for header, admin and images.',
+            '[Visual improvements] - Adjustaments here and there to make it look prettyyyyy.'
+        ));
+
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.07', '27/07/2013', array(
             '[Debug] - Content was getting messy when the width of the browser was too narrow. Set min-width in the header, content and footer, so now there is a minimum width.',
             '[Debug] - When not logged in the header and the footer were not suppose to be as in a logged in situation. Created special header and footer for non logged in users and logged in ones. This is a workaround meanwhile the Hecnel Framework does not works a way to use multiple headers and footers.',
             '[Debug] - Fixed UserManagemenetLibrary; was trying to update the User Id.'
         ));
-
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.06', '27/07/2013', array(
             '[Feature] - Added basic visual and functionality features to the Action tool',
             '[New design and architecture concept] - As part of the new architecture designed in V0.05, the Work Out tool now is divided in three sections. Implemented the visual characteristics and navigation.',

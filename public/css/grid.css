@@ -1,0 +1,28 @@
+/**
+ * Project: Selfology
+ * User: Hector Ordonez
+ * Description:
+ * CSS Library for the use of grids.
+ * Date: 27/07/13 20:30
+ */
+
+#grid_location {
+    /** background-color: #0f0; **/
+    width:200px;
+}
+
+.header {
+    background-color: #b2b2b1;
+}
+
+tr {
+    height: 20px;
+}
+
+td {
+    border: 1px solid #b2b2b1;
+    padding-left: 10px;
+}
+
+
+

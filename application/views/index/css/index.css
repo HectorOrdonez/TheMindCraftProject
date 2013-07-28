@@ -19,14 +19,14 @@
 #loginSubmit {
     background: url('./../../../../public/images/login.png') no-repeat;
     height: 50px;
-    width: 120px;
+    width: 150px;
 
     margin: 0 auto;
     cursor: pointer;
 }
 
 #loginSubmit:hover {
-    background-position: -120px 0px;
+    background-position: -150px 0px;
 }
 
 /** Error Style **/

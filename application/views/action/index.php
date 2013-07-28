@@ -12,12 +12,9 @@
         Action!
     </h1>
 
-    <div id='grid_box'>
-        <div id="grid_container">
-            <table id='grid'>
-            </table>
-        </div>
-
-        <div id='gridpager'>
-        </div>
+    <div id='gridWrapper'>
+        <table id='grid_location'>
+        </table>
+    </div>
+    <div class='font_error' id='errorDisplayer'>
     </div>

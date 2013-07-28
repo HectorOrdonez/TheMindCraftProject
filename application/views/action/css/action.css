@@ -4,3 +4,9 @@
  * User: Hector Ordonez
  * Date: 25/07/13 01:30
  */
+
+#gridWrapper {
+    width: 95%;
+    min-width: 600px;
+    margin: 0 auto;
+}

@@ -18,7 +18,7 @@
 #workOutMenu > a {
     background-color: #b2b2b1;
     width: 200px;
-    height: 23px;
+    height: 29px;
 
     float: left;
     text-align: center;
@@ -59,11 +59,17 @@
 #chunkPrioritizing {
 }
 
+#selectionGridWrapper, #timingGridWrapper, #prioritizingGridWrapper {
+    width: 95%;
+    min-width: 600px;
+    margin: 0 auto;
+}
+
 /** Next Button **/
 #nextStep {
-    background-color: #B2b2B1;
-    width: 100px;
-    height: 25px;
+    background: url('./../../../../public/images/next.png') no-repeat;
+    width: 50px;
+    height: 50px;
 
     margin: 0 auto;
     border-radius: 5px;

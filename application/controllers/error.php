@@ -56,6 +56,8 @@ class Error extends Controller
      */
     public function exception(Exception $exception)
     {
+        header('HTTP/1.1 500 Internal Server Error.');
+
         $this->_view->setParameter('exception', $exception->getMessage());
         $this->_view->setParameter('file', $exception->getRelativeFile());
         $this->_view->setParameter('line', $exception->getLine());
@@ -69,6 +71,7 @@ class Error extends Controller
      */
     public function authFailed()
     {
+        header('HTTP/1.1 401 Authentication failed.');
         $this->_view->setParameter('msg', 'Sorry dear, you are NOT authorized to see this. I fear I will have to send two missils to your location.');
 
         $this->_view->addChunk('error/index');
@@ -79,6 +82,8 @@ class Error extends Controller
      */
     public function accessForbidden()
     {
+        header('HTTP/1.1 403 Access forbidden to this page.');
+
         $this->_view->setParameter('msg', 'MAAAAAAAAAAAAAN What the fuck are you doing here?!?.');
 
         $this->_view->addChunk('error/index');
@@ -89,6 +94,8 @@ class Error extends Controller
      */
     public function internalServerError()
     {
+        header('HTTP/1.1 500 Internal Server Error.');
+
         $this->_view->setParameter('msg', 'OH MY GOD, OH MY GOD, OH MY GOD, OH MY GOD, OH MY GOD, OH MY GOD, OH MY GOD, OH MY GOD, OH MY GOD SOMETHING IS WRONG.');
 
         $this->_view->addChunk('error/index');
@@ -99,6 +106,8 @@ class Error extends Controller
      */
     public function resourceNotFound()
     {
+        header('HTTP/1.1 404 Resource not found.');
+
         $this->_view->setParameter('msg', 'The controller exist man, but the method does not seem like. Better luck next time :D');
 
         $this->_view->addChunk('error/index');

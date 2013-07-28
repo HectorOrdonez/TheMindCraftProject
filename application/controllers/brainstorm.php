@@ -15,6 +15,7 @@ namespace application\controllers;
 
 use application\engine\Controller;
 use application\libraries\BrainstormLibrary;
+use engine\Exception;
 use engine\Form;
 use engine\Session;
 
@@ -46,14 +47,11 @@ class brainstorm extends Controller
      */
     public function index()
     {
-        $this->_view->addLibrary('js', 'public/js/external/grid.locale-en.js');
-        $this->_view->addLibrary('js', 'public/js/external/jquery.jqGrid.src.js');
-        $this->_view->addLibrary('js', 'public/js/external/jquery-ui-1.10.3.custom.js');
-        $this->_view->addLibrary('js', 'public/js/jqgridToolkit.js');
+        $this->_view->addLibrary('js', 'public/js/grid.js');
+        $this->_view->addLibrary('js', 'public/js/gridElements.js');
         $this->_view->addLibrary('js', 'application/views/brainstorm/js/brainstorm.js');
 
-        $this->_view->addLibrary('css', 'public/css/jquery-ui-1.10.3.custom.css');
-        $this->_view->addLibrary('css', 'public/css/ui.jqgrid.css');
+        $this->_view->addLibrary('css', 'public/css/grid.css');
         $this->_view->addLibrary('css', 'application/views/brainstorm/css/brainstorm.css');
 
         $this->_view->addChunk('brainstorm/index');
@@ -67,41 +65,10 @@ class brainstorm extends Controller
         // Disabling auto render as this is an asynchronous request.
         $this->setAutoRender(FALSE);
 
-        $form = new Form();
-        $form
-            ->requireItem('page') //Get the page requested
-            ->validate('Int', array(
-                'min' => 1
-            ))
-            ->requireItem('rows') // Get how many rows are required in the grid
-            ->validate('Int', array(
-                'min' => 1
-            ))
-            ->requireItem('sidx') // Get the column the list needs to be sorted with
-            ->validate('Enum', array(
-                'availableOptions' => array(
-                    'id',
-                    'title',
-                    'date_creation'
-                )
-            ))
-            ->requireItem('sord') // Get the direction of the sorting
-            ->validate('Enum', array(
-                'availableOptions' => array(
-                    'asc',
-                    'desc'
-                )
-            ));
-
         $response = $this->_library->getIdeas(
-            Session::get('userId'),
-            $form->fetch('page'),
-            (int)$form->fetch('rows'),
-            $form->fetch('sidx'),
-            $form->fetch('sord')
+            Session::get('userId')
         );
 
-        header("Content-type: application/json;charset=utf-8");
         echo json_encode($response);
     }
 
@@ -118,7 +85,7 @@ class brainstorm extends Controller
             ->requireItem('title')
             ->validate('String', array(
                 'minLength' => 5,
-                'maxLength' => 500,
+                'maxLength' => 200,
             ));
 
         if (count($form->getErrors()) > 0) {
@@ -128,10 +95,12 @@ class brainstorm extends Controller
 
         // Executing
         try {
-            $this->_library->createIdea(
+            $response = $this->_library->createIdea(
                 Session::get('userId'),
                 $form->fetch('title')
             );
+
+            echo json_encode($response);
         } catch (Exception $e) {
             header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
             exit;
@@ -156,7 +125,7 @@ class brainstorm extends Controller
             ->requireItem('title')
             ->validate('String', array(
                 'minLength' => 5,
-                'maxLength' => 500,
+                'maxLength' => 200,
             ));
 
         if (count($form->getErrors()) > 0) {

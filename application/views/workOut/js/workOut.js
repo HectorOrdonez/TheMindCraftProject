@@ -89,10 +89,12 @@ function triggerVisuals(action) {
         toggleStepContent('hide', function () {
         });
     } else {
-        loadGrid();
-        toggleNextButton('show');
-        toggleStepContent('show', function () {
-        });
+        loadGrid(
+            function () {
+                toggleNextButton('show');
+                toggleStepContent('show', function () {
+                });
+            });
     }
 }
 
@@ -147,11 +149,11 @@ function toggleStepContent(action, callback) {
     var $stepContent = jQuery('#stepContent');
 
     if (action == 'hide') {
-        $stepContent.slideUp(function(){
+        $stepContent.animate({'opacity':'0'}, function () {
             callback();
         });
     } else {
-        $stepContent.slideDown(function(){
+        $stepContent.animate({'opacity':'1'}, function () {
             callback();
         });
     }
@@ -160,19 +162,19 @@ function toggleStepContent(action, callback) {
 /**
  * Loads the grid depending on the step pointer position.
  */
-function loadGrid() {
+function loadGrid(callback) {
     // Gets which grid to load
     var pointerPosition = jQuery('#stepPointer').html();
 
     switch (pointerPosition) {
         case 'stepSelection':
-            createSelectionGrid();
+            createSelectionGrid(callback);
             break;
         case 'stepTiming':
-            createTimingGrid();
+            createTimingGrid(callback);
             break;
         case 'stepPrioritizing':
-            createPrioritizingGrid();
+            createPrioritizingGrid(callback);
             break;
     }
 }
@@ -192,4 +194,17 @@ function generateActionPlan() {
                 callback();
             });
     });
+}
+
+/**
+ */
+function setErrorMessage($errorDisplayer, message, timeout) {
+    $errorDisplayer.html(message);
+
+    setTimeout(function () {
+        $errorDisplayer.fadeOut(function () {
+            $errorDisplayer.html('');
+            $errorDisplayer.fadeIn();
+        });
+    }, timeout);
 }

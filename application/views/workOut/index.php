@@ -18,5 +18,7 @@
 <div id='stepContent'>
 
 </div>
+<div class='font_error' id='errorDisplayer'>
+</div>
 
-<a href='#' class='font_title' id='nextStep'>Next</a>
+<a href='#' class='font_title' id='nextStep'></a>

@@ -25,6 +25,10 @@ time, mark, audio, video, input {
     vertical-align: baseline;
 }
 
+html {
+    overflow: auto;
+}
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -32,6 +36,7 @@ footer, header, hgroup, menu, nav, section {
 }
 
 body {
+    background-image: url('./../../public/images/background.png');
     line-height: 1;
 }
 
@@ -72,7 +77,7 @@ table {
 /*********************************************/
 
 #header {
-    background-color: #575756;
+    background-color: #000;
     width: 100%;
     min-width: 1025px;
     height: 100px;
@@ -81,11 +86,11 @@ table {
 
 #header #logo {
     position: absolute;
-    top: 10px;
+    top: 46px;
     left: 50px;
     background: url('./../../public/images/logo.png');
-    width: 339px;
-    height: 134px;
+    width: 280px;
+    height: 83px;
     float: left;
 
     cursor: pointer;
@@ -95,13 +100,24 @@ table {
 #header #headerPanel {
     float: right;
     margin-top: 60px;
-    margin-right: 15px;
+}
+
+#header #headerPanel .stayFocused {
+    position: relative;
+    top: 16px;
+    display: block;
+    background: url('./../../public/images/stayFocused.png') no-repeat;
+    width: 200px;
+    height: 36px;
+    float:left;
+    margin-right: 40px;
 }
 
 #header #headerPanel a {
     display: block;
     background-repeat: no-repeat;
     float: left;
+    margin-right: 15px;
 
     width: 30px;
     height: 30px;
@@ -163,19 +179,19 @@ table {
 }
 
 #leftPanel .stepSelection {
-    background: url('./../../public/images/selection.png');
+    background: url('./../../public/images/select.png');
 }
 
 #leftPanel .stepTiming {
-    background: url('./../../public/images/timing.png');
+    background: url('./../../public/images/applyTime.png');
 }
 
 #leftPanel .stepPrioritizing {
-    background: url('./../../public/images/prioritizing.png');
+    background: url('./../../public/images/prioritize.png');
 }
 
 #leftPanel .action {
-    background: url('./../../public/images/action.png');
+    background: url('./../../public/images/perform.png');
 }
 
 #leftPanel .profile {
@@ -209,13 +225,15 @@ body {
 }
 
 #content {
+    background-image: url('./../../public/images/background.png');
     position: absolute;
+    max-height: 800px;
+    min-height: 300px;
     height: 80%;
     width: 80%;
-    overflow: auto;
     margin: 0 auto;
     padding: 2px;
-    background: white;
+    overflow: auto;
 }
 #nonLogged_content {
     width: 80%;
@@ -241,8 +259,8 @@ body, .font_normal {
 
 /** Font Style - Titles **/
 h1, .font_title {
-    font: bold 16px "Lucida Sans Unicode", Arial;
-    color: #575756;
+    font: 30px "Harlow Solid Italic", Arial;
+    color: #333;
 }
 
 /** Font Style - Sub Titles **/
@@ -278,51 +296,61 @@ h2, .font_subTitle {
 
     width: 100%;
     min-width: 1025px;
-    height: 60px;
+    height: 50px;
     background-color: #000;
 }
 
-#admin_footer a {
-    display: block;
-    background-repeat: no-repeat;
+#admin_footer #adminWelcome {
     float: left;
-    margin-top: 15px;
+}
+
+#admin_footer #adminWelcome #captainAdminHere {
+    position: relative;
+    bottom: 35px;
+    left: 20px;
+
+    background: url('./../../public/images/admin.png') no-repeat;
+    float:left;
+    display: block;
+    width: 75px;
+    height: 75px;
+}
+
+#admin_footer #adminWelcome #helloMe{
+    position: relative;
+    bottom: 12px;
+    left: 24px;
+
+    background: url('./../../public/images/helloHector.png') no-repeat;
+    float: left;
+    display: block;
+    width: 220px;
+    height: 36px;
+}
+
+#admin_footer #adminActions {
+    float: right;
+}
+
+#admin_footer #adminActions a {
+    background-repeat: no-repeat;
+    display: block;
+    float:left;
+    margin-right: 20px;
+    margin-top: 10px;
 
     width: 30px;
     height: 30px;
 }
 
-#admin_footer a:hover {
+#admin_footer #adminActions a:hover {
     background-position: -30px 0;
 }
 
-#admin_footer .usersManagement {
+#admin_footer #adminActions .usersManagement {
     background: url('./../../public/images/userManagement.png');
 }
 
-#admin_footer .releaseHistory {
-    background: url('./../../public/images/settings.png');
-}
-
-#admin_footer #captainAdminHere {
-    background: url('./../../public/images/admin.png') no-repeat;
-
-    margin-left: 20px;
-    margin-right: 40px;
-
-    display: block;
-    width: 62px;
-    height: 56px;
-    float: left;
-}
-
-#admin_footer #stayFocused {
-    background: url('./../../public/images/footer.png') no-repeat;
-    float: right;
-    margin-top: 2px;
-    margin-right: 15px;
-
-    display: block;
-    width: 255px;
-    height: 57px;
+#admin_footer #adminActions .releaseHistory {
+    background: url('./../../public/images/releaseHistory.png');
 }
