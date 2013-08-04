@@ -43,7 +43,7 @@ class WorkOutLibrary extends Library
         $response = array();
 
         // Getting Data from DB
-        $result = $this->_model->getAllUserIdeas($userId);
+        $result = $this->_model->getUserActiveIdeas($userId);
 
         foreach ($result as $idea) {
             $response[] = array(
@@ -84,29 +84,47 @@ class WorkOutLibrary extends Library
     }
 
     /**
+     * Creates an idea related to given user.
+     *
+     * @param string $userId
+     * @param string $title
+     * @return array
+     */
+    public function createIdea($userId, $title)
+    {
+        $date_creation = date('Y-m-d');
+        $newIdeaId = $this->_model->insert($userId, $title, $date_creation);
+
+        return array(
+            'id' => $newIdeaId,
+            'title' => $title,
+            'date_creation' => $date_creation);
+    }
+
+    /**
      * Edit Idea
      *
      * @param int $ideaId
      * @param int $userId
-     * @param string $holdOverDate
+     * @param string $newTitle
      * @throws Exception
      */
-    public function holdOverIdea($ideaId, $userId, $holdOverDate)
+    public function editIdea($ideaId, $userId, $newTitle)
     {
         $idea = $this->_model->selectById($ideaId, $userId);
 
         if ($idea === FALSE) {
-            throw new Exception('The idea you are trying to hold over does not exist or it is not yours.');
+            throw new Exception('The idea you are trying to modify does not exist or it is not yours.');
         }
 
         if (
-            $holdOverDate == $idea['date_todo']
+            $newTitle == $idea['title']
         ) {
             throw new Exception('This edition request is not changing any idea data.');
         }
 
         $this->_model->update($ideaId, $userId, array(
-            'date_todo' => $holdOverDate
+            'title' => $newTitle
         ));
     }
 
@@ -126,7 +144,26 @@ class WorkOutLibrary extends Library
         }
 
         $this->_model->delete($ideaId, $userId);
+    }
 
+    /**
+     * Hold Over Idea
+     *
+     * @param int $ideaId
+     * @param int $userId
+     * @throws Exception
+     */
+    public function holdOverIdea($ideaId, $userId)
+    {
+        $idea = $this->_model->selectById($ideaId, $userId);
+
+        if ($idea === FALSE) {
+            throw new Exception('The idea you are trying to hold over does not exist or it is not yours.');
+        }
+
+        $this->_model->update($ideaId, $userId, array(
+            'postponed' => 'true'
+        ));
     }
 
     public function generateActionPlan($userId)

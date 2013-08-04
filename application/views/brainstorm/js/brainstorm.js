@@ -80,10 +80,10 @@ jQuery().ready(function () {
         editDialog(jQuery(this).parent().find('.editAction'));
     });
     $grid.delegate('.editAction', 'click', function () {
-        editDialog(jQuery(this))
+        editDialog(jQuery(this));
     });
     $grid.delegate('.delAction', 'click', function () {
-        deleteIdea(jQuery(this))
+        deleteIdea(jQuery(this));
     });
 
     // Initializing page focus on the add input

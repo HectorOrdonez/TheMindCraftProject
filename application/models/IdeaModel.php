@@ -26,7 +26,8 @@ class IdeaModel extends Model
         'date_todo',
         'time_todo',
         'priority',
-        'frequency'
+        'frequency',
+        'postponed',
     );
 
     /**
@@ -38,42 +39,37 @@ class IdeaModel extends Model
     }
 
     /**
-     * Special method of selection for grids. Requires an array of parameters with the followings:
-     * user_id - User from which we want to extract the ideas.
-     * sidx - Field to index the results.
-     * sord - Sorting direction.
-     * start - Starting page.
-     * rows - Number of max rows of the list.
+     * Selects all postponed ideas from User.
      *
-     * @param array $parameters
+     * @param int $userId
      * @return array of ideas of the user.
      */
-    public function getUserIdeasList($parameters)
+    public function getPostponedIdeas($userId)
     {
-        $sql = 'SELECT ' . implode(',', $this->ideaFields) . ' FROM idea';
-        $sql .= ' WHERE `user_id` = :user_id';
-        $sql .= ' AND (`date_todo` is NULL OR `date_todo` <= :today)';
-        $sql .= ' ORDER BY :sidx :sord';
-        $sql .= ' LIMIT :start, :rows';
-
-        $parameters['today'] = date('Y-m-d');
-
-        $result = $this->db->complexQuery($sql, $parameters);
+        $result = $this->db->select('idea', $this->ideaFields, array(
+            'user_id' => $userId,
+            'postponed' => true
+        ));
 
         return $result;
     }
 
     /**
-     * Selects all ideas from User.
+     * Selects all active ideas from User.
+     * An idea is considered active if the date to do it is for today or before, and if it is not postponed.
+     * Ideas which date to do is in the future are considered inactive for now; they will need to be done in the future.
+     * Postponed ideas are ideas that the User prefers not to do them now but in the future it might be interesting to
+     * do them.
      *
      * @param int $userId User Id
      * @return array of ideas of the user.
      */
-    public function getAllUserIdeas($userId)
+    public function getUserActiveIdeas($userId)
     {
         $sql = 'SELECT ' . implode(',', $this->ideaFields) . ' FROM idea';
         $sql .= ' WHERE `user_id` = :user_id';
         $sql .= ' AND (`date_todo` is NULL OR `date_todo` <= :today)';
+        $sql .= ' AND `postponed` = FALSE ';
 
         $parameters = array();
         $parameters['user_id'] = $userId;

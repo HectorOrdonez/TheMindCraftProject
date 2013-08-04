@@ -79,6 +79,11 @@
     color: #FFF;
 }
 
+#errorDisplayer {
+    display: block;
+    height: 40px;
+}
+
 /**********************************************************************************************************************/
 /** Selection Grid Style                                                                                             **/
 /**********************************************************************************************************************/
@@ -111,6 +116,66 @@
 
 #selection_grid .row.content:hover {background-color: #DDDDDD;}
 
+/**
+ * Id of the footer button to add a new idea.
+**/
+#selection_grid #linkNewIdea {
+    position: absolute;
+    background: url('./../../../../public/images/TMP_add.png');
+    width: 10px;
+    height: 10px;
+
+    margin: 5px 5px 0 5px;
+}
+
+/**
+ * Id of the footer form to add a new idea.
+**/
+#selection_grid #formNewIdea{
+    display: inline;
+}
+#selection_grid #formNewIdea input{
+    width: 100%;
+    border: none;
+    text-indent: 20px;
+}
+
+#selection_grid  #formEditIdea .inputEditIdeaTitle {
+    width: 100%;
+    border: none;
+}
+
+/**
+ * Selection actions
+**/
+#selection_grid .actions .editAction {
+    background: url('./../../../../public/images/TEMP_edit.png') no-repeat;
+    width: 16px;
+    height: 16px;
+    display: block;
+    float: left;
+    font-size: 0px;
+    cursor: pointer;
+}
+
+#selection_grid .actions .delAction {
+    background: url('./../../../../public/images/delete.png') no-repeat;
+    width: 16px;
+    height: 16px;
+    display: block;
+    float: left;
+    font-size: 0;
+    cursor: pointer;
+}
+#selection_grid .actions .holdOverAction {
+    background: url('./../../../../public/images/TEMP_clock.gif') no-repeat;
+    width: 16px;
+    height: 16px;
+    display: block;
+    float: left;
+    font-size: 0;
+    cursor: pointer;
+}
 
 
 /**********************************************************************************************************************/

@@ -10,6 +10,7 @@
 namespace application\libraries;
 
 use application\engine\Library;
+use application\models\IdeaModel;
 use application\models\UserModel;
 use engine\Session;
 
@@ -38,13 +39,32 @@ class IndexLibrary extends Library
      */
     public function login($name, $password)
     {
-        $result = $this->_model->selectUserForLogin($name, $password);
+        $userData = $this->_model->selectUserForLogin($name, $password);
 
-        if ($result !== FALSE) {
+        if ($userData!== FALSE) {
+            // User is logged in.
+
+            // Setting Session parameters
             Session::set('isUserLoggedIn', true);
-            Session::set('userId', $result['id']);
-            Session::set('userName', $result['name']);
-            Session::set('userRole', $result['role']);
+            Session::set('userId', $userData['id']);
+            Session::set('userName', $userData['name']);
+            Session::set('userRole', $userData['role']);
+
+            // In case the User is logged a different day than the last time...
+            if ($userData['last_login'] != date('Y-m-d'))
+            {
+                // Setting last login of User to today.
+                $this->_model->update($userData['id'], array('last_login' => date('Y-m-d')));
+
+                // Setting all postponed ideas of User to false.
+                $ideaModel = new IdeaModel();
+                $postponedIdeas = $ideaModel->getPostponedIdeas($userData['id']);
+                foreach($postponedIdeas as $idea)
+                {
+                    $ideaModel->update($idea['id'], $userData['id'], array('postponed' => false));
+                }
+            }
+
             return TRUE;
         } else {
             return FALSE;

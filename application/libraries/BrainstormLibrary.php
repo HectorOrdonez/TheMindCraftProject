@@ -41,7 +41,7 @@ class BrainstormLibrary extends Library
         $response = array();
 
         // Getting Data from DB
-        $result = $this->_model->getAllUserIdeas($userId);
+        $result = $this->_model->getUserActiveIdeas($userId);
 
         foreach ($result as $idea) {
             $response[] = array(

@@ -115,24 +115,19 @@ class workOut extends Controller
     }
 
     /**
-     * Asynchronous Jquery Grid request for holding over an idea.
+     * Asynchronous Jquery Grid request for adding a new idea.
      */
-    public function holdOverIdea()
+    public function createIdea()
     {
         // Disabling auto render as this is an asynchronous request.
         $this->setAutoRender(FALSE);
 
-        // Validating
         $form = new Form();
         $form
-            ->requireItem('id')
-            ->validate('Int', array(
-                'min' => 1
-            ))
-            ->requireItem('date_todo')
+            ->requireItem('title')
             ->validate('String', array(
-                'minLength' => 10,
-                'maxLength' => 10
+                'minLength' => 5,
+                'maxLength' => 200,
             ));
 
         if (count($form->getErrors()) > 0) {
@@ -142,11 +137,52 @@ class workOut extends Controller
 
         // Executing
         try {
-            $this->_library->holdOverIdea(
+            $response = $this->_library->createIdea(
+                Session::get('userId'),
+                $form->fetch('title')
+            );
+
+            echo json_encode($response);
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
+    /**
+     * Asynchronous Jquery Grid request for editing an idea.
+     */
+    public function editIdea()
+    {
+        // Disabling auto render as this is an asynchronous request.
+        $this->setAutoRender(FALSE);
+
+        try {
+            // Validating
+            $form = new Form();
+            $form
+                ->requireItem('id')
+                ->validate('Int', array(
+                    'min' => 1
+                ))
+                ->requireItem('title')
+                ->validate('String', array(
+                    'minLength' => 5,
+                    'maxLength' => 200,
+                ));
+
+            if (count($form->getErrors()) > 0) {
+                header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
+                exit;
+            }
+
+            // Executing
+            $this->_library->editIdea(
                 (int)$form->fetch('id'),
                 Session::get('userId'),
-                $form->fetch('date_todo')
+                $form->fetch('title')
             );
+
         } catch (Exception $e) {
             header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
             exit;
@@ -178,6 +214,39 @@ class workOut extends Controller
         try {
             $this->_library->deleteIdea(
                 $form->fetch('id'),
+                Session::get('userId')
+            );
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
+    /**
+     * Asynchronous Jquery Grid request for holding over an idea.
+     */
+    public function holdOverIdea()
+    {
+        // Disabling auto render as this is an asynchronous request.
+        $this->setAutoRender(FALSE);
+
+        // Validating
+        $form = new Form();
+        $form
+            ->requireItem('id')
+            ->validate('Int', array(
+                'min' => 1
+            ));
+
+        if (count($form->getErrors()) > 0) {
+            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
+            exit;
+        }
+
+        // Executing
+        try {
+            $this->_library->holdOverIdea(
+                (int)$form->fetch('id'),
                 Session::get('userId')
             );
         } catch (Exception $e) {

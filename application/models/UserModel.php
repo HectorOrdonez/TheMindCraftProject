@@ -23,7 +23,8 @@ class UserModel extends Model
         'id',
         'name',
         'password',
-        'role'
+        'role',
+        'last_login'
     );
 
     /**
@@ -51,7 +52,9 @@ class UserModel extends Model
 
         if (count($result) != 0) {
             if (Encrypter::verify($password, $result[0]['password']) === TRUE) {
-                return $result[0];
+                // User is logged in.
+                $userData = $result[0];
+                return $userData;
             }
         }
         return FALSE;
