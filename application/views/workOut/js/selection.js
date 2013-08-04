@@ -5,24 +5,43 @@
  * Date: 25/07/13 21:00
  */
 
-function createSelectionGrid(callback) {
-    var grid = new Grid({
-        location: 'grid_location',
-        url: root_url + 'workout/getIdeas/stepSelection',
-        columns: [
-            {display: '', name: 'id', index: 'id'},
-            {display: 'title', name: 'title', index: 'title'},
-            {display: 'input date', name: 'date_creation', index: 'date_creation'}
+function createSelectionGrid() {
+    // JQuery variable that stores the grid.
+    var $grid = jQuery('#selection_grid');
+
+    // Selection header construction
+    var headerRow = new Row(
+        {'cells': [
+            {'html': 'Id', 'classList': ['col_id']},
+            {'html': 'Title', 'classList': ['col_title']},
+            {'html': 'Actions', 'classList': ['col_actions']},
+            {'html': 'Date Creation', 'classList': ['col_date_creation']}
         ],
-        specialOptions: {headerClass: 'font_title'},
-        afterComplete: function () {
-            console.log('After Complete.');
-        },
-        afterRender: function () {
-            callback();
+            'classList': ['header']
+        });
+
+    // Selection Table construction
+    var table = new Table('selection_grid', {
+        colModel: [
+            {dataIndex: 'id', classList: ['id']},
+            {dataIndex: 'title', classList: ['title']},
+            {staticElement: function (rowId) {
+                return '';
+            },
+                classList: ['actions']
+            },
+            {dataIndex: 'date_creation'}
+        ]});
+    table.addHeaderElement(headerRow.getRow());
+
+    // Selection Grid parameters definition
+    var gridParameters = {
+        'url': root_url + 'workout/getIdeas/stepSelection',
+        'eventEOI': function () {
+            console.log('selection grid initialized.');
         }
-    });
+    };
 
-    grid.createGrid();
-
+    // Workout Grid construction
+    workoutGrid = new Grid(table, gridParameters);
 }

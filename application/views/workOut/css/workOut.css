@@ -40,8 +40,8 @@
 
     clear: both;
 
-    font-size: 0px;
-    display: none;
+    font-size: 0;
+    display: block;
 }
 
 /** General Step Content **/
@@ -57,12 +57,6 @@
 }
 
 #chunkPrioritizing {
-}
-
-#selectionGridWrapper, #timingGridWrapper, #prioritizingGridWrapper {
-    width: 95%;
-    min-width: 600px;
-    margin: 0 auto;
 }
 
 /** Next Button **/
@@ -84,3 +78,104 @@
     background-color: #575756;
     color: #FFF;
 }
+
+/**********************************************************************************************************************/
+/** Selection Grid Style                                                                                             **/
+/**********************************************************************************************************************/
+
+
+/**
+ * Id of the Table that contains the Selection table.
+**/
+#selection_grid {
+    width: 100%;
+}
+
+/**
+ * Table columns
+**/
+#selection_grid .col_id {}
+#selection_grid .col_title {width: 70%;}
+#selection_grid .col_actions {width: 15%;}
+#selection_grid .col_date_creation {width: 15%;}
+
+#selection_grid  .row .id, #selection_grid  .row .col_id {
+    display: none;
+}
+
+/**
+ * Content row
+**/
+#selection_grid .row.content:nth-child(2n+1) {background-color: #ff0;}
+#selection_grid .row.content {background-color: #e7e6eb;}
+
+#selection_grid .row.content:hover {background-color: #DDDDDD;}
+
+
+
+/**********************************************************************************************************************/
+/** Timing Grid Style                                                                                                **/
+/**********************************************************************************************************************/
+
+
+/**
+ * Id of the Table that contains the Timing table.
+**/
+#timing_grid {
+    width: 100%;
+}
+
+/**
+ * Table columns
+**/
+#timing_grid .col_id {}
+#timing_grid .col_title {width: 70%;}
+#timing_grid .col_actions {width: 15%;}
+#timing_grid .col_date_creation {width: 15%;}
+
+#timing_grid  .row .id, #timing_grid  .row .col_id {
+    display: none;
+}
+
+/**
+ * Content row
+**/
+#timing_grid .row.content:nth-child(2n+1) {background-color: #ff0;}
+#timing_grid .row.content {background-color: #e7e6eb;}
+
+#timing_grid .row.content:hover {background-color: #DDDDDD;}
+
+
+
+/**********************************************************************************************************************/
+/** Prioritizing Grid Style                                                                                             **/
+/**********************************************************************************************************************/
+
+
+/**
+ * Id of the Table that contains the Prioritizing table.
+**/
+#prioritizing_grid {
+    width: 100%;
+}
+
+/**
+ * Table columns
+**/
+#prioritizing_grid .col_id {}
+#prioritizing_grid .col_title {width: 70%;}
+#prioritizing_grid .col_actions {width: 15%;}
+#prioritizing_grid .col_date_creation {width: 15%;}
+
+#prioritizing_grid  .row .id, #prioritizing_grid  .row .col_id {
+    display: none;
+}
+
+/**
+ * Content row
+**/
+#prioritizing_grid .row.content:nth-child(2n+1) {background-color: #ff0;}
+#prioritizing_grid .row.content {background-color: #e7e6eb;}
+
+#prioritizing_grid .row.content:hover {background-color: #DDDDDD;}
+

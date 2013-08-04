@@ -41,11 +41,13 @@ class action extends Controller
      */
     public function index()
     {
-        $this->_view->addLibrary('js', 'public/js/grid.js');
-        $this->_view->addLibrary('js', 'public/js/gridElements.js');
-        $this->_view->addLibrary('js', 'application/views/action/js/action.js');
+        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/grid.js');
+        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/table.js');
+        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/row.js');
+        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/cell.js');
+        $this->_view->addLibrary('css', 'public/css/helpers/gridElements/gridElements.css');
 
-        $this->_view->addLibrary('css', 'public/css/grid.css');
+        $this->_view->addLibrary('js', 'application/views/action/js/action.js');
         $this->_view->addLibrary('css', 'application/views/action/css/action.css');
 
         $this->_view->addChunk('action/index');

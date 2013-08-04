@@ -115,6 +115,7 @@ class IdeaModel extends Model
      * @param int $userId owner of the idea
      * @param string $title
      * @param string $date_creation
+     * @return string new idea Id
      */
     public function insert($userId, $title, $date_creation)
     {
@@ -125,6 +126,8 @@ class IdeaModel extends Model
         );
 
         $this->db->insert('idea', $valuesArray);
+
+        return $this->db->lastInsertId();
     }
 
     /**

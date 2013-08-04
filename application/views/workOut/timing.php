@@ -14,7 +14,7 @@
         </h1>
 
         <div id='timingGridWrapper'>
-            <table id='grid_location'>
+            <table id='timing_grid'>
             </table>
         </div>
     </div>

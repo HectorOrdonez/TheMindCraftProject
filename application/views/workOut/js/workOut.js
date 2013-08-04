@@ -5,6 +5,12 @@
  * Date: 23/07/13 13:00
  */
 
+/**
+ * Global variable that will contain the current grid.
+ * @type {Grid}
+ */
+var workoutGrid;
+
 jQuery().ready(function () {
     // Element definitions
     var $stepPointer = jQuery('#stepPointer');
@@ -47,9 +53,8 @@ function changeStep(selectedStep) {
     // 1 - Set stepPointer to selected step
     $stepPointer.html(selectedStep);
 
-    // 2 - Hide the current content and empty it.
-    triggerVisuals('hide');
-
+    // 2 - Move Pointer to set position
+    moveStepPointer();
 
     // 3 - Make unique ajax request to fill the stepContent with the selected step content.
     uniqueAjaxCall(function (callback) {
@@ -61,55 +66,13 @@ function changeStep(selectedStep) {
             }
         }).done(function (data) {
                 $stepContent.html(data);
-                triggerVisuals('show');
+                loadGrid();
                 callback();
             }).fail(function (data) {
                 alert('Something went wrong and the step ' + selectedStep + ' could not be load! Here why: ' + data.statusText);
                 callback();
             });
     });
-}
-
-/**
- * This function manages the visual effects of the Work Out page when selecting a new step.
- * The triggering may happen in two situations:
- * 1 - Start of the page with a starting step as default or clicked by the user directly (example; user clicks Prioritizing step of Work Out directly)
- * 2 - User clicks 'Next' or another step button in the menu.
- *
- * In the first situation there is no step displayed, therefore there is nothing to close.
- * In the second situation there is content displayed and therefore it must be closed.
- *
- * This function needs the parameter action to work; it can be 'open' or 'close'.
- * When this function is called in the situation 1 with the parameter 'close' it must do nothing.
- */
-function triggerVisuals(action) {
-    if (action == 'hide') {
-        toggleNextButton('hide');
-        moveStepPointer();
-        toggleStepContent('hide', function () {
-        });
-    } else {
-        loadGrid(
-            function () {
-                toggleNextButton('show');
-                toggleStepContent('show', function () {
-                });
-            });
-    }
-}
-
-/**
- * Shows or hides the next button for the transitions between steps.
- * @param action
- */
-function toggleNextButton(action) {
-    var $nextButton = jQuery('#nextStep');
-
-    if (action == 'hide') {
-        $nextButton.animate({'opacity': 0});
-    } else {
-        $nextButton.animate({'opacity': 1, 'display': 'block'});
-    }
 }
 
 /**
@@ -133,52 +96,31 @@ function moveStepPointer() {
             $stepPointer.animate({'left': elemWidth * 2 });
             break;
     }
-
-    // Showing pointer (only on page load)
-    if ($stepPointer.css('display') == 'none') {
-        $stepPointer.css('display', 'block');
-    }
-}
-
-/**
- * Shows or hides the step content depending on the passed variable action
- * @param {string} action
- */
-function toggleStepContent(action, callback) {
-    // Set required parameters
-    var $stepContent = jQuery('#stepContent');
-
-    if (action == 'hide') {
-        $stepContent.animate({'opacity':'0'}, function () {
-            callback();
-        });
-    } else {
-        $stepContent.animate({'opacity':'1'}, function () {
-            callback();
-        });
-    }
 }
 
 /**
  * Loads the grid depending on the step pointer position.
  */
-function loadGrid(callback) {
+function loadGrid() {
     // Gets which grid to load
     var pointerPosition = jQuery('#stepPointer').html();
 
     switch (pointerPosition) {
         case 'stepSelection':
-            createSelectionGrid(callback);
+            createSelectionGrid();
             break;
         case 'stepTiming':
-            createTimingGrid(callback);
+            createTimingGrid();
             break;
         case 'stepPrioritizing':
-            createPrioritizingGrid(callback);
+            createPrioritizingGrid();
             break;
     }
 }
 
+/**
+ * Function triggered when User wants to go to the next step of Prioritizing. The set ideas will turn into actions and, after, User will be redirected to the action page.
+ */
 function generateActionPlan() {
     uniqueAjaxCall(function (callback) {
         jQuery.ajax({
@@ -186,7 +128,7 @@ function generateActionPlan() {
             url: root_url + '/workOut/generateActionPlan',
             data: {
             }
-        }).done(function (data) {
+        }).done(function () {
                 callback();
                 window.location = root_url + 'action';
             }).fail(function (data) {
@@ -197,6 +139,10 @@ function generateActionPlan() {
 }
 
 /**
+ * Shows an error in the div, hiding and deleting it after the time defined at the timeout parameter.
+ * @param $errorDisplayer
+ * @param {string} message
+ * @param {int} timeout
  */
 function setErrorMessage($errorDisplayer, message, timeout) {
     $errorDisplayer.html(message);

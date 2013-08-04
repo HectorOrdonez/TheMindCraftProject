@@ -64,10 +64,11 @@ class BrainstormLibrary extends Library
     public function createIdea($userId, $title)
     {
         $date_creation = date('Y-m-d');
-        $this->_model->insert($userId, $title, $date_creation);
+        $newIdeaId = $this->_model->insert($userId, $title, $date_creation);
 
         return array(
-            'title'=>$title,
+            'id' => $newIdeaId,
+            'title' => $title,
             'date_creation' => $date_creation);
     }
 

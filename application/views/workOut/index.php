@@ -8,17 +8,18 @@
  */
 ?>
 
-<div id='workOutMenu'>
-    <a href='#' class='font_title stepSelector' id='stepSelection'>Selection</a>
-    <a href='#' class='font_title stepSelector' id='stepTiming'>Timing</a>
-    <a href='#' class='font_title stepSelector' id='stepPrioritizing'>Prioritizing</a>
-    <div id='stepPointer'><?php echo $this->startingStep;?></div>
-</div>
+    <div id='workOutMenu'>
+        <a href='#' class='font_title stepSelector' id='stepSelection'>Selection</a>
+        <a href='#' class='font_title stepSelector' id='stepTiming'>Timing</a>
+        <a href='#' class='font_title stepSelector' id='stepPrioritizing'>Prioritizing</a>
+        <div id='stepPointer'><?php echo $this->startingStep;?></div>
+    </div>
 
-<div id='stepContent'>
+    <div id='stepContent'>
 
-</div>
-<div class='font_error' id='errorDisplayer'>
-</div>
+    </div>
 
-<a href='#' class='font_title' id='nextStep'></a>
+    <div class='font_error' id='errorDisplayer'>
+    </div>
+
+    <a href='#' class='font_title' id='nextStep'></a>

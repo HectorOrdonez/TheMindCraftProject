@@ -40,7 +40,7 @@
     <div id='headerPanel'>
         <div class="stayFocused"></div>
         <a class='option settings' href="<?php echo _SYSTEM_BASE_URL; ?>settings"></a>
-        <a class='option logOut' href="<?php echo _SYSTEM_BASE_URL; ?>index"></a>
+        <a class='option logOut' href="<?php echo _SYSTEM_BASE_URL; ?>index/logout"></a>
     </div>
 </div>
 

@@ -2,11 +2,39 @@
  * Project: Organizator
  * Description: Action CSS Library
  * User: Hector Ordonez
- * Date: 25/07/13 01:30
+ * Date: 02/08/13 19:00
  */
 
+/**
+ * Id of the element that contains the Action table.
+**/
 #gridWrapper {
-    width: 95%;
-    min-width: 600px;
-    margin: 0 auto;
+
 }
+
+/**
+ * Id of the Table that contains the Action table.
+**/
+#action_grid {
+    width: 100%;
+}
+
+/**
+ * Table columns
+**/
+#action_grid .col_id {}
+#action_grid .col_title {width: 70%;}
+#action_grid .col_actions {width: 15%;}
+#action_grid .col_date_creation {width: 15%;}
+
+#action_grid .row .id, #action_grid .row .col_id {
+    display: none;
+}
+
+/**
+ * Content row
+**/
+#action_grid .row.content:nth-child(2n+1) {background-color: #ff0;}
+#action_grid .row.content {background-color: #e7e6eb;}
+
+#action_grid .row.content:hover {background-color: #DDDDDD;}

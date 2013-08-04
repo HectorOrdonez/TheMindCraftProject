@@ -13,8 +13,8 @@
             Prioritizing
         </h1>
 
-        <div id='prioritizingGridWrapper'>
-            <table id='grid_location'>
+        <div id='prioritizingGridWrapperGridWrapper'>
+            <table id='prioritizing_grid'>
             </table>
         </div>
     </div>

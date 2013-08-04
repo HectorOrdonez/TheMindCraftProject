@@ -14,7 +14,7 @@
         </h1>
 
         <div id='selectionGridWrapper'>
-            <table id='grid_location'>
+            <table id='selection_grid'>
             </table>
         </div>
     </div>

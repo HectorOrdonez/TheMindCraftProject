@@ -47,11 +47,13 @@ class brainstorm extends Controller
      */
     public function index()
     {
-        $this->_view->addLibrary('js', 'public/js/grid.js');
-        $this->_view->addLibrary('js', 'public/js/gridElements.js');
-        $this->_view->addLibrary('js', 'application/views/brainstorm/js/brainstorm.js');
+        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/grid.js');
+        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/table.js');
+        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/row.js');
+        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/cell.js');
+        $this->_view->addLibrary('css', 'public/css/helpers/gridElements/gridElements.css');
 
-        $this->_view->addLibrary('css', 'public/css/grid.css');
+        $this->_view->addLibrary('js', 'application/views/brainstorm/js/brainstorm.js');
         $this->_view->addLibrary('css', 'application/views/brainstorm/css/brainstorm.css');
 
         $this->_view->addChunk('brainstorm/index');
@@ -115,31 +117,32 @@ class brainstorm extends Controller
         // Disabling auto render as this is an asynchronous request.
         $this->setAutoRender(FALSE);
 
-        // Validating
-        $form = new Form();
-        $form
-            ->requireItem('id')
-            ->validate('Int', array(
-                'min' => 1
-            ))
-            ->requireItem('title')
-            ->validate('String', array(
-                'minLength' => 5,
-                'maxLength' => 200,
-            ));
-
-        if (count($form->getErrors()) > 0) {
-            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
-            exit;
-        }
-
-        // Executing
         try {
+            // Validating
+            $form = new Form();
+            $form
+                ->requireItem('id')
+                ->validate('Int', array(
+                    'min' => 1
+                ))
+                ->requireItem('title')
+                ->validate('String', array(
+                    'minLength' => 5,
+                    'maxLength' => 200,
+                ));
+
+            if (count($form->getErrors()) > 0) {
+                header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
+                exit;
+            }
+
+            // Executing
             $this->_library->editIdea(
                 (int)$form->fetch('id'),
                 Session::get('userId'),
                 $form->fetch('title')
             );
+
         } catch (Exception $e) {
             header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
             exit;

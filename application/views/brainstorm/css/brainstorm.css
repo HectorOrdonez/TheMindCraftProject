@@ -5,36 +5,89 @@
  * Date: 23/07/13 10:00
  */
 
+/**
+ * Id of the element that contains the Brainstorm table.
+**/
 #gridWrapper {
-    width: 95%;
-    min-width: 600px;
-    margin: 0 auto;
+
 }
 
-#gridWrapper #formNewIdea {
-    display: inline;
+/**
+ * Id of the Table that contains the Brainstorm table.
+**/
+#brainstorm_grid {
+    width: 100%;
 }
 
-#gridWrapper #linkNewIdea {
+/**
+ * Table columns
+**/
+#brainstorm_grid .col_id {}
+#brainstorm_grid .col_title {width: 70%;}
+#brainstorm_grid .col_actions {width: 15%;}
+#brainstorm_grid .col_date_creation {width: 15%;}
+
+#brainstorm_grid .row .id, #brainstorm_grid .row .col_id {
+    display: none;
+}
+
+/**
+ * Content row
+**/
+#brainstorm_grid .row.content:nth-child(2n+1) {background-color: #ff0;}
+#brainstorm_grid .row.content {background-color: #e7e6eb;}
+
+#brainstorm_grid .row.content:hover {background-color: #DDDDDD;}
+
+
+/**
+ * Id of the footer button to add a new idea.
+**/
+#brainstorm_grid #linkNewIdea {
+    position: absolute;
     background: url('./../../../../public/images/TMP_add.png');
     width: 10px;
     height: 10px;
-    display: inline-block;
-    margin-right: 5px;
 
-    text-decoration: none;
+    margin: 5px 5px 0 5px;
 }
 
-#gridWrapper .inputNewIdea {
-    height: 20px;
-    width: 95%;
-    display: inline-block;
-    border: 0px;
-    text-align: left;
+/**
+ * Id of the footer form to add a new idea.
+**/
+#brainstorm_grid #formNewIdea{
+    display: inline;
+}
+#brainstorm_grid #formNewIdea input{
+    width: 100%;
+    border: none;
+    text-indent: 20px;
 }
 
-#errorDisplayer {
-    width: 95%;
-    min-width: 600px;
-    margin: 0 auto;
+#brainstorm_grid #formEditIdea .inputEditIdeaTitle {
+    width: 100%;
+    border: none;
+}
+
+/**
+ * Brainstorm actions
+**/
+#gridWrapper .actions .editAction {
+    background: url('./../../../../public/images/TEMP_edit.png') no-repeat;
+    width: 16px;
+    height: 16px;
+    display: block;
+    float: left;
+    font-size: 0px;
+    cursor: pointer;
+}
+
+#gridWrapper .actions .delAction {
+    background: url('./../../../../public/images/delete.png') no-repeat;
+    width: 16px;
+    height: 16px;
+    display: block;
+    float: left;
+    font-size: 0;
+    cursor: pointer;
 }

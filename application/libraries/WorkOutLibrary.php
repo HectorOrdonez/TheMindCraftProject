@@ -31,53 +31,26 @@ class WorkOutLibrary extends Library
     }
 
     /**
-     * Asynchronous request to get the ideas from the user in an Object that JQuery Grid can understand.
+     * Asynchronous request to get all current user ideas in an Object that JQuery Grid can understand.
      *
      * @param int $userId User Id requesting ideas.
-     * @param string $step Work Out step requesting the ideas
-     * @param int $page Page requested
-     * @param int $rows Amount of maximum rows the grid needs
-     * @param string $sidx Column the list needs to be sorted with
-     * @param string $sord (asc/desc) Direction of the sorting
-     * @return \stdClass
+     * @param string (stepSelection / stepTiming / stepPrioritizing)
+     * @return array
      */
-    public function getIdeas($userId, $step, $page, $rows, $sidx, $sord)
+    public function getIdeasForStep($userId, $step)
     {
         // Object response
-        $response = new \stdClass ();
-
-        $totalRecords = ceil(count($this->_model->getAllUserIdeas($userId)) / $rows);
-
-        // Defining the Start
-        $start = $rows * $page - $rows;
+        $response = array();
 
         // Getting Data from DB
-        $parameters = array(
-            'user_id' => $userId,
-            'sidx' => $sidx,
-            'sord' => $sord,
-            'start' => $start,
-            'rows' => $rows
-        );
-        $result = $this->_model->getUserIdeasList($parameters);
-
-        // Defining parameters required
-        $response->page = $page;
-        $response->total = $totalRecords;
-        $response->records = count($result);
-        $response->ideas = array();
-
-        // Getting the fields that this step needs
-        $fields = $this->_getRequiredFields($step);
+        $result = $this->_model->getAllUserIdeas($userId);
 
         foreach ($result as $idea) {
-            $newIdea = array();
-
-            foreach($fields as $i=>$field)
-            {
-                $newIdea[$field] = $idea[$field];
-            }
-            $response->ideas[] = $newIdea;
+            $response[] = array(
+                'id' => $idea['id'],
+                'title' => $idea['title'],
+                'date_creation' => $idea['date_creation']
+            );
         }
 
         return $response;

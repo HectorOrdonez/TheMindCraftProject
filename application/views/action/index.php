@@ -13,7 +13,7 @@
     </h1>
 
     <div id='gridWrapper'>
-        <table id='grid_location'>
+        <table id='action_grid'>
         </table>
     </div>
     <div class='font_error' id='errorDisplayer'>

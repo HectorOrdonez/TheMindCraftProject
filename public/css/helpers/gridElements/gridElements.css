@@ -1,0 +1,78 @@
+/**
+ * Project: Selfology
+ * User: Hector Ordonez
+ * Description:
+ * CSS Library for the use of grids and their tables, rows and cells.
+ * Date: 27/07/13 20:30
+ */
+
+/**
+ * Workspace is the Tbody tag from which headers, content and footer will append.
+ */
+.workspace {
+    border: 1px solid #525251;
+}
+
+/**
+ * Class header defines the top rows of the table.
+ */
+.workspace .header {
+    background-color: #575756;
+    color: #EEE;
+}
+
+/**
+ * Class content defines the content rows of the table.
+ */
+.workspace .content {
+
+}
+
+/**
+ * Class footer defines the rows at the bottom of the table.
+ */
+.workspace .footer {
+}
+
+/**
+ * Rows of the header section
+ */
+.workspace .header.row {
+    border: 1px solid #555;
+}
+
+/**
+ * Rows of the content section
+ */
+.workspace .content.row {
+    border-top: none;
+    border-bottom: none;
+}
+
+/**
+ * Rows of the footer section
+ */
+.workspace .footer.row {
+    border: 1px solid #555;
+}
+
+
+/**
+ * Cells of the header section
+ */
+.workspace .header .cell {
+}
+
+/**
+ * Cells of the content section
+ */
+.workspace .content .cell {
+    border-left: none;
+    border-right: none;
+}
+
+/**
+ * Cells of the footer section
+ */
+.workspace .footer .cell {
+}

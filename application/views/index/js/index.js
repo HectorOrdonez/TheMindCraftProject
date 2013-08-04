@@ -6,6 +6,8 @@
  * Date: 23/07/13 10:00
  */
 jQuery().ready(function () {
+    jQuery('.loginInputName').focus();
+
     jQuery('#loginSubmit').click(function () {
         jQuery('#loginForm').submit();
     });

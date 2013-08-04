@@ -29,6 +29,10 @@ html {
     overflow: auto;
 }
 
+html, body {
+    height: 100%;
+}
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -225,7 +229,6 @@ body {
 }
 
 #content {
-    background-image: url('./../../public/images/background.png');
     position: absolute;
     max-height: 800px;
     min-height: 300px;
@@ -244,7 +247,6 @@ body {
 input {
     border: 1px solid #b2b2b1;
     color: #b2b2b1;
-    text-align: center;
 }
 
 /*********************************************/
