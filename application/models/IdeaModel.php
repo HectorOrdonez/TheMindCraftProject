@@ -68,12 +68,10 @@ class IdeaModel extends Model
     {
         $sql = 'SELECT ' . implode(',', $this->ideaFields) . ' FROM idea';
         $sql .= ' WHERE `user_id` = :user_id';
-        $sql .= ' AND (`date_todo` is NULL OR `date_todo` <= :today)';
         $sql .= ' AND `postponed` = FALSE ';
 
         $parameters = array();
         $parameters['user_id'] = $userId;
-        $parameters['today'] = date('Y-m-d');
 
         $result = $this->db->complexQuery($sql, $parameters);
 

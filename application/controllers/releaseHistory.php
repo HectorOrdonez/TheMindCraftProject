@@ -34,13 +34,20 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.10', date('d-m-Y'), array (
+        $this->_setDevelopmentVersion('0.11', date('d-m-Y'), array (
+            '[Feature] - Added full functionality to the Apply Time step of the Work Out. Now it allows to set the date and time of the idea, and to define it as recurrent by setting its frequency.',
+            '[Code improvement] - Added new function to the General JavaScript library - isChecked. To use with a Checkbox in order to know whether is checked or not.',
+            '[Temporal] - Added a new JQuery library - Timepicker, which allows the time picker in the Apply Time step to show all timing possibilities. In future term a custom function should replace this.',
+            '[Refactor] - Refactored uniqueAjaxCall to uniqueUserRequest, as will as well manage requests that have time related needs, like fading outs.'
+        ));
+
+
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.10', '04/08/2103', array (
             '[Feature] - Added full functionality to the Selection step of the Work Out. Now Work Out allows Create, Edit, Delete and Hold Over Ideas.',
             '[Feature] - Idea concept improved; now it allows the parameter Postponed. This reacts to the action Hold Over in the selection step. Idea Model is refactored and the idea selection for the brainstorm and the selection step of the work out filters by postponed - false. The code is changed in order to make it easier to get the active ideas from the User. This affects all libraries that need to get active ideas from Idea Model.',
             '[Feature] - Extended the login system - now when a User logs into the system a new parameter is updated in the User Model: the last_login. This parameter allows the system to know if the User is logging a different day than the last time and, if that is the case, the postponed ideas will be set to "not postponed".'
         ));
-
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.09', '04/08/2013', array (
             '[Feature] - Redesigned the Grid construction system, making it far more flexible and readable.',
             '[Refactor] - Controllers and Libraries related to Work Out stage changed so it works for the basics.',

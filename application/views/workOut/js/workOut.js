@@ -57,7 +57,7 @@ function changeStep(selectedStep) {
     moveStepPointer();
 
     // 3 - Make unique ajax request to fill the stepContent with the selected step content.
-    uniqueAjaxCall(function (callback) {
+    uniqueUserRequest(function (callback) {
         jQuery.ajax({
             type: 'post',
             url: root_url + '/workOut/loadStepChunk',
@@ -69,7 +69,7 @@ function changeStep(selectedStep) {
                 loadGrid();
                 callback();
             }).fail(function (data) {
-                alert('Something went wrong and the step ' + selectedStep + ' could not be load! Here why: ' + data.statusText);
+                console.error('Something went wrong and the step ' + selectedStep + ' could not be load! Here why: ' + data.statusText);
                 callback();
             });
     });
@@ -122,7 +122,7 @@ function loadGrid() {
  * Function triggered when User wants to go to the next step of Prioritizing. The set ideas will turn into actions and, after, User will be redirected to the action page.
  */
 function generateActionPlan() {
-    uniqueAjaxCall(function (callback) {
+    uniqueUserRequest(function (callback) {
         jQuery.ajax({
             type: 'post',
             url: root_url + '/workOut/generateActionPlan',
@@ -132,7 +132,7 @@ function generateActionPlan() {
                 callback();
                 window.location = root_url + 'action';
             }).fail(function (data) {
-                alert('Something went wrong and your action plan could not be generated! Here is why: ' + data.statusText);
+                console.error('Something went wrong and your action plan could not be generated! Here is why: ' + data.statusText);
                 callback();
             });
     });

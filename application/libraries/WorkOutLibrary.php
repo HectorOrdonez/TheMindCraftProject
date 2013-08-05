@@ -45,42 +45,21 @@ class WorkOutLibrary extends Library
         // Getting Data from DB
         $result = $this->_model->getUserActiveIdeas($userId);
 
-        foreach ($result as $idea) {
-            $response[] = array(
+        foreach ($result as $index => $idea) {
+            $response[$index] = array(
                 'id' => $idea['id'],
                 'title' => $idea['title'],
                 'date_creation' => $idea['date_creation']
             );
-        }
 
+            if ($step == 'stepTiming')
+            {
+                $response[$index]['date_todo'] = (is_null($idea['date_todo'])) ? '' : $idea['date_todo'];
+                $response[$index]['time_todo'] = (is_null($idea['time_todo'])) ? '' : substr($idea['time_todo'], 0 , 5);
+                $response[$index]['frequency'] = $idea['frequency'];
+            }
+        }
         return $response;
-    }
-
-    /**
-     * Returns the list of fields that this step needs for its grid.
-     * @param string $step (stepSelection / stepTiming / stepPrioritizing)
-     * @return array List of fields
-     */
-    private function _getRequiredFields($step)
-    {
-        $requiredFields = array();
-        $requiredFields[] = 'id';
-        $requiredFields[] = 'title';
-
-        switch ($step)
-        {
-            case 'stepSelection':
-                $requiredFields[] = 'date_creation';
-                break;
-            case 'stepTiming':
-                $requiredFields[] = 'frequency';
-                $requiredFields[] = 'time_todo';
-                break;
-            case 'stepPrioritizing':
-                break;
-        }
-
-        return $requiredFields;
     }
 
     /**
@@ -166,13 +145,81 @@ class WorkOutLibrary extends Library
         ));
     }
 
+    /**
+     * Sets the date, time and frequency of an idea.
+     * The parameters received can be partially empty, as an idea might have frequency defined but no date or time, and viceversa.
+     * @param int $ideaId Idea which time is being applied.
+     * @param int $userId Current User
+     * @param string $date Date in which this idea needs to be done. Empty string if not required.
+     * @param string $time Time in which this idea needs to be done. Empty string if not required.
+     * @param array $frequency Array of days that User wants to do this idea. Empty array if not required.
+     * @throws Exception
+     */
+    public function applyTimeIdea($ideaId, $userId, $date, $time, $frequency)
+    {
+        // 1 - If all parameters are empty trigger exception.
+        if (strlen($date) == 0 AND
+            strlen($time) == 0 AND
+            count($frequency) == 0
+        ) {
+            throw new Exception ('This request is not changing anything.');
+        } else {
+            if (strlen($date) == 0) {
+                $date = NULL;
+            }
+            if (strlen($time) == 0) {
+                $time = NULL;
+            }
+        }
+
+        // 2 Turn Frequency array into frequency string
+        $parsedFrequency = array(0, 0, 0, 0, 0, 0, 0);
+        if (count($frequency) > 0) {
+            foreach ($frequency as $day) {
+                switch ($day) {
+                    case 'monday':
+                        $parsedFrequency[0] = 1;
+                        break;
+                    case 'tuesday':
+                        $parsedFrequency[1] = 1;
+                        break;
+                    case 'wednesday':
+                        $parsedFrequency[2] = 1;
+                        break;
+                    case 'thursday':
+                        $parsedFrequency[3] = 1;
+                        break;
+                    case 'friday':
+                        $parsedFrequency[4] = 1;
+                        break;
+                    case 'saturday':
+                        $parsedFrequency[5] = 1;
+                        break;
+                    case 'sunday':
+                        $parsedFrequency[6] = 1;
+                        break;
+                }
+            }
+        }
+        $parsedFrequency = implode('', $parsedFrequency);
+
+        // Updating Idea
+        $this->_model->update($ideaId, $userId, array(
+            'date_todo' => $date,
+            'time_todo' => $time,
+            'frequency' => $parsedFrequency
+        ));
+
+        echo $this->_model->db->getLastQuery();
+    }
+
     public function generateActionPlan($userId)
     {
         // Preparing Action model.
         $actionModel = new ActionModel;
 
         // Getting ideas
-        $ideas = $this->_model->getAllUserIdeas($userId);
+        $ideas = $this->_model->getUserActiveIdeas($userId);
 
         if (count($ideas) == 0) {
             throw new Exception('Without ideas you cannot make an action plan!');

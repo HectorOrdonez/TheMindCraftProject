@@ -24,10 +24,10 @@ var ajaxInProgress = false;
  *
  * @param {function} uniqueFunction
  */
-function uniqueAjaxCall(uniqueFunction)
+function uniqueUserRequest(uniqueFunction)
 {
     if (ajaxInProgress == true){
-        alert('Please, be patient. A request is being processed.');
+        console.error('Please, be patient. A request is being processed.');
     }
     else {
         ajaxInProgress = true;
@@ -36,7 +36,7 @@ function uniqueAjaxCall(uniqueFunction)
 }
 
 /**
- * Function that is passed as callback to all uniqueAjaxCall requests. Once this method is called as callback, new unique ajax calls can be done.
+ * Function that is passed as callback to all uniqueUserRequest requests. Once this method is called as callback, new unique ajax calls can be done.
  */
 function closeAjaxInProgress(){
     ajaxInProgress = false;
@@ -193,4 +193,36 @@ function var_export (mixed_expression, bool_return) {
         return null;
     }
     return retstr;
+}
+
+
+
+/**
+ * This function receives a JQuery element where has to be displayed a message.
+ * @param $infoDiv - JQuery Element where the message will be displayed.
+ * @param type - Type of the message (success / error) that defines the font to be used.
+ * @param message - Message to display.
+ * @param timeout - Time in mils of second that the message will remain displayed.
+ */
+function setInfoMessage($infoDiv, type, message, timeout) {
+    $infoDiv.addClass('font_' + type);
+    $infoDiv.html(message);
+
+    setTimeout(function () {
+        $infoDiv.fadeOut(function () {
+            $infoDiv.html('');
+            $infoDiv.removeClass('font_' + type);
+            $infoDiv.fadeIn();
+        });
+    }, timeout);
+}
+
+/**
+ * Function that checks if the received checkbox is checked or not.
+ * @param checkboxId Id of the Checkbox Input.
+ * @returns {boolean}
+ */
+function isChecked(checkboxId)
+{
+    return jQuery('#' + checkboxId).is(':checked');
 }

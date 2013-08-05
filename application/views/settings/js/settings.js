@@ -24,7 +24,7 @@ jQuery().ready(function () {
 
 /**
  * Function that runs an unique ajax call to update the setting that the user modified.
- * In order to make sure that only one request at a time is done, the uniqueAjaxCall will verify that there is no pending Ajax request.
+ * In order to make sure that only one request at a time is done, the uniqueUserRequest will verify that there is no pending Ajax request.
  * While this function is running, other unique ajax calls cannot be done.
  * Once this function ends, the callback is executed, which will allow further unique ajax calls.
  *
@@ -32,7 +32,7 @@ jQuery().ready(function () {
  * @param newValue New value of the setting.
  */
 function updateSetting(type, newValue) {
-    uniqueAjaxCall(function (callback) {
+    uniqueUserRequest(function (callback) {
         var $infoDiv = jQuery('#' + type + '_info');
         var $labelDiv = jQuery('#' + type + '_label');
         var $change = jQuery('#' + type + '_change');
@@ -59,24 +59,4 @@ function updateSetting(type, newValue) {
             });
     });
 
-}
-
-/**
- * This function receives a JQuery element where has to be displayed a message.
- * @param $infoDiv - JQuery Element where the message will be displayed.
- * @param type - Type of the message (success / error) that defines the font to be used.
- * @param message - Message to display.
- * @param timeout - Time in mils of second that the message will remain displayed.
- */
-function setInfoMessage($infoDiv, type, message, timeout) {
-    $infoDiv.addClass('font_' + type);
-    $infoDiv.html(message);
-
-    setTimeout(function () {
-        $infoDiv.fadeOut(function () {
-            $infoDiv.html('');
-            $infoDiv.removeClass('font_' + type);
-            $infoDiv.fadeIn();
-        });
-    }, timeout);
 }

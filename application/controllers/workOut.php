@@ -12,6 +12,7 @@ namespace application\controllers;
 
 use application\engine\Controller;
 use application\libraries\WorkoutLibrary;
+use engine\drivers\validators as Validators;
 use engine\Exception;
 use engine\Form;
 use engine\Session;
@@ -40,6 +41,10 @@ class workOut extends Controller
      */
     public function index($startingStep = 'stepSelection')
     {
+        $this->_view->addLibrary('js', 'public/js/external/jquery-ui-1.10.3.custom.js');
+        $this->_view->addLibrary('js', 'public/js/external/jquery-timepicker.js');
+        $this->_view->addLibrary('css', 'public/css/external/jquery-ui-1.10.3.custom.css');
+
         $this->_view->addLibrary('js', 'public/js/helpers/gridElements/grid.js');
         $this->_view->addLibrary('js', 'public/js/helpers/gridElements/table.js');
         $this->_view->addLibrary('js', 'public/js/helpers/gridElements/row.js');
@@ -79,8 +84,7 @@ class workOut extends Controller
             exit;
         }
 
-        switch($form->fetch('step'))
-        {
+        switch ($form->fetch('step')) {
             case 'stepSelection':
                 require _SYSTEM_ROOT_PATH . 'application/views/workOut/selection.php';
                 break;
@@ -255,16 +259,109 @@ class workOut extends Controller
         }
     }
 
+    /**
+     * Asynchronous Jquery Grid request for apply time to an idea.
+     */
+    public function applyTimeIdea()
+    {
+        // Disabling auto render as this is an asynchronous request.
+        $this->setAutoRender(FALSE);
+
+        // Validating
+        $form = new Form();
+        $form
+            ->requireItem('id')
+            ->validate('Int', array(
+                'min' => 1
+            ));
+
+        if ($_POST['date'] == '') {
+            $date = '';
+        } else {
+            $form
+                ->requireItem('date')
+                ->validate('String', array(
+                    'minLength' => 10,
+                    'maxLength' => 10
+                ));
+        }
+
+        if ($_POST['time'] == '') {
+            $time = '';
+        } else {
+            $form
+                ->requireItem('time')
+                ->validate('String', array(
+                    'minLength' => 5,
+                    'maxLength' => 5
+                ));
+        }
+
+        if (!isset($_POST['howOften'])) {
+            $howOften = array();
+        } else {
+            $howOften = $_POST['howOften'];
+            foreach($howOften as $day)
+            {
+                try {
+                    Validators\Enum::validate($day, array(
+                        'availableOptions' => array(
+                            'monday',
+                            'tuesday',
+                            'wednesday',
+                            'thursday',
+                            'friday',
+                            'saturday',
+                            'sunday'
+                        )
+                    ));
+                } catch (Exception $e)
+                {
+                    header('HTTP/1.1 400 How often selection is invalid.');
+                }
+            }
+        }
+
+        if (count($form->getErrors()) > 0) {
+            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
+            exit;
+        }
+
+        // Executing
+        try {
+            if (!isset($date))
+            {
+                $date = $form->fetch('date');
+            }
+
+            if (!isset($time))
+            {
+                $time = $form->fetch('time');
+            }
+
+            $this->_library->applyTimeIdea(
+                (int)$form->fetch('id'),
+                Session::get('userId'),
+                $date,
+                $time,
+                $howOften
+            );
+
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
     public function generateActionPlan()
     {
         // Disabling auto render as this is an asynchronous request.
         $this->setAutoRender(FALSE);
 
         try {
-        // Turning ideas into actions
-        $this->_library->generateActionPlan(Session::get('userId'));
-        } catch (Exception $e)
-        {
+            // Turning ideas into actions
+            $this->_library->generateActionPlan(Session::get('userId'));
+        } catch (Exception $e) {
             header("HTTP/1.1 500 " . $e->getMessage());
             exit($e->getMessage());
         }
