@@ -9,7 +9,6 @@
  * Id of the element that contains the Action table.
 **/
 #gridWrapper {
-
 }
 
 /**
@@ -22,19 +21,21 @@
 /**
  * Table columns
 **/
-#action_grid .col_id {}
-#action_grid .col_title {width: 70%;}
-#action_grid .col_actions {width: 15%;}
-#action_grid .col_date_creation {width: 15%;}
+#action_grid .col_id {
+}
+
+#action_grid .col_title {
+    width: 70%;
+}
+
+#action_grid .col_actions {
+    width: 15%;
+}
+
+#action_grid .col_date_creation {
+    width: 15%;
+}
 
 #action_grid .row .id, #action_grid .row .col_id {
     display: none;
 }
-
-/**
- * Content row
-**/
-#action_grid .row.content:nth-child(2n+1) {background-color: #ff0;}
-#action_grid .row.content {background-color: #e7e6eb;}
-
-#action_grid .row.content:hover {background-color: #DDDDDD;}

@@ -23,7 +23,10 @@ class ActionModel extends Model
         'id',
         'user_id',
         'title',
-        'date_creation'
+        'date_creation',
+        'date_todo',
+        'time_todo',
+        'priority'
     );
 
     /**
@@ -119,16 +122,22 @@ class ActionModel extends Model
     /**
      * Creates an action with the specified parameters for given user.
      *
-     * @param int $userId owner of the action
-     * @param string $title
-     * @param string $date_creation
+     * @param $userId
+     * @param $title
+     * @param $date_creation
+     * @param $date_todo
+     * @param $time_todo
+     * @param $priority
      */
-    public function insert($userId, $title, $date_creation)
+    public function insert($userId, $title, $date_creation, $date_todo, $time_todo, $priority)
     {
         $valuesArray = array(
             'user_id' => $userId,
             'title' => $title,
-            'date_creation' => $date_creation
+            'date_creation' => $date_creation,
+            'date_todo' => $date_todo,
+            'time_todo' => $time_todo,
+            'priority' => $priority
         );
 
         $this->db->insert('action', $valuesArray);

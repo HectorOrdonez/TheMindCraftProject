@@ -8,13 +8,13 @@
  */
 ?>
 
-    <div id='chunkPrioritizing'>
-        <h1>
-            Prioritizing
-        </h1>
+<div id='chunkPrioritizing'>
+    <h1>
+        Prioritizing
+    </h1>
 
-        <div id='prioritizingGridWrapperGridWrapper'>
-            <table id='prioritizing_grid'>
-            </table>
-        </div>
+    <div id='prioritizingGridWrapper'>
+        <table id='prioritizing_grid'>
+        </table>
     </div>
+</div>

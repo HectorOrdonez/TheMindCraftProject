@@ -45,7 +45,6 @@
 }
 
 /** General Step Content **/
-
 #stepContent {
     margin-bottom: 20px;
 }
@@ -88,7 +87,6 @@
 /** Selection Grid Style                                                                                             **/
 /**********************************************************************************************************************/
 
-
 /**
  * Id of the Table that contains the Selection table.
 **/
@@ -99,22 +97,24 @@
 /**
  * Table columns
 **/
-#selection_grid .col_id {}
-#selection_grid .col_title {width: 70%;}
-#selection_grid .col_actions {width: 15%;}
-#selection_grid .col_date_creation {width: 15%;}
+#selection_grid .col_id {
+}
+
+#selection_grid .col_title {
+    width: 70%;
+}
+
+#selection_grid .col_actions {
+    width: 15%;
+}
+
+#selection_grid .col_date_creation {
+    width: 15%;
+}
 
 #selection_grid  .row .id, #selection_grid  .row .col_id {
     display: none;
 }
-
-/**
- * Content row
-**/
-#selection_grid .row.content:nth-child(2n+1) {background-color: #ff0;}
-#selection_grid .row.content {background-color: #e7e6eb;}
-
-#selection_grid .row.content:hover {background-color: #DDDDDD;}
 
 /**
  * Id of the footer button to add a new idea.
@@ -131,10 +131,11 @@
 /**
  * Id of the footer form to add a new idea.
 **/
-#selection_grid #formNewIdea{
+#selection_grid #formNewIdea {
     display: inline;
 }
-#selection_grid #formNewIdea input{
+
+#selection_grid #formNewIdea input {
     width: 100%;
     border: none;
     text-indent: 20px;
@@ -167,6 +168,7 @@
     font-size: 0;
     cursor: pointer;
 }
+
 #selection_grid .actions .holdOverAction {
     background: url('./../../../../public/images/TEMP_clock.gif') no-repeat;
     width: 16px;
@@ -177,11 +179,9 @@
     cursor: pointer;
 }
 
-
 /**********************************************************************************************************************/
 /** Timing Grid Style                                                                                                **/
 /**********************************************************************************************************************/
-
 
 /**
  * Id of the Table that contains the Timing table.
@@ -193,33 +193,58 @@
 /**
  * Table columns
 **/
-#timing_grid .row.header {text-align: center;}
-#timing_grid .col_id {}
-#timing_grid .col_title {}
-#timing_grid .col_date_creation {width: 90px;}
-#timing_grid .col_tododate {width: 90px;}
-#timing_grid .col_todotime {width: 90px;}
-#timing_grid .col_frequency {width: 80px;}
-#timing_grid .col_actions {width: 60px;}
+#timing_grid .row.header {
+    text-align: center;
+}
 
-#timing_grid .cell.date_creation { text-align: center;}
-#timing_grid .cell.date_todo { text-align: center;}
-#timing_grid .cell.time_todo { text-align: center;}
+#timing_grid .col_id {
+}
 
-#timing_grid  .cell.id, #timing_grid  .row .col_id {display: none;}
-#timing_grid  .cell.frequency, #timing_grid  .row .col_frequency {display: none;}
+#timing_grid .col_title {
+}
+
+#timing_grid .col_date_creation {
+    width: 90px;
+}
+
+#timing_grid .col_tododate {
+    width: 90px;
+}
+
+#timing_grid .col_todotime {
+    width: 90px;
+}
+
+#timing_grid .col_frequency {
+    width: 80px;
+}
+
+#timing_grid .col_actions {
+    width: 60px;
+}
+
+#timing_grid .cell.date_creation {
+    text-align: center;
+}
+
+#timing_grid .cell.date_todo {
+    text-align: center;
+}
+
+#timing_grid .cell.time_todo {
+    text-align: center;
+}
+
+#timing_grid  .cell.id, #timing_grid  .row .col_id {
+    display: none;
+}
+
+#timing_grid  .cell.frequency, #timing_grid  .row .col_frequency {
+    display: none;
+}
 
 /**
- * Content row
-**/
-#timing_grid .row.content:nth-child(2n+1) {background-color: #dddce1;}
-#timing_grid .row.content {background-color: #e7e6eb;}
-
-#timing_grid .row.content:hover {background-color: #FFF;}
-
-
-/**
- * Selection actions
+ * Timing actions
 **/
 #timing_grid .actions .applyTimeAction {
     background: url('./../../../../public/images/TEMP_clock.gif') no-repeat;
@@ -243,7 +268,7 @@
 }
 
 #content #applyTimeDialog .applyTimeInnerDialog {
-    position:absolute;
+    position: absolute;
     width: 200px;
     min-height: 100px;
     top: 50%;
@@ -272,16 +297,48 @@
     margin-left: 5px;
 }
 
-#content #applyTimeDialog #submitAppliedTime{
+#content #applyTimeDialog #submitAppliedTime {
     margin-top: 10px;
     text-align: center;
     cursor: pointer;
 }
 
+div.time-picker {
+    position: absolute;
+    height: 191px;
+    width: 5em; /* needed for IE */
+    overflow: auto;
+    background: #fff;
+    border: 1px solid #aaa;
+    z-index: 99;
+    margin: 0;
+}
+
+div.time-picker-12hours {
+    width: 6em; /* needed for IE */
+}
+
+div.time-picker ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+div.time-picker li {
+    cursor: pointer;
+    height: 10px;
+    font: 12px/1 Helvetica, Arial, sans-serif;
+    padding: 4px 3px;
+}
+
+div.time-picker li.selected {
+    background: #0063CE;
+    color: #fff;
+}
+
 /**********************************************************************************************************************/
 /** Prioritizing Grid Style                                                                                             **/
 /**********************************************************************************************************************/
-
 
 /**
  * Id of the Table that contains the Prioritizing table.
@@ -293,50 +350,23 @@
 /**
  * Table columns
 **/
-#prioritizing_grid .col_id {}
-#prioritizing_grid .col_title {width: 70%;}
-#prioritizing_grid .col_actions {width: 15%;}
-#prioritizing_grid .col_date_creation {width: 15%;}
+#prioritizing_grid .col_id {
+}
+
+#prioritizing_grid .col_title {
+    width: 70%;
+}
+
+#prioritizing_grid .col_date_creation {
+    width: 15%;
+}
 
 #prioritizing_grid  .row .id, #prioritizing_grid  .row .col_id {
     display: none;
 }
 
-/**
- * Content row
-**/
-#prioritizing_grid .row.content:nth-child(2n+1) {background-color: #ff0;}
-#prioritizing_grid .row.content {background-color: #e7e6eb;}
-
-#prioritizing_grid .row.content:hover {background-color: #DDDDDD;}
-
-
-div.time-picker {
-    position: absolute;
-    height: 191px;
-    width:5em; /* needed for IE */
-    overflow: auto;
-    background: #fff;
-    border: 1px solid #aaa;
-    z-index: 99;
-    margin: 0;
-}
-div.time-picker-12hours {
-    width:6em; /* needed for IE */
-}
-
-div.time-picker ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-div.time-picker li {
-    cursor: pointer;
-    height: 10px;
-    font: 12px/1 Helvetica, Arial, sans-serif;
-    padding: 4px 3px;
-}
-div.time-picker li.selected {
-    background: #0063CE;
-    color: #fff;
+#prioritizing_grid .prioritySelector {
+    height: 14px;
+    border: none;
+    font-size: 10px;
 }

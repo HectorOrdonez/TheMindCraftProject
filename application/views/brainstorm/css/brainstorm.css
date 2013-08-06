@@ -9,7 +9,6 @@
  * Id of the element that contains the Brainstorm table.
 **/
 #gridWrapper {
-
 }
 
 /**
@@ -22,23 +21,24 @@
 /**
  * Table columns
 **/
-#brainstorm_grid .col_id {}
-#brainstorm_grid .col_title {width: 70%;}
-#brainstorm_grid .col_actions {width: 15%;}
-#brainstorm_grid .col_date_creation {width: 15%;}
+#brainstorm_grid .col_id {
+}
+
+#brainstorm_grid .col_title {
+    width: 70%;
+}
+
+#brainstorm_grid .col_actions {
+    width: 15%;
+}
+
+#brainstorm_grid .col_date_creation {
+    width: 15%;
+}
 
 #brainstorm_grid .row .id, #brainstorm_grid .row .col_id {
     display: none;
 }
-
-/**
- * Content row
-**/
-#brainstorm_grid .row.content:nth-child(2n+1) {background-color: #ff0;}
-#brainstorm_grid .row.content {background-color: #e7e6eb;}
-
-#brainstorm_grid .row.content:hover {background-color: #DDDDDD;}
-
 
 /**
  * Id of the footer button to add a new idea.
@@ -55,10 +55,11 @@
 /**
  * Id of the footer form to add a new idea.
 **/
-#brainstorm_grid #formNewIdea{
+#brainstorm_grid #formNewIdea {
     display: inline;
 }
-#brainstorm_grid #formNewIdea input{
+
+#brainstorm_grid #formNewIdea input {
     width: 100%;
     border: none;
     text-indent: 20px;

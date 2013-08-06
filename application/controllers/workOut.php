@@ -301,8 +301,7 @@ class workOut extends Controller
             $howOften = array();
         } else {
             $howOften = $_POST['howOften'];
-            foreach($howOften as $day)
-            {
+            foreach ($howOften as $day) {
                 try {
                     Validators\Enum::validate($day, array(
                         'availableOptions' => array(
@@ -315,8 +314,7 @@ class workOut extends Controller
                             'sunday'
                         )
                     ));
-                } catch (Exception $e)
-                {
+                } catch (Exception $e) {
                     header('HTTP/1.1 400 How often selection is invalid.');
                 }
             }
@@ -329,13 +327,11 @@ class workOut extends Controller
 
         // Executing
         try {
-            if (!isset($date))
-            {
+            if (!isset($date)) {
                 $date = $form->fetch('date');
             }
 
-            if (!isset($time))
-            {
+            if (!isset($time)) {
                 $time = $form->fetch('time');
             }
 
@@ -353,6 +349,48 @@ class workOut extends Controller
         }
     }
 
+    /**
+     * Asynchronous Jquery Grid request for setting a priority to an idea.
+     */
+    public function setPriorityToIdea()
+    {
+        // Disabling auto render as this is an asynchronous request.
+        $this->setAutoRender(FALSE);
+
+        // Validating
+        $form = new Form();
+        $form
+            ->requireItem('id')
+            ->validate('Int', array(
+                'min' => 1
+            ))
+            ->requireItem('priority')
+            ->validate('Int', array(
+                'min' => 1,
+                'max' => 10
+            ));
+
+        if (count($form->getErrors()) > 0) {
+            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
+            exit;
+        }
+
+        // Executing
+        try {
+            $this->_library->setPriorityToIdea(
+                (int)$form->fetch('id'),
+                Session::get('userId'),
+                (int)$form->fetch('priority')
+            );
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
+    /**
+     * Collects the User Ideas and turns them into actions.
+     */
     public function generateActionPlan()
     {
         // Disabling auto render as this is an asynchronous request.

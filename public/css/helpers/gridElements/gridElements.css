@@ -50,12 +50,26 @@
 }
 
 /**
+ * Row color definitions
+ */
+.workspace .row.content:nth-child(2n+1) {
+    background-color: #DDD;
+}
+
+.workspace .row.content {
+    background-color: #CCC;
+}
+
+.workspace .row.content:hover {
+    background-color: #FFF;
+}
+
+/**
  * Rows of the footer section
  */
 .workspace .footer.row {
     border: 1px solid #555;
 }
-
 
 /**
  * Cells of the header section

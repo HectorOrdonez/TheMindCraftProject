@@ -52,11 +52,14 @@ class WorkOutLibrary extends Library
                 'date_creation' => $idea['date_creation']
             );
 
-            if ($step == 'stepTiming')
-            {
+            if ($step == 'stepTiming') {
                 $response[$index]['date_todo'] = (is_null($idea['date_todo'])) ? '' : $idea['date_todo'];
-                $response[$index]['time_todo'] = (is_null($idea['time_todo'])) ? '' : substr($idea['time_todo'], 0 , 5);
+                $response[$index]['time_todo'] = (is_null($idea['time_todo'])) ? '' : substr($idea['time_todo'], 0, 5);
                 $response[$index]['frequency'] = $idea['frequency'];
+            }
+
+            if ($step == 'stepPrioritizing') {
+                $response[$index]['priority'] = $idea['priority'];
             }
         }
         return $response;
@@ -213,6 +216,32 @@ class WorkOutLibrary extends Library
         echo $this->_model->db->getLastQuery();
     }
 
+    /**
+     * Sets Priority To Idea
+     *
+     * @param int $ideaId
+     * @param int $userId
+     * @param int $priority
+     * @throws Exception
+     */
+    public function setPriorityToIdea($ideaId, $userId, $priority)
+    {
+        $idea = $this->_model->selectById($ideaId, $userId);
+
+        if ($idea === FALSE) {
+            throw new Exception('The idea you are trying to hold over does not exist or it is not yours.');
+        }
+
+        $this->_model->update($ideaId, $userId, array(
+            'priority' => $priority
+        ));
+    }
+
+    /**
+     * Turns active ideas from user into actions.
+     * @param $userId
+     * @throws Exception
+     */
     public function generateActionPlan($userId)
     {
         // Preparing Action model.
@@ -228,7 +257,14 @@ class WorkOutLibrary extends Library
         $date_creation = date('Y-m-d');
 
         foreach ($ideas as $idea) {
-            $actionModel->insert($userId, $idea['title'], $date_creation);
+            $actionModel->insert(
+                $userId,
+                $idea['title'],
+                $date_creation,
+                $idea['date_todo'],
+                $idea['time_todo'],
+                $idea['priority']
+            );
 
             $this->_model->delete($idea['id'], $userId);
         }
