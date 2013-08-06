@@ -26,7 +26,8 @@ class ActionModel extends Model
         'date_creation',
         'date_todo',
         'time_todo',
-        'priority'
+        'priority',
+        'date_done'
     );
 
     /**
@@ -38,24 +39,21 @@ class ActionModel extends Model
     }
 
     /**
-     * Special method of selection for grids. Requires an array of parameters with the followings:
-     * user_id - User from which we want to extract the actions.
-     * sidx - Field to index the results.
-     * sord - Sorting direction.
-     * start - Starting page.
-     * rows - Number of max rows of the list.
+     * Selects active actions from User.
      *
-     * @param array $parameters
+     * @param int $userId User Id
      * @return array of actions of the user.
      */
-    public function getUserActionsList($parameters)
+    public function getUserPendingActions($userId)
     {
         $sql = 'SELECT ' . implode(',', $this->actionFields) . ' FROM action';
         $sql .= ' WHERE `user_id` = :user_id';
+        $sql .= ' AND `date_done` is NULL';
         $sql .= ' AND (`date_creation` is NULL OR `date_creation` <= :today)';
-        $sql .= ' ORDER BY :sidx :sord';
-        $sql .= ' LIMIT :start, :rows';
+        $sql .= ' ORDER BY `priority` DESC';
 
+        $parameters = array();
+        $parameters['user_id'] = $userId;
         $parameters['today'] = date('Y-m-d');
 
         $result = $this->db->complexQuery($sql, $parameters);
@@ -64,20 +62,22 @@ class ActionModel extends Model
     }
 
     /**
-     * Selects all actions from User.
+     * Selects done actions from User.
      *
      * @param int $userId User Id
+     * @param int $limit Max number of finished actions to show
      * @return array of actions of the user.
      */
-    public function getAllUserActions($userId)
+    public function getUserFinishedActions($userId, $limit)
     {
         $sql = 'SELECT ' . implode(',', $this->actionFields) . ' FROM action';
         $sql .= ' WHERE `user_id` = :user_id';
-        $sql .= ' AND (`date_creation` is NULL OR `date_creation` <= :today)';
+        $sql .= ' AND `date_done` is not NULL';
+        $sql .= ' LIMIT :limit';
 
         $parameters = array();
         $parameters['user_id'] = $userId;
-        $parameters['today'] = date('Y-m-d');
+        $parameters['limit'] = $limit;
 
         $result = $this->db->complexQuery($sql, $parameters);
 

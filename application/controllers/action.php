@@ -54,7 +54,7 @@ class action extends Controller
     }
 
     /**
-     * Asynchronous Jquery Grid request for filling up the grid.
+     * Asynchronous Jquery Grid request for filling up the pending actions grid.
      */
     public function getActions()
     {
@@ -68,10 +68,59 @@ class action extends Controller
         echo json_encode($response);
     }
 
+
     /**
-     * Asynchronous Jquery Grid request for completing (deleting) an action.
+     * Asynchronous Jquery Grid request for filling up the old actions grid.
      */
-    public function completeAction()
+    public function getOldActions()
+    {
+        // Disabling auto render as this is an asynchronous request.
+        $this->setAutoRender(FALSE);
+
+        $response = $this->_library->getOldActions(
+            Session::get('userId')
+        );
+
+        echo json_encode($response);
+    }
+
+    /**
+     * Asynchronous Jquery Grid request for finishing an action.
+     */
+    public function finishAction()
+    {
+        // Disabling auto render as this is an asynchronous request.
+        $this->setAutoRender(FALSE);
+
+        // Validating
+        $form = new Form();
+        $form
+            ->requireItem('id')
+            ->validate('Int', array(
+                'min' => 1
+            ));
+
+        if (count($form->getErrors()) > 0) {
+            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
+            exit;
+        }
+
+        // Executing
+        try {
+            $this->_library->finishAction(
+                $form->fetch('id'),
+                Session::get('userId')
+            );
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
+    /**
+     * Asynchronous Jquery Grid request for deleting an action.
+     */
+    public function deleteAction()
     {
         // Disabling auto render as this is an asynchronous request.
         $this->setAutoRender(FALSE);

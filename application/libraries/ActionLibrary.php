@@ -20,6 +20,7 @@ class ActionLibrary extends Library
      * @var ActionModel $_model
      */
     protected $_model;
+    static private $_MAX_OLD_ACTIONS = 100;
 
     /**
      * Library constructor of Action logic.
@@ -30,7 +31,7 @@ class ActionLibrary extends Library
     }
 
     /**
-     * Asynchronous request to get all actions from user in an Object that JQuery Grid can understand.
+     * Asynchronous request to get all pending actions from user in an Object that JQuery Grid can understand.
      *
      * @param int $userId User Id requesting actions.
      * @return \stdClass
@@ -40,7 +41,7 @@ class ActionLibrary extends Library
         // Object response
         $response = array();
 
-        $result = $this->_model->getAllUserActions($userId);
+        $result = $this->_model->getUserPendingActions($userId, 100);
 
         // Defining parameters required
 
@@ -48,11 +49,59 @@ class ActionLibrary extends Library
             $response[] = array(
                 'id' => $action['id'],
                 'title' => $action['title'],
+                'priority' => $action['priority'],
                 'date_creation' => $action['date_creation']
             );
         }
 
         return $response;
+    }
+
+    /**
+     * Asynchronous request to get all old actions from user in an Object that JQuery Grid can understand.
+     *
+     * @param int $userId User Id requesting actions.
+     * @return \stdClass
+     */
+    public function getOldActions($userId)
+    {
+        // Object response
+        $response = array();
+
+        $result = $this->_model->getUserFinishedActions($userId, self::$_MAX_OLD_ACTIONS);
+
+        // Defining parameters required
+
+        foreach ($result as $action) {
+            $response[] = array(
+                'id' => $action['id'],
+                'title' => $action['title']
+            );
+        }
+
+        return $response;
+    }
+
+    /**
+     * Finish action
+     *
+     * @param int $actionId
+     * @param int $userId
+     * @throws Exception
+     */
+    public function finishAction($actionId, $userId)
+    {
+        $idea = $this->_model->selectById($actionId, $userId);
+
+        if ($idea === FALSE) {
+            throw new Exception('The action you are trying to finish does not exist or it is not yours.');
+        }
+
+        $date_done = date('Y-m-d');
+
+        $this->_model->update($actionId, $userId, array(
+            'date_done' => $date_done
+        ));
     }
 
     /**
@@ -67,10 +116,9 @@ class ActionLibrary extends Library
         $idea = $this->_model->selectById($actionId, $userId);
 
         if ($idea === FALSE) {
-            throw new Exception('The action you are trying to complete does not exist or it is not yours.');
+            throw new Exception('The action you are trying to delete does not exist or it is not yours.');
         }
 
         $this->_model->delete($actionId, $userId);
-
     }
 }
