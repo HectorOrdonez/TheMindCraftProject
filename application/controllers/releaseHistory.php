@@ -34,14 +34,16 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.15', date('d-m-Y'), array (
+        $this->_setDevelopmentVersion('0.151', date('d-m-Y'), array (
+            '[Temporal] - Added SQLExport of the current Database structure plus the Admin Users to allow a fast startup in another machine.'
+        ));
+
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.15', '07/08/2013', array (
             '[Code improvement] - Removed TODOS that belong to the Framework.',
             '[Temporal] - Added the JQuery Ui CSS for the datepicker. Eventually we need our own CSS version or even our own datepicker library.',
             '[Code improvement] - Removed not required libraries and deprecated functions - setErrorMessage is replaced by setInfoMessage.'
         ));
-
-
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.14', '07/08/2013', array (
             '[Refactor] - Changed the Users Management page to use the new grid. New methods for the User creation, edition and deletion.'
         ));

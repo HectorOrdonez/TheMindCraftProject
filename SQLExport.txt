@@ -1,0 +1,37 @@
+CREATE TABLE `action` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Action Id',
+  `user_id` INT(10) UNSIGNED NOT NULL COMMENT 'Foreign key of User table.',
+  `title` VARCHAR(500) COLLATE utf8_bin NOT NULL COMMENT 'Action Title',
+  `date_creation` DATE NOT NULL COMMENT 'Action Date of creation, which is the date in which this action is expected to be done.',
+  `date_todo` DATE DEFAULT NULL COMMENT 'Date in which the User expects to do this action',
+  `time_todo` TIME DEFAULT NULL COMMENT 'Time in which the User expects to do this action.',
+  `priority` INT(10) NOT NULL DEFAULT '5' COMMENT 'Action priority',
+  `date_done` DATE DEFAULT NULL COMMENT 'When this action was done, if any.',
+  PRIMARY KEY (`id`)
+) ENGINE=MYISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+
+CREATE TABLE `user` (
+  `id` INT(10) NOT NULL AUTO_INCREMENT COMMENT 'Id of User',
+  `name` VARCHAR(50) COLLATE utf8_bin NOT NULL COMMENT 'Name of User',
+  `password` VARCHAR(60) COLLATE utf8_bin DEFAULT NULL COMMENT 'Password of User. If is null it means the User is not activated.',
+  `role` ENUM('admin','basic') COLLATE utf8_bin NOT NULL DEFAULT 'basic' COMMENT 'Role of the User',
+  `last_login` DATE DEFAULT NULL COMMENT 'Last day in which the User logged in into the system.',
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+
+
+CREATE TABLE `idea` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Idea id',
+  `user_id` INT(10) NOT NULL COMMENT 'User foreign key',
+  `title` VARCHAR(200) COLLATE utf8_bin NOT NULL COMMENT 'Idea title',
+  `date_creation` DATE NOT NULL COMMENT 'Date in which this idea was conceived.',
+  `date_todo` DATE DEFAULT NULL COMMENT 'Date in which the User expects to do this idea.',
+  `time_todo` TIME DEFAULT NULL COMMENT 'Time in which this idea needs to be done.',
+  `frequency` VARCHAR(7) COLLATE utf8_bin NOT NULL DEFAULT '0000000' COMMENT 'Frequency with which the user wants to do this idea.',
+  `priority` INT(2) UNSIGNED NOT NULL DEFAULT '5' COMMENT 'Priority this idea has from 1 to 10',
+  `postponed` BIT(1) NOT NULL DEFAULT b'0' COMMENT 'Whether this idea is postponed or not.',
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+
+INSERT INTO `user` (`id`, `name`, `password`, `role`, `last_login`) VALUES('3','Hector','$2y$09$c3Hvalh9XZW.RRNZ2Fe/VO3VFNDfHCC3h7Kk5vY8bjONYAO0/5Lum','admin','2013-08-07');
+INSERT INTO `user` (`id`, `name`, `password`, `role`, `last_login`) VALUES('5','Zuzanna','$2y$09$LHSbgxlSRC2HO/JUFtLhX.tqgsPYQwwdNnV1yAJJ/pcLB0uTfuQbO','admin','2013-08-04');
