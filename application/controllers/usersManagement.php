@@ -4,8 +4,12 @@
  * User: Hector Ordonez
  * Description:
  * Controller of the page UsersManagement.
- * Pending of Documentation.
+ * Allows the management of the Users; creating them, editing their names, roles and password and deleting them if
+ * needed.
+ * Notice that a User can not delete him or herself.
  * Date: 25/07/13 01:30
+ *
+ * Updated: 07/08/2013, Hector Ordonez
  */
 
 namespace application\controllers;
@@ -30,7 +34,7 @@ class usersManagement extends Controller
 
         $logged = Session::get('isUserLoggedIn');
         $role = Session::get('userRole');
-        if ($logged == FALSE OR $role!= 'admin') {
+        if ($logged == FALSE OR $role != 'admin') {
             Session::destroy();
             header('location: ' . _SYSTEM_BASE_URL . 'error/accessForbidden');
         }
@@ -41,14 +45,13 @@ class usersManagement extends Controller
      */
     public function index()
     {
-        $this->_view->addLibrary('js', 'public/js/external/grid.locale-en.js');
-        $this->_view->addLibrary('js', 'public/js/external/jquery.jqGrid.src.js');
-        $this->_view->addLibrary('js', 'public/js/external/jquery-ui-1.10.3.custom.js');
-        $this->_view->addLibrary('js', 'public/js/jqgridToolkit.js');
-        $this->_view->addLibrary('js', 'application/views/usersManagement/js/usersManagement.js');
+        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/grid.js');
+        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/table.js');
+        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/row.js');
+        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/cell.js');
+        $this->_view->addLibrary('css', 'public/css/helpers/gridElements/gridElements.css');
 
-        $this->_view->addLibrary('css', 'public/css/jquery-ui-1.10.3.custom.css');
-        $this->_view->addLibrary('css', 'public/css/ui.jqgrid.css');
+        $this->_view->addLibrary('js', 'application/views/usersManagement/js/usersManagement.js');
         $this->_view->addLibrary('css', 'application/views/usersManagement/css/usersManagement.css');
 
         $this->_view->addChunk('usersManagement/index');
@@ -62,45 +65,19 @@ class usersManagement extends Controller
         // Disabling auto render as this is an asynchronous request.
         $this->setAutoRender(FALSE);
 
-        $form = new Form();
-        $form
-            ->requireItem('page') //Get the page requested
-            ->validate('Int', array(
-                'min' => 1
-            ))
-            ->requireItem('rows') // Get how many rows are required in the grid
-            ->validate('Int', array(
-                'min' => 1
-            ))
-            ->requireItem('sidx') // Get the column the list needs to be sorted with
-            ->validate('Enum', array(
-                'availableOptions' => array(
-                    'id',
-                    'name',
-                    'role'
-                )
-            ))
-            ->requireItem('sord') // Get the direction of the sorting
-            ->validate('Enum', array(
-                'availableOptions' => array(
-                    'asc',
-                    'desc'
-                )
-            ));
+        $response = $this->_library->getUsers();
 
-        $response = $this->_library->getUsers(
-            $form->fetch('page'),
-            (int)$form->fetch('rows'),
-            $form->fetch('sidx'),
-            $form->fetch('sord')
-        );
-
-        header("Content-type: application/json;charset=utf-8");
         echo json_encode($response);
     }
 
     /**
-     * Asynchronous Jquery Grid request for adding a new user.
+     * Asynchronous request for adding a new user.
+     *
+     * Notice that the only parameters required is the name. The role and password of the user needs to be set after
+     * its creation.
+     *
+     * Parameters required by post:
+     * name - The name that this new user will have.
      */
     public function createUser()
     {
@@ -113,19 +90,6 @@ class usersManagement extends Controller
             ->validate('String', array(
                 'minLength' => 5,
                 'maxLength' => 50,
-            ))
-            ->requireItem('password')
-            ->validate('String', array(
-                'minLength' => 5,
-                'maxLength' => 50,
-            ))
-            ->requireItem('role')
-            ->validate('Enum', array(
-                'availableOptions' => array(
-                    'superadmin',
-                    'admin',
-                    'basic'
-                )
             ));
 
         if (count($form->getErrors()) > 0) {
@@ -135,11 +99,8 @@ class usersManagement extends Controller
 
         // Executing
         try {
-            $this->_library->createUser(
-                $form->fetch('name'),
-                $form->fetch('password'),
-                $form->fetch('role')
-            );
+            $createdUser = $this->_library->createUser($form->fetch('name'));
+            echo json_encode($createdUser);
         } catch (Exception $e) {
             header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
             exit;
@@ -147,9 +108,13 @@ class usersManagement extends Controller
     }
 
     /**
-     * Asynchronous Jquery Grid request for editing a user.
+     * Asynchronous request for editing a user's name.
+     *
+     * Parameters required by post:
+     * id - User id to delete.
+     * name - New user name
      */
-    public function editUser()
+    public function editUserName()
     {
         // Disabling auto render as this is an asynchronous request.
         $this->setAutoRender(FALSE);
@@ -165,14 +130,6 @@ class usersManagement extends Controller
             ->validate('String', array(
                 'minLength' => 5,
                 'maxLength' => 50,
-            ))
-            ->requireItem('role')
-            ->validate('Enum', array(
-                'availableOptions' => array(
-                    'superadmin',
-                    'admin',
-                    'basic'
-                )
             ));
 
         if (count($form->getErrors()) > 0) {
@@ -182,11 +139,11 @@ class usersManagement extends Controller
 
         // Executing
         try {
-            $this->_library->editUser(
+            $this->_library->editUserName(
                 (int)$form->fetch('id'),
-                $form->fetch('name'),
-                $form->fetch('role')
+                $form->fetch('name')
             );
+
         } catch (Exception $e) {
             header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
             exit;
@@ -194,7 +151,56 @@ class usersManagement extends Controller
     }
 
     /**
-     * Asynchronous Jquery Grid request for editing User's password.
+     * Asynchronous request for editing a user's role.
+     *
+     * Parameters required by post:
+     * id - User id to delete.
+     * role - New user role
+     */
+    public function editUserRole()
+    {
+        // Disabling auto render as this is an asynchronous request.
+        $this->setAutoRender(FALSE);
+
+        // Validating
+        $form = new Form();
+        $form
+            ->requireItem('id')
+            ->validate('Int', array(
+                'min' => 1
+            ))
+            ->requireItem('role')
+            ->validate('Enum', array(
+                'availableOptions' => array(
+                    'admin',
+                    'basic'
+                ),
+            ));
+
+        if (count($form->getErrors()) > 0) {
+            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
+            exit;
+        }
+
+        // Executing
+        try {
+            $this->_library->editUserRole(
+                (int)$form->fetch('id'),
+                $form->fetch('role')
+            );
+
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
+    /**
+     * Asynchronous request for editing User's password.
+     *
+     * Parameters required by post:
+     * id - User Id to delete.
+     * password - User password to replace the previous one.
      */
     public function editUserPassword()
     {
@@ -231,7 +237,10 @@ class usersManagement extends Controller
     }
 
     /**
-     * Asynchronous Jquery Grid request for deleting a user.
+     * Asynchronous request for deleting a user.
+     *
+     * Parameters required by post:
+     * id - User Id to delete.
      */
     public function deleteUser()
     {
@@ -248,6 +257,11 @@ class usersManagement extends Controller
 
         if (count($form->getErrors()) > 0) {
             header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
+            exit;
+        }
+
+        if ($form->fetch('id') == Session::get('userId')) {
+            header("HTTP/1.1 400 " . 'Why do you want to commit suicide :( ???');
             exit;
         }
 

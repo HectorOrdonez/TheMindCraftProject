@@ -34,12 +34,15 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.13', date('d-m-Y'), array (
-            '[Feature] - Added functionality to the Action stage. Now Users can finish or delete their actions. Besides an historical table is shown with the previous finished actions.',
-            '[Code improvement] - Deleted non-necessary CSS libraries for JQGrid. Currently only the Users Management section (for admins) is still using (or trying to, as they do not exist anymore!) the JQgrids.'
+        $this->_setDevelopmentVersion('0.14', date('d-m-Y'), array (
+            '[Refactor] - Changed the Users Management page to use the new grid. New methods for the User creation, edition and deletion.'
         ));
 
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.13', '06/08/2013', array (
+            '[Feature] - Added functionality to the Action stage. Now Users can finish or delete their actions. Besides an historical table is shown with the previous finished actions.',
+            '[Code improvement] - Deleted non-necessary CSS libraries for JQGrid. Currently only the Users Management section (for admins) is still using (or trying to, as they do not exist anymore!) the JQgrids.'
+        ));
         $this->_addHistoryLog('0.12', '06/08/2013', array (
             '[Code improvement] - Moved CSS for the styling of table contents to the gridElements sheet, so it is not required in the sheets that uses it, except in case a redefinition is needed.',
             '[Feature] - Added functionality to the Prioritizing step on the Work Out stage: now Idea\'s priority can be set. It is possible that an Action column might be required; however at this point it is not sure, so the design of the feature is minimal.'

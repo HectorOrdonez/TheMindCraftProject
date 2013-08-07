@@ -4,3 +4,126 @@
  * User: Hector Ordonez
  * Date: 25/07/13 01:30
  */
+
+/**
+ * Id of the element that contains the Brainstorm table.
+**/
+#gridWrapper {
+}
+
+/**
+ * Id of the Table that contains the UsersManagement table.
+**/
+#usersManagement_grid {
+    width: 100%;
+}
+
+/**
+ * Table columns
+**/
+#usersManagement_grid .col_id {
+}
+
+#usersManagement_grid .col_name {
+}
+
+#usersManagement_grid .col_role {
+    width: 70px;
+}
+
+#usersManagement_grid .col_actions {
+    width: 70px;
+}
+
+#usersManagement_grid .col_last_login {
+    width: 100px;
+}
+
+#usersManagement_grid .row .id, #usersManagement_grid .row .col_id {
+    display: none;
+}
+
+/**
+ * Id of the footer button to add a new user.
+**/
+#usersManagement_grid #linkNewUser {
+    position: absolute;
+    background: url('./../../../../public/images/TMP_add.png');
+    width: 10px;
+    height: 10px;
+
+    margin: 5px 5px 0 5px;
+}
+
+/**
+ * Id of the footer form to add a new user.
+**/
+#usersManagement_grid #formNewUser {
+    display: inline;
+}
+
+#usersManagement_grid #formNewUser input {
+    width: 100%;
+    border: none;
+    text-indent: 20px;
+}
+
+/**
+ * Users actions
+**/
+#usersManagement_grid .actions .openNewPasswordDialog {
+    background: url('./../../../../public/images/TEMP_edit.png') no-repeat;
+    width: 16px;
+    height: 16px;
+    float: left;
+    display: block;
+    font-size: 0;
+    cursor: pointer;
+}
+
+#usersManagement_grid .actions .deleteUser {
+    background: url('./../../../../public/images/delete.png') no-repeat;
+    width: 16px;
+    height: 16px;
+    float: left;
+    display: block;
+    font-size: 0;
+    cursor: pointer;
+}
+
+#usersManagement_grid #formEditName #inputEditUserName {
+    width: 100%;
+    border: none;
+}
+
+#usersManagement_grid .roleSelector {
+    height: 14px;
+    border: none;
+    font-size: 10px;
+}
+
+#content #passwordDialog {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background: url('./../../../../public/images/transparent.png') repeat;
+    display: none;
+}
+
+#content #passwordDialog .passwordInnerDialog {
+    position: absolute;
+    width: 200px;
+    top: 50%;
+    left: 50%;
+    margin-left: -100px;
+    margin-top: -100px;
+    padding: 10px;
+
+    background-color: #DDD;
+    border: 2px solid #000;
+    border-radius: 10px;
+    text-align: center;
+}

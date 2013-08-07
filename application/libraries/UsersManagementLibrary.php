@@ -30,72 +30,37 @@ class UsersManagementLibrary extends Library
     }
 
     /**
-     * Asynchronous request to get all Users in UsersManagement in an Object that JQuery Grid can understand.
-     *
-     * @param int $page Page requested
-     * @param int $rows Amount of maximum rows the grid needs
-     * @param string $sidx Column the list needs to be sorted with
-     * @param string $sord (asc/desc) Direction of the sorting
+     * Asynchronous request to get all users.
      * @return \stdClass
      */
-    public function getUsers($page, $rows, $sidx, $sord)
+    public function getUsers()
     {
-        // Object response
-        $response = new \stdClass();
+        $result = $this->_model->selectAll();
 
-        $totalRecords = ceil(count($this->_model->selectAll()) / $rows);
-
-        // Defining the Start
-        $start = $rows * $page - $rows;
-
-        // Getting Data from DB
-        $parameters = array(
-            'sidx' => $sidx,
-            'sord' => $sord,
-            'start' => $start,
-            'rows' => $rows
-        );
-
-        $result = $this->_model->getUsersList($parameters);
-
-        // Defining parameters required
-        $response->page = $page;
-        $response->total = $totalRecords;
-        $response->records = count($result);
-        $response->users = array();
-
-        foreach ($result as $user) {
-            $response->users[] = array(
-                'id' => $user['id'],
-                'name' => $user['name'],
-                'role' => $user['role']
-            );
-        }
-
-        return $response;
+        return $result;
     }
 
     /**
      * Create user
      * /**
      * @param $name string
-     * @param $password string
-     * @param $role string
+     * @return array Id and Name of new user.
      */
-    public function createUser($name, $password, $role)
+    public function createUser($name)
     {
-        $this->_model->insert($name, $password, $role);
+        $newUserId = $this->_model->insert($name);
+
+        return $this->_model->selectById($newUserId);
     }
 
     /**
-     * Edit user
+     * Edit user name
      *
      * @param int $userId
      * @param string $newName
-     * @param string $newRole
      * @throws Exception
      */
-    public function editUser($userId, $newName, $newRole)
+    public function editUserName($userId, $newName)
     {
         $user = $this->_model->selectById($userId);
 
@@ -103,14 +68,34 @@ class UsersManagementLibrary extends Library
             throw new Exception('The User you are trying to modify does not exist.');
         }
 
-        if ($newName == $user['name'] AND $newRole == $user['role']) {
+        if ($newName == $user['name']) {
             throw new Exception('This edition request is not changing any User data.');
         }
 
-        $this->_model->update($userId, array(
-            'name' => $newName,
-            'role' => $newRole
-        ));
+        $this->_model->update($userId, array('name' => $newName));
+    }
+
+
+    /**
+     * Edit user role
+     *
+     * @param int $userId
+     * @param string $newRole
+     * @throws Exception
+     */
+    public function editUserRole($userId, $newRole)
+    {
+        $user = $this->_model->selectById($userId);
+
+        if ($user === FALSE) {
+            throw new Exception('The User you are trying to modify does not exist.');
+        }
+
+        if ($newRole == $user['role']) {
+            throw new Exception('This edition request is not changing any User data.');
+        }
+
+        $this->_model->update($userId, array('role' => $newRole));
     }
 
     /**
@@ -132,9 +117,7 @@ class UsersManagementLibrary extends Library
             $this->_model->update($userId, array(
                 'password' => $newPassword
             ));
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
     }

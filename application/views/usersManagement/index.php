@@ -8,12 +8,12 @@
  */
 ?>
 
-<div id='grid_box'>
-    <div id="grid_container">
-        <table id='grid'>
-        </table>
-    </div>
-
-    <div id='gridpager'>
-    </div>
+<h1>
+    Users Management
+</h1>
+<div id='gridWrapper'>
+    <table id='usersManagement_grid'>
+    </table>
+</div>
+<div id='infoDisplayer'>
 </div>

@@ -16,6 +16,11 @@ use engine\Exception;
 class UserModel extends Model
 {
     /**
+     * Key of the userFields array that relates to the password. Used to unset it.
+     * @var int
+     */
+    static private $_passwordFieldKey = 2;
+    /**
      * Fields of the Table User
      * @var array
      */
@@ -61,25 +66,16 @@ class UserModel extends Model
     }
 
     /**
-     * Special method of selection for grids. Requires an array of parameters with the followings:
-     * sidx - Field to index the results.
-     * sord - Sorting direction.
-     * start - Starting page.
-     * rows - Number of max rows of the list.
-     *
-     * @param array $parameters
+     * Selects all Users
      * @return array of Users.
      */
-    public function getUsersList($parameters)
+    public function selectAll()
     {
         $fields = $this->userFields;
-        unset($fields['password']);
 
-        $sql = 'SELECT  ' . implode(',', $fields) . ' FROM user';
-        $sql .= " ORDER BY {$parameters['sidx']} {$parameters['sord']}";
-        $sql .= " LIMIT {$parameters['start']}, {$parameters['rows']}";
+        unset($fields[self::$_passwordFieldKey]);
 
-        $result = $this->db->complexQuery($sql);
+        $result = $this->db->select('user', $fields);
 
         return $result;
     }
@@ -93,7 +89,7 @@ class UserModel extends Model
     public function selectById($userId)
     {
         $fields = $this->userFields;
-        unset($fields['password']);
+        unset($fields[self::$_passwordFieldKey]);
 
         $conditions = array(
             'id' => $userId
@@ -109,33 +105,18 @@ class UserModel extends Model
     }
 
     /**
-     * Selects all Users.
-     *
-     * @return array List of Users.
-     */
-    public function selectAll()
-    {
-        $result = $this->db->select('user');
-
-        return $result;
-    }
-
-    /**
      * Creates user with the specified parameters.
      *
      * @param string $userName
-     * @param string $password Password will be encrypted.
-     * @param string $userRole (owner, admin or basic)
+     * @return string New User id
      */
-    public function insert($userName, $password, $userRole)
+    public function insert($userName)
     {
-        $valuesArray = array(
-            'name' => $userName,
-            'password' => Encrypter::encrypt($password),
-            'role' => $userRole
-        );
+        $valuesArray = array('name' => $userName);
 
         $this->db->insert('user', $valuesArray);
+
+        return $this->db->lastInsertId();
     }
 
     /**
