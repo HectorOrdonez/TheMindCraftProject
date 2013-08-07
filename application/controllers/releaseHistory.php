@@ -34,11 +34,17 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.14', date('d-m-Y'), array (
-            '[Refactor] - Changed the Users Management page to use the new grid. New methods for the User creation, edition and deletion.'
+        $this->_setDevelopmentVersion('0.15', date('d-m-Y'), array (
+            '[Code improvement] - Removed TODOS that belong to the Framework.',
+            '[Temporal] - Added the JQuery Ui CSS for the datepicker. Eventually we need our own CSS version or even our own datepicker library.',
+            '[Code improvement] - Removed not required libraries and deprecated functions - setErrorMessage is replaced by setInfoMessage.'
         ));
 
+
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.14', '07/08/2013', array (
+            '[Refactor] - Changed the Users Management page to use the new grid. New methods for the User creation, edition and deletion.'
+        ));
         $this->_addHistoryLog('0.13', '06/08/2013', array (
             '[Feature] - Added functionality to the Action stage. Now Users can finish or delete their actions. Besides an historical table is shown with the previous finished actions.',
             '[Code improvement] - Deleted non-necessary CSS libraries for JQGrid. Currently only the Users Management section (for admins) is still using (or trying to, as they do not exist anymore!) the JQgrids.'
@@ -78,27 +84,11 @@ class ReleaseHistory extends Controller
             '[New design and architecture concept] - As part of the new architecture designed in V0.05, the Work Out tool now is divided in three sections. Implemented the visual characteristics and navigation.',
             '[Feature] - Refactored the old IdeaToAction tool to the new Selection tool, first part of Work Out section.',
             '[Feature] - Created the basics of the Timing tool, second part of Work Out section.',
-            '[Feature] - Created the basics of the Prioritizing tool, second part of Work Out section.',
+            '[Feature] - Created the basics of the Prioritizing tool, third part of Work Out section.',
             '[Feature] - Created the basics of the Settings section so User can change its name and password.',
             '[Visual improvement] - Minor adjustments in the header and content css in order to avoid having the logo upon selectable content.',
             '[Debug] - Fixed relative paths in JS; this was giving issues depending on whether the controller received or not Index as method. Now links will always be absolute.',
-            '[Visual improvement] - Moved Left Panel from header to the left of the body.',
-            '[Feature] - Created the basics of the Prioritizing tool, second part of Work Out section.',
-            '[Feature] - Created the basics of the Settings section so User can change its name and password.',
-            '[Visual improvement] - Minor adjustments in the header and content css in order to avoid having the logo upon selectable content.',
-            '[Debug] - Fixed relative paths in JS; this was giving issues depending on whether the controller received or not Index as method. Now links will always be absolute.',
-            '[Visual improvement] - Moved Left Panel from header to the left of the body.',
-            '[Feature] - Created the basics of the Prioritizing tool, second part of Work Out section.',
-            '[Feature] - Created the basics of the Settings section so User can change its name and password.',
-            '[Visual improvement] - Minor adjustments in the header and content css in order to avoid having the logo upon selectable content.',
-            '[Debug] - Fixed relative paths in JS; this was giving issues depending on whether the controller received or not Index as method. Now links will always be absolute.',
-            '[Visual improvement] - Moved Left Panel from header to the left of the body.',
-            '[Feature] - Created the basics of the Prioritizing tool, second part of Work Out section.',
-            '[Feature] - Created the basics of the Settings section so User can change its name and password.',
-            '[Visual improvement] - Minor adjustments in the header and content css in order to avoid having the logo upon selectable content.',
-            '[Debug] - Fixed relative paths in JS; this was giving issues depending on whether the controller received or not Index as method. Now links will always be absolute.',
-            '[Visual improvement] - Moved Left Panel from header to the left of the body.',
-            '[Visual improvement] - New buttons for the Work Out steps .'
+            '[Visual improvement] - Moved Left Panel from header to the left of the body.'
         ));
         $this->_addHistoryLog('0.05', '25/07/2013', array(
             '[New design and architecture concept] - Changed names and images to add a new project model. Now the process starts at Brainstorm, IdeaToAction is the "Work Out" of the ideas, and the action list is shown in the Action stage.',

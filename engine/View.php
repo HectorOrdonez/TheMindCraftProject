@@ -4,9 +4,6 @@
  * User: Hector Ordonez
  * Description:
  * Date: 11/06/13 12:00
- * @todo Rebuild View logic for working with headers and footers. The system that seems most interesting is the one I saw in Sheriff / Kohana; every page has a index view related. That Index view will, before the content starts, open and close the "page" that it needs. On doing that the view receives the request from itself saying "the page X needs to be open/closed". The engine View does not know about which header/footers are related to each request type, but the Application should extend the engine View, so the application View does know. When opening the page type, View includes the header and runs the logic related to that page type header. When closing, View knows that it needs to add the footer, again running nay logic related to that footer. This solution works perfect with Asynchronous calls, as they will simply do not open or close any page type.
- * @todo Create a way to render an asynchronous view. This is, a way to set some chunks to the view and render only them.
- *
  */
 
 namespace engine;
@@ -86,7 +83,6 @@ class View
      *
      * @param string $type
      * @param string $libraryPath
-     * @todo - Maybe, and I need to think about it, might be interesting that this method allows a folder. In which case, the method logic will search all files in that folder, adding them if they are of the specified type.
      */
     public function addLibrary($type, $libraryPath)
     {

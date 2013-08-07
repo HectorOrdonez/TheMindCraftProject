@@ -5,13 +5,6 @@
  * Description:
  * This class manages the collection of Post data, allowing validations.
  * Date: 16/06/13 21:45
- *
- * @todo Add exception trigger in the Fetch if data requested was not set.
- * @todo Create a special Exception type that allows logic to filter the exceptions triggered by the Form.
- * @todo Form work with both Get and Post options.
- * @todo Validations have to allow Strict Mode as third optional parameter.
- * @todo If Strict Mode is not enabled, Form should parse parameters type to the expected ones. Example: Form requires the item 'id' which is an Int, with Strict Mode disabled. When fetching it, the Form retrieves it as Int, even if it was retrieved as String.
- * @todo Validation type 'password' required. This validation would be different than the others when errors being found; password must never be displayed to the user.
  */
 
 namespace engine;
@@ -101,7 +94,6 @@ class Form
      * Adds an error.
      * @param string $key Parameter that failed
      * @param string $explanation Why parameter did not pass validation.
-     * @todo The errors should contain a code to the validation that failed. The explanation should be an option to the object that receives the error to display it or not, but the object should have access to the information regarding what validation failed.
      */
     private function addError($key, $explanation)
     {

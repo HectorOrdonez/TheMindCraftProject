@@ -142,10 +142,10 @@ function submitEditIdea($form, successCallback) {
     var $inputTitle = $form.find('.inputEditIdeaTitle');
 
     if ($inputTitle.val() == '') {
-        setErrorMessage($errorDisplayer, 'Title cannot be empty.', 2000);
+        setInfoMessage($errorDisplayer, 'error', 'Title cannot be empty.', 2000);
         return;
     } else if ($inputTitle.val().length > 200) {
-        setErrorMessage($errorDisplayer, 'Title cannot be longer than 200 characters.', 2000);
+        setInfoMessage($errorDisplayer, 'error', 'Title cannot be longer than 200 characters.', 2000);
         return;
     }
 
@@ -157,7 +157,7 @@ function submitEditIdea($form, successCallback) {
             successCallback($inputTitle.val());
         }
     ).fail(function (data) {
-            setErrorMessage($errorDisplayer, data.statusText, 2000);
+            setInfoMessage($errorDisplayer, 'error',data.statusText, 2000);
         }
     );
 }
@@ -179,7 +179,7 @@ function deleteIdea($element) {
             workoutGrid.table.removeContentId($element.parent().parent().attr('id'));
         }
     ).fail(function (data) {
-            setErrorMessage($errorDisplayer, data.statusText, 2000);
+            setInfoMessage($errorDisplayer, 'error',data.statusText, 2000);
         }
     );
 }
@@ -194,10 +194,10 @@ function submitNewIdea() {
     var $input = jQuery('.inputNewIdea');
 
     if ($input.val() == '') {
-        setErrorMessage($errorDisplayer, 'That was a good idea.', 2000);
+        setInfoMessage($errorDisplayer, 'error', 'Woah, what a long description!', 2000);
         return;
     } else if ($input.val().length > 200) {
-        setErrorMessage($errorDisplayer, 'go away.', 2000);
+        setInfoMessage($errorDisplayer, 'error', 'A bit more brief, please!', 2000);
         return;
     }
 
@@ -210,7 +210,7 @@ function submitNewIdea() {
             jQuery('.inputNewIdea').val('');
         }
     ).fail(function (data) {
-            setErrorMessage($errorDisplayer, data.statusText, 2000);
+            setInfoMessage($errorDisplayer, 'error',data.statusText, 2000);
         }
     );
 }
@@ -233,7 +233,7 @@ function holdOverDialog($element){
                 workoutGrid.table.removeContentId($element.parent().parent().attr('id'));
             }
         ).fail(function (data) {
-                setErrorMessage($errorDisplayer, data.statusText, 2000);
+                setInfoMessage($errorDisplayer, 'error', data.statusText, 2000);
             }
         );
     }

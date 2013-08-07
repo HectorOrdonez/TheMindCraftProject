@@ -11,9 +11,6 @@
  * - Direct access to php files. .htaccess has to disable all requests to files with extension php.
  * - Access to folders. Same than before.
  * Date: 11/06/13 12:00
- *
- * @todo - Later stage - Research possible security issues regarding URL modifications.
- * @todo - Ask why this class is a dynamic object instead of a static one.
  */
 
 namespace engine;

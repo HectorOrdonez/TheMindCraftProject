@@ -59,19 +59,21 @@ function changeStep(selectedStep) {
     // 3 - Make unique ajax request to fill the stepContent with the selected step content.
     uniqueUserRequest(function (callback) {
         jQuery.ajax({
-            type: 'post',
-            url: root_url + '/workOut/loadStepChunk',
-            data: {
-                'step': selectedStep
+                type: 'post',
+                url: root_url + '/workOut/loadStepChunk',
+                data: {
+                    'step': selectedStep
+                }
             }
-        }).done(function (data) {
+        ).done(function (data) {
                 $stepContent.html(data);
                 loadGrid();
                 callback();
-            }).fail(function (data) {
-                console.error('Something went wrong and the step ' + selectedStep + ' could not be load! Here why: ' + data.statusText);
+            }
+        ).fail(function (data) {
                 callback();
-            });
+            }
+        );
     });
 }
 
@@ -124,33 +126,19 @@ function loadGrid() {
 function generateActionPlan() {
     uniqueUserRequest(function (callback) {
         jQuery.ajax({
-            type: 'post',
-            url: root_url + '/workOut/generateActionPlan',
-            data: {
+                type: 'post',
+                url: root_url + '/workOut/generateActionPlan',
+                data: {
+                }
             }
-        }).done(function () {
+        ).done(function () {
                 callback();
                 window.location = root_url + 'action';
-            }).fail(function (data) {
+            }
+        ).fail(function (data) {
                 console.error('Something went wrong and your action plan could not be generated! Here is why: ' + data.statusText);
                 callback();
-            });
+            }
+        );
     });
-}
-
-/**
- * Shows an error in the div, hiding and deleting it after the time defined at the timeout parameter.
- * @param $errorDisplayer
- * @param {string} message
- * @param {int} timeout
- */
-function setErrorMessage($errorDisplayer, message, timeout) {
-    $errorDisplayer.html(message);
-
-    setTimeout(function () {
-        $errorDisplayer.fadeOut(function () {
-            $errorDisplayer.html('');
-            $errorDisplayer.fadeIn();
-        });
-    }, timeout);
 }

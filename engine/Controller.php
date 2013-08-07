@@ -16,8 +16,6 @@
  *
  * Controllers have the duty to manage the Exceptions that the Libraries throw; Controllers must know what to do when an error arises, even if this means calling another library to manage the error final data.
  * Date: 11/06/13 12:00
- *
- * @todo - View and Controller libraries should allow an application to use them. The application should not depend on them to run any logic. I must find a way to avoid the general css, js and meta definitions in these libraries. I think that an interesting approach might to have an "engine" folder for the Framework libraries and another "engine" folder for the Application libraries. Then the Application controllers, libraries, views and models will extend the Application Engine libraries, which would extend the Framework Engine libraries. Need to ponder this.
  */
 
 namespace engine;

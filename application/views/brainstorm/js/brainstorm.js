@@ -145,10 +145,10 @@ function submitEditIdea($form, successCallback) {
     var $inputTitle = $form.find('.inputEditIdeaTitle');
 
     if ($inputTitle.val() == '') {
-        setErrorMessage($errorDisplayer, 'Title cannot be empty.', 2000);
+        setInfoMessage($$errorDisplayer, 'error', 'Title cannot be empty.', 2000);
         return;
     } else if ($inputTitle.val().length > 200) {
-        setErrorMessage($errorDisplayer, 'Title cannot be longer than 200 characters.', 2000);
+        setInfoMessage($errorDisplayer, 'error', 'Title cannot be longer than 200 characters.', 2000);
         return;
     }
 
@@ -160,7 +160,7 @@ function submitEditIdea($form, successCallback) {
             successCallback($inputTitle.val());
         }
     ).fail(function (data) {
-            setErrorMessage($errorDisplayer, data.statusText, 2000);
+            setInfoMessage($errorDisplayer, 'error', data.statusText, 2000);
         }
     );
 }
@@ -182,7 +182,7 @@ function deleteIdea($element) {
             brainstormGrid.table.removeContentId($element.parent().parent().attr('id'));
         }
     ).fail(function (data) {
-            setErrorMessage($errorDisplayer, data.statusText, 2000);
+            setInfoMessage($errorDisplayer, 'error', data.statusText, 2000);
         }
     );
 }
@@ -197,10 +197,10 @@ function submitNewIdea() {
     var $input = jQuery('.inputNewIdea');
 
     if ($input.val() == '') {
-        setErrorMessage($errorDisplayer, 'That was a good idea.', 2000);
+        setInfoMessage($errorDisplayer, 'error', 'Explain a bit more your idea... :) ', 2000);
         return;
     } else if ($input.val().length > 200) {
-        setErrorMessage($errorDisplayer, 'go away.', 2000);
+        setInfoMessage($errorDisplayer, 'error', 'A bit more brief, please? ', 2000);
         return;
     }
 
@@ -213,24 +213,7 @@ function submitNewIdea() {
             jQuery('.inputNewIdea').val('');
         }
     ).fail(function (data) {
-            setErrorMessage($errorDisplayer, data.statusText, 2000);
+            setInfoMessage($errorDisplayer, 'error', data.statusText, 2000);
         }
     );
-}
-
-/**
- * Shows an error in the div, hiding and deleting it after the time defined at the timeout parameter.
- * @param $errorDisplayer
- * @param {string} message
- * @param {int} timeout
- */
-function setErrorMessage($errorDisplayer, message, timeout) {
-    $errorDisplayer.html(message);
-
-    setTimeout(function () {
-        $errorDisplayer.fadeOut(function () {
-            $errorDisplayer.html('');
-            $errorDisplayer.fadeIn();
-        });
-    }, timeout);
 }

@@ -121,17 +121,15 @@ function finishAction($element) {
         var data = {'id': actionId};
 
         jQuery.ajax({
-            type: 'post',
-            url: url,
-            data: data
-        }).done(function () {
+                type: 'post',
+                url: url,
+                data: data
+            }
+        ).done(function () {
                 actionGrid.table.removeContentId(rowId);
-                console.log('Action Id ' + actionId + ', actionTitle: ' + actionTitle);
-
                 oldActionGrid.table.addContentData({'id': actionId, 'title': actionTitle});
             }
-        ).
-            fail(function (data) {
+        ).fail(function (data) {
                 setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
             }
         );
@@ -154,10 +152,11 @@ function deleteAction($element) {
         var data = {'id': actionId};
 
         jQuery.ajax({
-            type: 'post',
-            url: url,
-            data: data
-        }).done(function () {
+                type: 'post',
+                url: url,
+                data: data
+            }
+        ).done(function () {
                 actionGrid.table.removeContentId(rowId);
             }
         ).fail(function (data) {

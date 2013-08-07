@@ -310,7 +310,6 @@ function openChangeRoleDialog($element) {
                 $roleCell.html(newRole);
             });
         } else {
-            console.log('same role. Remains the same');
             $roleCell.html(previousRole);
         }
     });

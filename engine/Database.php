@@ -8,7 +8,6 @@
  * This custom Database library extends PDO.
  * For more information about PDO, this might be of interest: http://blog.tordek.com.ar/2010/11/pdo-o-por-que-todos-los-tutoriales-de-php-llevan-a-las-malas-practicas/
  * Date: 12/06/13 11:30
- * @todo Research about security related to the misuse of the Database methods. Example, giving whole sql entry instead a string parameter when a table name expected.
  */
 
 namespace engine;

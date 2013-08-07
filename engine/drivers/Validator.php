@@ -3,10 +3,6 @@
  * Project: Hecnel Framework
  * User: Hector Ordonez
  * Date: 16/06/13 22:37
- *
- * @todo The Validation system needs a specific Exception class. This Exception class should retrieve the type of the parameter that failed, the parameter received, and the validation that this parameter did not pass.
- * @todo New Validation type Password required. Extending String, as all basic functionality remains the same. Different falls on exceptions triggering; Password is not shown.
- * @todo New Validation type Date required.
  */
 
 namespace engine\drivers;

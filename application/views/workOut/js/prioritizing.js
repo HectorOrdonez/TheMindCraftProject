@@ -32,10 +32,7 @@ function createPrioritizingGrid() {
 
     // Prioritizing Grid parameters definition
     var gridParameters = {
-        'url': root_url + 'workout/getIdeas/stepPrioritizing',
-        'eventEOI': function () {
-            console.log('selection grid initialized.');
-        }
+        'url': root_url + 'workout/getIdeas/stepPrioritizing'
     };
 
     // Workout Grid construction
