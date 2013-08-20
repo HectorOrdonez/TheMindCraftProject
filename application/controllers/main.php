@@ -23,8 +23,7 @@ class main extends Controller
         parent::__construct();
 
         $logged = Session::get('isUserLoggedIn');
-        if ($logged == FALSE) {
-            Session::destroy();
+        if ($logged === FALSE) {
             header('location: ' . _SYSTEM_BASE_URL . 'index');
         }
     }

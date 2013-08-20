@@ -7,6 +7,7 @@
  * Date: 23/07/13 13:30
  */
 ?>
-<div class='welcome'>
-    Welcome <?php echo $this->userName; ?>!!
-</div>
+
+                <div class='welcome'>
+                    Welcome <?php echo $this->userName; ?>!!
+                </div>

@@ -8,18 +8,18 @@
  */
 ?>
 
-    <h1>
-        Action!
-    </h1>
+                <h1>
+                    Action!
+                </h1>
 
-    <div id='gridWrapper'>
-        <table id='action_grid'>
-        </table>
-    </div>
-    <div class='font_error' id='errorDisplayer'>
-    </div>
-
-    <div id='oldGridWrapper'>
-        <table id='oldAction_grid'>
-        </table>
-    </div>
+                <div id='gridWrapper'>
+                    <table id='action_grid'>
+                    </table>
+                </div>
+                <div class='font_error' id='errorDisplayer'>
+                </div>
+                
+                <div id='oldGridWrapper'>
+                    <table id='oldAction_grid'>
+                    </table>
+                </div>

@@ -32,11 +32,11 @@ function createPrioritizingGrid() {
 
     // Prioritizing Grid parameters definition
     var gridParameters = {
-        'url': root_url + 'workout/getIdeas/stepPrioritizing'
+        'url': root_url + 'workOut/getIdeas/stepPrioritizing'
     };
 
     // Workout Grid construction
-    workoutGrid = new Grid(table, gridParameters);
+    workOutGrid = new Grid(table, gridParameters);
 
     // Adding prioritizing triggers
     $grid.delegate('.priority', 'dblclick', function () {
@@ -100,7 +100,7 @@ function openEditPriorityDialog($element) {
  */
 function submitSetPriority(ideaId, newPrio, callback) {
     var $infoDisplayer = jQuery('#infoDisplayer');
-    var url = root_url + 'workout/setPriorityToIdea';
+    var url = root_url + 'workOut/setPriorityToIdea';
     var data = {
         'id': ideaId,
         'priority': newPrio

@@ -18,17 +18,18 @@ use engine\Session;
 class Index extends Controller
 {
     /**
+     * Defining $_library Library type.
+     * @var IndexLibrary $_library
+     */
+    protected $_library;
+
+    /**
      * Index constructor.
      * Verifies that the User is not logged in and, if so, redirects to Dashboard.
      */
     public function __construct()
     {
         parent::__construct(new IndexLibrary);
-
-        $logged = Session::get('isUserLoggedIn');
-        if ($logged == TRUE) {
-            header('location: ' . _SYSTEM_BASE_URL . 'main');
-        }
         $this->_view->addLibrary('js', 'application/views/index/js/index.js');
         $this->_view->addLibrary('css', 'application/views/index/css/index.css');
     }
@@ -38,6 +39,10 @@ class Index extends Controller
      */
     public function index()
     {
+        $logged = Session::get('isUserLoggedIn');
+        if ($logged === TRUE) {
+            header('location: ' . _SYSTEM_BASE_URL . 'main');
+        }
         $this->_view->addChunk('index/index');
     }
 
@@ -46,6 +51,11 @@ class Index extends Controller
      */
     public function login()
     {
+        $logged = Session::get('isUserLoggedIn');
+        if ($logged === TRUE) {
+            header('location: ' . _SYSTEM_BASE_URL . 'main');
+        }
+
         // Validation
         $form = new Form;
         $form
@@ -85,5 +95,6 @@ class Index extends Controller
     {
         Session::destroy();
         header('location: ' . _SYSTEM_BASE_URL . 'index');
+        exit;
     }
 }

@@ -11,8 +11,8 @@
 namespace application\controllers;
 
 use application\engine\Controller;
-use application\libraries\WorkoutLibrary;
-use engine\drivers\validators as Validators;
+use application\libraries\WorkOutLibrary;
+use engine\drivers\Validators as Validators;
 use engine\Exception;
 use engine\Form;
 use engine\Session;
@@ -21,16 +21,16 @@ class workOut extends Controller
 {
     /**
      * Defining $_library Library type.
-     * @var WorkoutLibrary $_library
+     * @var WorkOutLibrary $_library
      */
     protected $_library;
 
     public function __construct()
     {
-        parent::__construct(new WorkoutLibrary);
+        parent::__construct(new WorkOutLibrary);
 
         $logged = Session::get('isUserLoggedIn');
-        if ($logged == FALSE) {
+        if ($logged === FALSE) {
             Session::destroy();
             header('location: ' . _SYSTEM_BASE_URL . 'error/accessForbidden');
         }

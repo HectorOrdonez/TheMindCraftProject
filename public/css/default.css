@@ -239,9 +239,11 @@ body {
     overflow: auto;
 }
 #nonLogged_content {
-    width: 80%;
-    margin: 0 auto;
     background: white;
+    margin: 0 auto;
+    border-radius: 50px;
+    min-height: 35%;
+    width: 80%;
 }
 
 input {
@@ -320,14 +322,9 @@ h2, .font_subTitle {
 
 #admin_footer #adminWelcome #helloMe{
     position: relative;
-    bottom: 12px;
-    left: 24px;
-
-    background: url('./../../public/images/helloHector.png') no-repeat;
     float: left;
-    display: block;
-    width: 220px;
-    height: 36px;
+    top: -11px;
+    left: 5px;
 }
 
 #admin_footer #adminActions {

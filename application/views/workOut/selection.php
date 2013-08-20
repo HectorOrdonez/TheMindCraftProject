@@ -8,13 +8,13 @@
  */
 ?>
 
-    <div id='chunkSelection'>
-        <h1>
-            Selection
-        </h1>
+                <div id='chunkSelection'>
+                    <h1>
+                        Selection
+                    </h1>
 
-        <div id='selectionGridWrapper'>
-            <table id='selection_grid'>
-            </table>
-        </div>
-    </div>
+                    <div id='selectionGridWrapper'>
+                        <table id='selection_grid'>
+                        </table>
+                    </div>
+                </div>

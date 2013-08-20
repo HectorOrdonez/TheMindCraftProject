@@ -9,9 +9,9 @@
 if (_PRODUCTION === TRUE) {
     define ('DB_TYPE','mysql');
     define ('DB_HOST','localhost');
-    define ('DB_NAME','hecnel');
-    define ('DB_USER','root');
-    define ('DB_PASS','');
+    define ('DB_NAME','themind_main');
+    define ('DB_USER','themind_master');
+    define ('DB_PASS','M1ndW0rd');
 } else {
     define ('DB_TYPE','mysql');
     define ('DB_HOST','localhost');

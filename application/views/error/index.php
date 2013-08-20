@@ -7,7 +7,8 @@
  * Date: 23/07/13 13:00
  */
 ?>
-<div>
-    <?php echo $this->msg; ?>
 
-</div>
+                <div>
+                    <?php echo $this->msg; ?>
+
+                </div>

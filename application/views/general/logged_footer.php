@@ -8,9 +8,12 @@
  */
 ?>
 
-            </div>  <!-- Closed Content -->
-        </div>  <!-- Closed wrappedContentMain -->
-    </div>  <!-- Closed Content Wrapper -->
+            </div>
+            <!-- Closing logged-in Content -->
+
+        </div>
+    </div>
+
     <div id='footer'>
     </div>
 </body>

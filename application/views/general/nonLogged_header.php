@@ -35,9 +35,9 @@
 
 <body>
 
-<div id='header'>
-    <div id='logo'></div>
-</div>
+    <div id='header'>
+        <div id='logo'></div>
+    </div>
 
-<!-- Opening Content -->
-<div id='nonLogged_content'>
+    <!-- Opening non-logged Content -->
+    <div id='nonLogged_content'>

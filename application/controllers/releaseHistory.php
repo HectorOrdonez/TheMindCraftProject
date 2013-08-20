@@ -34,11 +34,20 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.151', date('d-m-Y'), array (
-            '[Temporal] - Added SQLExport of the current Database structure plus the Admin Users to allow a fast startup in another machine.'
+        $this->_setDevelopmentVersion('0.16', '20/08/2013', array (
+            '[Production] - First release to Production!! Check out :) http: http://themindcraftproject.org/. In order to achieve this and as a consequence, the following changes have been done...',
+            '[Code improvement] - Added in the htaccess file the config for the live server. It contains the code for both development and live, and needs to be switched when working on one another.'.
+            '[Debug] - Index page now logs in and out properly. Before there was a short delay in live',
+            '[Debug] - Errors appear in live as the PHP version the hosting uses is case sensitive. Changes in order to have the uppers and the lowers where they must be.',
+            '[Code improvement] - Changes in Views so, when User wants to read the source code of a page, the lines tabulates properly.',
+            '[Feature] - Removed the welcoming static image for admin footer (Hello Hector) and added dynamic text (Hello userName).'
+
         ));
 
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.151', '07/08/2013', array (
+            '[Temporal] - Added SQLExport of the current Database structure plus the Admin Users to allow a fast startup in another machine.'
+        ));
         $this->_addHistoryLog('0.15', '07/08/2013', array (
             '[Code improvement] - Removed TODOS that belong to the Framework.',
             '[Temporal] - Added the JQuery Ui CSS for the datepicker. Eventually we need our own CSS version or even our own datepicker library.',

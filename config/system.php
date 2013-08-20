@@ -5,11 +5,11 @@
  * Date: 23/07/13 14:00
  */
 // Informs the System about which setup use
-define ('_PRODUCTION', FALSE);
+define ('_PRODUCTION', TRUE);
 
 // Base path of the website.
 if (_PRODUCTION === TRUE) {
-    define ('_SYSTEM_BASE_URL', 'unknown');
+    define ('_SYSTEM_BASE_URL', 'http://themindcraftproject.org/');
 } else {
     define ('_SYSTEM_BASE_URL', 'http://192.168.192.13/projects/selfology/');
 }
@@ -22,5 +22,5 @@ define ('_SYSTEM_ROOT_PATH', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 /**********************************/
 define ('_DEFAULT_CONTROLLER', 'index');
 define ('_DEFAULT_METHOD', 'index');
-define ('_ERROR_CONTROLLER', 'Error');
+define ('_ERROR_CONTROLLER', 'error');
 define ('_EXCEPTION_METHOD', 'exception');

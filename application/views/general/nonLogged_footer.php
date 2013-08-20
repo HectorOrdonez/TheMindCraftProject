@@ -8,10 +8,11 @@
  */
 ?>
 
-            </div>  <!-- Closed Content -->
-        </div>  <!-- Closed wrappedContentMain -->
-    </div>  <!-- Closed Content Wrapper -->
+    </div>
+    <!-- Closing non-Logged Content -->
+
     <div id='footer'>
     </div>
+
 </body>
 </html>

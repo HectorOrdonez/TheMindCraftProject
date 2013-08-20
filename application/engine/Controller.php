@@ -70,6 +70,7 @@ class Controller extends engineController
         if (Session::get('userRole') == 'admin')
         {
             $this->_view->setFooterChunk('application/views/general/admin_footer.php');
+            $this->_view->setParameter('myName', Session::get('userName'));
         }
 
         $this->_view->setParameter('userLogin', Session::get('isUserLoggedIn'));

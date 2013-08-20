@@ -9,7 +9,7 @@
  * Global variable that will contain the current grid.
  * @type {Grid}
  */
-var workoutGrid;
+var workOutGrid;
 
 jQuery().ready(function () {
     // Element definitions

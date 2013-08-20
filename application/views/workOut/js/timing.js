@@ -42,11 +42,11 @@ function createTimingGrid() {
 
     // Selection Grid parameters definition
     var gridParameters = {
-        'url': root_url + 'workout/getIdeas/stepTiming'
+        'url': root_url + 'workOut/getIdeas/stepTiming'
     };
 
     // Workout Grid construction
-    workoutGrid = new Grid(table, gridParameters);
+    workOutGrid = new Grid(table, gridParameters);
 
     // Adding edit and delete triggers
     $grid.delegate('.applyTimeAction', 'click', function () {
@@ -74,7 +74,7 @@ function openApplyTimeDialog($element) {
         applyTimeDialog.setAttribute('id', 'applyTimeDialog');
         applyTimeDialog.innerHTML = '' +
             '<div class="applyTimeInnerDialog">' +
-            '   <form id="formApplyTime" action="' + root_url + 'workout/applyTimeIdea">' +
+            '   <form id="formApplyTime" action="' + root_url + 'workOut/applyTimeIdea">' +
             '   <input type="hidden" class="inputApplyTimeIdeaId" name="id" value="' + ideaId + '" />' +
             '       <div class="title font_subTitle">Apply Time</div>' +
             '       <input id="datePicker" name="date" placeholder="Set the day" value="' + dateTodoCell +'" />' +

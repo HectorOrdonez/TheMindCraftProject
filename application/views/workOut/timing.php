@@ -8,13 +8,13 @@
  */
 ?>
 
-    <div id='chunkTiming'>
-        <h1>
-            Timing
-        </h1>
+                <div id='chunkTiming'>
+                    <h1>
+                        Timing
+                    </h1>
 
-        <div id='timingGridWrapper'>
-            <table id='timing_grid'>
-            </table>
-        </div>
-    </div>
+                    <div id='timingGridWrapper'>
+                        <table id='timing_grid'>
+                        </table>
+                    </div>
+                </div>

@@ -24,7 +24,7 @@ function createSelectionGrid() {
     var footerRow = new Row(
         {'cells': [
             {
-                'html': '<a href="#" id="linkNewIdea" class="font_normal"></a><form id="formNewIdea" action="' + root_url + 'workout/createIdea"><input type="text" name="title" class="inputNewIdea" /></form>',
+                'html': '<a href="#" id="linkNewIdea" class="font_normal"></a><form id="formNewIdea" action="' + root_url + 'workOut/createIdea"><input type="text" name="title" class="inputNewIdea" /></form>',
                 'colspan': '3'
             }
         ], 'classList': ['footer']}
@@ -50,11 +50,11 @@ function createSelectionGrid() {
 
     // Selection Grid parameters definition
     var gridParameters = {
-        'url': root_url + 'workout/getIdeas/stepSelection'
+        'url': root_url + 'workOut/getIdeas/stepSelection'
     };
 
     // Workout Grid construction
-    workoutGrid = new Grid(table, gridParameters);
+    workOutGrid = new Grid(table, gridParameters);
 
     // Adding effects to the grid buttons
     jQuery('#linkNewIdea').click(function () {
@@ -107,7 +107,7 @@ function editDialog($element) {
     var previousTitle = $titleCell.html();
 
     // 4 - Replace title column text with input.
-    var titleCellContent = '<a href="#" id="linkEditIdea" class="font_normal"></a><form id="formEditIdea" action="' + root_url + 'workout/editIdea"><input type="hidden" class="inputEditIdeaId" name="id" value="' + ideaId + '" /><input type="text" name="title" class="inputEditIdeaTitle" value="' + previousTitle + '"/></form>';
+    var titleCellContent = '<a href="#" id="linkEditIdea" class="font_normal"></a><form id="formEditIdea" action="' + root_url + 'workOut/editIdea"><input type="hidden" class="inputEditIdeaId" name="id" value="' + ideaId + '" /><input type="text" name="title" class="inputEditIdeaTitle" value="' + previousTitle + '"/></form>';
     $titleCell.html(titleCellContent);
 
     // 5 - Focus user on Input
@@ -168,7 +168,7 @@ function submitEditIdea($form, successCallback) {
  */
 function deleteIdea($element) {
     var $errorDisplayer = jQuery('#errorDisplayer');
-    var url = root_url + 'workout/deleteIdea';
+    var url = root_url + 'workOut/deleteIdea';
     var data = {'id': $element.html()};
 
     jQuery.ajax({
@@ -176,7 +176,7 @@ function deleteIdea($element) {
         url: url,
         data: data
     }).done(function () {
-            workoutGrid.table.removeContentId($element.parent().parent().attr('id'));
+            workOutGrid.table.removeContentId($element.parent().parent().attr('id'));
         }
     ).fail(function (data) {
             setInfoMessage($errorDisplayer, 'error',data.statusText, 2000);
@@ -206,7 +206,7 @@ function submitNewIdea() {
         url: url,
         data: data
     }).done(function (data) {
-            workoutGrid.table.addContentData(jQuery.parseJSON(data));
+            workOutGrid.table.addContentData(jQuery.parseJSON(data));
             jQuery('.inputNewIdea').val('');
         }
     ).fail(function (data) {
@@ -222,7 +222,7 @@ function holdOverDialog($element){
     if (userResponse == true)
     {
         var $errorDisplayer = jQuery('#errorDisplayer');
-        var url = root_url + 'workout/holdOverIdea';
+        var url = root_url + 'workOut/holdOverIdea';
         var data = {'id': $element.html()};
 
         jQuery.ajax({
@@ -230,7 +230,7 @@ function holdOverDialog($element){
             url: url,
             data: data
         }).done(function () {
-                workoutGrid.table.removeContentId($element.parent().parent().attr('id'));
+                workOutGrid.table.removeContentId($element.parent().parent().attr('id'));
             }
         ).fail(function (data) {
                 setInfoMessage($errorDisplayer, 'error', data.statusText, 2000);

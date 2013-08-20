@@ -53,8 +53,6 @@ class settings extends Controller
      */
     public function updateSetting()
     {
-        sleep(2);
-
         // Disabling auto render as this is an asynchronous request.
         $this->setAutoRender(FALSE);
 
