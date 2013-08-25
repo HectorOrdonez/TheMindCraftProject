@@ -1,5 +1,5 @@
 /**
- * Project: Selfology
+ * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Description: WorkOut JS Library
  * Date: 23/07/13 13:00
@@ -70,7 +70,7 @@ function changeStep(selectedStep) {
                 loadGrid();
                 callback();
             }
-        ).fail(function (data) {
+        ).fail(function () {
                 callback();
             }
         );
@@ -133,7 +133,7 @@ function generateActionPlan() {
             }
         ).done(function () {
                 callback();
-                window.location = root_url + 'action';
+                window.location = root_url + 'perform';
             }
         ).fail(function (data) {
                 console.error('Something went wrong and your action plan could not be generated! Here is why: ' + data.statusText);

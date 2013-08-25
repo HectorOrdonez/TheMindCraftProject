@@ -1,9 +1,9 @@
 <?php
 /**
- * Project: Selfology
+ * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Description:
- * Library that manages the Action page's logic.
+ * Library that manages the Perform page's logic.
  * Date: 25/07/13 01:30
  */
 
@@ -13,7 +13,7 @@ use application\engine\Library;
 use application\models\ActionModel;
 use engine\Exception;
 
-class ActionLibrary extends Library
+class PerformLibrary extends Library
 {
     /**
      * Defining $_model Model type.

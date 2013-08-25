@@ -40,7 +40,6 @@ footer, header, hgroup, menu, nav, section {
 }
 
 body {
-    background-image: url('./../../public/images/background.png');
     line-height: 1;
 }
 
@@ -81,7 +80,6 @@ table {
 /*********************************************/
 
 #header {
-    background-color: #000;
     width: 100%;
     min-width: 1025px;
     height: 100px;
@@ -90,11 +88,11 @@ table {
 
 #header #logo {
     position: absolute;
-    top: 46px;
+    top: 20px;
     left: 50px;
     background: url('./../../public/images/logo.png');
     width: 280px;
-    height: 83px;
+    height: 70px;
     float: left;
 
     cursor: pointer;
@@ -104,102 +102,43 @@ table {
 #header #headerPanel {
     float: right;
     margin-top: 60px;
-}
-
-#header #headerPanel .stayFocused {
-    position: relative;
-    top: 16px;
-    display: block;
-    background: url('./../../public/images/stayFocused.png') no-repeat;
-    width: 200px;
-    height: 36px;
-    float:left;
-    margin-right: 40px;
+    margin-right: 50px;
 }
 
 #header #headerPanel a {
     display: block;
-    background-repeat: no-repeat;
     float: left;
-    margin-right: 15px;
+    margin-right: 100px;
 
-    width: 30px;
-    height: 30px;
+    width: 100px;
+    height: 35px;
 }
 
 #header #headerPanel a:hover {
-    background-position: 30px 0;
+    background-position: -100px 0;
 }
 
-#header #headerPanel .logIn, #header #headerPanel .logOut {
-    background: url('./../../public/images/access.png');
+#header #headerPanel .learnMore {
+    background: url('./../../public/images/LearnMore.png') no-repeat;
 }
 
-#header #headerPanel .settings {
-    background: url('./../../public/images/settings.png');
+#header #headerPanel .signUp {
+    background: url('./../../public/images/SignUp.png') no-repeat;
 }
+
+#header #headerPanel .profile {
+    background: url('./../../public/images/Profile.png') no-repeat;
+}
+
+#header #headerPanel .logOut {
+    background: url('./../../public/images/LogOut.png') no-repeat;
+}
+
 
 .separation_1 {
     background-color: #AAA;
     height: 5px;
     border: 1px solid #888888;
-}
-
-/*********************************************/
-/**             LEFT PANEL                  **/
-/*********************************************/
-
-/** Left panel **/
-#leftPanel {
-    /** background-color:#a9c1c9; **/
-}
-
-#leftPanel > a {
-    margin-bottom: 12px;
-}
-
-#leftPanel a {
-    display: block;
-    background-repeat: no-repeat;
-
-    width: 50px;
-    height: 50px;
-}
-
-#leftPanel a:hover {
-    background-position: -50px 0;
-}
-
-#leftPanel .workOut_subOptions {
-    margin-left: 20px;
-}
-
-#leftPanel .brainstorm {
-    background: url('./../../public/images/brainstorm.png');
-}
-
-#leftPanel .workOut {
-    background: url('./../../public/images/workOut.png');
-}
-
-#leftPanel .stepSelection {
-    background: url('./../../public/images/select.png');
-}
-
-#leftPanel .stepTiming {
-    background: url('./../../public/images/applyTime.png');
-}
-
-#leftPanel .stepPrioritizing {
-    background: url('./../../public/images/prioritize.png');
-}
-
-#leftPanel .action {
-    background: url('./../../public/images/perform.png');
-}
-
-#leftPanel .profile {
-    background: url('./../../public/images/profile.png');
 }
 
 /*********************************************/
@@ -247,7 +186,8 @@ body {
 }
 
 input {
-    border: 1px solid #b2b2b1;
+    background-color: #f4f2ef;
+    /*border: 1px solid #b2b2b1;*/
     color: #b2b2b1;
 }
 
@@ -257,7 +197,7 @@ input {
 
 /** Font Style - Normal **/
 body, .font_normal {
-    font: 12px "Lucida Sans Unicode", Arial;
+    font: 12px Tahoma, Arial;
     color: #222;
 }
 
@@ -313,7 +253,7 @@ h2, .font_subTitle {
     bottom: 35px;
     left: 20px;
 
-    background: url('./../../public/images/admin.png') no-repeat;
+    background: url('./../../public/images/TMP_admin.png') no-repeat;
     float:left;
     display: block;
     width: 75px;
@@ -347,9 +287,9 @@ h2, .font_subTitle {
 }
 
 #admin_footer #adminActions .usersManagement {
-    background: url('./../../public/images/userManagement.png');
+    background: url('./../../public/images/TMP_userManagement.png');
 }
 
 #admin_footer #adminActions .releaseHistory {
-    background: url('./../../public/images/releaseHistory.png');
+    background: url('./../../public/images/TMP_settings.png');
 }

@@ -1,5 +1,5 @@
 /**
- * Project: Selfology
+ * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Description:
  * Description: Action JS Library

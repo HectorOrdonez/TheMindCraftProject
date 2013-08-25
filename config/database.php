@@ -1,6 +1,6 @@
 <?php
 /**
- * Project: Selfology
+ * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Date: 23/07/13 14:00
  */
@@ -15,7 +15,7 @@ if (_PRODUCTION === TRUE) {
 } else {
     define ('DB_TYPE','mysql');
     define ('DB_HOST','localhost');
-    define ('DB_NAME','selfology');
+    define ('DB_NAME','themindcraftproject');
     define ('DB_USER','root');
     define ('DB_PASS','');
 }

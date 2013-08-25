@@ -1,9 +1,9 @@
 <?php
 /**
- * Project: Selfology
+ * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Description:
- * Controller of the page Action.
+ * Controller of the page Perform.
  * Pending of Documentation.
  * Date: 25/07/13 01:30
  */
@@ -11,22 +11,22 @@
 namespace application\controllers;
 
 use application\engine\Controller;
-use application\libraries\ActionLibrary;
+use application\libraries\PerformLibrary;
 use engine\Exception;
 use engine\Form;
 use engine\Session;
 
-class action extends Controller
+class perform extends Controller
 {
     /**
      * Defining $_library Library type.
-     * @var ActionLibrary $_library
+     * @var PerformLibrary $_library
      */
     protected $_library;
 
     public function __construct()
     {
-        parent::__construct(new ActionLibrary);
+        parent::__construct(new PerformLibrary);
 
         $logged = Session::get('isUserLoggedIn');
         if ($logged == FALSE) {
@@ -36,7 +36,7 @@ class action extends Controller
     }
 
     /**
-     * Action index page.
+     * Perform index page.
      * Loads the required JS libraries of this page, together with language and CSS styles for the grid and the page.
      */
     public function index()

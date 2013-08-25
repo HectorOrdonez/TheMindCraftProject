@@ -1,5 +1,5 @@
 /**
- * Project: Selfology
+ * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Description:
  * CSS Library for the use of grids and their tables, rows and cells.
@@ -17,8 +17,11 @@
  * Class header defines the top rows of the table.
  */
 .workspace .header {
-    background-color: #575756;
-    color: #EEE;
+    background-color: #e94f3b;
+    color: #FFF;
+
+    font-weight: bold;
+    text-indent: 5px;
 }
 
 /**
@@ -53,11 +56,11 @@
  * Row color definitions
  */
 .workspace .row.content:nth-child(2n+1) {
-    background-color: #DDD;
+    background-color: #f4f2ef;
 }
 
 .workspace .row.content {
-    background-color: #CCC;
+    background-color: #dfd9c2;
 }
 
 .workspace .row.content:hover {

@@ -1,5 +1,5 @@
 /**
- * Project: Selfology
+ * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Description: Selection JS Library
  * Date: 25/07/13 21:00
@@ -114,8 +114,8 @@ function editDialog($element) {
     $titleCell.find('.inputEditIdeaTitle').focus();
     $titleCell.find('.inputEditIdeaTitle').blur(function () {
         // Restore to normality
-        $titleCell.html(previousTitle);
-        $actionCell.html(previousActions);
+        //$titleCell.html(previousTitle);
+        //$actionCell.html(previousActions);
     });
 
     // 6 - Adding Enter event to the form

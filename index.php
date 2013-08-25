@@ -1,6 +1,6 @@
 <?php
 /**
- * General TODOS in the Selfology Application
+ * General TODOS in the The Mindcraft Project Application
  */
 
 use engine\Bootstrap;

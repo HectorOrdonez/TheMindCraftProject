@@ -1,10 +1,10 @@
 <?php
 /**
- * Project: Selfology
+ * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Description:
  * Controller of the page Index.
- * This is the main page of Selfology, and displays a login panel that the User needs to fulfill if he or she wants to have access to the website.
+ * This is the main page of The Mindcraft Project, and displays a login panel that the User needs to fulfill if he or she wants to have access to the website.
  * Date: 11/06/13 11:00
  */
 

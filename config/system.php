@@ -1,17 +1,17 @@
 <?php
 /**
- * Project: Selfology
+ * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Date: 23/07/13 14:00
  */
 // Informs the System about which setup use
-define ('_PRODUCTION', TRUE);
+define ('_PRODUCTION', FALSE);
 
 // Base path of the website.
 if (_PRODUCTION === TRUE) {
     define ('_SYSTEM_BASE_URL', 'http://themindcraftproject.org/');
 } else {
-    define ('_SYSTEM_BASE_URL', 'http://192.168.192.13/projects/selfology/');
+    define ('_SYSTEM_BASE_URL', 'http://192.168.192.13/projects/themindcraftproject/');
 }
 
 // Root path of the project in the server.

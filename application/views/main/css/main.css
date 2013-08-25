@@ -2,9 +2,55 @@
  * Project: Organizator
  * Description: Main CSS Library
  * User: Hector Ordonez
- * Date: 23/07/13 10:00
+ * Date: 22/07/13 10:00
+ * Update: 22/08/2013 Hector Ordonez -  Modified Style in order to match the new Main page. Now Main page shows the main
+                                        options of the User: brainstorm, work out and action.
  */
 
-.welcome {
-    text-align: center;
+#mainMenu {
+    background: #FFF url('./../../../../public/images/Menu.png') no-repeat;
+    height: 330px;
+    width: 330px;
+
+    margin: 0 auto;
+}
+
+#mainMenu a {
+    position: relative;
+    background-repeat: no-repeat;
+
+    width: 200px;
+    height: 80px;
+
+    display: block;
+}
+#mainMenu a:hover {
+    background-position: 200px 0;
+}
+
+#mainMenu .brainstorm {
+    top: 15px;
+    left: 15px;
+    background: url('./../../../../public/images/BrainStorm.png');
+}
+#mainMenu .brainstorm:hover {
+    top: 22px;
+}
+
+#mainMenu .workOut{
+    top: 0;
+    left: 275px;
+    background: url('./../../../../public/images/WorkOut.png');
+}
+#mainMenu .workOut:hover {
+    top: 10px;
+}
+
+#mainMenu .perform{
+    top: 105px;
+    left: 95px;
+    background: url('./../../../../public/images/PerForm.png');
+}
+#mainMenu .perform:hover{
+    top: 115px;
 }

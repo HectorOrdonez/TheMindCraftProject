@@ -1,6 +1,6 @@
 <?php
 /**
- * Project: Selfology
+ * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Description:
  * Controller class of the application engine.
@@ -32,7 +32,7 @@ class Controller extends engineController
     {
         parent::_setView();
 
-        $this->_view->setTitle('Selfology');
+        $this->_view->setTitle('The Mindcraft Project');
         $this->_view->addLibrary('css', 'public/css/default.css');
 
         $this->_view->addLibrary('js', 'public/js/external/jquery-1.10.1.js');
@@ -40,7 +40,7 @@ class Controller extends engineController
 
         $this->_view->setMeta('description', array(
             'name' => 'description',
-            'content' => 'This is a sample website for Selfology'
+            'content' => 'Mindcraft Project'
         ));
 
         $this->_view->setMeta('author', array(
@@ -55,7 +55,7 @@ class Controller extends engineController
 
         $this->_view->setMeta('keywords', array(
             'name' => 'keywords',
-            'content' => 'Selfology, PHP, JavaScript, OOP, MVC'
+            'content' => 'The Mindcraft Project, PHP, JavaScript, OOP, MVC'
         ));
 
         if (Session::get('isUserLoggedIn') == TRUE)

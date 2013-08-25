@@ -1,6 +1,6 @@
 <?php
 /**
- * Project: Selfology
+ * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Description:
  * Library that manages the Work Out page's logic.

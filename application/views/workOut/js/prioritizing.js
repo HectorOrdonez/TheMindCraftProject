@@ -1,5 +1,5 @@
 /**
- * Project: Selfology
+ * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Description: Prioritizing JS Library
  * Date: 25/07/13 21:00
@@ -40,7 +40,6 @@ function createPrioritizingGrid() {
 
     // Adding prioritizing triggers
     $grid.delegate('.priority', 'dblclick', function () {
-
         openEditPriorityDialog(jQuery(this).parent());
     });
 }

@@ -1,5 +1,5 @@
 /**
- * Project: Selfology
+ * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Description:
  * General JS Library. Why, for general purposes!
@@ -10,8 +10,8 @@
  * Definition of the Root Url to use in links.
  * @type {string}
  */
-// var root_url = 'http://192.168.192.13/projects/selfology/';
-var root_url = 'http://themindcraftproject.org/';
+var root_url = 'http://192.168.192.13/projects/themindcraftproject/';
+// var root_url = 'http://themindcraftproject.org/';
 
 /**
  * Boolean global variable that allows us to know in any place if there is an ongoing ajax request.

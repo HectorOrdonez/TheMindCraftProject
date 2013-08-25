@@ -1,45 +1,12 @@
 # Global Htaccess file.
 #
-# Project: Selfology
+# Project: The Mindcraft Project
 # User: Hector Ordonez
 # Date: 18/06/13 21:00
 
 #######################
 ##### DEVELOPMENT #####
 #######################
-#
-# php_flag display_errors on
-# php_value error_reporting 32767
-#
-# # RewriteEngine tells Apache to process Rewrite commands.
-# RewriteEngine On
-#
-# # RewriteBase defines what is going to be the base url. So localhost/index.php becomes localhost/hecnel/index.php
-# RewriteBase /projects/selfology
-#
-# # Error pages for fatal errors redirection - Authentication failed
-# ErrorDocument 401 http://192.168.192.13/projects/selfology/error/authFailed
-# # Error pages for fatal errors redirection - Forbidden access
-# ErrorDocument 403 http://192.168.192.13/projects/selfology/error/accessForbidden
-# # Error pages for fatal errors redirection - Page not found
-# ErrorDocument 404 http://192.168.192.13/projects/selfology/error/resourceNotFound
-# # Error pages for fatal errors redirection - Internal Server Error
-# ErrorDocument 500 http://192.168.192.13/projects/selfology/error/internalServerError
-#
-# # Allowing access to Index.
-# RewriteRule ^(index.php) index.php [QSA,L]
-#
-# # Forbidding access to PHP files.
-# RewriteRule ^(.+)\.php - [F,L]
-#
-# # Redirecting requests if not to a file or link.
-# RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteCond %{REQUEST_FILENAME} !-l
-# RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
-
-######################
-##### PRODUCTION #####
-######################
 
 php_flag display_errors on
 php_value error_reporting 32767
@@ -48,16 +15,16 @@ php_value error_reporting 32767
 RewriteEngine On
 
 # RewriteBase defines what is going to be the base url. So localhost/index.php becomes localhost/hecnel/index.php
-RewriteBase /
+RewriteBase /projects/themindcraftproject
 
 # Error pages for fatal errors redirection - Authentication failed
-ErrorDocument 401 http://themindcraftproject.org/error/authFailed
+ErrorDocument 401 http://192.168.192.13/projects/themindcraftproject/error/authFailed
 # Error pages for fatal errors redirection - Forbidden access
-ErrorDocument 403 http://themindcraftproject.org/error/accessForbidden
+ErrorDocument 403 http://192.168.192.13/projects/themindcraftproject/error/accessForbidden
 # Error pages for fatal errors redirection - Page not found
-ErrorDocument 404 http://themindcraftproject.org/error/resourceNotFound
+ErrorDocument 404 http://192.168.192.13/projects/themindcraftproject/error/resourceNotFound
 # Error pages for fatal errors redirection - Internal Server Error
-ErrorDocument 500 http://themindcraftproject.org/error/internalServerError
+ErrorDocument 500 http://192.168.192.13/projects/themindcraftproject/error/internalServerError
 
 # Allowing access to Index.
 RewriteRule ^(index.php) index.php [QSA,L]
@@ -69,3 +36,36 @@ RewriteRule ^(.+)\.php - [F,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-l
 RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+
+######################
+##### PRODUCTION #####
+######################
+
+# php_flag display_errors on
+# php_value error_reporting 32767
+#
+# # RewriteEngine tells Apache to process Rewrite commands.
+# RewriteEngine On
+#
+# # RewriteBase defines what is going to be the base url. So localhost/index.php becomes localhost/hecnel/index.php
+# RewriteBase /
+#
+# # Error pages for fatal errors redirection - Authentication failed
+# ErrorDocument 401 http://themindcraftproject.org/error/authFailed
+# # Error pages for fatal errors redirection - Forbidden access
+# ErrorDocument 403 http://themindcraftproject.org/error/accessForbidden
+# # Error pages for fatal errors redirection - Page not found
+# ErrorDocument 404 http://themindcraftproject.org/error/resourceNotFound
+# # Error pages for fatal errors redirection - Internal Server Error
+# ErrorDocument 500 http://themindcraftproject.org/error/internalServerError
+#
+# # Allowing access to Index.
+# RewriteRule ^(index.php) index.php [QSA,L]
+#
+# # Forbidding access to PHP files.
+# RewriteRule ^(.+)\.php - [F,L]
+#
+# # Redirecting requests if not to a file or link.
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-l
+# RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]

@@ -60,7 +60,7 @@
 
 /** Next Button **/
 #nextStep {
-    background: url('./../../../../public/images/next.png') no-repeat;
+    background: url('./../../../../public/images/TMP_next.png') no-repeat;
     width: 50px;
     height: 50px;
 
@@ -81,6 +81,24 @@
 #errorDisplayer {
     display: block;
     height: 40px;
+}
+
+/**********************************************************************************************************************/
+/** All Grid shared Styles                                                                                           **/
+/**********************************************************************************************************************/
+
+table .actions a {
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+
+    display: block;
+    font-size: 0;
+    cursor: pointer;
+}
+
+table .actions a:hover {
+    background-position: 30px 0 !important;
 }
 
 /**********************************************************************************************************************/
@@ -125,7 +143,7 @@
     width: 10px;
     height: 10px;
 
-    margin: 5px 5px 0 5px;
+    margin: 10px 5px 0 5px;
 }
 
 /**
@@ -136,12 +154,14 @@
 }
 
 #selection_grid #formNewIdea input {
+    height: 30px;
     width: 100%;
     border: none;
     text-indent: 20px;
 }
 
 #selection_grid  #formEditIdea .inputEditIdeaTitle {
+    height: 30px;
     width: 100%;
     border: none;
 }
@@ -150,33 +170,18 @@
  * Selection actions
 **/
 #selection_grid .actions .editAction {
-    background: url('./../../../../public/images/TEMP_edit.png') no-repeat;
-    width: 16px;
-    height: 16px;
-    display: block;
+    background: url('./../../../../public/images/Edit.png');
     float: left;
-    font-size: 0;
-    cursor: pointer;
 }
 
 #selection_grid .actions .delAction {
-    background: url('./../../../../public/images/delete.png') no-repeat;
-    width: 16px;
-    height: 16px;
-    display: block;
+    background: url('./../../../../public/images/Delete.png');
     float: left;
-    font-size: 0;
-    cursor: pointer;
 }
 
 #selection_grid .actions .holdOverAction {
-    background: url('./../../../../public/images/TEMP_clock.gif') no-repeat;
-    width: 16px;
-    height: 16px;
-    display: block;
+    background: url('./../../../../public/images/TMP_clock.gif');
     float: left;
-    font-size: 0;
-    cursor: pointer;
 }
 
 /**********************************************************************************************************************/
@@ -247,13 +252,8 @@
  * Timing actions
 **/
 #timing_grid .actions .applyTimeAction {
-    background: url('./../../../../public/images/TEMP_clock.gif') no-repeat;
-    width: 16px;
-    height: 16px;
-    display: block;
+    background: url('./../../../../public/images/TMP_clock.gif');
     margin: 0 auto;
-    font-size: 0;
-    cursor: pointer;
 }
 
 #content #applyTimeDialog {
@@ -263,7 +263,7 @@
     top: 0;
     left: 0;
     z-index: 2;
-    background: url('./../../../../public/images/transparent.png') repeat;
+    background: url('./../../../../public/images/TMP_transparent.png') repeat;
     display: none;
 }
 

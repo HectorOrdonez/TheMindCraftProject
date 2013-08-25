@@ -1,6 +1,6 @@
 <?php
 /**
- * Project: Selfology
+ * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Description:
  * Error Controller. Here the errors are displayed.
@@ -23,7 +23,7 @@ class Error extends Controller
 
         $this->_view->setMeta('description', array(
             'name' => 'description',
-            'content' => 'Error in Selfology.'
+            'content' => 'Error in The Mindcraft Project.'
         ));
 
         $this->_view->setMeta('author', array(
