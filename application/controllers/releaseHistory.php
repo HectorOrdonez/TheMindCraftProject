@@ -34,11 +34,16 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.161', '22/08/2013', array (
-            '[Refactor] - Project name changed. Root folder changed accordingly too. Selfology now is The Mindcraft Project.'
+        $this->_setDevelopmentVersion('0.17', '20/10/2013', array (
+            '[Etc] - Reactivation! The Mindcraft Project\'s on the road again!!',
+            '[Debug] - Fixed a link that was wrong - learnMore is redirecting to releaseHistory. We do not have a Learn More page yet :(',
+            '[Etc] - Modified settings files for development. Of course, Live is not impacted by those changes.'
         ));
 
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.161', '22/08/2013', array (
+            '[Refactor] - Project name changed. Root folder changed accordingly too. Selfology now is The Mindcraft Project.'
+        ));
         $this->_addHistoryLog('0.16', '20/08/2013', array (
             '[Production] - First release to Production!! Check out :) http: http://themindcraftproject.org/. In order to achieve this and as a consequence, the following changes have been done...',
             '[Code improvement] - Added in the htaccess file the config for the live server. It contains the code for both development and live, and needs to be switched when working on one another.'.

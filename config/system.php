@@ -11,7 +11,7 @@ define ('_PRODUCTION', FALSE);
 if (_PRODUCTION === TRUE) {
     define ('_SYSTEM_BASE_URL', 'http://themindcraftproject.org/');
 } else {
-    define ('_SYSTEM_BASE_URL', 'http://192.168.192.13/projects/themindcraftproject/');
+    define ('_SYSTEM_BASE_URL', 'http://192.168.1.55/projects/themindcraftproject/');
 }
 
 // Root path of the project in the server.

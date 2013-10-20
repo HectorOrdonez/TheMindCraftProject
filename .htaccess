@@ -18,13 +18,13 @@ RewriteEngine On
 RewriteBase /projects/themindcraftproject
 
 # Error pages for fatal errors redirection - Authentication failed
-ErrorDocument 401 http://192.168.192.13/projects/themindcraftproject/error/authFailed
+ErrorDocument 401 http://192.168.1.55/projects/themindcraftproject/error/authFailed
 # Error pages for fatal errors redirection - Forbidden access
-ErrorDocument 403 http://192.168.192.13/projects/themindcraftproject/error/accessForbidden
+ErrorDocument 403 http://192.168.1.55/projects/themindcraftproject/error/accessForbidden
 # Error pages for fatal errors redirection - Page not found
-ErrorDocument 404 http://192.168.192.13/projects/themindcraftproject/error/resourceNotFound
+ErrorDocument 404 http://192.168.1.55/projects/themindcraftproject/error/resourceNotFound
 # Error pages for fatal errors redirection - Internal Server Error
-ErrorDocument 500 http://192.168.192.13/projects/themindcraftproject/error/internalServerError
+ErrorDocument 500 http://192.168.1.55/projects/themindcraftproject/error/internalServerError
 
 # Allowing access to Index.
 RewriteRule ^(index.php) index.php [QSA,L]

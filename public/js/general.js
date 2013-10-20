@@ -10,7 +10,7 @@
  * Definition of the Root Url to use in links.
  * @type {string}
  */
-var root_url = 'http://192.168.192.13/projects/themindcraftproject/';
+var root_url = 'http://192.168.1.55/projects/themindcraftproject/';
 // var root_url = 'http://themindcraftproject.org/';
 
 /**
