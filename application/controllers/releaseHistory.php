@@ -34,11 +34,14 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.19', '22/11/2013', array (
-            '[Core Update] - Updated TheMindcraftProject Hecnel Framework to Version 1.84.'
+        $this->_setDevelopmentVersion('0.20', '22/11/2013', array (
+            '[Visual improvement] - Minor changes in Index visuals.'
         ));
 
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.19', '22/11/2013', array (
+            '[Core Update] - Updated TheMindcraftProject Hecnel Framework to Version 1.84.'
+        ));
         $this->_addHistoryLog('0.18', '22/11/2013', array (
             '[Debug] - Added some modifications to prevent issues with Session.',
             '[Feature] - SignUp page skeleton.'

@@ -5,20 +5,76 @@
  * Date: 23/07/13 10:00
  */
 
+body {
+    position: absolute;
+    left: -500px;
+    width: 1000px;
+
+    margin-left: 50%;
+}
+
+/*********************************************/
+/**             HEADER                      **/
+/*********************************************/
+
+#header {
+    width: 1000px;
+    height: 105px;
+}
+
+#header #logo {
+    position: absolute;
+    top: 35px;
+    background: url('./../../../../public/images/logo.png');
+    width: 300px;
+    height: 70px;
+    float: left;
+
+    cursor: pointer;
+}
+
+/** Right menu **/
+#header #headerPanel {
+    float: right;
+    margin-top: 70px;
+    margin-right: -50px;
+}
+
+#header #headerPanel a {
+    display: block;
+    float: left;
+
+    width: 100px;
+    height: 35px;
+    margin-left: 50px;
+}
+
+#header #headerPanel a:hover {
+    background-position: -100px 0;
+}
+
+#header #headerPanel .learnMore {
+    background: url('./../../../../public/images/LearnMore.png') no-repeat;
+}
+
+#header #headerPanel .signUp {
+    background: url('./../../../../public/images/SignUp.png') no-repeat;
+}
+
 .loginBlock {
-    padding-top: 100px;
+    margin-top: 175px;
     text-align: center;
 }
 
 .loginBlock input {
     width: 500px;
-    height: 20px;
-    margin-bottom: 30px;
+    height: 30px;
+    margin-bottom: 40px;
     text-align: center;
 }
 
 #loginSubmit {
-    background: url('./../../../../public/images/login.png') no-repeat;
+    background: url('./../../../../public/images/LogIn.png') no-repeat;
     height: 55px;
     width: 150px;
 
@@ -31,7 +87,6 @@
 }
 
 /** Error Style **/
-
 .loginError, .inputError {
     text-align: center;
 }

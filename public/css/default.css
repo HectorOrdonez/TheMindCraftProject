@@ -79,62 +79,6 @@ table {
 /**             HEADER                      **/
 /*********************************************/
 
-#header {
-    width: 100%;
-    min-width: 1025px;
-    height: 100px;
-    margin-bottom: 45px;
-}
-
-#header #logo {
-    position: absolute;
-    top: 20px;
-    left: 50px;
-    background: url('./../../public/images/logo.png');
-    width: 280px;
-    height: 70px;
-    float: left;
-
-    cursor: pointer;
-}
-
-/** Right menu **/
-#header #headerPanel {
-    float: right;
-    margin-top: 60px;
-    margin-right: 50px;
-}
-
-#header #headerPanel a {
-    display: block;
-    float: left;
-    margin-right: 100px;
-
-    width: 100px;
-    height: 35px;
-}
-
-#header #headerPanel a:hover {
-    background-position: -100px 0;
-}
-
-#header #headerPanel .learnMore {
-    background: url('./../../public/images/LearnMore.png') no-repeat;
-}
-
-#header #headerPanel .signUp {
-    background: url('./../../public/images/SignUp.png') no-repeat;
-}
-
-#header #headerPanel .profile {
-    background: url('./../../public/images/Profile.png') no-repeat;
-}
-
-#header #headerPanel .logOut {
-    background: url('./../../public/images/LogOut.png') no-repeat;
-}
-
-
 .separation_1 {
     background-color: #AAA;
     height: 5px;
@@ -144,12 +88,6 @@ table {
 /*********************************************/
 /**             CONTENT                     **/
 /*********************************************/
-
-body {
-    min-width: 1025px;
-    min-height: 550px;
-    overflow: hidden;
-}
 
 #contentWrapper {
 }
@@ -176,13 +114,6 @@ body {
     margin: 0 auto;
     padding: 2px;
     overflow: auto;
-}
-#nonLogged_content {
-    background: white;
-    margin: 0 auto;
-    border-radius: 50px;
-    min-height: 35%;
-    width: 80%;
 }
 
 input {
@@ -228,10 +159,6 @@ h2, .font_subTitle {
 /*********************************************/
 /**             FOOTER                      **/
 /*********************************************/
-
-#footer {
-    min-width: 1025px;
-}
 
 #admin_footer {
     position: fixed;
