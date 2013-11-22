@@ -83,7 +83,7 @@ class Validator
     {
         if (!in_array($rule, static::$validRules))
         {
-            throw new Exceptionn ('Requested rule ' . $rule . ' is not accepted for the Validator ' . static::$validatorName);
+            throw new Exception ('Requested rule ' . $rule . ' is not accepted for the Validator ' . static::$validatorName);
         }
     }
 }

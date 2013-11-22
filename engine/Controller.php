@@ -57,7 +57,6 @@ class Controller
      */
     public function __construct(Library $library = NULL)
     {
-        Session::init();
         $this->_setView();
         $this->_setLibrary($library);
     }
@@ -91,10 +90,12 @@ class Controller
         }
     }
 
+    /**
+     * Sets the autoRender true or false. Notice that, by the fault, the autoRender is true.
+     * @param $option
+     */
     public function setAutoRender($option)
     {
         $this->_autoRender = (boolean) $option;
     }
-
-
 }

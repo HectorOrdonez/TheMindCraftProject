@@ -5,7 +5,7 @@
  * Date: 17/06/13 13:44
  */
 
-namespace engine\drivers\Validators;
+namespace engine\drivers\validators;
 
 use engine\drivers\Validator;
 use engine\Exception;

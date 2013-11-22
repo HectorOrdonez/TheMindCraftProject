@@ -3,7 +3,10 @@
  * Project: Hecnel Framework
  * User: Hector Ordonez
  * Description:
+ * View engine class.
+ * Its purpose is to define the behavior of the Views of the application and to provide general methods.
  * Date: 11/06/13 12:00
+ * @todo Redesign View concept.
  */
 
 namespace engine;
@@ -14,7 +17,7 @@ class View
      * Title of the Page.
      * @var string
      */
-    protected $_title = 'Hecnel Framework';
+    protected $_title = '';
 
     /**
      * List of js files that the page needs to load

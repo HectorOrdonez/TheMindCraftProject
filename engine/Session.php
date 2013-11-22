@@ -11,16 +11,6 @@ namespace engine;
 class Session
 {
     /**
-     * Initialize Session
-     */
-    public static function init()
-    {
-        if(!isset($_SESSION)){
-            session_start();
-        }
-    }
-
-    /**
      * Sets SESSION parameter.
      * @param string $key
      * @param string $value
@@ -51,5 +41,6 @@ class Session
     public static function destroy()
     {
         session_destroy();
+        session_regenerate_id(TRUE);
     }
 }

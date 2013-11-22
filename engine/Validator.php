@@ -8,7 +8,7 @@
 
 namespace engine;
 
-use engine\drivers\Validators as Validators;
+use engine\drivers\validators as Validators;
 
 class Validator
 {

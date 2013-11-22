@@ -3,6 +3,9 @@
  * General TODOS in the The Mindcraft Project Application
  */
 
+// First thing ever, session_start.
+session_start();
+
 use engine\Bootstrap;
 
 /**
