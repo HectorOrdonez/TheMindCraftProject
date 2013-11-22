@@ -38,6 +38,7 @@ class brainstorm extends Controller
         if ($logged == FALSE) {
             Session::destroy();
             header('location: ' . _SYSTEM_BASE_URL . 'error/accessForbidden');
+            exit;
         }
     }
 

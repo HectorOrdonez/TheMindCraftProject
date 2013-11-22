@@ -42,6 +42,7 @@ class Index extends Controller
         $logged = Session::get('isUserLoggedIn');
         if ($logged === TRUE) {
             header('location: ' . _SYSTEM_BASE_URL . 'main');
+            exit;
         }
         $this->_view->addChunk('index/index');
     }
@@ -54,6 +55,7 @@ class Index extends Controller
         $logged = Session::get('isUserLoggedIn');
         if ($logged === TRUE) {
             header('location: ' . _SYSTEM_BASE_URL . 'main');
+            exit;
         }
 
         // Validation
@@ -76,6 +78,7 @@ class Index extends Controller
 
             if ($login === TRUE) {
                 header('location: ' . _SYSTEM_BASE_URL . 'index');
+                exit;
             } else {
                 $this->_view->setParameter('loginError', 'Wrong username or Password.');
                 $this->_view->addChunk('index/index');

@@ -4,13 +4,15 @@
  * Description:
  * General JS Library. Why, for general purposes!
  * Date: 25/07/13 1:30
+ * @todo - Create a Config JS file?
  */
 
 /**
  * Definition of the Root Url to use in links.
  * @type {string}
  */
-var root_url = 'http://192.168.1.55/projects/themindcraftproject/';
+var root_url = 'http://localhost/projects/themindcraftproject/';
+// var root_url = 'http://192.168.1.55/projects/themindcraftproject/';
 // var root_url = 'http://themindcraftproject.org/';
 
 /**
