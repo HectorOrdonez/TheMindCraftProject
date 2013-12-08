@@ -108,7 +108,7 @@ function openChangePasswordDialog($element) {
             '   </form>' +
             '   <div class="font_error" id="passwordDialogInfoDisplayer"></div>' +
             '</div>';
-        jQuery('#content').append(passwordDialog);
+        jQuery('.bodyContent').append(passwordDialog);
         var $passwordDialog = jQuery('#passwordDialog');
 
         jQuery('.passwordInnerDialog').click(function (event) {
@@ -179,7 +179,7 @@ function closePasswordDialog() {
         // Fading out dialog
         $passwordDialog.fadeOut(function () {
             // When dialog is faded, remove the dialog completely
-            document.getElementById('content').removeChild(passwordDialog);
+            document.getElementById('loggedContent').removeChild(passwordDialog);
             allowNewUniqueRequests();
         });
     });

@@ -1,5 +1,5 @@
 /**
- * Project: Organizator
+ * Project: The Mindcraft Project
  * Description: UsersManagement CSS Library
  * User: Hector Ordonez
  * Date: 25/07/13 01:30
@@ -72,7 +72,7 @@
  * Users actions
 **/
 #usersManagement_grid .actions .openNewPasswordDialog {
-    background: url('./../../../../public/images/TEMP_edit.png') no-repeat;
+    background: url('./../../../../public/images/Edit.png') no-repeat;
     width: 16px;
     height: 16px;
     float: left;
@@ -82,7 +82,7 @@
 }
 
 #usersManagement_grid .actions .deleteUser {
-    background: url('./../../../../public/images/delete.png') no-repeat;
+    background: url('./../../../../public/images/Delete.png') no-repeat;
     width: 16px;
     height: 16px;
     float: left;
@@ -102,18 +102,18 @@
     font-size: 10px;
 }
 
-#content #passwordDialog {
+.bodyContent #passwordDialog {
     position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     z-index: 2;
-    background: url('./../../../../public/images/transparent.png') repeat;
+    background: url('./../../../../public/images/TMP_transparent.png') repeat;
     display: none;
 }
 
-#content #passwordDialog .passwordInnerDialog {
+.bodyContent #passwordDialog .passwordInnerDialog {
     position: absolute;
     width: 200px;
     top: 50%;

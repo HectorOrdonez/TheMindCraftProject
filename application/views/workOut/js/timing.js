@@ -98,7 +98,7 @@ function openApplyTimeDialog($element) {
             '   </form>' +
             '   <div class="font_error" id="applyTimeInfoDisplayer"></div>' +
             '</div>';
-        jQuery('#content').append(applyTimeDialog);
+        jQuery('.bodyContent').append(applyTimeDialog);
         var $applyTimeDialog = jQuery('#applyTimeDialog');
 
         // Initializing features
@@ -180,7 +180,7 @@ function closeApplyTimeDialog() {
         // Fading out dialog
         $applyTimeDialog.fadeOut(function () {
             // When dialog is faded, remove the dialog completely
-            document.getElementById('content').removeChild(applyTimeDialog);
+            document.getElementById('loggedContent').removeChild(applyTimeDialog);
             allowNewUniqueRequests();
         });
     });

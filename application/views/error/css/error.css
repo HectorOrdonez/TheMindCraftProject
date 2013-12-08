@@ -1,5 +1,5 @@
 /**
- * Project: Organizator
+ * Project: The Mindcraft Project
  * Description: Error CSS Library
  * User: Hector Ordonez
  * Date: 23/07/13 10:00
@@ -15,7 +15,7 @@
     text-align: center;
 }
 
-#content {
+.bodyContent {
 }
 
 .exceptionTable {

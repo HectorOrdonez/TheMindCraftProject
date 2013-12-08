@@ -6,5 +6,4 @@
  * Date: 22/08/13 10:00
  */
 jQuery().ready(function () {
-    console.log('Yep. Works.');
 });

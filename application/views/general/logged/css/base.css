@@ -1,0 +1,60 @@
+/**
+ * Project: The Mindcraft Project
+ * User: Hector Ordonez
+ * Description:
+ * Base styles for logged Users.
+ * Date: 08/12/13 17:00
+*/
+
+/*********************************************/
+/**             HEADER                      **/
+/*********************************************/
+
+#header {
+    width: 1000px;
+    height: 105px;
+    margin-bottom: 35px;
+}
+
+#header #logo {
+    position: absolute;
+    top: 35px;
+    background: url('../../../../../public/images/logo.png');
+    width: 300px;
+    height: 70px;
+    float: left;
+
+    cursor: pointer;
+}
+
+/** Right menu **/
+#header #headerPanel {
+    float: right;
+    margin-top: 70px;
+    margin-right: -50px;
+}
+
+#header #headerPanel a {
+    display: block;
+    float: left;
+
+    width: 100px;
+    height: 35px;
+    margin-left: 50px;
+}
+
+#header #headerPanel a:hover {
+    background-position: -100px 0;
+}
+
+#header #headerPanel .learnMore {
+    background: url('../../../../../public/images/LearnMore.png') no-repeat;
+}
+
+#header #headerPanel .profile {
+    background: url('../../../../../public/images/Profile.png') no-repeat;
+}
+
+#header #headerPanel .logOut {
+    background: url('../../../../../public/images/LogOut.png') no-repeat;
+}

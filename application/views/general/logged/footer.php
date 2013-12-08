@@ -8,11 +8,8 @@
  */
 ?>
 
-            </div>
-            <!-- Closing logged-in Content -->
-
-        </div>
     </div>
+    <!-- Closing logged-in Content -->
 
     <div id='footer'>
     </div>

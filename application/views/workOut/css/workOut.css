@@ -1,5 +1,5 @@
 /**
- * Project: Organizator
+ * Project: The Mindcraft Project
  * Description: IdeaToAction CSS Library
  * User: Hector Ordonez
  * Date: 25/07/13 21:00
@@ -256,7 +256,7 @@ table .actions a:hover {
     margin: 0 auto;
 }
 
-#content #applyTimeDialog {
+.bodyContent #applyTimeDialog {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -267,7 +267,7 @@ table .actions a:hover {
     display: none;
 }
 
-#content #applyTimeDialog .applyTimeInnerDialog {
+.bodyContent #applyTimeDialog .applyTimeInnerDialog {
     position: absolute;
     width: 200px;
     min-height: 100px;
@@ -282,22 +282,22 @@ table .actions a:hover {
     border-radius: 10px;
 }
 
-#content #applyTimeDialog #moreOften .clicker {
+.bodyContent #applyTimeDialog #moreOften .clicker {
     display: block;
     margin-top: 10px;
     margin-bottom: 10px;
     cursor: pointer;
 }
 
-#content #applyTimeDialog #moreOftenPanel {
+.bodyContent #applyTimeDialog #moreOftenPanel {
     display: none;
 }
 
-#content #applyTimeDialog #moreOftenPanel input {
+.bodyContent #applyTimeDialog #moreOftenPanel input {
     margin-left: 5px;
 }
 
-#content #applyTimeDialog #submitAppliedTime {
+.bodyContent #applyTimeDialog #submitAppliedTime {
     margin-top: 10px;
     text-align: center;
     cursor: pointer;
