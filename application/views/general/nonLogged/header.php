@@ -44,4 +44,4 @@
     </div>
 
     <!-- Opening non-logged Content -->
-    <div id='nonLogged_content'>
+    <div class='bodyContent' id='nonLogged_content'>

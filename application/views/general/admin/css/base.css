@@ -1,0 +1,65 @@
+
+/*********************************************/
+/**             FOOTER                      **/
+/*********************************************/
+
+#admin_footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    min-width: 1025px;
+    height: 50px;
+    background-color: #000;
+}
+
+#admin_footer #adminWelcome {
+    float: left;
+}
+
+#admin_footer #adminWelcome #captainAdminHere {
+    position: relative;
+    bottom: 35px;
+    left: 20px;
+
+    background: url('./../../../../../public/images/TMP_admin.png') no-repeat;
+    float:left;
+    display: block;
+    width: 75px;
+    height: 75px;
+}
+
+#admin_footer #adminWelcome #helloMe{
+    position: relative;
+    float: left;
+    top: -11px;
+    left: 5px;
+}
+
+#admin_footer #adminActions {
+    float: right;
+}
+
+#admin_footer #adminActions a {
+    background-repeat: no-repeat;
+    display: block;
+    float:left;
+    margin-right: 20px;
+    margin-top: 10px;
+
+    width: 30px;
+    height: 30px;
+}
+
+#admin_footer #adminActions a:hover {
+    background-position: -30px 0;
+}
+
+#admin_footer #adminActions .usersManagement {
+    background: url('./../../../../../public/images/TMP_userManagement.png');
+}
+
+#admin_footer #adminActions .releaseHistory {
+    background: url('./../../../../../public/images/TMP_settings.png');
+}

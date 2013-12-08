@@ -4,15 +4,6 @@
  * User: Hector Ordonez
  * Date: 23/07/13 10:00
  */
-
-body {
-    position: absolute;
-    left: -500px;
-    width: 1000px;
-
-    margin-left: 50%;
-}
-
 .loginBlock {
     margin-top: 175px;
     text-align: center;

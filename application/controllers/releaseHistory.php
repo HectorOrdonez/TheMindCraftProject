@@ -34,13 +34,16 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.21', '08/12/2013', array (
+        $this->_setDevelopmentVersion('0.211', '08/12/2013', array (
+            '[Refactor] - More styles movement. With this release the non-logged styles are organized.'
+        ));
+
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.21', '08/12/2013', array (
             '[Refactor] - Changed header and footer related files structure.',
             '[Refactor] - Separated header and footer styles in different files.',
             '[Visual improvement] - Finished the minor changes applied in previous update (buggy)'
         ));
-
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.20', '22/11/2013', array (
             '[Visual improvement] - Minor changes in Index visuals.'
         ));
