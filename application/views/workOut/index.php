@@ -9,9 +9,9 @@
 ?>
 
                 <div id='workOutMenu'>
-                    <a href='#' class='font_title stepSelector' id='stepSelection'>Selection</a>
-                    <a href='#' class='font_title stepSelector' id='stepTiming'>Timing</a>
-                    <a href='#' class='font_title stepSelector' id='stepPrioritizing'>Prioritizing</a>
+                    <a href='#' class='stepSelector' id='stepSelection'>Selection</a>
+                    <a href='#' class='stepSelector' id='stepTiming'>Timing</a>
+                    <a href='#' class='stepSelector' id='stepPrioritizing'>Prioritizing</a>
 
                     <div id='stepPointer'><?php echo $this->startingStep; ?></div>
                 </div>
@@ -23,4 +23,4 @@
                 <div id='infoDisplayer'>
                 </div>
 
-                <a href='#' class='font_title' id='nextStep'></a>
+                <a href='#' class='' id='nextStep'></a>

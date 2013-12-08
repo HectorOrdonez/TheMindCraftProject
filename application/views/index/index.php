@@ -11,11 +11,11 @@
         <div class='loginBlock'>
             <form id='loginForm' action="<?php echo _SYSTEM_BASE_URL; ?>index/login" method="POST">
                 <p>
-                    <input class='loginInputName' type='text' name='username' placeholder="username"/>
+                    <input class='loginInputName ftype_contentA' type='text' name='username' placeholder="username"/>
                 </p>
 
                 <p>
-                    <input class='loginInputPass' type='password' name='password' placeholder="password"/>
+                    <input class='loginInputPass ftype_contentA' type='password' name='password' placeholder="password"/>
                 </p>
 
                 <div id='loginSubmit'></div>

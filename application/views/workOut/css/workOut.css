@@ -27,7 +27,6 @@
 
 #workOutMenu > a:hover {
     background-color: #575756;
-    color: #FFF;
 }
 
 #stepPointer {
@@ -75,7 +74,6 @@
 
 #nextStep:hover {
     background-color: #575756;
-    color: #FFF;
 }
 
 #errorDisplayer {
@@ -333,7 +331,6 @@ div.time-picker li {
 
 div.time-picker li.selected {
     background: #0063CE;
-    color: #fff;
 }
 
 /**********************************************************************************************************************/

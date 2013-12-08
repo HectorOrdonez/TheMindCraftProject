@@ -87,42 +87,80 @@ body {
 /**                  FONTS                  **/
 /*********************************************/
 
-/** Font Style - Normal **/
-body, .font_normal {
-    font: 12px Tahoma, Arial;
-    color: #222;
+/** Font Style - logo **/
+.ftype_logo1 {
+    font: 36px Tahoma, Arial;
+    color: #dfd9c2;
+}
+.ftype_logo2 {
+    font: 36px Tahoma, Arial;
+    color: #e94f3b;
+}
+.ftype_logo3 {
+    font: 36px Tahoma, Arial;
+    color: #2a2724;
 }
 
-/** Font Style - Titles **/
-h1, .font_title {
-    font: 30px "Harlow Solid Italic", Arial;
-    color: #333;
+/** Font Style - titleA **/
+.ftype_titleA1 {
+    font: 24px Tahoma, Arial;
+    color: #dfd9c2;
+}
+.ftype_titleA2 {
+    font: 24px Tahoma, Arial;
+    color: #e94f3b;
 }
 
-/** Font Style - Sub Titles **/
-h2, .font_subTitle {
-    font: bold 14px "Lucida Sans Unicode", Arial;
-    color: #B2b2B1;
+/** Font Style - titleB **/
+.ftype_titleB1 {
+    font: 16px Tahoma, Arial;
+    color: #dfd9c2;
+}
+.ftype_titleB2 {
+    font: 16px Tahoma, Arial;
+    color: #e94f3b;
 }
 
-/** Font Style - Normal Error **/
-.font_error {
-    font: italic 12px "Lucida Sans Unicode", Arial;
-    color: #c90600;
+/** Font Style - titleC **/
+.ftype_titleC1 {
+    font: 16px Tahoma, Arial;
+    color: #FFF;
+}
+.ftype_titleC2 {
+    font: 16px Tahoma, Arial;
+    color: #FFF;
 }
 
-/** Font Style - Normal Success **/
-.font_success {
-    font: italic 12px "Lucida Sans Unicode", Arial;
+/** Font Style - contentA **/
+.ftype_contentA {
+    font: 16px Tahoma, Arial;
+    color: #5e5755;
+}
+
+/** Font Style - successA **/
+.ftype_successA {
+    font: italic 12px Tahoma, Arial;
     color: #008b33;
 }
 
+/** Font Style - errorA **/
+.ftype_errorA {
+    font: italic 12px Tahoma, Arial;
+    color: #e94f3b;
+}
+
 /*********************************************/
-/**                  SKIN                   **/
+/**             DEFAULT SKIN                **/
+/** Color standards                         **/
+/** black - 2a2724                          **/
+/** red - e94f3b                            **/
+/** mid grey - b9a889                       **/
+/** dark grey - 5e5755                      **/
+/** pearl - f4f2ef                          **/
+/** beige - dfd9c2                          **/
 /*********************************************/
 
 input {
     background-color: #f4f2ef;
     color: #b2b2b1;
 }
-

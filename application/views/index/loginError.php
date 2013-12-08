@@ -8,4 +8,4 @@
  */
 ?>
 
-    <div class='loginError font_error'><?php echo $this->loginError; ?></div>
+    <div class='loginError ftype_errorA'><?php echo $this->loginError; ?></div>

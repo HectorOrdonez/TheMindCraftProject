@@ -32,7 +32,7 @@ jQuery().ready(function () {
     var footerRow = new Row(
         {'cells': [
             {
-                'html': '<a href="#" id="linkNewUser" class="font_normal"></a><form id="formNewUser" action="' + root_url + 'usersManagement/createUser"><input type="text" name="title" id="inputNewUser" /></form>',
+                'html': '<a href="#" id="linkNewUser" class="ftype_contentA"></a><form id="formNewUser" action="' + root_url + 'usersManagement/createUser"><input type="text" name="title" id="inputNewUser" /></form>',
                 'colspan': '4'
             }
         ], 'classList': ['footer']}
@@ -103,10 +103,10 @@ function openChangePasswordDialog($element) {
         passwordDialog.innerHTML = '' +
             '<div class="passwordInnerDialog">' +
             '   <form id="formChangePassword" action="' + root_url + 'usersManagement/editUserPassword">' +
-            '       <div class="title font_subTitle">New password</div>' +
+            '       <div class="title">New password</div>' +
             '       <input id="inputNewPassword" type="password" name="password" placeholder="Enter a new password" />' +
             '   </form>' +
-            '   <div class="font_error" id="passwordDialogInfoDisplayer"></div>' +
+            '   <div class="ftype_errorA" id="passwordDialogInfoDisplayer"></div>' +
             '</div>';
         jQuery('.bodyContent').append(passwordDialog);
         var $passwordDialog = jQuery('#passwordDialog');

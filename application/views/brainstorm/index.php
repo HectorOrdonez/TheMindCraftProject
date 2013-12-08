@@ -15,5 +15,5 @@
                     <table id='brainstorm_grid'>
                     </table>
                 </div>
-                <div class='font_error' id='errorDisplayer'>
+                <div class='ftype_errorA' id='errorDisplayer'>
                 </div>

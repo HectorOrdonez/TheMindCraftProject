@@ -208,13 +208,13 @@ function var_export (mixed_expression, bool_return) {
  * @param timeout - Time in mils of second that the message will remain displayed.
  */
 function setInfoMessage($infoDiv, type, message, timeout) {
-    $infoDiv.addClass('font_' + type);
+    $infoDiv.addClass('ftype_' + type + 'A');
     $infoDiv.html(message);
 
     setTimeout(function () {
         $infoDiv.fadeOut(function () {
             $infoDiv.html('');
-            $infoDiv.removeClass('font_' + type);
+            $infoDiv.removeClass('ftype_' + type + 'A');
             $infoDiv.fadeIn();
         });
     }, timeout);

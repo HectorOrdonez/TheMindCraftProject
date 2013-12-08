@@ -24,7 +24,7 @@ function createSelectionGrid() {
     var footerRow = new Row(
         {'cells': [
             {
-                'html': '<a href="#" id="linkNewIdea" class="font_normal"></a><form id="formNewIdea" action="' + root_url + 'workOut/createIdea"><input type="text" name="title" class="inputNewIdea" /></form>',
+                'html': '<a href="#" id="linkNewIdea" class="ftype_contentA"></a><form id="formNewIdea" action="' + root_url + 'workOut/createIdea"><input type="text" name="title" class="inputNewIdea" /></form>',
                 'colspan': '3'
             }
         ], 'classList': ['footer']}
@@ -107,7 +107,7 @@ function editDialog($element) {
     var previousTitle = $titleCell.html();
 
     // 4 - Replace title column text with input.
-    var titleCellContent = '<a href="#" id="linkEditIdea" class="font_normal"></a><form id="formEditIdea" action="' + root_url + 'workOut/editIdea"><input type="hidden" class="inputEditIdeaId" name="id" value="' + ideaId + '" /><input type="text" name="title" class="inputEditIdeaTitle" value="' + previousTitle + '"/></form>';
+    var titleCellContent = '<a href="#" id="linkEditIdea" class="ftype_contentA"></a><form id="formEditIdea" action="' + root_url + 'workOut/editIdea"><input type="hidden" class="inputEditIdeaId" name="id" value="' + ideaId + '" /><input type="text" name="title" class="inputEditIdeaTitle" value="' + previousTitle + '"/></form>';
     $titleCell.html(titleCellContent);
 
     // 5 - Focus user on Input

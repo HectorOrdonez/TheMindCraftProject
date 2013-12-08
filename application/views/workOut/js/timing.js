@@ -76,7 +76,7 @@ function openApplyTimeDialog($element) {
             '<div class="applyTimeInnerDialog">' +
             '   <form id="formApplyTime" action="' + root_url + 'workOut/applyTimeIdea">' +
             '   <input type="hidden" class="inputApplyTimeIdeaId" name="id" value="' + ideaId + '" />' +
-            '       <div class="title font_subTitle">Apply Time</div>' +
+            '       <div class="title">Apply Time</div>' +
             '       <input id="datePicker" name="date" placeholder="Set the day" value="' + dateTodoCell +'" />' +
             '       <div class="timeSelection">' +
             '           <label>At a certain time?</label>' +
@@ -94,9 +94,9 @@ function openApplyTimeDialog($element) {
             '               <p><label>Sunday</label><input type="checkbox" class="dayBox" name="howOften[]" value="sunday"></p>' +
             '           </div>' +
             '       </div>' +
-            '       <div class="font_subTitle" id="submitAppliedTime">Apply time</div>' +
+            '       <div class="" id="submitAppliedTime">Apply time</div>' +
             '   </form>' +
-            '   <div class="font_error" id="applyTimeInfoDisplayer"></div>' +
+            '   <div class="ftype_errorA" id="applyTimeInfoDisplayer"></div>' +
             '</div>';
         jQuery('.bodyContent').append(applyTimeDialog);
         var $applyTimeDialog = jQuery('#applyTimeDialog');

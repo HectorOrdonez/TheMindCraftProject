@@ -8,21 +8,21 @@
  */
 ?>
 
-                <div id='settingsSection' class='font_normal'>
+                <div id='settingsSection' class='ftype_contentA'>
 
-                    <div class='settingsTitle font_title'>
+                    <div class='settingsTitle'>
                         Settings.
                     </div>
 
-                    <div class='setting name font_subTitle'>
+                    <div class='setting name'>
                         <label>
                             A different name?
                         </label>
 
-                        <div class='current font_normal' id='name_label'><?php echo $this->currentUsername; ?></div>
+                        <div class='current ftype_contentA' id='name_label'><?php echo $this->currentUsername; ?></div>
 
                         <form class='formSetting'>
-                            <input type='text' class='font_normal' name='name' placeholder='new username'/>
+                            <input type='text' class='ftype_contentA' name='name' placeholder='new username'/>
                         </form>
 
                         <a href='#' class='change' id='name_change'></a>
@@ -30,15 +30,15 @@
                         <div class='info' id='name_info'></div>
                     </div>
 
-                    <div class='setting password font_subTitle'>
+                    <div class='setting password'>
                         <label>
                             A new password?
                         </label>
 
-                        <div class='current font_normal' id='password_label'> * * * * *</div>
+                        <div class='current ftype_contentA' id='password_label'> * * * * *</div>
 
                         <form class='formSetting'>
-                            <input type='password' class='font_normal' name='password' placeholder='new password'/>
+                            <input type='password' class='ftype_contentA' name='password' placeholder='new password'/>
                         </form>
 
                         <a href='#' class='change' id="password_change"></a>

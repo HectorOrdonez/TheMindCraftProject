@@ -8,7 +8,7 @@
  */
 ?>
 
-    <div class='inputErrors font_error'>
+    <div class='inputErrors ftype_errorA'>
 <?php foreach ($this->errors as $error) : ?>
         <div class='inputError'><?php echo $error; ?></div>
 <?php endforeach; ?>

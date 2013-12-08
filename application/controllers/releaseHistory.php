@@ -34,18 +34,21 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.212', '08/12/2013', array (
+        $this->_setDevelopmentVersion('0.213', '08/12/2013', array (
+            '[Visual improvement] - Added new font and colors default standard.',
+            '[Etc] - Removed previous font classes from project. Replaced, when defined, new font style.'
+        ));
+
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.212', '08/12/2013', array (
             '[Debug] - Fixed issue where some scripts where trying to get the body by the old ID. Replaced with the new one.',
             '[Etc] - Some comments had Project: Organizator. Replaced with The Mindcraft Project.',
             '[Etc] - Minor changes in the views in order to tabulate properly the code in Source-View mode.',
             '[Visual improvement] - Changes for the Logged In styles in Header and Footer, for both regular and admin users.'
         ));
-
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.211', '08/12/2013', array (
             '[Refactor] - More styles movement. With this release the non-logged styles are organized.'
         ));
-
         $this->_addHistoryLog('0.21', '08/12/2013', array (
             '[Refactor] - Changed header and footer related files structure.',
             '[Refactor] - Separated header and footer styles in different files.',
