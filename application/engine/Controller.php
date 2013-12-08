@@ -60,20 +60,23 @@ class Controller extends engineController
 
         if (Session::get('isUserLoggedIn') == TRUE)
         {
-            $this->_view->setHeaderChunk('application/views/general/logged_header.php');
-            $this->_view->setFooterChunk('application/views/general/logged_footer.php');
+            $this->_view->addLibrary('css', 'application/views/general/logged/css/base.css');
+            $this->_view->setHeaderChunk('application/views/general/logged/header.php');
+            $this->_view->setFooterChunk('application/views/general/logged/footer.php');
         } else {
-            $this->_view->setHeaderChunk('application/views/general/nonLogged_header.php');
-            $this->_view->setFooterChunk('application/views/general/nonLogged_footer.php');
+            $this->_view->addLibrary('css', 'application/views/general/nonLogged/css/base.css');
+            $this->_view->setHeaderChunk('application/views/general/nonLogged/header.php');
+            $this->_view->setFooterChunk('application/views/general/nonLogged/footer.php');
         }
 
         if (Session::get('userRole') == 'admin')
         {
-            $this->_view->setFooterChunk('application/views/general/admin_footer.php');
-            $this->_view->setParameter('myName', Session::get('userName'));
+            $this->_view->addLibrary('css', 'application/views/general/admin/css/base.css');
+            $this->_view->setFooterChunk('application/views/general/admin/footer.php');
         }
 
         $this->_view->setParameter('userLogin', Session::get('isUserLoggedIn'));
+        $this->_view->setParameter('userName', Session::get('userName'));
         $this->_view->setParameter('userRole', Session::get('userRole'));
     }
 }

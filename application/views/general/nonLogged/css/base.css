@@ -1,0 +1,59 @@
+/**
+ * Project: Organizator
+ * Description: Base CSS Library
+ * Here will be stored the styles related to generic elements, common in multiple pages.
+ * User: Hector Ordonez
+ * Date: 23/11/13 23:30
+*/
+
+/** NON LOGGED HEADER **/
+
+
+
+/*********************************************/
+/**             HEADER                      **/
+/*********************************************/
+
+#header {
+    width: 1000px;
+    height: 105px;
+}
+
+#header #logo {
+    position: absolute;
+    top: 35px;
+    background: url('../../../../../public/images/logo.png');
+    width: 300px;
+    height: 70px;
+    float: left;
+
+    cursor: pointer;
+}
+
+/** Right menu **/
+#header #headerPanel {
+    float: right;
+    margin-top: 70px;
+    margin-right: -50px;
+}
+
+#header #headerPanel a {
+    display: block;
+    float: left;
+
+    width: 100px;
+    height: 35px;
+    margin-left: 50px;
+}
+
+#header #headerPanel a:hover {
+    background-position: -100px 0;
+}
+
+#header #headerPanel .learnMore {
+    background: url('../../../../../public/images/LearnMore.png') no-repeat;
+}
+
+#header #headerPanel .signUp {
+    background: url('../../../../../public/images/SignUp.png') no-repeat;
+}
