@@ -36,7 +36,9 @@ class main extends Controller
         $this->_view->addLibrary('css', 'application/views/main/css/main.css');
 
         $this->_view->addLibrary('js', 'application/views/main/js/main.js');
-
+        
         $this->_view->addChunk('main/index');
+        
+        $this->_view->setParameter('userName', Session::get('userName'));
     }
 }

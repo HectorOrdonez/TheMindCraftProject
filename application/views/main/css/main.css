@@ -7,6 +7,15 @@
                                         options of the User: brainstorm, work out and action.
  */
 
+#welcome {
+    margin: 95px 0 20px 0;
+    text-align: center;
+}
+
+#welcome div {
+    display: inline;
+}
+
 #mainMenu {
     background: #FFF url('./../../../../public/images/Menu.png') no-repeat;
     height: 330px;

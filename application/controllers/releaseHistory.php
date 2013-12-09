@@ -34,12 +34,15 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.213', '08/12/2013', array (
-            '[Visual improvement] - Added new font and colors default standard.',
-            '[Etc] - Removed previous font classes from project. Replaced, when defined, new font style.'
+        $this->_setDevelopmentVersion('0.22', '08/12/2013', array (
+            '[Visual improvement] - New style for Main page.'
         ));
 
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.213', '08/12/2013', array (
+            '[Visual improvement] - Added new font and colors default standard.',
+            '[Etc] - Removed previous font classes from project. Replaced, when defined, new font style.'
+        ));
         $this->_addHistoryLog('0.212', '08/12/2013', array (
             '[Debug] - Fixed issue where some scripts where trying to get the body by the old ID. Replaced with the new one.',
             '[Etc] - Some comments had Project: Organizator. Replaced with The Mindcraft Project.',
