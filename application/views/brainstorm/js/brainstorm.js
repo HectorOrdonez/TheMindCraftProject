@@ -19,10 +19,10 @@ jQuery().ready(function () {
     // Brainstorm header construction
     var headerRow = new Row(
         {'cells': [
-            {'html': 'Id', 'classList': ['col_id']},
-            {'html': 'Title', 'classList': ['col_title']},
-            {'html': 'Actions', 'classList': ['col_actions']},
-            {'html': 'Date Creation', 'classList': ['col_date_creation']}
+            {'html': 'id', 'classList': ['col_id']},
+            {'html': 'title', 'classList': ['col_title', 'ftype_titleC']},
+            {'html': '', 'classList': ['col_actions']},
+            {'html': 'input date', 'classList': ['col_date_creation', 'ftype_titleC', 'centered']}
         ],
             'classList': ['header']
         });
@@ -31,7 +31,7 @@ jQuery().ready(function () {
     var footerRow = new Row(
         {'cells': [
             {
-                'html': '<a href="#" id="linkNewIdea" class="ftype_contentA"></a><form id="formNewIdea" action="' + root_url + 'brainstorm/createIdea"><input type="text" name="title" class="inputNewIdea" /></form>',
+                'html': '<a href="#" id="linkNewIdea"></a><form id="formNewIdea" action="' + root_url + 'brainstorm/createIdea"><input type="text" name="title" class="inputNewIdea ftype_contentA" /></form>',
                 'colspan': '3'
             }
         ], 'classList': ['footer']}
@@ -41,15 +41,17 @@ jQuery().ready(function () {
     var table = new Table('brainstorm_grid', {
         colModel: [
             {dataIndex: 'id', classList: ['id']},
-            {dataIndex: 'title', classList: ['title']},
+            {dataIndex: 'title', classList: ['title', 'ftype_contentA']},
             {staticElement: function (rowId) {
-                var editAction = '<a class="editAction">' + rowId + '</a>';
-                var delAction = '<a class="delAction"> ' + rowId + '</a>';
-                return editAction + delAction;
+                var actionBox = '<div class="actionBox">';
+                var editAction = '<div class="action"><a class="editAction">' + rowId + '</a></div>';
+                var delAction = '<div class="action"><a class="delAction"> ' + rowId + '</a></div>';
+                actionBox = actionBox + editAction + delAction + '</div>';
+                return actionBox;
             },
                 classList: ['actions']
             },
-            {dataIndex: 'date_creation'}
+            {dataIndex: 'date_creation', classList: ['ftype_contentA', 'centered']}
         ]});
     table.addHeaderElement(headerRow.getRow());
     table.addFooterElement(footerRow.getRow());
@@ -92,12 +94,15 @@ jQuery().ready(function () {
 
 /**
  * Replaces the title string in the row of the given element with an input that allows the user to edit it.
- * @param $element
+ * @param $clickedAction The clicked thing.
  */
-function editDialog($element) {
-    var $actionCell = $element.parent();
-    var $ideaRow = $element.parent().parent();
-    var ideaId = $element.html();
+function editDialog($clickedAction) {
+    /**
+     * The Clicked action is the <a> link. Its parent is the action div, which parent is the action box, which parent is the action cell.
+     */
+    var $actionCell = $clickedAction.parent().parent().parent(); 
+    var $ideaRow = $actionCell.parent();
+    var ideaId = $clickedAction.html();
     var $titleCell = $ideaRow.children().eq(1);
 
     // 1 - Save previous links in Action column
@@ -110,13 +115,13 @@ function editDialog($element) {
     var previousTitle = $titleCell.html();
 
     // 4 - Replace title column text with input.
-    var titleCellContent = '<a href="#" id="linkEditIdea" class="ftype_contentA"></a><form id="formEditIdea" action="' + root_url + 'brainstorm/editIdea"><input type="hidden" class="inputEditIdeaId" name="id" value="' + ideaId + '" /><input type="text" name="title" class="inputEditIdeaTitle" value="' + previousTitle + '"/></form>';
+    var titleCellContent = '<a href="#" id="linkEditIdea"></a><form id="formEditIdea" action="' + root_url + 'brainstorm/editIdea"><input type="hidden" class="inputEditIdeaId" name="id" value="' + ideaId + '" /><input type="text" name="title" class="inputEditIdeaTitle ftype_contentA" value="' + previousTitle + '"/></form>';
     $titleCell.html(titleCellContent);
 
     // 5 - Focus user on Input
     $titleCell.find('.inputEditIdeaTitle').focus();
     $titleCell.find('.inputEditIdeaTitle').blur(function () {
-        // Restore to normality
+        // Restore normality
         $titleCell.html(previousTitle);
         $actionCell.html(previousActions);
     });
@@ -145,7 +150,7 @@ function submitEditIdea($form, successCallback) {
     var $inputTitle = $form.find('.inputEditIdeaTitle');
 
     if ($inputTitle.val() == '') {
-        setInfoMessage($$errorDisplayer, 'error', 'Title cannot be empty.', 2000);
+        setInfoMessage($errorDisplayer, 'error', 'Title cannot be empty.', 2000);
         return;
     } else if ($inputTitle.val().length > 200) {
         setInfoMessage($errorDisplayer, 'error', 'Title cannot be longer than 200 characters.', 2000);
@@ -167,19 +172,21 @@ function submitEditIdea($form, successCallback) {
 
 /**
  * Asynchronous request to the server to delete an idea.
- * @param $element
+ * @param $clickedAction The clicked thing.
  */
-function deleteIdea($element) {
+function deleteIdea($clickedAction) {
     var $errorDisplayer = jQuery('#errorDisplayer');
     var url = root_url + 'brainstorm/deleteIdea';
-    var data = {'id': $element.html()};
+    var data = {'id': $clickedAction.html()};
+    
+    var $actionCell = $clickedAction.parent().parent().parent();
 
     jQuery.ajax({
         type: 'post',
         url: url,
         data: data
     }).done(function () {
-            brainstormGrid.table.removeContentId($element.parent().parent().attr('id'));
+            brainstormGrid.table.removeContentId($actionCell.parent().attr('id'));
         }
     ).fail(function (data) {
             setInfoMessage($errorDisplayer, 'error', data.statusText, 2000);

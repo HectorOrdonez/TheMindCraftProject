@@ -51,7 +51,7 @@
  * Action actions
 **/
 #action_grid .actions .finishAction {
-    background: url('./../../../../public/images/TEMP_edit.png') no-repeat;
+    background: url('./../../../../public/images/Edit.png') no-repeat;
     width: 16px;
     height: 16px;
     display: block;
@@ -61,7 +61,7 @@
 }
 
 #action_grid .actions .deleteAction {
-    background: url('./../../../../public/images/delete.png') no-repeat;
+    background: url('./../../../../public/images/Delete.png') no-repeat;
     width: 16px;
     height: 16px;
     display: block;

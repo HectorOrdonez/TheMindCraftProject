@@ -29,11 +29,11 @@
 }
 
 #brainstorm_grid .col_actions {
-    width: 15%;
+    width: 5%;
 }
 
 #brainstorm_grid .col_date_creation {
-    width: 15%;
+    width: 25%;
 }
 
 #brainstorm_grid .row .id, #brainstorm_grid .row .col_id {
@@ -49,7 +49,7 @@
     width: 10px;
     height: 10px;
 
-    margin: 5px 5px 0 5px;
+    margin: 10px 0 0 20px;
 }
 
 /**
@@ -60,35 +60,48 @@
 }
 
 #brainstorm_grid #formNewIdea input {
+    height: 30px;
     width: 100%;
     border: none;
-    text-indent: 20px;
+    text-indent: 35px;
 }
 
 #brainstorm_grid #formEditIdea .inputEditIdeaTitle {
-    width: 100%;
+    margin-top: -4px;
+    height: 30px;
+    width: 114%;
     border: none;
 }
 
 /**
  * Brainstorm actions
 **/
-#gridWrapper .actions .editAction {
-    background: url('./../../../../public/images/TEMP_edit.png') no-repeat;
-    width: 16px;
-    height: 16px;
-    display: block;
+#gridWrapper .actions {
+    padding-top: 0;
+}
+#gridWrapper .actionBox {
+    position: relative;
+    min-width: 100px;
+}
+#gridWrapper .actionBox div {
     float: left;
-    font-size: 0px;
+}
+#gridWrapper .action a {
+    width: 30px;
+    height: 30px;
+    display: block;
+    font-size: 0;
     cursor: pointer;
 }
 
-#gridWrapper .actions .delAction {
-    background: url('./../../../../public/images/delete.png') no-repeat;
-    width: 16px;
-    height: 16px;
-    display: block;
-    float: left;
-    font-size: 0;
-    cursor: pointer;
+#gridWrapper .action a:hover{
+    background-position: -30px 0;
+}
+
+#gridWrapper .action .editAction {
+    background: url('./../../../../public/images/Edit.png') no-repeat;
+}
+
+#gridWrapper .action .delAction {
+    background: url('./../../../../public/images/Delete.png') no-repeat;
 }

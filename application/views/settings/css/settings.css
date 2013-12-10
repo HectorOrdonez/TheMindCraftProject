@@ -29,12 +29,12 @@
 
     display: inline-block;
 
-    background: url('./../../../../public/images/TEMP_edit.png') no-repeat;
+    background: url('./../../../../public/images/Edit.png') no-repeat;
     width: 16px;
     height: 16px;
 }
 #settingsSection .setting .processing {
-    background: url('./../../../../public/images/TEMP_clock.gif') no-repeat;
+    background: url('./../../../../public/images/TMP_clock.gif') no-repeat;
 }
 
 #settingsSection .setting .info {

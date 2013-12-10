@@ -8,10 +8,10 @@
  */
 ?>
         <div id='welcome'>
-            <div class='ftype_titleB1'>
+            <div class='ftype_titleA1'>
                 Welcome
             </div>
-            <div class='ftype_titleB2'>
+            <div class='ftype_titleA2'>
                 <?php echo $this->userName; ?>
             </div>
         </div>

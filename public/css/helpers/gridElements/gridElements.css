@@ -10,54 +10,51 @@
  * Workspace is the Tbody tag from which headers, content and footer will append.
  */
 .workspace {
-    border: 1px solid #525251;
 }
 
 /**
- * Class header defines the top rows of the table.
+ * All Rows in workspace.
  */
-.workspace .header {
-    background-color: #e94f3b;
-    text-indent: 5px;
-}
 
-/**
- * Class content defines the content rows of the table.
- */
-.workspace .content {
-
-}
-
-/**
- * Class footer defines the rows at the bottom of the table.
- */
-.workspace .footer {
+.workspace .row {
+    height: 30px;
 }
 
 /**
  * Rows of the header section
  */
-.workspace .header.row {
-    border: 1px solid #555;
+.workspace .header {
+    text-indent: 20px;
+    background-color: #2a2724;
 }
 
 /**
  * Rows of the content section
  */
-.workspace .content.row {
-    border-top: none;
-    border-bottom: none;
+.workspace .content {
+    text-indent: 20px;
+    padding-top: 4px;
+}
+
+/**
+ * Rows of the footer section
+ */
+.workspace .footer {
+    background-color: #f4f2ef;
 }
 
 /**
  * Row color definitions
  */
+
+/** Pair rows **/
 .workspace .row.content:nth-child(2n+1) {
-    background-color: #f4f2ef;
+    background-color: #dfd9c2;
 }
 
+/** Odd rows **/
 .workspace .row.content {
-    background-color: #dfd9c2;
+    background-color: #f4f2ef;
 }
 
 .workspace .row.content:hover {
@@ -65,22 +62,17 @@
 }
 
 /**
- * Rows of the footer section
- */
-.workspace .footer.row {
-    border: 1px solid #555;
-}
-
-/**
  * Cells of the header section
  */
 .workspace .header .cell {
+    padding-top: 4px;
 }
 
 /**
  * Cells of the content section
  */
 .workspace .content .cell {
+    padding-top: 4px;
     border-left: none;
     border-right: none;
 }
@@ -89,4 +81,13 @@
  * Cells of the footer section
  */
 .workspace .footer .cell {
+}
+
+
+/**
+ * Extras
+ */
+.workspace .cell.centered {
+    text-align: center;
+    text-indent: 0;
 }

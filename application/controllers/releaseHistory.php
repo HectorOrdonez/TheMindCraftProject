@@ -34,11 +34,15 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.22', '08/12/2013', array (
-            '[Visual improvement] - New style for Main page.'
+        $this->_setDevelopmentVersion('0.23', '08/12/2013', array (
+            '[Refactor] - Implemented new table design.',
+            '[Refactor] - Removed usage of old images and added two new ones. Modified code to use the new images.'
         ));
 
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.22', '08/12/2013', array (
+            '[Visual improvement] - New style for Main page.'
+        ));
         $this->_addHistoryLog('0.213', '08/12/2013', array (
             '[Visual improvement] - Added new font and colors default standard.',
             '[Etc] - Removed previous font classes from project. Replaced, when defined, new font style.'
