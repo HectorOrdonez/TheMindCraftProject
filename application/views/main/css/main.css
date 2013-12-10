@@ -10,17 +10,29 @@
 #welcome {
     margin: 95px 0 20px 0;
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
 #welcome div {
     display: inline;
 }
 
-#mainMenu {
+#mainMenu #spinningCircle {
+    position: absolute;
+    left: 50%;
+    margin-left: -165px;
+    
     background: #FFF url('./../../../../public/images/Menu.png') no-repeat;
     height: 330px;
     width: 330px;
+    z-index: 0;
+}
 
+#mainMenu #processActions {
+    height: 330px;
+    width: 330px;
+    
     margin: 0 auto;
 }
 
@@ -28,38 +40,26 @@
     position: relative;
     background-repeat: no-repeat;
 
-    width: 200px;
-    height: 80px;
+    width: 75px;
+    height: 75px;
 
     display: block;
 }
-#mainMenu a:hover {
-    background-position: 200px 0;
-}
 
 #mainMenu .brainstorm {
-    top: 15px;
-    left: 15px;
-    background: url('./../../../../public/images/BrainStorm.png');
-}
-#mainMenu .brainstorm:hover {
-    top: 22px;
+    top: 23px;
+    left: 22px;
+    background: url('./../../../../public/images/BrainStorm.png') no-repeat;
 }
 
 #mainMenu .workOut{
-    top: 0;
-    left: 275px;
-    background: url('./../../../../public/images/WorkOut.png');
-}
-#mainMenu .workOut:hover {
-    top: 10px;
+    top: 11px;
+    left: 272px;
+    background: url('./../../../../public/images/WorkOut.png') no-repeat;
 }
 
 #mainMenu .perform{
-    top: 105px;
+    top: 120px;
     left: 95px;
-    background: url('./../../../../public/images/PerForm.png');
-}
-#mainMenu .perform:hover{
-    top: 115px;
+    background: url('./../../../../public/images/PerForm.png') no-repeat;
 }

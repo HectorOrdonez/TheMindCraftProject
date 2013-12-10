@@ -34,13 +34,18 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.23', '08/12/2013', array (
-            '[Refactor] - Implemented new table design.',
-            '[Refactor] - Removed usage of old images and added two new ones. Modified code to use the new images.'
+        $this->_setDevelopmentVersion('0.24', '10/12/2013', array (
+            '[Code improvement] - Added JQuery plugin Transit to the site.',
+            '[Visual improvement] - Added movement to the center of the Main page.',
+            '[Visual improvement] - Replaced previous images for main page links to new ones without text. Added events to it, so now they get bigger when hovering.'
         ));
 
         // Setting Historical Log of releases
-        $this->_addHistoryLog('0.22', '08/12/2013', array (
+        $this->_addHistoryLog('0.23', '10/12/2013', array (
+            '[Refactor] - Implemented new table design.',
+            '[Refactor] - Removed usage of old images and added two new ones. Modified code to use the new images.'
+        ));
+        $this->_addHistoryLog('0.22', '09/12/2013', array (
             '[Visual improvement] - New style for Main page.'
         ));
         $this->_addHistoryLog('0.213', '08/12/2013', array (

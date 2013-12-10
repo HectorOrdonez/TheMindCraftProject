@@ -18,7 +18,12 @@
             
         </div>
         <div id='mainMenu'>
-            <a class='option brainstorm' href="<?php echo _SYSTEM_BASE_URL; ?>brainstorm"></a>
-            <a class='option workOut' href="<?php echo _SYSTEM_BASE_URL; ?>workOut"></a>
-            <a class='option perform' href="<?php echo _SYSTEM_BASE_URL; ?>perform"></a>
+            <div id='spinningCircle'>
+            </div>
+
+            <div id='processActions'>
+                <a class='option brainstorm' href="<?php echo _SYSTEM_BASE_URL; ?>brainstorm"></a>
+                <a class='option workOut' href="<?php echo _SYSTEM_BASE_URL; ?>workOut"></a>
+                <a class='option perform' href="<?php echo _SYSTEM_BASE_URL; ?>perform"></a>
+            </div>
         </div>

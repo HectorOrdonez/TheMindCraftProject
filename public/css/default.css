@@ -89,63 +89,59 @@ body {
 
 /** Font Style - logo **/
 .ftype_logo1 {
-    font: 36px Tahoma, Arial;
+    font: bold 36px Tahoma;
     color: #dfd9c2;
 }
 .ftype_logo2 {
-    font: 36px Tahoma, Arial;
+    font: bold 36px Tahoma;
     color: #e94f3b;
 }
 .ftype_logo3 {
-    font: 36px Tahoma, Arial;
+    font: bold 36px Tahoma;
     color: #2a2724;
 }
 
 /** Font Style - titleA **/
 .ftype_titleA1 {
-    font: 24px Tahoma, Arial;
+    font: 24px Tahoma;
     color: #dfd9c2;
 }
 .ftype_titleA2 {
-    font: 24px Tahoma, Arial;
+    font: 24px Tahoma;
     color: #e94f3b;
 }
 
 /** Font Style - titleB **/
 .ftype_titleB1 {
-    font: 16px Tahoma, Arial;
+    font: bold 16px Tahoma;
     color: #dfd9c2;
 }
 .ftype_titleB2 {
-    font: 16px Tahoma, Arial;
+    font: bold 16px Tahoma;
     color: #e94f3b;
 }
 
 /** Font Style - titleC **/
-.ftype_titleC1 {
-    font: 16px Tahoma, Arial;
-    color: #FFF;
-}
-.ftype_titleC2 {
-    font: 16px Tahoma, Arial;
+.ftype_titleC {
+    font: bold 16px Tahoma;
     color: #FFF;
 }
 
 /** Font Style - contentA **/
 .ftype_contentA {
-    font: 16px Tahoma, Arial;
+    font: 16px Tahoma;
     color: #5e5755;
 }
 
 /** Font Style - successA **/
 .ftype_successA {
-    font: italic 12px Tahoma, Arial;
+    font: italic 12px Tahoma;
     color: #008b33;
 }
 
 /** Font Style - errorA **/
 .ftype_errorA {
-    font: italic 12px Tahoma, Arial;
+    font: italic 12px Tahoma;
     color: #e94f3b;
 }
 
