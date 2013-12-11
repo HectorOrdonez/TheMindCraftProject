@@ -104,21 +104,29 @@ body {
 /** Font Style - titleA **/
 .ftype_titleA1 {
     font: 24px Tahoma;
-    color: #dfd9c2;
+    color: #b9a889;
 }
 .ftype_titleA2 {
     font: 24px Tahoma;
     color: #e94f3b;
 }
+.ftype_titleA3 {
+    font: 24px Tahoma;
+    color: #5e5755;
+}
 
 /** Font Style - titleB **/
 .ftype_titleB1 {
     font: bold 16px Tahoma;
-    color: #dfd9c2;
+    color: #b9a889;
 }
 .ftype_titleB2 {
     font: bold 16px Tahoma;
     color: #e94f3b;
+}
+.ftype_titleB3 {
+    font: 16px Tahoma;
+    color: #5e5755;
 }
 
 /** Font Style - titleC **/

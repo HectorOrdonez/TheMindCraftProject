@@ -8,15 +8,17 @@
 jQuery().ready(function () {
     initSpinning();
     
-    jQuery('#processActions').find('a').hover(function () {
+    jQuery('#processActions').find('.action img').hover(function () {
         jQuery(this).transition({
-            scale: 1.2,
-            duration: 200
+            scale: 1.33,
+            duration: 150,
+            queue: false
         });
     }, function () {
         jQuery(this).transition({
             scale: 1,
-            duration: 200
+            duration: 150,
+            queue: false
         });
     });
 });

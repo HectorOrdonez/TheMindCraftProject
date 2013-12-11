@@ -8,12 +8,12 @@
  */
 ?>
         <div id='welcome'>
-            <div class='ftype_titleA1'>
+            <span class='ftype_titleA1'>
                 Welcome
-            </div>
-            <div class='ftype_titleA2'>
+            </span>
+            <span class='ftype_titleA2'>
                 <?php echo $this->userName; ?>
-            </div>
+            </span>
         </div>
             
         </div>
@@ -22,8 +22,29 @@
             </div>
 
             <div id='processActions'>
-                <a class='option brainstorm' href="<?php echo _SYSTEM_BASE_URL; ?>brainstorm"></a>
-                <a class='option workOut' href="<?php echo _SYSTEM_BASE_URL; ?>workOut"></a>
-                <a class='option perform' href="<?php echo _SYSTEM_BASE_URL; ?>perform"></a>
+                <div class='action brainStorm'>
+                    <a href="<?php echo _SYSTEM_BASE_URL; ?>brainStorm">
+                        <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>BrainStorm.png' alt='BrainStorm' />
+                    </a>
+                    <div class='text'>
+                        <span class='ftype_titleA1'>Brain</span><span class='ftype_titleA2'>Storm</span><span class='ftype_titleA3'>!</span>
+                    </div>
+                </div>
+                <div class='action workOut'>
+                    <a href="<?php echo _SYSTEM_BASE_URL; ?>workOut">
+                        <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>WorkOut.png' alt='WorkOut' />
+                    </a>
+                    <div class='text'>
+                        <span class='ftype_titleA1'>Work</span><span class='ftype_titleA2'>Out</span><span class='ftype_titleA3'>!</span>
+                    </div>
+                </div>
+                <div class='action perForm'>
+                    <a href="<?php echo _SYSTEM_BASE_URL; ?>perForm">
+                        <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>PerForm.png' alt='PerForm' />
+                    </a>
+                    <div class='text'>
+                        <span class='ftype_titleA1'>Per</span><span class='ftype_titleA2'>Form</span><span class='ftype_titleA3'>!</span>
+                    </div>
+                </div>
             </div>
         </div>

@@ -8,21 +8,17 @@
  */
 
 #welcome {
+    position: relative;
     margin: 95px 0 20px 0;
     text-align: center;
-    position: relative;
     z-index: 1;
-}
-
-#welcome div {
-    display: inline;
 }
 
 #mainMenu #spinningCircle {
     position: absolute;
     left: 50%;
     margin-left: -165px;
-    
+
     background: #FFF url('./../../../../public/images/Menu.png') no-repeat;
     height: 330px;
     width: 330px;
@@ -30,36 +26,138 @@
 }
 
 #mainMenu #processActions {
-    height: 330px;
+    position: relative;
     width: 330px;
-    
     margin: 0 auto;
+    z-index: 1;
 }
 
-#mainMenu a {
+#mainMenu #processActions img {
+    width: 60px;
+    height: 60px;
+}
+
+#mainMenu #processActions .text {
+    position: relative;
+    top: -20px;
+    left: 41px;
+}
+
+#mainMenu #processActions div.action {
+    position: relative;
+}
+
+#mainMenu #processActions .brainStorm {
+    top: 29px;
+    left: 24px;
+}
+
+#mainMenu #processActions .workOut{
+    top: -3px;
+    left: 281px;
+}
+
+#mainMenu #processActions .perForm{
+    top: 98px;
+    left: 99px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+
+#mainMenu #processActions a {
     position: relative;
     background-repeat: no-repeat;
-
-    width: 75px;
-    height: 75px;
-
     display: block;
+    text-decoration: none;
+}
+
+#mainMenu #processActions div {
+    display: inline;
 }
 
 #mainMenu .brainstorm {
     top: 23px;
     left: 22px;
-    background: url('./../../../../public/images/BrainStorm.png') no-repeat;
 }
 
 #mainMenu .workOut{
     top: 11px;
     left: 272px;
-    background: url('./../../../../public/images/WorkOut.png') no-repeat;
 }
 
 #mainMenu .perform{
     top: 120px;
     left: 95px;
-    background: url('./../../../../public/images/PerForm.png') no-repeat;
 }
+
+**/
