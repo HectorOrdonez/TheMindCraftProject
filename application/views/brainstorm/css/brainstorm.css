@@ -48,11 +48,11 @@
 **/
 #brainstorm_grid #linkNewIdea {
     position: absolute;
-    background: url('./../../../../public/images/TMP_add.png');
-    width: 10px;
-    height: 10px;
+    background: url('./../../../../public/images/Plus.png');
+    width: 15px;
+    height: 15px;
 
-    margin: 10px 0 0 20px;
+    margin: 8px 0 0 12px;
 }
 
 /**
