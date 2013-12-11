@@ -34,11 +34,14 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.244', '11/12/2013', array (
-            '[Visual improvement] - Added text to the process actions. Minor modifications in the image sizes. '
+        $this->_setDevelopmentVersion('0.245', '11/12/2013', array (
+            '[Debug] - Minor issue with the Welcoming message.'
         ));
 
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.244', '11/12/2013', array (
+            '[Visual improvement] - Added text to the process actions. Minor modifications in the image sizes. '
+        ));
         $this->_addHistoryLog('0.243', '11/12/2013', array (
             '[Visual improvement] - Replaced temporal Add image for creating new ideas with new Plus image.'
         ));
