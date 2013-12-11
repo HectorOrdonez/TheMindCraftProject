@@ -34,11 +34,14 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.241', '10/12/2013', array (
-            '[Visual improvement] - Added partial rotation and stop sequence to the circle spinning in the main page.'
+        $this->_setDevelopmentVersion('0.242', '10/12/2013', array (
+            '[Debug] - Minor fixes in the visuals of the new table design implementation.'
         ));
 
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.241', '10/12/2013', array (
+            '[Visual improvement] - Added partial rotation and stop sequence to the circle spinning in the main page.'
+        ));
         $this->_addHistoryLog('0.24', '10/12/2013', array (
             '[Code improvement] - Added JQuery plugin Transit to the site.',
             '[Visual improvement] - Added movement to the center of the Main page.',

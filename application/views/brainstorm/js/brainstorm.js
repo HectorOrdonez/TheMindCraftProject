@@ -78,7 +78,7 @@ jQuery().ready(function () {
     });
 
     // Adding edit and delete triggers
-    $grid.delegate('.title', 'dblclick', function () {
+    $grid.delegate('.title', 'click', function () {
         editDialog(jQuery(this).parent().find('.editAction'));
     });
     $grid.delegate('.editAction', 'click', function () {
