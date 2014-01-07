@@ -5,14 +5,26 @@
  * Description:
  * View engine class.
  * Its purpose is to define the behavior of the Views of the application and to provide general methods.
- * Date: 11/06/13 12:00
- * @todo Redesign View concept.
+ * @date: 11/06/13 12:00
  */
 
 namespace engine;
 
+use engine\drivers\Exception;
+use engine\drivers\Exceptions\ViewException;
+
+/**
+ * Class View
+ * @package engine
+ */
 class View
 {
+    /**
+     * Default error messages.
+     */
+    const MAIN_CHUNK_ALREADY_SET = "Main chunk can not be set as it is already set.";
+    const CHUNK_NOT_SET = "Requested chunk %s is not set.";
+
     /**
      * Title of the Page.
      * @var string
@@ -26,25 +38,13 @@ class View
     protected $_js = array();
 
     /**
-     * List of css files that the page needs to load
+     * List of css files that the page needs to load.
      * @var array
      */
     protected $_css = array();
 
     /**
-     * Path of the header to be rendered.
-     * @var string
-     */
-    protected $_header = 'application/views/general/header.php';
-
-    /**
-     * Path of the footer to be rendered.
-     * @var string
-     */
-    protected $_footer = 'application/views/general/footer.php';
-
-    /**
-     * Array of view chunks to be rendered. The set order defines the render order.
+     * Array of view chunks that can be displayed.
      * @var array
      */
     protected $_chunks = array();
@@ -79,24 +79,20 @@ class View
 
     /**
      * Adds a CSS or JS library to the appropriate array in the View.
-     * The handling of these arrays is normally done in the Header. In case the general Header is not called, another
-     * view has to render them.
-     *
      * Notice that if the first four characters are http, the library is considered external and the BASE_URL of the system won't be added to the String.
      *
-     * @param string $type
      * @param string $libraryPath
      */
-    public function addLibrary($type, $libraryPath)
+    public function addLibrary($libraryPath)
     {
         if (substr($libraryPath, 0, 4) !== "http") {
             $libraryPath = _SYSTEM_BASE_URL . $libraryPath;
         }
-
-        if ($type == 'css') {
-            $this->_css[] = $libraryPath;
-        } elseif ($type == 'js') {
+        
+        if(substr($libraryPath, -2, 2) == 'js'){
             $this->_js[] = $libraryPath;
+        } else {
+            $this->_css[] = $libraryPath;
         }
     }
 
@@ -115,7 +111,7 @@ class View
      * Sets the title of the page.
      * @param string $title
      */
-    public function setTitle ($title)
+    public function setTitle($title)
     {
         $this->_title = $title;
     }
@@ -131,49 +127,20 @@ class View
     }
 
     /**
-     * Sets the Header chunk.
-     * @param string $chunk
+     * Gets a parameter with the specified key in the view.
+     * @param string $key
+     * @return mixed $value
      */
-    public function setHeaderChunk($chunk)
+    public function getParameter($key)
     {
-        $this->_header = $chunk;
-    }
-
-    /**
-     * Sets the Footer chunk.
-     * @param string $chunk
-     */
-    public function setFooterChunk($chunk)
-    {
-        $this->_footer = (string) $chunk;
-    }
-
-    /**
-     * Adds a view chunk. As an optional parameter, position can be sent. In that
-     * case the view chunk is injected in that position.
-     * @param string $chunk
-     * @param int $pos
-     */
-    public function addChunk($chunk, $pos = NULL)
-    {
-        if (!isset($pos))
-        {
-            $this->_chunks[] = $chunk;
-        }
-        else
-        {
-            $prevChunks = array_slice($this->_chunks, 0, $pos);
-            $postChunks = array_slice($this->_chunks, $pos);
-            $prevChunks[] = $chunk;
-            $this->_chunks= array_merge($prevChunks, $postChunks);
-        }
+        return $this->$key;
     }
 
     /**
      * Returns the Title.
      * @return string
      */
-    private function _getTitle()
+    public function getTitle()
     {
         return $this->_title;
     }
@@ -182,7 +149,7 @@ class View
      * Returns the array of Css libraries.
      * @return array
      */
-    private function _getCss()
+    public function getCss()
     {
         return $this->_css;
     }
@@ -191,7 +158,7 @@ class View
      * Returns the array of Js libraries.
      * @return array
      */
-    private function _getJs()
+    public function getJs()
     {
         return $this->_js;
     }
@@ -200,27 +167,50 @@ class View
      * Returns the array of Meta tags.
      * @return array
      */
-    private function _getMeta()
+    public function getMeta()
     {
         return $this->_meta;
     }
 
     /**
-     * Renders the chunks of the View.
+     * Adds a view chunk. The chunk name gives the chunk a key to be accessed when requested by printChunk and tha path
+     * specifies the View where to search it when printing.
+     *
+     * Notice that main chunk is special - it is the one that will be printed when rendering the view, and it should
+     * be in charge of printing what is required.
+     * Because of this, replacing main chunk with another one once it is set is not allowed.
+     *
+     * @param string $path Chunk path.
+     * @param string $name Chunk name.
+     * @throws ViewException
      */
-    public function render()
+    public function addChunk($path, $name = 'main')
     {
-        if (strlen($this->_header) > 0) {
-            require $this->_header;
+        if ('main' == $name and isset($this->_chunks[$name])) {
+            throw new ViewException(sprintf(self::MAIN_CHUNK_ALREADY_SET), Exception::FATAL_EXCEPTION);
         }
 
-        foreach ($this->_chunks as $chunk)
-        {
-            require 'application/views/' . $chunk . '.php';
-        }
+        $this->_chunks[$name] = $path;
+    }
 
-        if (strlen($this->_footer) > 0) {
-            require $this->_footer;
+    /**
+     * Prints a chunks.
+     * 
+     * Notice that in case main chunk is requested and it is not defined, it does NOT triggers an exception.
+     * That allows controllers to avoid using views in, for example, an Ajax request.
+     * 
+     * @param string $name
+     * @throws ViewException
+     */
+    public function printChunk($name = 'main')
+    {
+        if (!isset($this->_chunks[$name])) {
+            // No exception if no view is required.
+            if ('main' == $name) return;
+            
+            throw new ViewException(sprintf(self::CHUNK_NOT_SET, $name), Exception::FATAL_EXCEPTION);
         }
+        
+        require _SYSTEM_ROOT_PATH . "application/views/{$this->_chunks[$name]}.php";
     }
 }

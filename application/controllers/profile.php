@@ -11,20 +11,20 @@
 namespace application\controllers;
 
 use application\engine\Controller;
-use application\libraries\ProfileLibrary;
+use application\services\ProfileService;
 use engine\Session;
 
 class profile extends Controller
 {
     /**
-     * Defining $_library Library type.
-     * @var ProfileLibrary $_library
+     * Defining $_service Service type.
+     * @var ProfileService $_service
      */
-    protected $_library;
+    protected $_service;
 
     public function __construct()
     {
-        parent::__construct(new ProfileLibrary);
+        parent::__construct(new ProfileService);
 
         $logged = Session::get('isUserLoggedIn');
         if ($logged == FALSE) {
@@ -38,8 +38,8 @@ class profile extends Controller
      */
     public function index()
     {
-        $this->_view->addLibrary('js', 'application/views/profile/js/profile.js');
-        $this->_view->addLibrary('css', 'application/views/profile/css/profile.css');
+        $this->_view->addLibrary('application/views/profile/js/profile.js');
+        $this->_view->addLibrary('application/views/profile/css/profile.css');
         $this->_view->addChunk('profile/index');
     }
 }

@@ -45,7 +45,7 @@ jQuery().ready(function () {
             {staticElement: function (rowId) {
                 var actionBox = '<div class="actionBox">';
                 var editAction = '<div class="action"><a class="editAction">' + rowId + '</a></div>';
-                var delAction = '<div class="action"><a class="delAction"> ' + rowId + '</a></div>';
+                var delAction = '<div class="action"><a class="delAction">' + rowId + '</a></div>';
                 actionBox = actionBox + editAction + delAction + '</div>';
                 return actionBox;
             },

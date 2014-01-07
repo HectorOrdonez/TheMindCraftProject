@@ -18,11 +18,11 @@ use engine\Session;
 class signUp extends Controller
 {
     /**
-     * Defining $_library Library type.
+     * Defining $_service Service type.
      * @var null $_library
      * @todo Assign library to the controller.
      */
-    protected $_library;
+    protected $_service;
 
     public function __construct()
     {

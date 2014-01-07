@@ -33,10 +33,10 @@ class main extends Controller
      */
     public function index()
     {
-        $this->_view->addLibrary('css', 'application/views/main/css/main.css');
+        $this->_view->addLibrary('application/views/main/css/main.css');
 
-        $this->_view->addLibrary('js', 'application/views/main/js/main.js');
-        $this->_view->addLibrary('js', 'public/js/external/jquery.transit.js');
+        $this->_view->addLibrary('application/views/main/js/main.js');
+        $this->_view->addLibrary('public/js/external/jquery.transit.js');
         
         $this->_view->addChunk('main/index');
         

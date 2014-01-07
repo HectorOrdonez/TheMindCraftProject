@@ -5,10 +5,13 @@
  * Description:
  * View chunk for the non-logged users footer.
  * Date: 27/07/13 19:15
+ *
+ * @var \application\engine\View $this
  */
 ?>
 
-    </div>
+
+</div>
     <!-- Closing non-Logged Content -->
 
     <div id='footer'>

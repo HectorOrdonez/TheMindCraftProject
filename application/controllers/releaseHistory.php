@@ -34,11 +34,21 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.245', '11/12/2013', array (
-            '[Debug] - Minor issue with the Welcoming message.'
+        $this->_setDevelopmentVersion('0.250', '07/01/2013', array (
+            'Happy new year!',
+            '[Core Update] - Updated TheMindcraftProject Hecnel Framework to Version 3.001.',
+            '[Refactor] - Absolutely awesome refactor of the whole project due to lots of improvements that new Hecnel brings.',
+            '[Refactor] - Library object is replaced by Service object.',
+            '[Refactor] - New View engine means changes in related code.',
+            '[Refactor] - Validation system disappears, being replaced by a new Form and Input system',
+            '[Refactor] - Previous Database-Model system is smashed by php-activerecord, which brings lots of awesomeness to the project.',
+            '[Etc] - A high number of issues are here and there. I am not concerned about it because the new design is still on the way and changes are going to be done.',
         ));
 
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.245', '11/12/2013', array (
+            '[Debug] - Minor issue with the Welcoming message.'
+        ));
         $this->_addHistoryLog('0.244', '11/12/2013', array (
             '[Visual improvement] - Added text to the process actions. Minor modifications in the image sizes. '
         ));
@@ -199,7 +209,7 @@ class ReleaseHistory extends Controller
      */
     public function index()
     {
-        $this->_view->addLibrary('css', 'application/views/releaseHistory/css/releaseHistory.css');
+        $this->_view->addLibrary('application/views/releaseHistory/css/releaseHistory.css');
 
         $this->_view->setParameter('developmentVersion', $this->_getDevelopmentVersion());
         $this->_view->setParameter('historicalLog', $this->_getHistoryLog());

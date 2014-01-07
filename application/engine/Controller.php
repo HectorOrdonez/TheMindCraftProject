@@ -17,11 +17,11 @@ class Controller extends engineController
     /**
      * Controller constructor of the application engine.
      *
-     * @param Library $library in which this Controller can search for the Model
+     * @param Service $service in which this Controller can search for the Model
      */
-    public function __construct(Library $library = NULL)
+    public function __construct(Service $service = NULL)
     {
-        parent::__construct($library);
+        parent::__construct($service);
     }
 
     /**
@@ -33,10 +33,10 @@ class Controller extends engineController
         parent::_setView();
 
         $this->_view->setTitle('The Mindcraft Project');
-        $this->_view->addLibrary('css', 'public/css/default.css');
+        $this->_view->addLibrary('public/css/default.css');
 
-        $this->_view->addLibrary('js', 'public/js/external/jquery-1.10.1.js');
-        $this->_view->addLibrary('js', 'public/js/general.js');
+        $this->_view->addLibrary('public/js/external/jquery-1.10.1.js');
+        $this->_view->addLibrary('public/js/general.js');
 
         $this->_view->setMeta('description', array(
             'name' => 'description',
@@ -60,21 +60,24 @@ class Controller extends engineController
 
         if (Session::get('isUserLoggedIn') == TRUE)
         {
-            $this->_view->addLibrary('css', 'application/views/general/logged/css/base.css');
-            $this->_view->setHeaderChunk('application/views/general/logged/header.php');
-            $this->_view->setFooterChunk('application/views/general/logged/footer.php');
+            $this->_view->addLibrary('application/views/general/logged/css/base.css');
+            $headerPath = 'general/logged/header';
+            $footerPath = 'general/logged/footer';
         } else {
-            $this->_view->addLibrary('css', 'application/views/general/nonLogged/css/base.css');
-            $this->_view->setHeaderChunk('application/views/general/nonLogged/header.php');
-            $this->_view->setFooterChunk('application/views/general/nonLogged/footer.php');
+            $this->_view->addLibrary('application/views/general/nonLogged/css/base.css');
+            $headerPath = 'general/nonLogged/header';
+            $footerPath = 'general/nonLogged/footer';
         }
 
         if (Session::get('userRole') == 'admin')
         {
-            $this->_view->addLibrary('css', 'application/views/general/admin/css/base.css');
-            $this->_view->setFooterChunk('application/views/general/admin/footer.php');
+            $this->_view->addLibrary('application/views/general/admin/css/base.css');
+            $footerPath = 'general/admin/footer';
         }
 
+        $this->_view->addChunk($headerPath, 'header');
+        $this->_view->addChunk($footerPath, 'footer');
+        
         $this->_view->setParameter('userLogin', Session::get('isUserLoggedIn'));
         $this->_view->setParameter('userName', Session::get('userName'));
         $this->_view->setParameter('userRole', Session::get('userRole'));

@@ -5,8 +5,11 @@
  * Description:
  * View chunk for the Error exception display.
  * Date: 23/07/13 13:30
+ *
+ * @var \application\engine\View $this
  */
 ?>
+<?php $this->printChunk('header'); ?>
 
                 <div class='exception'>
                     <table class="exceptionTable">
@@ -15,26 +18,26 @@
                             <td class="exceptionLabel">
                                 Exception
                             </td>
-                            <td class="exceptionValue"><?php echo $this->exception; ?></td>
+                            <td class="exceptionValue"><?php echo $this->getParameter('exception'); ?></td>
                         </tr>
                         <tr>
                             <td class="exceptionLabel">
                                 File
                             </td>
-                            <td class="exceptionValue"><?php echo $this->file; ?></td>
+                            <td class="exceptionValue"><?php echo $this->getParameter('file'); ?></td>
                         </tr>
                         <tr>
                             <td class="exceptionLabel">
                                 Line
                             </td>
-                            <td class="exceptionValue"><?php echo $this->line; ?></td>
+                            <td class="exceptionValue"><?php echo $this->getParameter('line'); ?></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class='exceptionTrack'>
-                    <?php foreach ($this->backtrace as $traces): ?>
+                    <?php foreach ($this->getParameter('backtrace') as $traces): ?>
                         <table class="backtraceTable">
                             <?php foreach ($traces as $tracedField => $tracedValue): ?>
                                 <tr class="backtraceRow">
@@ -45,3 +48,5 @@
                         </table>
                     <?php endforeach; ?>
                 </div>
+
+<?php $this->printChunk('footer'); ?>

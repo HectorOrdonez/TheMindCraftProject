@@ -6,13 +6,12 @@
 // First thing ever, session_start.
 session_start();
 
-use engine\Bootstrap;
-
 /**
  * Loading System Configs
  */
-require 'config/system.php';
-require 'config/database.php';
+require_once 'application/config/system.php';
+require_once 'application/config/database.php';
+require_once 'engine/php-activerecord/ActiveRecord.php';
 
 /**
  * Defining Autoload function
@@ -33,8 +32,19 @@ function __autoload($class)
         header("HTTP/1.1 500 " . $msg);
         exit($msg);
     }
-
 }
+
+/**
+ * Initializing ActiveRecord
+ */
+ActiveRecord\Config::initialize(function($cfg)
+{
+    $cfg->set_model_directory('application/models');
+    $cfg->set_connections(array('development' => DB_TYPE . '://' . DB_USER . ':' . DB_PASS . '@' . DB_HOST . '/' . DB_NAME));
+});
+
+use engine\Bootstrap;
+
 // Run app
 $application = new Bootstrap();
 $application->set_DEFAULT_CONTROLLER(_DEFAULT_CONTROLLER);

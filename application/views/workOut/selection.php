@@ -5,16 +5,18 @@
  * Description:
  * View chunk for the Selection step of the Work Out section.
  * Date: 25/07/13 13:30
+ *
+ * @var \application\engine\View $this
  */
 ?>
 
-                <div id='chunkSelection'>
-                    <h1>
-                        Selection
-                    </h1>
+<div id='chunkSelection'>
+    <h1>
+        Selection
+    </h1>
 
-                    <div id='selectionGridWrapper'>
-                        <table id='selection_grid'>
-                        </table>
-                    </div>
-                </div>
+    <div id='selectionGridWrapper'>
+        <table id='selection_grid'>
+        </table>
+    </div>
+</div>

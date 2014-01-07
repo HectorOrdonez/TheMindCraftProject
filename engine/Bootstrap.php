@@ -6,19 +6,22 @@
  * Bootstrap class. Initializes the application.
  *
  * The booting system implements some security - like allowing access to pages only if existing in the controllers folder - but for a complete
- * security implementation the .htaccess has to do its work.
+ * security implementation the .htaccess has to do its job.
  * At the moment of this writing I am aware of the following security points that this class does not fulfill and .htaccess must:
  * - Direct access to php files. .htaccess has to disable all requests to files with extension php.
  * - Access to folders. Same than before.
- * Date: 11/06/13 12:00
- *
+ * @date: 11/06/13 12:00
  * @todo - Later stage - Research possible security issues regarding URL modifications.
  */
 
 namespace engine;
 
-use engine\Exception;
+use engine\drivers\Exception;
 
+/**
+ * Class Bootstrap
+ * @package engine
+ */
 class Bootstrap
 {
     /*************************************************/
@@ -136,7 +139,7 @@ class Bootstrap
      */
     public function set_DEFAULT_CONTROLLER($DEFAULT_CONTROLLER)
     {
-        $this->_DEFAULT_CONTROLLER = (string) $DEFAULT_CONTROLLER;
+        $this->_DEFAULT_CONTROLLER = (string)$DEFAULT_CONTROLLER;
     }
 
     /**
@@ -145,7 +148,7 @@ class Bootstrap
      */
     public function set_DEFAULT_METHOD($DEFAULT_METHOD)
     {
-        $this->_DEFAULT_METHOD = (string) $DEFAULT_METHOD;
+        $this->_DEFAULT_METHOD = (string)$DEFAULT_METHOD;
     }
 
     /**
@@ -154,7 +157,7 @@ class Bootstrap
      */
     public function set_ERROR_CONTROLLER($ERROR_CONTROLLER)
     {
-        $this->_ERROR_CONTROLLER = (string) $ERROR_CONTROLLER;
+        $this->_ERROR_CONTROLLER = (string)$ERROR_CONTROLLER;
     }
 
     /**
@@ -190,12 +193,9 @@ class Bootstrap
     private function _executeRequest()
     {
         // At this point the property Args might be null, in case of no Args passed. In that case the method is called with no args.
-        if (isset($this->_args))
-        {
+        if (isset($this->_args)) {
             call_user_func_array(array($this->_controller, $this->_method), $this->_args);
-        }
-        else
-        {
+        } else {
             $this->_controller->{$this->_method}();
         }
         $this->_controller->render();
@@ -207,33 +207,27 @@ class Bootstrap
      */
     private function _setUrl()
     {
-        if (isset($_GET['url']))
-        {
+        if (isset($_GET['url'])) {
             $url = rtrim($_GET['url'], '/');
             $url = filter_var($url, FILTER_SANITIZE_URL);
             $url = explode('/', $url);
-        }
-        else
-        {
+        } else {
             $url = $this->_getDefaultUrl();
         }
 
         $this->_url[self::URL_CONTROLLER] = $url[self::URL_CONTROLLER];
 
-        if (isset($url[self::URL_METHOD]))
-        {
+        if (isset($url[self::URL_METHOD])) {
             $this->_url[self::URL_METHOD] = $url[self::URL_METHOD];
         }
 
-        if (isset($url[self::URL_ARGUMENTS]))
-        {
+        if (isset($url[self::URL_ARGUMENTS])) {
             $this->_url[self::URL_ARGUMENTS] = array_slice($url, 2);
         }
     }
 
     /**
      * Loads the controller requested by the URL collected in _getUrl.
-     *
      * @throws Exception If requested controller does not exist.
      */
     private function _setController()
@@ -241,12 +235,9 @@ class Bootstrap
         $controller = 'application' . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR . $this->_url[self::URL_CONTROLLER];
         $requestedControllerPath = _SYSTEM_ROOT_PATH . $controller . '.php';
 
-        if (file_exists($requestedControllerPath))
-        {
+        if (file_exists($requestedControllerPath)) {
             $this->_controller = new $controller();
-        }
-        else
-        {
+        } else {
             throw new Exception ('The requested page does not exist.');
         }
     }
@@ -257,18 +248,14 @@ class Bootstrap
      */
     private function _setMethod()
     {
-        if (isset($this->_url[self::URL_METHOD]))
-        {
+        if (isset($this->_url[self::URL_METHOD])) {
             $requestedMethod = $this->_url[self::URL_METHOD];
-        }
-        else
-        {
+        } else {
             $requestedMethod = $this->_DEFAULT_METHOD;
         }
 
         // Verify passed method or default one exists in that controller
-        if (!method_exists($this->_controller, $requestedMethod))
-        {
+        if (!method_exists($this->_controller, $requestedMethod)) {
             throw new Exception ('The requested resource does not exist.');
         }
 
@@ -281,12 +268,9 @@ class Bootstrap
      */
     private function _setArgs()
     {
-        if (isset($this->_url[self::URL_ARGUMENTS]))
-        {
+        if (isset($this->_url[self::URL_ARGUMENTS])) {
             $args = $this->_url[self::URL_ARGUMENTS];
-        }
-        else
-        {
+        } else {
             $args = NULL;
         }
         $this->_args = $args;
@@ -302,7 +286,7 @@ class Bootstrap
     }
 
     /**
-    * Called when an Exception is generated in the Application and is not caught.
+     * Called when an Exception is generated in the Application and is not caught.
      * @param Exception $exception
      */
     private function _prepareGeneralExceptionRequest($exception)
@@ -313,28 +297,25 @@ class Bootstrap
             $this->_controller = new $errorController();
             $this->_method = $this->get_EXCEPTION_METHOD();
             $this->_args = array($exception);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             exit('Fatal Error in the System while Booting. Please report Batman the following message : ' . $e->getMessage());
         }
     }
 
     /**
-    * Called when something went wrong while Bootstrapping the application.
-    * @param \Exception $exception
-    */
+     * Called when something went wrong while Bootstrapping the application.
+     * @param \Exception $exception
+     */
     private function _prepareFatalExceptionRequest($exception)
     {
         try {
             $errorController = 'application' . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR . $this->_ERROR_CONTROLLER;
 
             $this->_controller = new $errorController();
-            $this->_method = $this->_DEFAULT_METHOD;;
+            $this->_method = $this->_DEFAULT_METHOD;
+            ;
             $this->_args = array($exception->getMessage());
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             exit('Fatal Error in the System while Booting. Please report Batman the following message : ' . $e->getMessage());
         }
     }

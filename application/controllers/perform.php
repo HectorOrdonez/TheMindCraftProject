@@ -11,22 +11,22 @@
 namespace application\controllers;
 
 use application\engine\Controller;
-use application\libraries\PerformLibrary;
-use engine\Exception;
+use application\services\PerformService;
+use engine\drivers\Exception;
 use engine\Form;
 use engine\Session;
 
 class perform extends Controller
 {
     /**
-     * Defining $_library Library type.
-     * @var PerformLibrary $_library
+     * Defining $_service Service type.
+     * @var PerformService $_service
      */
-    protected $_library;
+    protected $_service;
 
     public function __construct()
     {
-        parent::__construct(new PerformLibrary);
+        parent::__construct(new PerformService);
 
         $logged = Session::get('isUserLoggedIn');
         if ($logged == FALSE) {
@@ -41,14 +41,14 @@ class perform extends Controller
      */
     public function index()
     {
-        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/grid.js');
-        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/table.js');
-        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/row.js');
-        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/cell.js');
-        $this->_view->addLibrary('css', 'public/css/helpers/gridElements/gridElements.css');
+        $this->_view->addLibrary('public/js/helpers/gridElements/grid.js');
+        $this->_view->addLibrary('public/js/helpers/gridElements/table.js');
+        $this->_view->addLibrary('public/js/helpers/gridElements/row.js');
+        $this->_view->addLibrary('public/js/helpers/gridElements/cell.js');
+        $this->_view->addLibrary('public/css/helpers/gridElements/gridElements.css');
 
-        $this->_view->addLibrary('js', 'application/views/action/js/action.js');
-        $this->_view->addLibrary('css', 'application/views/action/css/action.css');
+        $this->_view->addLibrary('application/views/action/js/action.js');
+        $this->_view->addLibrary('application/views/action/css/action.css');
 
         $this->_view->addChunk('action/index');
     }

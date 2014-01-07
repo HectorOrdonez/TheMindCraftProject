@@ -11,22 +11,22 @@
 namespace application\controllers;
 
 use application\engine\Controller;
-use application\libraries\SettingsLibrary;
-use engine\Exception;
-use engine\Form;
+use application\services\SettingsService;
+use engine\Input;
+use engine\drivers\Exceptions\RuleException;
 use engine\Session;
 
 class settings extends Controller
 {
     /**
-     * Defining $_library Library type.
-     * @var SettingsLibrary $_library
+     * Defining $_service Service type.
+     * @var SettingsService $_service
      */
-    protected $_library;
+    protected $_service;
 
     public function __construct()
     {
-        parent::__construct(new SettingsLibrary);
+        parent::__construct(new SettingsService);
 
         $logged = Session::get('isUserLoggedIn');
         if ($logged == FALSE) {
@@ -40,8 +40,8 @@ class settings extends Controller
      */
     public function index()
     {
-        $this->_view->addLibrary('js', 'application/views/settings/js/settings.js');
-        $this->_view->addLibrary('css', 'application/views/settings/css/settings.css');
+        $this->_view->addLibrary('application/views/settings/js/settings.js');
+        $this->_view->addLibrary('application/views/settings/css/settings.css');
 
         $this->_view->setParameter('currentUsername', Session::get('userName'));
 
@@ -53,39 +53,19 @@ class settings extends Controller
      */
     public function updateSetting()
     {
-        // Disabling auto render as this is an asynchronous request.
-        $this->setAutoRender(FALSE);
-
-        $form = new Form();
-        $form
-            ->requireItem('type') //Get the type of Setting to change
-            ->validate('Enum', array(
-                'availableOptions' => array(
-                    'name',
-                    'password'
-                )
-            ))
-            ->requireItem('newValue') // Get the new value for the Setting
-            ->validate('String', array(
-                'minLength' => 1,
-                'maxLength' => 100,
-            ));
-
-        if (count($form->getErrors()) > 0) {
-            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
-            exit;
-        }
-
-        // Executing
         try {
-            $this->_library->updateSetting(
-                Session::get('userId'),
-                $form->fetch('type'),
-                $form->fetch('newValue')
-            );
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . $e->getMessage());
-            exit;
+            $inputType = Input::build('Select', 'type')
+                ->addRule('availableOptions', array('name', 'password'));
+            $inputValue = Input::build('Text', 'newValue')
+                ->addRule('minLength', 1)
+                ->addRule('maxLength', 100);
+
+            $inputType->validate();
+            $inputValue->validate();
+            
+            $this->_service->updateSetting(Session::get('userId'), $inputType->getValue(), $inputValue->getValue());
+        } catch (RuleException $rEx) {
+            header("HTTP/1.1 400 " . $rEx->getMessage());
         }
     }
 }

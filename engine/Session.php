@@ -3,11 +3,15 @@
  * Project: Hecnel Framework
  * User: Hector Ordonez
  * Description:
- * Date: 12/06/13 12:30
+ * @date: 12/06/13 12:30
  */
 
 namespace engine;
 
+/**
+ * Class Session
+ * @package engine
+ */
 class Session
 {
     /**
@@ -27,8 +31,7 @@ class Session
      */
     public static function get($key)
     {
-        if (isset($_SESSION[$key]))
-        {
+        if (isset($_SESSION[$key])) {
             return $_SESSION[$key];
         } else {
             return false;

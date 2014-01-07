@@ -6,11 +6,15 @@
  * Library to centralize the Encrypting methods. Using password_hash and password_verify from PHP Core.
  * http://nl3.php.net/manual/en/function.password-hash.php
  * http://nl3.php.net/manual/en/function.password-verify.php
- * Date: 14/06/13 16:30
+ * @date: 14/06/13 16:30
  */
 
 namespace engine;
 
+/**
+ * Class Encrypter
+ * @package engine
+ */
 class Encrypter
 {
     /**
@@ -30,7 +34,7 @@ class Encrypter
             'cost' => self::$cost
         );
 
-        return password_hash($string, PASSWORD_DEFAULT , $encryptingOptions);
+        return password_hash($string, PASSWORD_DEFAULT, $encryptingOptions);
     }
 
     /**

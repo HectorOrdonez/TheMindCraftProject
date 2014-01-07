@@ -11,17 +11,18 @@
 namespace application\controllers;
 
 use application\engine\Controller;
-use application\libraries\IndexLibrary;
+use application\services\IndexService;
 use engine\Form;
+use engine\Input;
 use engine\Session;
 
 class Index extends Controller
 {
     /**
-     * Defining $_library Library type.
-     * @var IndexLibrary $_library
+     * Defining $_service Service type.
+     * @var IndexService $_service
      */
-    protected $_library;
+    protected $_service;
 
     /**
      * Index constructor.
@@ -29,9 +30,9 @@ class Index extends Controller
      */
     public function __construct()
     {
-        parent::__construct(new IndexLibrary);
-        $this->_view->addLibrary('js', 'application/views/index/js/index.js');
-        $this->_view->addLibrary('css', 'application/views/index/css/index.css');
+        parent::__construct(new IndexService);
+        $this->_view->addLibrary('application/views/index/js/index.js');
+        $this->_view->addLibrary('application/views/index/css/index.css');
     }
 
     /**
@@ -60,35 +61,35 @@ class Index extends Controller
 
         // Validation
         $form = new Form;
-        $form
-            ->requireItem('username')
-            ->validate('String', array(
-                'minLength' => 3,
-                'maxLength' => 50
-            ))
-            ->requireItem('password')
-            ->validate('String', array(
-                'minLength' => 3,
-                'maxLength' => 50
-            ));
+        $form->addInput(
+            Input::build('Text', 'username')
+                ->addRule('minLength', 3)
+                ->addRule('maxLength', 50)
+        );
+        $form->addInput(
+            Input::build('Text', 'password')
+                ->addRule('minLength', 3)
+                ->addRule('maxLength', 50)
+        );
 
         // Logic
-        if (sizeof($form->getErrors()) == 0) {
-            $login = $this->_library->login($form->fetch('username'), $form->fetch('password'));
-
-            if ($login === TRUE) {
-                header('location: ' . _SYSTEM_BASE_URL . 'index');
-                exit;
-            } else {
-                $this->_view->setParameter('loginError', 'Wrong username or Password.');
-                $this->_view->addChunk('index/index');
-                $this->_view->addChunk('index/loginError');
-            }
-        } else {
-            $this->_view->setParameter('errors', $form->getErrors());
-            $this->_view->addChunk('index/index');
+        $wrongInputs = $form->getValidationErrors();
+        if (false !== $wrongInputs) {
+            $this->_view->setParameter('errors', $form->getValidationErrors());
+            
             $this->_view->addChunk('index/inputErrors');
+            return;
         }
+
+        $login = $this->_service->login($form->getInput('username')->getValue(), $form->getInput('password')->getValue());
+
+        if (true !== $login) {
+            $this->_view->setParameter('loginError', 'Wrong username or Password.');
+            $this->_view->addChunk('index/loginError');
+            return;
+        }
+
+        header('location: ' . _SYSTEM_BASE_URL . 'index');
     }
 
     /**

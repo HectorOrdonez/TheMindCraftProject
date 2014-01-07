@@ -15,22 +15,23 @@
 namespace application\controllers;
 
 use application\engine\Controller;
-use application\libraries\UsersManagementLibrary;
-use engine\Exception;
-use engine\Form;
+use application\services\UsersManagementService;
+use engine\Input;
+use engine\drivers\Exception;
+use engine\drivers\Exceptions\RuleException;
 use engine\Session;
 
 class usersManagement extends Controller
 {
     /**
-     * Defining $_library Library type.
-     * @var UsersManagementLibrary $_library
+     * Defining $_service Service type.
+     * @var UsersManagementService $_service
      */
-    protected $_library;
+    protected $_service;
 
     public function __construct()
     {
-        parent::__construct(new UsersManagementLibrary);
+        parent::__construct(new UsersManagementService);
 
         $logged = Session::get('isUserLoggedIn');
         $role = Session::get('userRole');
@@ -45,14 +46,14 @@ class usersManagement extends Controller
      */
     public function index()
     {
-        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/grid.js');
-        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/table.js');
-        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/row.js');
-        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/cell.js');
-        $this->_view->addLibrary('css', 'public/css/helpers/gridElements/gridElements.css');
+        $this->_view->addLibrary('public/js/helpers/gridElements/grid.js');
+        $this->_view->addLibrary('public/js/helpers/gridElements/table.js');
+        $this->_view->addLibrary('public/js/helpers/gridElements/row.js');
+        $this->_view->addLibrary('public/js/helpers/gridElements/cell.js');
+        $this->_view->addLibrary('public/css/helpers/gridElements/gridElements.css');
 
-        $this->_view->addLibrary('js', 'application/views/usersManagement/js/usersManagement.js');
-        $this->_view->addLibrary('css', 'application/views/usersManagement/css/usersManagement.css');
+        $this->_view->addLibrary('application/views/usersManagement/js/usersManagement.js');
+        $this->_view->addLibrary('application/views/usersManagement/css/usersManagement.css');
 
         $this->_view->addChunk('usersManagement/index');
     }
@@ -62,12 +63,9 @@ class usersManagement extends Controller
      */
     public function getUsers()
     {
-        // Disabling auto render as this is an asynchronous request.
-        $this->setAutoRender(FALSE);
+        $response = $this->_service->getUsers();
 
-        $response = $this->_library->getUsers();
-
-        echo json_encode($response);
+        print json_encode($response);
     }
 
     /**
@@ -81,29 +79,18 @@ class usersManagement extends Controller
      */
     public function createUser()
     {
-        // Disabling auto render as this is an asynchronous request.
-        $this->setAutoRender(FALSE);
-
-        $form = new Form();
-        $form
-            ->requireItem('name')
-            ->validate('String', array(
-                'minLength' => 5,
-                'maxLength' => 50,
-            ));
-
-        if (count($form->getErrors()) > 0) {
-            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
-            exit;
-        }
-
-        // Executing
         try {
-            $createdUser = $this->_library->createUser($form->fetch('name'));
-            echo json_encode($createdUser);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
-            exit;
+            $inputName = Input::build('Text', 'name')
+                ->addRule('minLength', 5)
+                ->addRule('maxLength', 50);
+            $inputName->validate();
+
+            $newUserId = $this->_service->createUser($inputName->getValue());
+            print json_encode($newUserId);
+        } catch (RuleException $rEx) {
+            header("HTTP/1.1 400 " . $rEx->getMessage());
+        } catch (Exception $ex) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $ex->getMessage());
         }
     }
 
@@ -116,37 +103,21 @@ class usersManagement extends Controller
      */
     public function editUserName()
     {
-        // Disabling auto render as this is an asynchronous request.
-        $this->setAutoRender(FALSE);
-
-        // Validating
-        $form = new Form();
-        $form
-            ->requireItem('id')
-            ->validate('Int', array(
-                'min' => 1
-            ))
-            ->requireItem('name')
-            ->validate('String', array(
-                'minLength' => 5,
-                'maxLength' => 50,
-            ));
-
-        if (count($form->getErrors()) > 0) {
-            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
-            exit;
-        }
-
-        // Executing
         try {
-            $this->_library->editUserName(
-                (int)$form->fetch('id'),
-                $form->fetch('name')
-            );
+            $inputId = Input::build('Number', 'id')
+                ->addRule('isInt');
+            $inputName = Input::build('Text', 'name')
+                ->addRule('minLength', 5)
+                ->addRule('maxLength', 50);
 
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
-            exit;
+            $inputId->validate();
+            $inputName->validate();
+
+            $this->_service->editUserName($inputId->getValue(), $inputName->getValue());
+        } catch (RuleException $rEx) {
+            header("HTTP/1.1 400 " . $rEx->getMessage());
+        } catch (Exception $ex) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $ex->getMessage());
         }
     }
 
@@ -159,39 +130,19 @@ class usersManagement extends Controller
      */
     public function editUserRole()
     {
-        // Disabling auto render as this is an asynchronous request.
-        $this->setAutoRender(FALSE);
-
-        // Validating
-        $form = new Form();
-        $form
-            ->requireItem('id')
-            ->validate('Int', array(
-                'min' => 1
-            ))
-            ->requireItem('role')
-            ->validate('Enum', array(
-                'availableOptions' => array(
-                    'admin',
-                    'basic'
-                ),
-            ));
-
-        if (count($form->getErrors()) > 0) {
-            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
-            exit;
-        }
-
-        // Executing
         try {
-            $this->_library->editUserRole(
-                (int)$form->fetch('id'),
-                $form->fetch('role')
-            );
+            $inputId = Input::build('Number', 'id')
+                ->addRule('isInt');
+            $inputRole = Input::build('Select', 'role')->addRule('availableOptions', array('admin', 'basic'));
 
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
-            exit;
+            $inputId->validate();
+            $inputRole->validate();
+
+            $this->_service->editUserRole($inputId->getValue(), $inputRole->getValue());
+        } catch (RuleException $rEx) {
+            header("HTTP/1.1 400 " . $rEx->getMessage());
+        } catch (Exception $ex) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $ex->getMessage());
         }
     }
 
@@ -204,35 +155,21 @@ class usersManagement extends Controller
      */
     public function editUserPassword()
     {
-        // Disabling auto render as this is an asynchronous request.
-        $this->setAutoRender(FALSE);
-
-        // Validating
-        $form = new Form();
-        $form
-            ->requireItem('id')
-            ->validate('Int', array(
-                'min' => 1
-            ))
-            ->requireItem('password')
-            ->validate('String', array(
-                'minLength' => 5,
-                'maxLength' => 50,
-            ));
-
-        if (count($form->getErrors()) > 0) {
-            header("HTTP/1.1 400 " . 'Input password does not pass validation.');
-        }
-
-        // Executing
         try {
-            $this->_library->editUserPassword(
-                (int)$form->fetch('id'),
-                $form->fetch('password')
-            );
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
-            exit;
+            $inputId = Input::build('Number', 'id')
+                ->addRule('isInt');
+            $inputPass = Input::build('Text', 'password')
+                ->addRule('minLength', 5)
+                ->addRule('maxLength', 50);
+
+            $inputId->validate();
+            $inputPass->validate();
+
+            $this->_service->editUserPassword($inputId->getValue(), $inputPass->getValue());
+        } catch (RuleException $rEx) {
+            header("HTTP/1.1 400 " . $rEx->getMessage());
+        } catch (Exception $ex) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $ex->getMessage());
         }
     }
 
@@ -244,35 +181,17 @@ class usersManagement extends Controller
      */
     public function deleteUser()
     {
-        // Disabling auto render as this is an asynchronous request.
-        $this->setAutoRender(FALSE);
-
-        // Validating
-        $form = new Form();
-        $form
-            ->requireItem('id')
-            ->validate('Int', array(
-                'min' => 1
-            ));
-
-        if (count($form->getErrors()) > 0) {
-            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
-            exit;
-        }
-
-        if ($form->fetch('id') == Session::get('userId')) {
-            header("HTTP/1.1 400 " . 'Why do you want to commit suicide :( ???');
-            exit;
-        }
-
-        // Executing
         try {
-            $this->_library->deleteUser(
-                $form->fetch('id')
-            );
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
-            exit;
+            $inputId = Input::build('Number', 'id')
+                ->addRule('isInt');
+
+            $inputId->validate();
+
+            $this->_service->deleteUser($inputId->getValue());
+        } catch (RuleException $rEx) {
+            header("HTTP/1.1 400 " . $rEx->getMessage());
+        } catch (Exception $ex) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $ex->getMessage());
         }
     }
 }

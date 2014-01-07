@@ -14,25 +14,28 @@
 namespace application\controllers;
 
 use application\engine\Controller;
-use application\libraries\BrainstormLibrary;
-use engine\Exception;
+use application\services\BrainstormService;
+use engine\Input;
 use engine\Form;
 use engine\Session;
+use engine\drivers\Exception;
+use engine\drivers\Exceptions\InputException;
+use engine\drivers\Exceptions\RuleException;
 
 class brainstorm extends Controller
 {
     /**
-     * Defining $_library Library type.
-     * @var BrainstormLibrary $_library
+     * Defining $_service Service type.
+     * @var BrainstormService $_service
      */
-    protected $_library;
+    protected $_service;
 
     /**
      * Controller constructor for the Brainstorm page.
      */
     public function __construct()
     {
-        parent::__construct(new BrainstormLibrary());
+        parent::__construct(new BrainstormService());
 
         $logged = Session::get('isUserLoggedIn');
         if ($logged == FALSE) {
@@ -48,14 +51,14 @@ class brainstorm extends Controller
      */
     public function index()
     {
-        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/grid.js');
-        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/table.js');
-        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/row.js');
-        $this->_view->addLibrary('js', 'public/js/helpers/gridElements/cell.js');
-        $this->_view->addLibrary('css', 'public/css/helpers/gridElements/gridElements.css');
+        $this->_view->addLibrary('public/js/helpers/gridElements/grid.js');
+        $this->_view->addLibrary('public/js/helpers/gridElements/table.js');
+        $this->_view->addLibrary('public/js/helpers/gridElements/row.js');
+        $this->_view->addLibrary('public/js/helpers/gridElements/cell.js');
+        $this->_view->addLibrary('public/css/helpers/gridElements/gridElements.css');
 
-        $this->_view->addLibrary('js', 'application/views/brainstorm/js/brainstorm.js');
-        $this->_view->addLibrary('css', 'application/views/brainstorm/css/brainstorm.css');
+        $this->_view->addLibrary('application/views/brainstorm/js/brainstorm.js');
+        $this->_view->addLibrary('application/views/brainstorm/css/brainstorm.css');
 
         $this->_view->addChunk('brainstorm/index');
     }
@@ -65,12 +68,7 @@ class brainstorm extends Controller
      */
     public function getIdeas()
     {
-        // Disabling auto render as this is an asynchronous request.
-        $this->setAutoRender(FALSE);
-
-        $response = $this->_library->getIdeas(
-            Session::get('userId')
-        );
+        $response = $this->_service->getIdeas(Session::get('userId'));
 
         echo json_encode($response);
     }
@@ -80,30 +78,25 @@ class brainstorm extends Controller
      */
     public function createIdea()
     {
-        // Disabling auto render as this is an asynchronous request.
-        $this->setAutoRender(FALSE);
-
-        $form = new Form();
-        $form
-            ->requireItem('title')
-            ->validate('String', array(
-                'minLength' => 5,
-                'maxLength' => 200,
-            ));
-
-        if (count($form->getErrors()) > 0) {
-            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
-            exit;
-        }
-
-        // Executing
         try {
-            $response = $this->_library->createIdea(
-                Session::get('userId'),
-                $form->fetch('title')
-            );
+            $inputIdeaName = Input::build('Text', 'title')
+                ->addRule('minLength', 5)
+                ->addRule('maxLength', 200);
 
-            echo json_encode($response);
+            $inputIdeaName->validate();
+
+            $response = $this->_service->createIdea(Session::get('userId'), $inputIdeaName->getValue());
+
+            print json_encode($response);
+
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
         } catch (Exception $e) {
             header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
             exit;
@@ -115,35 +108,26 @@ class brainstorm extends Controller
      */
     public function editIdea()
     {
-        // Disabling auto render as this is an asynchronous request.
-        $this->setAutoRender(FALSE);
-
         try {
-            // Validating
-            $form = new Form();
-            $form
-                ->requireItem('id')
-                ->validate('Int', array(
-                    'min' => 1
-                ))
-                ->requireItem('title')
-                ->validate('String', array(
-                    'minLength' => 5,
-                    'maxLength' => 200,
-                ));
+            $inputIdeaId = Input::build('Number', 'id')
+                ->addRule('isInt');
+            $inputIdeaName = Input::build('Text', 'title')
+                ->addRule('minLength', 5)
+                ->addRule('maxLength', 200);
 
-            if (count($form->getErrors()) > 0) {
-                header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
-                exit;
-            }
+            $inputIdeaId->validate();
+            $inputIdeaName->validate();
 
-            // Executing
-            $this->_library->editIdea(
-                (int)$form->fetch('id'),
-                Session::get('userId'),
-                $form->fetch('title')
-            );
+            $this->_service->editIdea(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaName->getValue());
 
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
         } catch (Exception $e) {
             header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
             exit;
@@ -155,28 +139,22 @@ class brainstorm extends Controller
      */
     public function deleteIdea()
     {
-        // Disabling auto render as this is an asynchronous request.
-        $this->setAutoRender(FALSE);
-
-        // Validating
-        $form = new Form();
-        $form
-            ->requireItem('id')
-            ->validate('Int', array(
-                'min' => 1
-            ));
-
-        if (count($form->getErrors()) > 0) {
-            header("HTTP/1.1 400 " . implode('<br />', $form->getErrors()));
-            exit;
-        }
-
-        // Executing
         try {
-            $this->_library->deleteIdea(
-                $form->fetch('id'),
-                Session::get('userId')
-            );
+            $inputIdeaId = Input::build('Number', 'id')
+                ->addRule('isInt');
+
+            $inputIdeaId->validate();
+
+            $this->_service->deleteIdea(Session::get('userId'), $inputIdeaId->getValue());
+
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
         } catch (Exception $e) {
             header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
             exit;

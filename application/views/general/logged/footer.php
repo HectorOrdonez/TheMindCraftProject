@@ -5,10 +5,12 @@
  * Description:
  * View chunk for the logged users footer.
  * Date: 23/07/13 13:00
+ *
+ * @var \application\engine\View $this
  */
 ?>
 
-    </div>
+</div>
     <!-- Closing logged-in Content -->
 
     <div id='footer'>
