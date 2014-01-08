@@ -34,11 +34,14 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.251', '08/01/2013', array (
-            '[Debug] - Fixed visual issue - circular image in main was increasing height in its rotations.'
+        $this->_setDevelopmentVersion('0.260', '08/01/2013', array (
+            '[Feature] - Skeleton of new page: MindFlow. This page will contain the core workflow of the website: BrainStorm, WorkOut, Select, ApplyTime, Prioritize and PerForm. Created the basic behavior for different steps selection. Pending on building the content.'
         ));
         
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.251', '08/01/2013', array (
+            '[Debug] - Fixed visual issue - circular image in main was increasing height in its rotations.'
+        ));
         $this->_addHistoryLog('0.250', '07/01/2013', array (
             'Happy new year!',
             '[Core Update] - Updated TheMindcraftProject Hecnel Framework to Version 3.001.',

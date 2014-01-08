@@ -22,7 +22,7 @@
 
         <div id='processActions'>
             <div class='action brainStorm'>
-                <a href="<?php echo _SYSTEM_BASE_URL; ?>brainStorm">
+                <a href="<?php echo _SYSTEM_BASE_URL; ?>mindFlow/index/step1">
                     <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>BrainStorm.png' alt='BrainStorm'/>
                 </a>
 
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class='action workOut'>
-                <a href="<?php echo _SYSTEM_BASE_URL; ?>workOut">
+                <a href="<?php echo _SYSTEM_BASE_URL; ?>mindFlow/index/step2">
                     <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>WorkOut.png' alt='WorkOut'/>
                 </a>
 
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class='action perForm'>
-                <a href="<?php echo _SYSTEM_BASE_URL; ?>perForm">
+                <a href="<?php echo _SYSTEM_BASE_URL; ?>mindFlow/index/step3">
                     <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>PerForm.png' alt='PerForm'/>
                 </a>
 
@@ -53,5 +53,4 @@
             </div>
         </div>
     </div>
-
 <?php $this->printChunk('footer'); ?>

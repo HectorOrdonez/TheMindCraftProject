@@ -1,0 +1,76 @@
+#initStep {
+    display: none;
+}
+
+#flowMenu {
+    display: block;
+    height: 100px;
+}
+
+#flowMenu ul {
+    position: absolute;
+    z-index: 1;
+}
+
+#flowMenu ul li, .text {
+    display: inline;
+}
+
+#flowMenu ul li a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#flowMenu .flowOption, #flowMenu .miniFlowOption {
+    display: inline-block;
+    width: 160px;
+}
+
+#flowMenu .flowOption .text {
+    position: relative;
+    left: -26px;
+}
+#flowMenu .miniFlowOption .text {
+    position: relative;
+    left: -10px;
+}
+
+#flowMenu .flowOption img {
+    width: 60px;
+    height: 60px;
+}
+
+#flowMenu  .imgBox {
+    width: 43px;
+    height: 43px;
+    display: inline-block;
+    overflow: hidden;
+}
+
+#flowMenu .imgBox:hover img {
+    width: 86px;
+    margin-left: -43px;
+}
+
+#flowLine {
+    position: absolute;
+    width: 100%;
+    height: 25px;
+    z-index: 0;
+    margin: 20px 0 0 5px;
+    background-color: #e94f3b;
+}
+
+#flowLine #pastFlow {
+    float: left;
+    width: 0;
+    height: 100%;
+    background-color: #5e5755;
+}
+
+#flowLine #futureFlow {
+    float: right;
+    width: 100%;
+    height: 100%;
+    background-color: #b9a889;
+}
