@@ -34,7 +34,12 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.250', '07/01/2013', array (
+        $this->_setDevelopmentVersion('0.251', '08/01/2013', array (
+            '[Debug] - Fixed visual issue - circular image in main was increasing height in its rotations.'
+        ));
+        
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.250', '07/01/2013', array (
             'Happy new year!',
             '[Core Update] - Updated TheMindcraftProject Hecnel Framework to Version 3.001.',
             '[Refactor] - Absolutely awesome refactor of the whole project due to lots of improvements that new Hecnel brings.',
@@ -44,8 +49,6 @@ class ReleaseHistory extends Controller
             '[Refactor] - Previous Database-Model system is smashed by php-activerecord, which brings lots of awesomeness to the project.',
             '[Etc] - A high number of issues are here and there. I am not concerned about it because the new design is still on the way and changes are going to be done.',
         ));
-
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.245', '11/12/2013', array (
             '[Debug] - Minor issue with the Welcoming message.'
         ));
