@@ -1,103 +1,9 @@
 /**
  * Project: The Mindcraft Project
- * Description: IdeaToAction CSS Library
+ * Description: WorkOut CSS Library
  * User: Hector Ordonez
  * Date: 25/07/13 21:00
  */
-
-/** Work Out Menu **/
-
-#workOutMenu {
-    background-color: #FFF;
-    width: 600px;
-    height: 29px;
-
-    margin: 0 auto;
-}
-
-#workOutMenu > a {
-    background-color: #b2b2b1;
-    width: 200px;
-    height: 29px;
-
-    float: left;
-    text-align: center;
-    text-decoration: none;
-}
-
-#workOutMenu > a:hover {
-    background-color: #575756;
-}
-
-#stepPointer {
-    position: relative;
-    top: 5px;
-
-    background-color: #000;
-    width: 200px;
-    height: 1px;
-
-    clear: both;
-
-    font-size: 0;
-    display: block;
-}
-
-/** General Step Content **/
-#stepContent {
-    margin-bottom: 20px;
-}
-
-#chunkSelection {
-}
-
-#chunkTiming {
-}
-
-#chunkPrioritizing {
-}
-
-/** Next Button **/
-#nextStep {
-    background: url('./../../../../public/images/TMP_next.png') no-repeat;
-    width: 50px;
-    height: 50px;
-
-    margin: 0 auto;
-    border-radius: 5px;
-    opacity: 1;
-
-    text-align: center;
-    text-decoration: none;
-    display: block;
-}
-
-#nextStep:hover {
-    background-color: #575756;
-}
-
-#errorDisplayer {
-    display: block;
-    height: 40px;
-}
-
-/**********************************************************************************************************************/
-/** All Grid shared Styles                                                                                           **/
-/**********************************************************************************************************************/
-
-table .actions a {
-    background-repeat: no-repeat;
-    width: 30px;
-    height: 30px;
-
-    display: block;
-    font-size: 0;
-    cursor: pointer;
-}
-
-table .actions a:hover {
-    background-position: 30px 0 !important;
-}
 
 /**********************************************************************************************************************/
 /** Selection Grid Style                                                                                             **/
@@ -107,7 +13,6 @@ table .actions a:hover {
  * Id of the Table that contains the Selection table.
 **/
 #selection_grid {
-    width: 100%;
 }
 
 /**
@@ -132,54 +37,8 @@ table .actions a:hover {
     display: none;
 }
 
-/**
- * Id of the footer button to add a new idea.
-**/
-#selection_grid #linkNewIdea {
-    position: absolute;
-    background: url('./../../../../public/images/TMP_add.png');
-    width: 10px;
-    height: 10px;
-
-    margin: 10px 5px 0 5px;
-}
-
-/**
- * Id of the footer form to add a new idea.
-**/
-#selection_grid #formNewIdea {
-    display: inline;
-}
-
-#selection_grid #formNewIdea input {
-    height: 30px;
-    width: 100%;
-    border: none;
-    text-indent: 20px;
-}
-
-#selection_grid  #formEditIdea .inputEditIdeaTitle {
-    height: 30px;
-    width: 100%;
-    border: none;
-}
-
-/**
- * Selection actions
-**/
-#selection_grid .actions .editAction {
-    background: url('./../../../../public/images/Edit.png');
-    float: left;
-}
-
-#selection_grid .actions .delAction {
-    background: url('./../../../../public/images/Delete.png');
-    float: left;
-}
-
-#selection_grid .actions .holdOverAction {
-    background: url('./../../../../public/images/TMP_clock.gif');
-    float: left;
+#selection_grid .actions .postponeAction {
+    background: url('./../../../../public/images/Postpone.png');
 }
 
 /**********************************************************************************************************************/
@@ -189,72 +48,58 @@ table .actions a:hover {
 /**
  * Id of the Table that contains the Timing table.
 **/
-#timing_grid {
-    width: 100%;
+#applyTime_grid {
 }
 
-/**
- * Table columns
-**/
-#timing_grid .row.header {
-    text-align: center;
+#applyTime_grid .col_id {
 }
 
-#timing_grid .col_id {
+#applyTime_grid .col_title {
 }
 
-#timing_grid .col_title {
-}
-
-#timing_grid .col_date_creation {
+#applyTime_grid .col_date_creation {
     width: 90px;
 }
 
-#timing_grid .col_tododate {
+#applyTime_grid .col_tododate {
     width: 90px;
 }
 
-#timing_grid .col_todotime {
+#applyTime_grid .col_todotime {
     width: 90px;
 }
 
-#timing_grid .col_frequency {
-    width: 80px;
+#applyTime_grid .col_frequency {
 }
 
-#timing_grid .col_actions {
+#applyTime_grid .col_actions {
     width: 60px;
 }
 
-#timing_grid .cell.date_creation {
+#applyTime_grid .cell.date_creation {
     text-align: center;
 }
 
-#timing_grid .cell.date_todo {
+#applyTime_grid .cell.date_todo {
     text-align: center;
 }
 
-#timing_grid .cell.time_todo {
+#applyTime_grid .cell.time_todo {
     text-align: center;
 }
 
-#timing_grid  .cell.id, #timing_grid  .row .col_id {
-    display: none;
-}
-
-#timing_grid  .cell.frequency, #timing_grid  .row .col_frequency {
+#applyTime_grid  .cell.frequency, #applyTime_grid  .row .col_frequency {
     display: none;
 }
 
 /**
- * Timing actions
+ * ApplyTime_grid actions
 **/
-#timing_grid .actions .applyTimeAction {
+#applyTime_grid .actions .applyTimeAction {
     background: url('./../../../../public/images/TMP_clock.gif');
-    margin: 0 auto;
 }
 
-.bodyContent #applyTimeDialog {
+#applyTimeDialog {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -265,7 +110,7 @@ table .actions a:hover {
     display: none;
 }
 
-.bodyContent #applyTimeDialog .applyTimeInnerDialog {
+#applyTimeDialog .applyTimeInnerDialog {
     position: absolute;
     width: 200px;
     min-height: 100px;
@@ -280,29 +125,29 @@ table .actions a:hover {
     border-radius: 10px;
 }
 
-.bodyContent #applyTimeDialog #moreOften .clicker {
+#applyTimeDialog #moreOften .clicker {
     display: block;
     margin-top: 10px;
     margin-bottom: 10px;
     cursor: pointer;
 }
 
-.bodyContent #applyTimeDialog #moreOftenPanel {
+#applyTimeDialog #moreOftenPanel {
     display: none;
 }
 
-.bodyContent #applyTimeDialog #moreOftenPanel input {
+#applyTimeDialog #moreOftenPanel input {
     margin-left: 5px;
 }
 
-.bodyContent #applyTimeDialog #submitAppliedTime {
+#applyTimeDialog #submitAppliedTime {
     margin-top: 10px;
     text-align: center;
     cursor: pointer;
 }
 
 div.time-picker {
-    position: absolute;
+    position: fixed;
     height: 191px;
     width: 5em; /* needed for IE */
     overflow: auto;
@@ -340,29 +185,28 @@ div.time-picker li.selected {
 /**
  * Id of the Table that contains the Prioritizing table.
 **/
-#prioritizing_grid {
-    width: 100%;
+#prioritize_grid {
 }
 
 /**
  * Table columns
 **/
-#prioritizing_grid .col_id {
+#prioritize_grid .col_id {
 }
 
-#prioritizing_grid .col_title {
-    width: 70%;
+#prioritize_grid .col_title {
+    width: 75%;
 }
 
-#prioritizing_grid .col_date_creation {
+#prioritize_grid .col_date_creation {
     width: 15%;
 }
 
-#prioritizing_grid  .row .id, #prioritizing_grid  .row .col_id {
-    display: none;
+#prioritize_grid .col_priority {
+    width: 10%;
 }
 
-#prioritizing_grid .prioritySelector {
+#prioritize_grid .prioritySelector {
     height: 14px;
     border: none;
     font-size: 10px;

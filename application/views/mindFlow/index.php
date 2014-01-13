@@ -71,6 +71,8 @@
     </ul>
 </div>
 
-<div id='log'></div>
+<div id='stepContent'>
+</div>
 
 <?php $this->printChunk('footer'); ?>
+

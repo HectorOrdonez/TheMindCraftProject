@@ -58,5 +58,4 @@ function updateSetting(type, newValue) {
                 setInfoMessage($infoDiv, 'error', data.statusText, 2000);
             });
     });
-
 }

@@ -12,95 +12,19 @@
 }
 
 /**
- * Id of the Table that contains the Brainstorm table.
-**/
-#brainstorm_grid {
-    width: 100%;
-    -moz-box-shadow: 2px 2px 5px #b9a889;
-    -webkit-box-shadow: 2px 2px 5px #b9a889;
-    box-shadow: 2px 2px 5px #b9a889;
-}
-
-/**
  * Table columns
 **/
-#brainstorm_grid .col_id {
+#brainStorm_grid .col_id {
 }
 
-#brainstorm_grid .col_title {
+#brainStorm_grid .col_title {
     width: 70%;
 }
 
-#brainstorm_grid .col_actions {
+#brainStorm_grid .col_actions {
     width: 5%;
 }
 
-#brainstorm_grid .col_date_creation {
+#brainStorm_grid .col_date_creation {
     width: 25%;
-}
-
-#brainstorm_grid .row .id, #brainstorm_grid .row .col_id {
-    display: none;
-}
-
-/**
- * Id of the footer button to add a new idea.
-**/
-#brainstorm_grid #linkNewIdea {
-    position: absolute;
-    background: url('./../../../../public/images/Plus.png');
-    width: 15px;
-    height: 15px;
-
-    margin: 8px 0 0 12px;
-}
-
-/**
- * Id of the footer form to add a new idea.
-**/
-#brainstorm_grid #formNewIdea {
-    display: inline;
-}
-
-#brainstorm_grid #formNewIdea input {
-    height: 30px;
-    width: 100%;
-    border: none;
-    text-indent: 35px;
-}
-
-#brainstorm_grid #formEditIdea .inputEditIdeaTitle {
-    width: calc(100% - 20px);
-}
-
-/**
- * Brainstorm actions
-**/
-#gridWrapper .actions {
-    padding-top: 0;
-}
-#gridWrapper .actionBox {
-    position: absolute;
-}
-#gridWrapper .actionBox div {
-    float: left;
-}
-#gridWrapper .action a {
-    width: 30px;
-    height: 30px;
-    display: block;
-    font-size: 0;
-    cursor: pointer;
-}
-
-#gridWrapper .action a:hover{
-    background-position: -30px 0;
-}
-
-#gridWrapper .action .editAction {
-    background: url('./../../../../public/images/Edit.png') no-repeat;
-}
-
-#gridWrapper .action .delAction {
-    background: url('./../../../../public/images/Delete.png') no-repeat;
 }

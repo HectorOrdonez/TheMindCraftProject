@@ -1,10 +1,3 @@
 Here is where we are going to store the general TODO lists.
 
-Project direction
- - Maybe is interesting a radically different approach to a website. Right now we are already simplifying the visuals, but it can be done even more; we can guess something that normally websites do not guess; that the user is CLEVER.
-    With this approach for example, in the index page we would not put instructions in the login panel like "Username" or "Password".
-
-
-Software development
- - Set minimum and maximum lengths for the inputs of the user in the places in which he or she can input something.
-Design
+- Find out how position the website body centered, crossbrowsing and everything. Right now gets messed up when resizing to small window. 

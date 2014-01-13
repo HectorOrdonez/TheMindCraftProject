@@ -44,19 +44,22 @@ class WorkOutService extends Service
         
         $index = 0;
         foreach ($ideas as $idea) {
+            /**
+             * @var \ActiveRecord\Model $idea
+             */
             $response[$index] = array(
                 'id' => $idea->id,
                 'title' => $idea->title,
                 'date_creation' => $idea->date_creation->format('Y-m-d')
             );
-
-            if ($step == 'stepTiming') {
+            
+            if ($step == 'stepApplyTime') {
                 $response[$index]['date_todo'] = (is_null($idea->date_todo)) ? '' : $idea->date_todo->format('Y-m-d');
                 $response[$index]['time_todo'] = (is_null($idea->time_todo)) ? '' : substr($idea->time_todo, 0, 5);
                 $response[$index]['frequency'] = $idea->frequency;
             }
-
-            if ($step == 'stepPrioritizing') {
+            
+            if ($step == 'stepPrioritize') {
                 $response[$index]['priority'] = $idea->priority;
             }
             

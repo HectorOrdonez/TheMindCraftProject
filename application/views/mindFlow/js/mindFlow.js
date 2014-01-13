@@ -11,19 +11,26 @@ jQuery(document).ready(function () {
     // Init parameters
     var $flowMenu = jQuery('#flowMenu');
     currentStep = jQuery('#initStep').html();
-    moveFlow();
+
+    uniqueUserRequest(function (callback) {
+        loadCurrentStep(callback);
+        moveFlowToCurrentStep();
+        callback();
+    });
 
     // Adding Events to the page
-
     // Flow menu click
     $flowMenu.find('a').click(function () {
         var selectedStep = jQuery(this).parent().attr('id');
         if (currentStep == selectedStep) {
             return;
         }
-        currentStep = selectedStep;
 
-        moveFlow();
+        uniqueUserRequest(function (callback) {
+            currentStep = selectedStep;
+            loadCurrentStep(callback);
+            moveFlowToCurrentStep();
+        });
     });
 
     // Big options hovering
@@ -40,31 +47,61 @@ jQuery(document).ready(function () {
             queue: false
         });
     });
-
-
 });
 
-function logThis(msg) {
-    jQuery('#log').append(msg);
+function loadCurrentStep(callback) {
+    // Init parameters
+    var MindFlowGrid;
+    var $stepContent = jQuery('#stepContent');
+    var afterLoadCallback = function () {
+        $stepContent.fadeIn();
+        callback();
+    };
+    var doAfterFadeOut = function () {
+        switch (currentStep) {
+            case 'step1':
+                MindFlowGrid = new BrainStorm($stepContent, afterLoadCallback);
+                break;
+            case 'step2':
+            case 'step21':
+                MindFlowGrid = new Selection($stepContent, afterLoadCallback);
+                break;
+            case 'step22':
+                MindFlowGrid = new ApplyTime($stepContent, afterLoadCallback);
+                break;
+            case 'step23':
+                MindFlowGrid = new Prioritize($stepContent, afterLoadCallback);
+                break;
+            case 'step3':
+                MindFlowGrid = new Prioritize();
+                //generateActionPlan(afterLoadCallback);
+                break;
+        }
+    };
+
+    // Execute
+    $stepContent.fadeOut(function () {
+        doAfterFadeOut()
+    });
 }
 
-function moveFlow() {
+/**
+ * Function called when flow line needs to be moved to the current step.
+ */
+function moveFlowToCurrentStep() {
+
     var $pastFlow = jQuery('#pastFlow');
     var $futureFlow = jQuery('#futureFlow');
     var stepSize = 170;
     var fullSize = 1000;
     var multiplier;
 
-    logThis('Moving Flow to step ' + currentStep);
-    
-    switch (currentStep)
-    {
+    switch (currentStep) {
         case 'step1':
             multiplier = 0;
             break;
         case 'step2':
-            multiplier = 1;
-            break;
+            currentStep = 'step21';
         case 'step21':
             multiplier = 2;
             break;
@@ -78,12 +115,12 @@ function moveFlow() {
             multiplier = 5;
             break;
     }
-    
+
     $pastFlow.animate({
         width: multiplier * stepSize
     });
-        
+
     $futureFlow.animate({
         width: fullSize - ( (1 + multiplier) * stepSize)
-    }); 
+    });
 }
