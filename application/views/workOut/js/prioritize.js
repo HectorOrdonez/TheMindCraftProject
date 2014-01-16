@@ -62,7 +62,7 @@ function Prioritize($element, callback) {
 
         // ApplyTime Grid parameters definition
         var gridParameters = {
-            'url': root_url + 'workOut/getIdeas/stepPrioritize',
+            'url': root_url + 'MindFlow/getIdeas/Prioritize',
             'eventDL': function () {
                 callback();
             }
@@ -131,7 +131,7 @@ function Prioritize($element, callback) {
      */
     function submitSetPriority(ideaId, newPrio, callback) {
         var $infoDisplayer = jQuery('#infoDisplayer');
-        var url = root_url + 'workOut/setPriorityToIdea';
+        var url = root_url + 'MindFLow/prioritizeIdea';
         var data = {
             'id': ideaId,
             'priority': newPrio

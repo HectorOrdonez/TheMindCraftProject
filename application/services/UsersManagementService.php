@@ -41,7 +41,7 @@ class UsersManagementService extends Service
                 'id' => $user->id,
                 'name' => $user->name,
                 'role' => $user->role,
-                'last_login' => (is_null($user->last_login)? '' : $user->last_login->format('Y-m-d')));
+                'last_login' => (is_null($user->last_login)? '' : $user->last_login->format('d/m/Y')));
         }
 
         return $result;

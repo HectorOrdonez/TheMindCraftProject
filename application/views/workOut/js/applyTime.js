@@ -75,7 +75,7 @@ function ApplyTime($element, callback) {
 
         // ApplyTime Grid parameters definition
         var gridParameters = {
-            'url': root_url + 'workOut/getIdeas/stepApplyTime',
+            'url': root_url + 'MindFlow/getIdeas/ApplyTime',
             'eventDL': function () {
                 callback();
             }
@@ -109,7 +109,7 @@ function ApplyTime($element, callback) {
             applyTimeDialog.setAttribute('id', 'applyTimeDialog');
             applyTimeDialog.innerHTML = '' +
                 '<div class="applyTimeInnerDialog">' +
-                '   <form id="formApplyTime" action="' + root_url + 'workOut/applyTimeIdea">' +
+                '   <form id="formApplyTime" action="' + root_url + 'MindFlow/applyTimeToIdea">' +
                 '   <input type="hidden" class="inputApplyTimeIdeaId" name="id" value="' + ideaId + '" />' +
                 '       <div class="title">Apply Time</div>' +
                 '       <input id="datePicker" name="date" placeholder="Set the day" value="' + dateTodoCell +'" />' +
@@ -137,7 +137,7 @@ function ApplyTime($element, callback) {
             var $applyTimeDialog = jQuery('#applyTimeDialog');
 
             // Initializing features
-            jQuery('#datePicker').datepicker({dateFormat: "yy-mm-dd"});
+            jQuery('#datePicker').datepicker({dateFormat: "dd/mm/yy"});
             jQuery('#timePicker').timePicker();
             setHowOftenBoxes(frequencyCell);
 

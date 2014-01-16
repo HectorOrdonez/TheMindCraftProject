@@ -54,7 +54,7 @@ function BrainStorm($element, callback) {
         var footerRow = new Row(
             {'cells': [
                 {
-                    'html': '<a href="#" id="linkNewIdea"></a><form id="formNewIdea" action="' + root_url + 'brainstorm/createIdea"><input type="text" name="title" class="ftype_contentA" id="inputNewIdea" /></form>',
+                    'html': '<a href="#" id="linkNewIdea"></a><form id="formNewIdea" action="' + root_url + 'MindFlow/newIdea"><input type="text" name="title" class="ftype_contentA" id="inputNewIdea" /></form>',
                     'colspan': '3'
                 }
             ], 'classList': ['footer']}
@@ -81,11 +81,14 @@ function BrainStorm($element, callback) {
 
         // Brainstorm Grid parameters definition
         var gridParameters = {
-            'url': root_url + 'brainstorm/getIdeas',
+            'url': root_url + 'MindFlow/getIdeas',
             'eventEOI': function () {
             },
             'eventDL': function () {
                 callback();
+
+                // Initializing page focus on the add input
+                jQuery('#inputNewIdea').focus();
             }
         };
 
@@ -98,6 +101,7 @@ function BrainStorm($element, callback) {
         });
         jQuery('#formNewIdea').keypress(function (event) {
             if (event.which == 13) {
+                console.log('enter pressed in brainstorm');
                 submitNewIdea();
                 event.preventDefault();
             }
@@ -113,9 +117,6 @@ function BrainStorm($element, callback) {
         $grid.delegate('.delAction', 'click', function () {
             deleteIdea(jQuery(this));
         });
-
-        // Initializing page focus on the add input
-        jQuery('.inputNewIdea').focus();
     }
 
     /**
@@ -141,7 +142,7 @@ function BrainStorm($element, callback) {
         var previousTitle = $titleCell.html();
 
         // 4 - Replace title column text with input.
-        var titleCellContent = '<a href="#" id="linkEditIdea"></a><form id="formEditIdea" action="' + root_url + 'brainstorm/editIdea"><input type="hidden" class="inputEditIdeaId" name="id" value="' + ideaId + '" /><input type="text" name="title" class="inputEditIdeaTitle ftype_contentA" value="' + previousTitle + '"/></form>';
+        var titleCellContent = '<a href="#" id="linkEditIdea"></a><form id="formEditIdea" action="' + root_url + 'MindFlow/editIdea"><input type="hidden" class="inputEditIdeaId" name="id" value="' + ideaId + '" /><input type="text" name="title" class="inputEditIdeaTitle ftype_contentA" value="' + previousTitle + '"/></form>';
         $titleCell.html(titleCellContent);
 
         // 5 - Focus user on Input
@@ -202,7 +203,7 @@ function BrainStorm($element, callback) {
      */
     function deleteIdea($clickedAction) {
         var $errorDisplayer = jQuery('#errorDisplayer');
-        var url = root_url + 'brainstorm/deleteIdea';
+        var url = root_url + 'MindFlow/deleteIdea';
         var data = {'id': $clickedAction.html()};
 
         var $actionCell = $clickedAction.parent().parent().parent();
@@ -224,6 +225,7 @@ function BrainStorm($element, callback) {
      * Asynchronous request to the server to create an idea.
      */
     function submitNewIdea() {
+        console.log('Submit new BS idea');
         var $form = jQuery('#formNewIdea');
         var $errorDisplayer = jQuery('#errorDisplayer');
         var url = $form.attr('action');

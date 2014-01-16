@@ -54,7 +54,7 @@ function Selection($element, callback) {
         var footerRow = new Row(
             {'cells': [
                 {
-                    'html': '<a href="#" id="linkNewIdea" class="ftype_contentA"></a><form id="formNewIdea" action="' + root_url + 'workOut/createIdea"><input type="text" name="title" class="ftype_contentA" id="inputNewIdea" /></form>',
+                    'html': '<a href="#" id="linkNewIdea" class="ftype_contentA"></a><form id="formNewIdea" action="' + root_url + 'MindFlow/newIdea"><input type="text" name="title" class="ftype_contentA" id="inputNewIdea" /></form>',
                     'colspan': '3'
                 }
             ], 'classList': ['footer']}
@@ -82,9 +82,12 @@ function Selection($element, callback) {
 
         // Selection Grid parameters definition
         var gridParameters = {
-            'url': root_url + 'workOut/getIdeas/stepSelection',
+            'url': root_url + 'MindFlow/getIdeas/Select',
             'eventDL': function () {
                 callback();
+
+                // Initializing page focus on the add input
+                jQuery('#inputNewIdea').focus();
             }
         };
 
@@ -97,6 +100,7 @@ function Selection($element, callback) {
         });
         jQuery('#formNewIdea').keypress(function (event) {
             if (event.which == 13) {
+                console.log('Enter pressed in the damn select');
                 submitNewIdea();
                 event.preventDefault();
             }
@@ -115,9 +119,6 @@ function Selection($element, callback) {
         $grid.delegate('.delAction', 'click', function () {
             deleteIdea(jQuery(this));
         });
-
-        // Initializing page focus on the add input
-        jQuery('.inputNewIdea').focus();
     }
 
     /**
@@ -143,7 +144,7 @@ function Selection($element, callback) {
         var previousTitle = $titleCell.html();
 
         // 4 - Replace title column text with input.
-        var titleCellContent = '<a href="#" id="linkEditIdea" class="ftype_contentA"></a><form id="formEditIdea" action="' + root_url + 'workOut/editIdea"><input type="hidden" class="inputEditIdeaId" name="id" value="' + ideaId + '" /><input type="text" name="title" class="inputEditIdeaTitle" value="' + previousTitle + '"/></form>';
+        var titleCellContent = '<a href="#" id="linkEditIdea" class="ftype_contentA"></a><form id="formEditIdea" action="' + root_url + 'MindFlow/editIdea"><input type="hidden" class="inputEditIdeaId" name="id" value="' + ideaId + '" /><input type="text" name="title" class="inputEditIdeaTitle" value="' + previousTitle + '"/></form>';
         $titleCell.html(titleCellContent);
 
         // 5 - Focus user on Input
@@ -204,7 +205,7 @@ function Selection($element, callback) {
      */
     function deleteIdea($clickedAction) {
         var $errorDisplayer = jQuery('#errorDisplayer');
-        var url = root_url + 'workOut/deleteIdea';
+        var url = root_url + 'MindFlow/deleteIdea';
         var data = {'id': $clickedAction.html()};
 
         var $actionCell = $clickedAction.parent().parent().parent();
@@ -226,11 +227,12 @@ function Selection($element, callback) {
      * Asynchronous request to the server to create an idea.
      */
     function submitNewIdea() {
+        console.log('Submit new Select idea');
         var $form = jQuery('#formNewIdea');
         var $errorDisplayer = jQuery('#errorDisplayer');
         var url = $form.attr('action');
         var data = $form.serialize();
-        var $input = jQuery('.inputNewIdea');
+        var $input = jQuery('#inputNewIdea');
 
         if ($input.val() == '') {
             setInfoMessage($errorDisplayer, 'error', 'Woah, what a long description!', 2000);
@@ -246,7 +248,7 @@ function Selection($element, callback) {
             data: data
         }).done(function (data) {
                 grid.table.addContentData(jQuery.parseJSON(data));
-                jQuery('.inputNewIdea').val('');
+                jQuery('#inputNewIdea').val('');
             }
         ).fail(function (data) {
                 setInfoMessage($errorDisplayer, 'error', data.statusText, 2000);
@@ -254,20 +256,30 @@ function Selection($element, callback) {
         );
     }
 
-    function postponeDialog($element) {
+    /**
+     * Requests User confirmation and, if received, postpones the idea for tomorrow. 
+     * @param $clickedAction The clicked thing.
+     */
+    function postponeDialog($clickedAction) {
+        /**
+         * The Clicked action is the <a> link. Its parent is the action div, which parent is the action box, which parent is the action cell, which parent is the row itself.
+         */
+        var $ideaRow = $clickedAction.parent().parent().parent().parent();
+        var ideaId = $clickedAction.html();
+        
         var userResponse = confirm('You want to postpone this, then?');
 
         if (userResponse == true) {
             var $errorDisplayer = jQuery('#errorDisplayer');
-            var url = root_url + 'workOut/postponeIdea';
-            var data = {'id': $element.html()};
+            var url = root_url + 'MindFlow/postponeIdea';
+            var data = {'id': ideaId};
 
             jQuery.ajax({
                 type: 'post',
                 url: url,
                 data: data
             }).done(function () {
-                    grid.table.removeContentId($element.parent().parent().attr('id'));
+                    grid.table.removeContentId($ideaRow.attr('id'));
                 }
             ).fail(function (data) {
                     setInfoMessage($errorDisplayer, 'error', data.statusText, 2000);

@@ -10,7 +10,12 @@
 namespace application\controllers;
 
 use application\engine\Controller;
+use application\services\MindFlowService;
+use engine\Input;
 use engine\Session;
+use engine\drivers\Exception;
+use engine\drivers\Exceptions\InputException;
+use engine\drivers\Exceptions\RuleException;
 
 /**
  * Class mindFlow
@@ -18,9 +23,15 @@ use engine\Session;
  */
 class mindFlow extends Controller
 {
+    /**
+     * Defining $_service Service type.
+     * @var MindFlowService $_service
+     */
+    protected $_service;
+
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct(new MindFlowService());
 
         $logged = Session::get('isUserLoggedIn');
         if ($logged === FALSE) {
@@ -43,7 +54,7 @@ class mindFlow extends Controller
         // MindFlow libraries
         $this->_view->addLibrary('application/views/mindFlow/css/mindFlow.css');
         $this->_view->addLibrary('application/views/mindFlow/js/mindFlow.js');
-        
+
         // Step related libraries
         $this->_view->addLibrary('application/views/brainStorm/js/brainStorm.js');
         $this->_view->addLibrary('application/views/workOut/js/selection.js');
@@ -51,15 +62,215 @@ class mindFlow extends Controller
         $this->_view->addLibrary('application/views/workOut/js/prioritize.js');
         $this->_view->addLibrary('application/views/brainStorm/css/brainStorm.css');
         $this->_view->addLibrary('application/views/workOut/css/workOut.css');
-        
+
         // Additional libraries
         $this->_view->addLibrary('public/css/external/jquery-ui-1.10.3.custom.css');
         $this->_view->addLibrary('public/js/external/jquery.transit.js');
         $this->_view->addLibrary('public/js/external/jquery-ui-1.10.3.custom.js');
         $this->_view->addLibrary('public/js/external/jquery-timepicker.js');
-        
+
         $this->_view->setParameter('initStep', $step);
         $this->_view->addChunk('mindFlow/index');
-        
+
+    }
+
+    /**
+     * Asynchronous idea list request.
+     * The required parameter tells the MindFlow for which stage the list is for, as every stage needs different info.
+     *
+     * @param string $step (BrainStorm, Select, ApplyTime, Prioritize)
+     * @todo Validate Step as one of the permitted options. We lack the good old Validator :'(
+     */
+    public function getIdeas($step = 'BrainStorm')
+    {
+        $response = $this->_service->getIdeas(
+            Session::get('userId'),
+            $step
+        );
+
+        echo json_encode($response);
+    }
+
+    /**
+     * New idea request.
+     */
+    public function newIdea()
+    {
+        try {
+            $inputIdeaName = Input::build('Text', 'title')
+                ->addRule('minLength', 5)
+                ->addRule('maxLength', 200);
+
+            $inputIdeaName->validate();
+
+            $response = $this->_service->newIdea(Session::get('userId'), $inputIdeaName->getValue());
+
+            print json_encode($response);
+
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+
+    }
+
+    /**
+     * Edit idea request.
+     */
+    public function editIdea()
+    {
+        try {
+            $inputIdeaId = Input::build('Number', 'id')
+                ->addRule('isInt');
+            $inputIdeaName = Input::build('Text', 'title')
+                ->addRule('minLength', 5)
+                ->addRule('maxLength', 200);
+
+            $inputIdeaId->validate();
+            $inputIdeaName->validate();
+
+            $this->_service->editIdea(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaName->getValue());
+
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
+    /**
+     * Delete idea request.
+     */
+    public function deleteIdea()
+    {
+        try {
+            $inputIdeaId = Input::build('Number', 'id')
+                ->addRule('isInt');
+
+            $inputIdeaId->validate();
+
+            $this->_service->deleteIdea(Session::get('userId'), $inputIdeaId->getValue());
+
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
+    /**
+     * Postpone idea request.
+     */
+    public function postponeIdea()
+    {
+        try {
+            $inputIdeaId = Input::build('Number', 'id')->addRule('isInt');
+            $inputIdeaId->validate();
+            $this->_service->postponeIdea(Session::get('userId'), $inputIdeaId->getValue());
+        } catch (RuleException $rEx) {
+            header("HTTP/1.1 400 " . $rEx->getMessage());
+            exit;
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
+    /**
+     * Request to apply time to an idea.
+     */
+    public function applyTimeToIdea()
+    {
+        try {
+            $inputIdeaId = Input::build('Number', 'id')
+                ->addRule('isInt');
+            $inputIdeaDate = Input::build('Date', 'date');
+            $inputIdeaTime = Input::build('Text', 'time')
+                ->addRule('minLength', 5)
+                ->addRule('maxLength', 5);
+            $inputIdeaFrequency = Input::build('Multiselect', 'howOften')
+                ->addRule('availableOptions', array(
+                    'monday',
+                    'tuesday',
+                    'wednesday',
+                    'thursday',
+                    'friday',
+                    'saturday',
+                    'sunday'
+                ));
+
+            $inputIdeaId->validate();
+            $inputIdeaDate->validate();
+            $inputIdeaTime->validate();
+            $inputIdeaFrequency->validate();
+
+            $this->_service->applyTimeToIdea(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaDate->getValue(), $inputIdeaTime->getValue(), $inputIdeaFrequency->getValue());
+
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
+    /**
+     * Prioritize idea request.
+     */
+    public function prioritizeIdea()
+    {
+        try {
+            $inputIdeaId = Input::build('Number', 'id')
+                ->addRule('isInt');
+            $inputIdeaPriority = Input::build('Number', 'priority')
+                ->addRule('isInt')
+                ->addRule('min', 1)
+                ->addRule('max', 10);
+                
+            $inputIdeaId->validate();
+            $inputIdeaPriority->validate();
+
+            $this->_service->prioritizeIdea(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaPriority->getValue());
+
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
     }
 }

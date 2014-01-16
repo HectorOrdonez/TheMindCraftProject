@@ -34,11 +34,15 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.261', '08/01/2013', array (
-            '[Feature] - MindFlow new design construction for BrainStorm, Selection, ApplyTime and Prioritize. PerForm has no design so remains undone. Pending functionality.'
+        $this->_setDevelopmentVersion('0.262', '16/01/2013', array (
+            '[Feature] - MindFlow Functionality completed.',
+            '[Debug] - Modified fields related to dates to display them with Spanish format dd/mm/yyyy.',
         ));
         
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.261', '13/01/2013', array (
+            '[Feature] - MindFlow new design construction for BrainStorm, Selection, ApplyTime and Prioritize. PerForm has no design so remains undone. Pending functionality.'
+        ));
         $this->_addHistoryLog('0.260', '08/01/2013', array (
             '[Feature] - Skeleton of new page: MindFlow. This page will contain the core workflow of the website: BrainStorm, WorkOut, Select, ApplyTime, Prioritize and PerForm. Created the basic behavior for different steps selection. Pending on building the content.'
         ));
