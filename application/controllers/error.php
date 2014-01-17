@@ -12,7 +12,7 @@ namespace application\controllers;
 use application\engine\Controller;
 use engine\drivers\Exception;
 
-class Error extends Controller
+class error extends Controller
 {
     /**
      * Error constructor.

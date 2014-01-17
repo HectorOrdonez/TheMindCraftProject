@@ -12,7 +12,7 @@ namespace application\controllers;
 
 use application\engine\Controller;
 
-class ReleaseHistory extends Controller
+class releaseHistory extends Controller
 {
     /**
      * Array of Arrays.
@@ -34,12 +34,16 @@ class ReleaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.262', '16/01/2013', array (
-            '[Feature] - MindFlow Functionality completed.',
-            '[Debug] - Modified fields related to dates to display them with Spanish format dd/mm/yyyy.',
+        $this->_setDevelopmentVersion('0.263', '17/01/2013', array (
+            '[Debug] - Fixed many issues related to case sensitivity.',
+            '[Core Update] - Updated TheMindcraftProject Hecnel Framework to Version 3.002, fixing and a Bootstrap issue.',
         ));
         
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.262', '16/01/2013', array (
+            '[Feature] - MindFlow Functionality completed.',
+            '[Debug] - Modified fields related to dates to display them with Spanish format dd/mm/yyyy.',
+        ));
         $this->_addHistoryLog('0.261', '13/01/2013', array (
             '[Feature] - MindFlow new design construction for BrainStorm, Selection, ApplyTime and Prioritize. PerForm has no design so remains undone. Pending functionality.'
         ));

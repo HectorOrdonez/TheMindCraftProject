@@ -75,7 +75,7 @@ function ApplyTime($element, callback) {
 
         // ApplyTime Grid parameters definition
         var gridParameters = {
-            'url': root_url + 'MindFlow/getIdeas/ApplyTime',
+            'url': root_url + 'mindFlow/getIdeas/ApplyTime',
             'eventDL': function () {
                 callback();
             }
@@ -109,7 +109,7 @@ function ApplyTime($element, callback) {
             applyTimeDialog.setAttribute('id', 'applyTimeDialog');
             applyTimeDialog.innerHTML = '' +
                 '<div class="applyTimeInnerDialog">' +
-                '   <form id="formApplyTime" action="' + root_url + 'MindFlow/applyTimeToIdea">' +
+                '   <form id="formApplyTime" action="' + root_url + 'mindFlow/applyTimeToIdea">' +
                 '   <input type="hidden" class="inputApplyTimeIdeaId" name="id" value="' + ideaId + '" />' +
                 '       <div class="title">Apply Time</div>' +
                 '       <input id="datePicker" name="date" placeholder="Set the day" value="' + dateTodoCell +'" />' +

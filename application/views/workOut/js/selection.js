@@ -54,7 +54,7 @@ function Selection($element, callback) {
         var footerRow = new Row(
             {'cells': [
                 {
-                    'html': '<a href="#" id="linkNewIdea" class="ftype_contentA"></a><form id="formNewIdea" action="' + root_url + 'MindFlow/newIdea"><input type="text" name="title" class="ftype_contentA" id="inputNewIdea" /></form>',
+                    'html': '<a href="#" id="linkNewIdea" class="ftype_contentA"></a><form id="formNewIdea" action="' + root_url + 'mindFlow/newIdea"><input type="text" name="title" class="ftype_contentA" id="inputNewIdea" /></form>',
                     'colspan': '3'
                 }
             ], 'classList': ['footer']}
@@ -82,7 +82,7 @@ function Selection($element, callback) {
 
         // Selection Grid parameters definition
         var gridParameters = {
-            'url': root_url + 'MindFlow/getIdeas/Select',
+            'url': root_url + 'mindFlow/getIdeas/Select',
             'eventDL': function () {
                 callback();
 
@@ -144,7 +144,7 @@ function Selection($element, callback) {
         var previousTitle = $titleCell.html();
 
         // 4 - Replace title column text with input.
-        var titleCellContent = '<a href="#" id="linkEditIdea" class="ftype_contentA"></a><form id="formEditIdea" action="' + root_url + 'MindFlow/editIdea"><input type="hidden" class="inputEditIdeaId" name="id" value="' + ideaId + '" /><input type="text" name="title" class="inputEditIdeaTitle" value="' + previousTitle + '"/></form>';
+        var titleCellContent = '<a href="#" id="linkEditIdea" class="ftype_contentA"></a><form id="formEditIdea" action="' + root_url + 'mindFlow/editIdea"><input type="hidden" class="inputEditIdeaId" name="id" value="' + ideaId + '" /><input type="text" name="title" class="inputEditIdeaTitle" value="' + previousTitle + '"/></form>';
         $titleCell.html(titleCellContent);
 
         // 5 - Focus user on Input
@@ -205,7 +205,7 @@ function Selection($element, callback) {
      */
     function deleteIdea($clickedAction) {
         var $errorDisplayer = jQuery('#errorDisplayer');
-        var url = root_url + 'MindFlow/deleteIdea';
+        var url = root_url + 'mindFlow/deleteIdea';
         var data = {'id': $clickedAction.html()};
 
         var $actionCell = $clickedAction.parent().parent().parent();
@@ -271,7 +271,7 @@ function Selection($element, callback) {
 
         if (userResponse == true) {
             var $errorDisplayer = jQuery('#errorDisplayer');
-            var url = root_url + 'MindFlow/postponeIdea';
+            var url = root_url + 'mindFlow/postponeIdea';
             var data = {'id': ideaId};
 
             jQuery.ajax({

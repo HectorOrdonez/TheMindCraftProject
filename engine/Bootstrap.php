@@ -232,8 +232,8 @@ class Bootstrap
      */
     private function _setController()
     {
-        $controller = 'application' . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR . $this->_url[self::URL_CONTROLLER];
-        $requestedControllerPath = _SYSTEM_ROOT_PATH . $controller . '.php';
+        $controller = 'application\controllers\\' . $this->_url[self::URL_CONTROLLER];
+        $requestedControllerPath = _SYSTEM_ROOT_PATH . str_replace('\\', '/', $controller) . '.php';
 
         if (file_exists($requestedControllerPath)) {
             $this->_controller = new $controller();
@@ -292,7 +292,7 @@ class Bootstrap
     private function _prepareGeneralExceptionRequest($exception)
     {
         try {
-            $errorController = 'application' . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR . $this->_ERROR_CONTROLLER;
+            $errorController = 'application\controllers\\' . $this->_ERROR_CONTROLLER;
 
             $this->_controller = new $errorController();
             $this->_method = $this->get_EXCEPTION_METHOD();
@@ -309,7 +309,7 @@ class Bootstrap
     private function _prepareFatalExceptionRequest($exception)
     {
         try {
-            $errorController = 'application' . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR . $this->_ERROR_CONTROLLER;
+            $errorController = 'application\controllers\\' . $this->_ERROR_CONTROLLER;
 
             $this->_controller = new $errorController();
             $this->_method = $this->_DEFAULT_METHOD;

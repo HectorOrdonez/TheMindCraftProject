@@ -16,7 +16,7 @@ use engine\Form;
 use engine\Input;
 use engine\Session;
 
-class Index extends Controller
+class index extends Controller
 {
     /**
      * Defining $_service Service type.

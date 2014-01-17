@@ -12,7 +12,6 @@
  * @type {string}
  */
 var root_url = 'http://localhost/projects/themindcraftproject/';
-// var root_url = 'http://192.168.1.55/projects/themindcraftproject/';
 // var root_url = 'http://themindcraftproject.org/';
 
 /**
