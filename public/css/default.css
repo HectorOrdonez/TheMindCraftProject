@@ -168,3 +168,10 @@ input {
     background-color: #f4f2ef;
     color: #b2b2b1;
 }
+
+/*********************************************/
+/**                 HELPERS                 **/
+/*********************************************/
+
+.verticalSpace15 {height: 15px;}
+.verticalSpace30 {height: 30px;}

@@ -34,12 +34,16 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.263', '17/01/2013', array (
-            '[Debug] - Fixed many issues related to case sensitivity.',
-            '[Core Update] - Updated TheMindcraftProject Hecnel Framework to Version 3.002, fixing and a Bootstrap issue.',
+        $this->_setDevelopmentVersion('0.2641', '22/01/2013', array (
+            '[Feature] - SignUp page has been build! Front-end at least. Functionality pending to be done.',
+            '[Visual improvement] - Updated the index, so the key does cool stuff. Functionality pending to be done.',
         ));
         
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.263', '17/01/2013', array (
+            '[Debug] - Fixed many issues related to case sensitivity.',
+            '[Core Update] - Updated TheMindcraftProject Hecnel Framework to Version 3.002, fixing and a Bootstrap issue.',
+        ));
         $this->_addHistoryLog('0.262', '16/01/2013', array (
             '[Feature] - MindFlow Functionality completed.',
             '[Debug] - Modified fields related to dates to display them with Spanish format dd/mm/yyyy.',

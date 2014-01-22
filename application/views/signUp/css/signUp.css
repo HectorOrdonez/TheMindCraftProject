@@ -1,0 +1,57 @@
+/**
+ * Project: The Mindcraft Project
+ * Description: SignUp CSS Library
+ * User: Hector Ordonez
+ * @date 22/01/14 15:00
+ */
+
+#signUpBody {
+    text-align: center;
+}
+
+#signUpNow {
+    font-size: 27px;
+}
+
+#signUpBlock {
+    margin-top: 60px;
+}
+
+#signUpBlock input {
+    width: 500px;
+    height: 30px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+#signUpSubmitBox, #signUpSubmitText {
+    position: relative;
+    margin: 0 auto;
+}
+
+#signUpSubmitBox {
+    top: -53px;
+    width: 120px;
+    z-index: 0;
+}
+
+#signUpSubmitText {
+    width: 120px;
+    height: 30px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+/** Styles for the new User and the crowd **/
+
+#you, #signUpped {
+    position: absolute;
+}
+
+#you {
+    right: 75px;
+}
+
+#signUpped {
+    right: 0;
+}

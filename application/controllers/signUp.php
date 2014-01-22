@@ -41,6 +41,8 @@ class signUp extends Controller
      */
     public function index()
     {
+        $this->_view->addLibrary('application/views/signUp/js/signUp.js');
+        $this->_view->addLibrary('application/views/signUp/css/signUp.css');
         $this->_view->addChunk('signUp/index');
     }
 }

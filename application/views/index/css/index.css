@@ -4,32 +4,58 @@
  * User: Hector Ordonez
  * Date: 23/07/13 10:00
  */
-.loginBlock {
+#loginBlock {
     margin-top: 175px;
     text-align: center;
 }
 
-.loginBlock input {
+#loginBlock input {
     width: 500px;
     height: 30px;
     margin-bottom: 40px;
     text-align: center;
 }
 
-#loginSubmit {
-    background: url('./../../../../public/images/LogIn.png') no-repeat;
-    height: 55px;
-    width: 150px;
-
+#loginSubmitBox {
+    top: -54px;
+}
+#loginSubmitBox, #loginSubmitText {
+    position: relative;
     margin: 0 auto;
+    width: 140px;
+}
+
+#loginSubmitText {
+    width: 120px;
+    height: 30px;
+    z-index: 4;
     cursor: pointer;
 }
 
-#loginSubmit:hover {
-    background-position: -150px 0;
+/** Styles for the Lock and Key **/
+#lock {
+    position: absolute;
+    right: 0;
+    width: 25px;
+    height: 45px;
+}
+#lockFront {
+    z-index: 2;
+}
+#key {
+    position: absolute;
+    right: 30px;
+    z-index: 1;
+}
+#lockBack {
+    z-index: 0;
 }
 
-/** Error Style **/
-.loginError, .inputError {
+#lockFront, #lockBack {
+    position: absolute;
+}
+
+    /** Error Style **/
+#loginError, #inputError {
     text-align: center;
 }

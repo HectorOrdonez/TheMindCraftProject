@@ -13,7 +13,8 @@
 
     <div id='welcome'>
         <span class='ftype_titleA1'>Welcome </span><span
-            class='ftype_titleA2'><?php echo $this->getParameter('userName'); ?></span><span class='ftype_titleA3'>!</span>
+            class='ftype_titleA2'><?php echo $this->getParameter('userName'); ?></span><span
+            class='ftype_titleA3'>!</span>
     </div>
 
     <div id='mainMenu'>
