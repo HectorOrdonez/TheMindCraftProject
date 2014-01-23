@@ -20,10 +20,12 @@ jQuery().ready(function () {
     var headerRow = new Row(
         {'cells': [
             {'html': 'Id', 'classList': ['col_id']},
-            {'html': 'Username', 'classList': ['col_name']},
-            {'html': 'Role', 'classList': ['col_role']},
-            {'html': 'Actions', 'classList': ['col_actions']},
-            {'html': 'Last login', 'classList': ['col_last_login']}
+            {'html': 'Username', 'classList': ['col_name', 'ftype_titleC']},
+            {'html': 'Mail', 'classList': ['col_mail', 'ftype_titleC']},
+            {'html': 'Role', 'classList': ['col_role', 'ftype_titleC']},
+            {'html': 'State', 'classList': ['col_state', 'ftype_titleC']},
+            {'html': 'Actions', 'classList': ['col_actions', 'ftype_titleC']},
+            {'html': 'Last login', 'classList': ['col_last_login', 'ftype_titleC', 'centered']}
         ],
             'classList': ['header']
         });
@@ -32,8 +34,8 @@ jQuery().ready(function () {
     var footerRow = new Row(
         {'cells': [
             {
-                'html': '<a href="#" id="linkNewUser" class="ftype_contentA"></a><form id="formNewUser" action="' + root_url + 'usersManagement/createUser"><input type="text" name="newUsername" id="inputNewUsername" /></form>',
-                'colspan': '4'
+                'html': '<a href="#" id="linkNewUser"></a><form id="formNewUser" action="' + root_url + 'usersManagement/createUser"><input type="text" name="newUsername" class="ftype_contentA" id="inputNewUsername" /></form>',
+                'colspan': '6'
             }
         ], 'classList': ['footer']}
     );
@@ -42,16 +44,20 @@ jQuery().ready(function () {
     var table = new Table('usersManagement_grid', {
         colModel: [
             {dataIndex: 'id', classList: ['id']},
-            {dataIndex: 'username', classList: ['username']},
-            {dataIndex: 'role', classList: ['role']},
+            {dataIndex: 'username', classList: ['username', 'ftype_contentA']},
+            {dataIndex: 'mail', classList: ['mail', 'ftype_contentA']},
+            {dataIndex: 'role', classList: ['role', 'ftype_contentA']},
+            {dataIndex: 'state', classList: ['state', 'ftype_contentA']},
             {staticElement: function (rowId) {
-                var newPassword = '<a class="openNewPasswordDialog">' + rowId + '</a>';
-                var deleteUser = '<a class="deleteUser">' + rowId + '</a>';
-                return newPassword + deleteUser;
+                var actionBox = '<div class="actionBox">';
+                var newPassword = '<div class="action"><a class="openNewPasswordDialog">' + rowId + '</a></div>';
+                var deleteUser = '<div class="action"><a class="deleteUser">' + rowId + '</a></div>';
+                actionBox = actionBox + newPassword + deleteUser + '</div>';
+                return actionBox;
             },
                 classList: ['actions']
             },
-            {dataIndex: 'last_login', classList: ['last_login']}
+            {dataIndex: 'last_login', classList: ['last_login', 'ftype_contentA', 'centered']}
         ]});
     table.addHeaderElement(headerRow.getRow());
     table.addFooterElement(footerRow.getRow());
@@ -81,6 +87,9 @@ jQuery().ready(function () {
     });
     $grid.delegate('.role', 'dblclick', function () {
         openChangeRoleDialog(jQuery(this).parent());
+    });
+    $grid.delegate('.state', 'dblclick', function () {
+        openChangeStateDialog(jQuery(this).parent());
     });
     $grid.delegate('.openNewPasswordDialog', 'click', function () {
         openChangePasswordDialog(jQuery(this));
@@ -207,7 +216,7 @@ function submitNewUser() {
     jQuery.ajax({
         type: 'post',
         url: url,
-        data: {name: username}
+        data: {username: username}
     }).done(function (data) {
             usersManagementGrid.table.addContentData(jQuery.parseJSON(data));
             setInfoMessage($infoDisplayer, 'success', 'User added.', 2000);
@@ -245,7 +254,7 @@ function openEditUsernameDialog($element) {
     jQuery('#formEditUsername').keypress(function (event) {
         if (event.which == 13) {
             event.preventDefault();
-            submitEditUser(userId, $nameCell.find('#inputEditUsername').val(), function (newUsername) {
+            submitEditUser(userId, $usernameCell.find('#inputEditUsername').val(), function (newUsername) {
                 $usernameCell.html(newUsername);
             });
         }
@@ -286,7 +295,7 @@ function submitEditUser(userId, newUsername, callback) {
  */
 function openChangeRoleDialog($element) {
     var userId = $element.children().eq(0).html();
-    var $roleCell = $element.children().eq(2);
+    var $roleCell = $element.children().eq(3);
 
     // Save previous user's role
     var previousRole = $roleCell.html();
@@ -311,6 +320,41 @@ function openChangeRoleDialog($element) {
             });
         } else {
             $roleCell.html(previousRole);
+        }
+    });
+}
+
+/**
+ * Opens the state edition dialog.
+ * @param $element
+ */
+function openChangeStateDialog($element) {
+    var userId = $element.children().eq(0).html();
+    var $stateCell = $element.children().eq(4);
+
+    // Save previous user's state
+    var previousState = $stateCell.html();
+
+    // Replace state column text with select.
+    var stateCellContent = '' +
+        '<select class="stateSelector">' +
+        '   <option>active</option>' +
+        '   <option>inactive</option>' +
+        '</select>';
+    $stateCell.html(stateCellContent);
+    $stateCell.find('select').val(previousState);
+
+    // 5 - Focus user on Input
+    $stateCell.find('select').focus();
+    $stateCell.find('select').blur(function () {
+        // Check if State has changed
+        var newRole = $stateCell.find('select').val();
+        if (newRole != previousState) {
+            submitSetState(userId, newRole, function () {
+                $stateCell.html(newRole);
+            });
+        } else {
+            $stateCell.html(previousState);
         }
     });
 }
@@ -344,11 +388,39 @@ function submitSetRole(userId, newRole, callback) {
 }
 
 /**
+ * * Function requested when User changes the state of a user. Using the state parameter, requests its change to the
+ * server and, when successful, restores the normality of the table calling the callback.
+ * @param userId
+ * @param newState
+ * @param callback
+ */
+function submitSetState(userId, newState, callback) {
+    var $infoDisplayer = jQuery('#infoDisplayer');
+    var url = root_url + 'usersManagement/editUserState';
+    var data = {
+        id: userId,
+        state: newState
+    };
+
+    jQuery.ajax({
+        type: 'post',
+        url: url,
+        data: data
+    }).done(function () {
+            callback(newState);
+        }
+    ).fail(function (data) {
+            setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
+        }
+    );
+}
+
+/**
  * Asynchronous request to the server to delete a User.
  * @param $element
  */
 function deleteUser($element) {
-    if (!confirm('Really really really?')) return;
+    if (!confirm('Every time you kill a User, God eats a cookie. Proceed? (Fat Gods are bad seen in some cultures and religions, as shown in a German research in 1965)')) return;
 
     var $infoDisplayer = jQuery('#infoDisplayer');
     var url = root_url + 'usersManagement/deleteUser';
@@ -359,7 +431,7 @@ function deleteUser($element) {
         url: url,
         data: data
     }).done(function () {
-            usersManagementGrid.table.removeContentId($element.parent().parent().attr('id'));
+            usersManagementGrid.table.removeContentId($element.closest('tr').attr('id'));
         }
     ).fail(function (data) {
             setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);

@@ -34,7 +34,13 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.2642', '23/01/2013', array (
+        $this->_setDevelopmentVersion('0.265', '23/01/2013', array (
+            '[Feature] - Modified UserManagement page to include the new columns State and Mail.',
+            '[Refactor] - Minor refactor of UserManagement page construction, to use similar methods than in other places. This requires a better refactor, together with the MindFlow tables.'
+        ));
+        
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.2642', '23/01/2013', array (
             '[Feature] - SignUp functionality implemented.',
             '[Database change] - User table modified; now Users can be active or inactive and can have a mail (actually it is a must for not so-cool people like we the Super Admins!). Changed field name to username.',
             '[Refactor] - Modified access to the User field name to username, according to the nature of the field and to avoid confusions - it is NOT the real name!',
@@ -42,8 +48,6 @@ class releaseHistory extends Controller
             '[Feature] - Restored functionality to Index and improved - now login does not redirect from PHP but from JS.',
             '[Refactor] - Enhanced the exception control and communication with client side for SignUp and Login. I expected the system to be of use in other parts of the site.'
         ));
-        
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.2641', '22/01/2013', array (
             '[Feature] - SignUp page has been build! Front-end at least. Functionality pending to be done.',
             '[Visual improvement] - Updated the index, so the key does cool stuff. Functionality pending to be done.',

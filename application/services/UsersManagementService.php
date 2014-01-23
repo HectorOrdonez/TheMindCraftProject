@@ -16,6 +16,8 @@ use engine\drivers\Exception;
 
 class UsersManagementService extends Service
 {
+    const DEFAULT_USER_STATE = 'inactive';
+    
     /**
      * Service constructor of UsersManagement logic.
      */
@@ -30,18 +32,21 @@ class UsersManagementService extends Service
      */
     public function getUsers()
     {
+        $result = array();
+
         /**
          * @var User[] $users
          */
         $users = User::find('all');
 
-        $result = array();
         foreach ($users as $user) {
             $result[] = array(
                 'id' => $user->id,
                 'username' => $user->username,
+                'mail' => $user->mail,
                 'role' => $user->role,
-                'last_login' => (is_null($user->last_login)? '' : $user->last_login->format('d/m/Y')));
+                'state' => $user->state,
+                'last_login' => (is_null($user->last_login) ? '' : $user->last_login->format('d/m/Y')));
         }
 
         return $result;
@@ -57,7 +62,14 @@ class UsersManagementService extends Service
     {
         $user = User::create(array('username' => $username));
 
-        return $user->id;
+        return array(
+            'id' => $user->id,
+            'username' => $user->username,
+            'mail' => $user->mail,
+            'role' => $user->role,
+            'state' => self::DEFAULT_USER_STATE,
+            'last_login' => ''
+        );
     }
 
     /**
@@ -73,7 +85,7 @@ class UsersManagementService extends Service
          * @var User $user
          */
         $user = User::find_by_id($userId);
-        
+
         if (is_null($user)) {
             throw new Exception('The User you are trying to modify does not exist.');
         }
@@ -85,7 +97,6 @@ class UsersManagementService extends Service
         $user->username = $newUsername;
         $user->save();
     }
-
 
     /**
      * Edit user role
@@ -114,6 +125,32 @@ class UsersManagementService extends Service
     }
 
     /**
+     * Edit user state
+     *
+     * @param int $userId
+     * @param string $newState
+     * @throws Exception
+     */
+    public function editUserState($userId, $newState)
+    {
+        /**
+         * @var User $user
+         */
+        $user = User::find_by_id($userId);
+
+        if (is_null($user)) {
+            throw new Exception('The User you are trying to modify does not exist.');
+        }
+
+        if ($newState == $user->state) {
+            throw new Exception('This edition request is not changing any User data.');
+        }
+
+        $user->state = $newState;
+        $user->save();
+    }
+
+    /**
      * Edit user password
      *
      * @param int $userId
@@ -130,7 +167,7 @@ class UsersManagementService extends Service
         if (is_null($user)) {
             throw new Exception('The User you are trying to modify does not exist.');
         }
-        
+
         $user->password = Encrypter::encrypt($newPassword);
         $user->save();
     }

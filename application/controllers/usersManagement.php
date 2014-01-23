@@ -147,6 +147,31 @@ class usersManagement extends Controller
     }
 
     /**
+     * Asynchronous request for editing a user's state.
+     *
+     * Parameters required by post:
+     * id - User id to delete.
+     * state - New user state
+     */
+    public function editUserState()
+    {
+        try {
+            $inputId = Input::build('Number', 'id')
+                ->addRule('isInt');
+            $inputState = Input::build('Select', 'state')->addRule('availableOptions', array('active', 'inactive'));
+
+            $inputId->validate();
+            $inputState->validate();
+
+            $this->_service->editUserState($inputId->getValue(), $inputState->getValue());
+        } catch (RuleException $rEx) {
+            header("HTTP/1.1 400 " . $rEx->getMessage());
+        } catch (Exception $ex) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $ex->getMessage());
+        }
+    }
+
+    /**
      * Asynchronous request for editing User's password.
      *
      * Parameters required by post:

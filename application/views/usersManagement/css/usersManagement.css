@@ -31,6 +31,10 @@
     width: 70px;
 }
 
+#usersManagement_grid .col_state {
+    width: 70px;
+}
+
 #usersManagement_grid .col_actions {
     width: 70px;
 }
@@ -49,10 +53,10 @@
 #usersManagement_grid #linkNewUser {
     position: absolute;
     background: url('./../../../../public/images/Plus.png');
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
 
-    margin: 5px 5px 0 5px;
+    margin: 8px 0 0 12px;
 }
 
 /**
@@ -63,32 +67,38 @@
 }
 
 #usersManagement_grid #formNewUser input {
+    height: 30px;
     width: 100%;
     border: none;
-    text-indent: 20px;
+    text-indent: 35px;
 }
 
 /**
  * Users actions
 **/
-#usersManagement_grid .actions .openNewPasswordDialog {
-    background: url('./../../../../public/images/Edit.png') no-repeat;
-    width: 16px;
-    height: 16px;
+#usersManagement_grid .actionBox{
+    position: relative;
+} 
+
+#usersManagement_grid .actionBox div {
     float: left;
+}
+
+#usersManagement_grid .action a {
+    width: 30px;
+    height: 30px;
     display: block;
     font-size: 0;
     cursor: pointer;
 }
 
+
+#usersManagement_grid .actions .openNewPasswordDialog {
+    background: url('./../../../../public/images/TMP_settings.png') no-repeat;
+}
+
 #usersManagement_grid .actions .deleteUser {
     background: url('./../../../../public/images/Delete.png') no-repeat;
-    width: 16px;
-    height: 16px;
-    float: left;
-    display: block;
-    font-size: 0;
-    cursor: pointer;
 }
 
 #usersManagement_grid #formEditUsername #inputEditUsername {
@@ -97,6 +107,11 @@
 }
 
 #usersManagement_grid .roleSelector {
+    height: 14px;
+    border: none;
+    font-size: 10px;
+}
+#usersManagement_grid .stateSelector {
     height: 14px;
     border: none;
     font-size: 10px;
