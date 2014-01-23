@@ -1,6 +1,8 @@
 <?php
 /**
  * General TODOS in the The Mindcraft Project Application
+ *
+ * @todo Redirection page. Build a page that is load when User tries to go somewhere it can not go, that redirects him or her to its place (index or main).
  */
 
 // First thing ever, session_start.
@@ -37,8 +39,7 @@ function __autoload($class)
 /**
  * Initializing ActiveRecord
  */
-ActiveRecord\Config::initialize(function($cfg)
-{
+ActiveRecord\Config::initialize(function ($cfg) {
     $cfg->set_model_directory('application/models');
     $cfg->set_connections(array('development' => DB_TYPE . '://' . DB_USER . ':' . DB_PASS . '@' . DB_HOST . '/' . DB_NAME));
 });

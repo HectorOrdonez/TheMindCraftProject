@@ -20,7 +20,7 @@ jQuery().ready(function () {
     var headerRow = new Row(
         {'cells': [
             {'html': 'Id', 'classList': ['col_id']},
-            {'html': 'Name', 'classList': ['col_name']},
+            {'html': 'Username', 'classList': ['col_name']},
             {'html': 'Role', 'classList': ['col_role']},
             {'html': 'Actions', 'classList': ['col_actions']},
             {'html': 'Last login', 'classList': ['col_last_login']}
@@ -32,7 +32,7 @@ jQuery().ready(function () {
     var footerRow = new Row(
         {'cells': [
             {
-                'html': '<a href="#" id="linkNewUser" class="ftype_contentA"></a><form id="formNewUser" action="' + root_url + 'usersManagement/createUser"><input type="text" name="title" id="inputNewUser" /></form>',
+                'html': '<a href="#" id="linkNewUser" class="ftype_contentA"></a><form id="formNewUser" action="' + root_url + 'usersManagement/createUser"><input type="text" name="newUsername" id="inputNewUsername" /></form>',
                 'colspan': '4'
             }
         ], 'classList': ['footer']}
@@ -42,7 +42,7 @@ jQuery().ready(function () {
     var table = new Table('usersManagement_grid', {
         colModel: [
             {dataIndex: 'id', classList: ['id']},
-            {dataIndex: 'name', classList: ['name']},
+            {dataIndex: 'username', classList: ['username']},
             {dataIndex: 'role', classList: ['role']},
             {staticElement: function (rowId) {
                 var newPassword = '<a class="openNewPasswordDialog">' + rowId + '</a>';
@@ -76,8 +76,8 @@ jQuery().ready(function () {
     });
 
     // Adding edit and delete triggers
-    $grid.delegate('.name', 'dblclick', function () {
-        openEditNameDialog(jQuery(this).parent());
+    $grid.delegate('.username', 'dblclick', function () {
+        openEditUsernameDialog(jQuery(this).parent());
     });
     $grid.delegate('.role', 'dblclick', function () {
         openChangeRoleDialog(jQuery(this).parent());
@@ -194,12 +194,12 @@ function submitNewUser() {
     var $form = jQuery('#formNewUser');
     var $infoDisplayer = jQuery('#infoDisplayer');
     var url = $form.attr('action');
-    var userName = jQuery('#inputNewUser').val();
+    var username = jQuery('#inputNewUsername').val();
 
-    if (userName == '') {
+    if (username == '') {
         setInfoMessage($infoDisplayer, 'error', 'Who you say?.', 2000);
         return;
-    } else if (userName.length > 200) {
+    } else if (username.length > 200) {
         setInfoMessage($infoDisplayer, 'error', 'That WAS a long name. We do not expect any Egyptian, I fear.', 2000);
         return;
     }
@@ -207,11 +207,11 @@ function submitNewUser() {
     jQuery.ajax({
         type: 'post',
         url: url,
-        data: {name: userName}
+        data: {name: username}
     }).done(function (data) {
             usersManagementGrid.table.addContentData(jQuery.parseJSON(data));
             setInfoMessage($infoDisplayer, 'success', 'User added.', 2000);
-            jQuery('#inputNewUser').val('');
+            jQuery('#inputNewUsername').val('');
         }
     ).fail(function (data) {
             setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
@@ -223,30 +223,30 @@ function submitNewUser() {
  * Opens the name edition dialog.
  * @param $element
  */
-function openEditNameDialog($element) {
+function openEditUsernameDialog($element) {
     var userId = $element.children().eq(0).html();
-    var $nameCell = $element.children().eq(1);
+    var $usernameCell = $element.children().eq(1);
 
     // Save previous user's name
-    var previousName = $nameCell.html();
+    var previousUsername = $usernameCell.html();
 
     // Replace name column text with input.
-    var nameCellContent = '<form id="formEditName"><input type="text" name="title" id="inputEditUserName" value="' + previousName + '"/></form>';
-    $nameCell.html(nameCellContent);
+    var nameCellContent = '<form id="formEditUsername"><input type="text" name="title" id="inputEditUsername" value="' + previousUsername + '"/></form>';
+    $usernameCell.html(nameCellContent);
 
     // Focus user on Input and restore normality when unfocus.
-    $nameCell.find('#inputEditUserName').focus();
-    $nameCell.find('#inputEditUserName').blur(function () {
+    $usernameCell.find('#inputEditUsername').focus();
+    $usernameCell.find('#inputEditUsername').blur(function () {
         // Restore normality
-        $nameCell.html(previousName);
+        $usernameCell.html(previousUsername);
     });
 
     // Adding Enter event to the form
-    jQuery('#formEditName').keypress(function (event) {
+    jQuery('#formEditUsername').keypress(function (event) {
         if (event.which == 13) {
             event.preventDefault();
-            submitEditUser(userId, $nameCell.find('#inputEditUserName').val(), function (newName) {
-                $nameCell.html(newName);
+            submitEditUser(userId, $nameCell.find('#inputEditUsername').val(), function (newUsername) {
+                $usernameCell.html(newUsername);
             });
         }
     });
@@ -256,15 +256,15 @@ function openEditNameDialog($element) {
  * * Function requested when User edits the name of a user. Using the name parameter, requests to the server its edition
  * and, when successful, restores the normality of the table calling the callback.
  * @param userId
- * @param newName
+ * @param newUsername
  * @param callback
  */
-function submitEditUser(userId, newName, callback) {
+function submitEditUser(userId, newUsername, callback) {
     var $infoDisplayer = jQuery('#infoDisplayer');
-    var url = root_url + 'usersManagement/editUserName';
+    var url = root_url + 'usersManagement/editUsername';
     var data = {
         id: userId,
-        name: newName
+        username: newUsername
     };
 
     jQuery.ajax({
@@ -272,7 +272,7 @@ function submitEditUser(userId, newName, callback) {
         url: url,
         data: data
     }).done(function () {
-            callback(newName);
+            callback(newUsername);
         }
     ).fail(function (data) {
             setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);

@@ -12,13 +12,13 @@
 #loginBlock input {
     width: 500px;
     height: 30px;
-    margin-bottom: 40px;
     text-align: center;
 }
 
 #loginSubmitBox {
     top: -54px;
 }
+
 #loginSubmitBox, #loginSubmitText {
     position: relative;
     margin: 0 auto;
@@ -39,14 +39,17 @@
     width: 25px;
     height: 45px;
 }
+
 #lockFront {
     z-index: 2;
 }
+
 #key {
     position: absolute;
     right: 30px;
     z-index: 1;
 }
+
 #lockBack {
     z-index: 0;
 }
@@ -55,7 +58,21 @@
     position: absolute;
 }
 
-    /** Error Style **/
-#loginError, #inputError {
+/** Error Style **/
+#generalError {
     text-align: center;
+}
+.errorText {
+    height: 30px;
+}
+
+/** Styles for the Login confirmation **/
+
+#loginConfirmation {
+    text-align: center;
+    display: none;
+}
+
+#confirmationTitle {
+    font-size: 24px;
 }

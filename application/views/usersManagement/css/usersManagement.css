@@ -24,7 +24,7 @@
 #usersManagement_grid .col_id {
 }
 
-#usersManagement_grid .col_name {
+#usersManagement_grid .col_username {
 }
 
 #usersManagement_grid .col_role {
@@ -48,7 +48,7 @@
 **/
 #usersManagement_grid #linkNewUser {
     position: absolute;
-    background: url('./../../../../public/images/TMP_add.png');
+    background: url('./../../../../public/images/Plus.png');
     width: 10px;
     height: 10px;
 
@@ -91,7 +91,7 @@
     cursor: pointer;
 }
 
-#usersManagement_grid #formEditName #inputEditUserName {
+#usersManagement_grid #formEditUsername #inputEditUsername {
     width: 100%;
     border: none;
 }

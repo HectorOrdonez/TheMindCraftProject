@@ -16,6 +16,7 @@ use application\models\User;
 use application\models\UserModel;
 use engine\Encrypter;
 use engine\Session;
+use engine\drivers\Exception;
 
 class IndexService extends Service
 {
@@ -30,49 +31,59 @@ class IndexService extends Service
     /**
      * Receives a name and a password. Using the User Model, verifies if the name and password are correct.
      * If so, saves in Session the relevant data.
-     * @param string $name
+     * @param string $username
      * @param string $password
-     * @return bool If User is now logged in or not.
+     * @throws Exception
      */
-    public function login($name, $password)
+    public function login($username, $password)
     {
-        $user = User::find_by_name($name);
+        $user = User::find_by_username($username);
 
-        if (is_null($user))
-        {
-            return false;
+        if (is_null($user) OR (!Encrypter::verify($password, $user->password))) {
+            throw new Exception('User does not exist or password does not match.', Exception::GENERAL_EXCEPTION, EXCEPTION_LOGIN_FAILED);
         }
-        
-        if (Encrypter::verify($password, $user->password))
-        {
-            // User is logged in.
 
-            // Setting Session parameters
-            Session::set('isUserLoggedIn', true);
-            Session::set('userId', $user->id);
-            Session::set('userName', $user->name);
-            Session::set('userRole', $user->role);
-
-            // In case the User is logged a different day than the last time...
-            if ($user->last_login != date('Y-m-d'))
-            {
-                // Setting last login of User to today.
-                $user->last_login = date('Y-m-d');
-                $user->save();
-                
-                // Setting all postponed ideas of User to false.
-                $ideas = Idea::find('all', array('conditions'=> array('postponed = true')));
-                
-                foreach($ideas as $idea)
-                {
-                    $idea->postponed = false;
-                    $idea->save();
-                }
-            }
-
-            return true;
+        if ('inactive' == $user->state) {
+            throw new Exception('User is not active. Try again later.', Exception::GENERAL_EXCEPTION, EXCEPTION_LOGIN_USER_NOT_ACTIVE);
         }
-        
-        return false;
+
+        // Everything is alright.
+
+        // Setting Session parameters
+        Session::set('isUserLoggedIn', true);
+        Session::set('userId', $user->id);
+        Session::set('userName', $user->username);
+        Session::set('userRole', $user->role);
+
+        // In case the User is logged a different day than the last time...
+        if ($user->last_login != date('Y-m-d')) {
+            // Setting last login of User to today.
+            $user->last_login = date('Y-m-d');
+            $user->save();
+
+            $this->unPostpone($user->id);
+        }
+    }
+
+    /**
+     * When a User logs in a day after, its postponed ideas are set to not-postponed.
+     * @param $userId
+     */
+    private function unPostpone($userId)
+    {
+
+        // Setting all postponed ideas of User to false.
+        /**
+         * @var \ActiveRecord\Model[] $ideas
+         */
+        $ideas = Idea::find('all', array('conditions' => array(
+            'postponed = true',
+            "user_id = {$userId}"
+        )));
+
+        foreach ($ideas as $idea) {
+            $idea->postponed = false;
+            $idea->save();
+        }
     }
 }

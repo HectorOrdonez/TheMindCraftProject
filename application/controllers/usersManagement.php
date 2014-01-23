@@ -75,12 +75,12 @@ class usersManagement extends Controller
      * its creation.
      *
      * Parameters required by post:
-     * name - The name that this new user will have.
+     * username - The username that this new user will have.
      */
     public function createUser()
     {
         try {
-            $inputName = Input::build('Text', 'name')
+            $inputName = Input::build('Text', 'username')
                 ->addRule('minLength', 5)
                 ->addRule('maxLength', 50);
             $inputName->validate();
@@ -99,21 +99,21 @@ class usersManagement extends Controller
      *
      * Parameters required by post:
      * id - User id to delete.
-     * name - New user name
+     * username - New username
      */
-    public function editUserName()
+    public function editUsername()
     {
         try {
             $inputId = Input::build('Number', 'id')
                 ->addRule('isInt');
-            $inputName = Input::build('Text', 'name')
+            $inputUsername = Input::build('Text', 'username')
                 ->addRule('minLength', 5)
                 ->addRule('maxLength', 50);
 
             $inputId->validate();
-            $inputName->validate();
+            $inputUsername->validate();
 
-            $this->_service->editUserName($inputId->getValue(), $inputName->getValue());
+            $this->_service->editUserName($inputId->getValue(), $inputUsername->getValue());
         } catch (RuleException $rEx) {
             header("HTTP/1.1 400 " . $rEx->getMessage());
         } catch (Exception $ex) {

@@ -34,3 +34,8 @@ define ('_EXCEPTION_METHOD', 'exception');
  * Config required for ActiveRecord. It disables its autoloading function.
  */
 define ('PHP_ACTIVERECORD_AUTOLOAD_DISABLE', true);
+
+define ('EXCEPTION_SIGNUP_USERNAME_IN_USE', 1001);
+define ('EXCEPTION_SIGNUP_MAIL_IN_USE', 1002);
+define ('EXCEPTION_LOGIN_FAILED', 1003);
+define ('EXCEPTION_LOGIN_USER_NOT_ACTIVE', 1004);

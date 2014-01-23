@@ -39,7 +39,7 @@ class UsersManagementService extends Service
         foreach ($users as $user) {
             $result[] = array(
                 'id' => $user->id,
-                'name' => $user->name,
+                'username' => $user->username,
                 'role' => $user->role,
                 'last_login' => (is_null($user->last_login)? '' : $user->last_login->format('d/m/Y')));
         }
@@ -50,24 +50,24 @@ class UsersManagementService extends Service
     /**
      * Create user
      * /**
-     * @param $name string
+     * @param $username string
      * @return array Id and Name of new user.
      */
-    public function createUser($name)
+    public function createUser($username)
     {
-        $user = User::create(array('name' => $name));
+        $user = User::create(array('username' => $username));
 
         return $user->id;
     }
 
     /**
-     * Edit user name
+     * Edit Username
      *
      * @param int $userId
-     * @param string $newName
+     * @param string $newUsername
      * @throws Exception
      */
-    public function editUserName($userId, $newName)
+    public function editUsername($userId, $newUsername)
     {
         /**
          * @var User $user
@@ -78,11 +78,11 @@ class UsersManagementService extends Service
             throw new Exception('The User you are trying to modify does not exist.');
         }
 
-        if ($newName == $user->name) {
+        if ($newUsername == $user->username) {
             throw new Exception('This edition request is not changing any User data.');
         }
 
-        $user->name = $newName;
+        $user->username = $newUsername;
         $user->save();
     }
 

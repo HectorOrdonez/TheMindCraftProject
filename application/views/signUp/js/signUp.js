@@ -59,7 +59,7 @@ function signUp(callback) {
     var url = $signUpForm.attr('action');
     var formArray = $signUpForm.serializeArray();
     var formData = {
-        'email': formArray[0].value,
+        'mail': formArray[0].value,
         'username': formArray[1].value,
         'password': formArray[2].value
     };
@@ -67,14 +67,26 @@ function signUp(callback) {
     jQuery.ajax({
         type: 'post',
         url: url,
-        data: formData
-    }).done(function () {
-            // @todo Congrats, you've been registered. You'll find a mail and bla.
-            callback();
+        data: formData,
+        statusCode: {
+            // Error code 400 means User did something wrong
+            400: function (data) {
+                var errors = jQuery.parseJSON(data.responseText);
+                jQuery.each(errors, function (key, value) {
+                    setInfoMessage(jQuery('#' + key + 'Error'), 'error', value, 3000);
+                });
+                callback();
+            },
+            // Error code 500 means, probably, that we did something wrong (Oh noes!%!??!)
+            500: function (data) {
+                setInfoMessage(jQuery('#generalError'), 'error', data.responseText, 5000);
+                callback();
+            }
         }
-    ).fail(function (data) {
-            // @todo Show error elements, wherever they are (more than one might be shown!)
-            callback();
+    }).done(function () {
+            jQuery('#signUpBody').fadeOut(function () {
+                jQuery('#signUpConfirmation').fadeIn();
+            });
         }
     );
 }

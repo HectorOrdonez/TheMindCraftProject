@@ -13,14 +13,22 @@
 
     <div id='loginBlock'>
         <form id='loginForm' action="<?php echo _SYSTEM_BASE_URL; ?>index/login" method="POST">
-            <p>
+            <label>
                 <input id='loginInputUsername' class='ftype_contentA' type='text' name='username' placeholder="username"/>
-            </p>
+            </label>
 
-            <p>
+            <div class='errorText'>
+                <div id='usernameError'></div>
+            </div>
+
+            <label>
                 <input id='loginInputPassword' class='ftype_contentA' type='password' name='password' placeholder="password"/>
-            </p>
-            
+            </label>
+
+            <div class='errorText'>
+                <div id='passwordError'></div>
+            </div>
+
             <div class='verticalSpace30'></div>
 
             <div id='loginSubmitText'>
@@ -43,6 +51,16 @@
 
             <div id='loginSubmitBox'></div>
         </form>
+    </div>
+
+    <div id='generalError'>
+        
+    </div>
+
+    <div id='loginConfirmation'>
+        <div class='ftype_successA' id='confirmationTitle'>
+            Starting session ...
+        </div>
     </div>
 
 <?php $this->printChunk('footer'); ?>

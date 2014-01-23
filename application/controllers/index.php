@@ -15,6 +15,7 @@ use application\services\IndexService;
 use engine\Form;
 use engine\Input;
 use engine\Session;
+use engine\drivers\Exception;
 
 class index extends Controller
 {
@@ -75,21 +76,32 @@ class index extends Controller
         // Logic
         $wrongInputs = $form->getValidationErrors();
         if (false !== $wrongInputs) {
-            $this->_view->setParameter('errors', $form->getValidationErrors());
-            
-            $this->_view->addChunk('index/inputErrors');
+            $errorArray = array();
+            foreach ($wrongInputs as $input) {
+                $errorArray[$input->getFieldName()] = $input->getError()->getMessage();
+            }
+            header('HTTP/1.1 400 Can not login with these parameters.');
+            header('Content-Type: application/json');
+            print json_encode($errorArray);
             return;
         }
 
-        $login = $this->_service->login($form->getInput('username')->getValue(), $form->getInput('password')->getValue());
-
-        if (true !== $login) {
-            $this->_view->setParameter('loginError', 'Wrong username or Password.');
-            $this->_view->addChunk('index/loginError');
-            return;
+        try {
+            $this->_service->login($form->getInput('username')->getValue(), $form->getInput('password')->getValue());
+        } catch (Exception $e) {
+            if (EXCEPTION_LOGIN_USER_NOT_ACTIVE === $e->getCode() OR
+                EXCEPTION_LOGIN_FAILED === $e->getCode()
+            ) {
+                header("HTTP/1.1 401 " . $e->getMessage());
+                print $e->getMessage();
+            } else {
+                header("HTTP/1.1 500 " . $e->getMessage());
+                print ('Unknown error.');
+            }
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unknown error.');
+            print ('Unknown error.');
         }
-
-        header('location: ' . _SYSTEM_BASE_URL . 'index');
     }
 
     /**
