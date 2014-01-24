@@ -105,7 +105,7 @@ class index extends Controller
     }
 
     /**
-     * Logout page. Destroys the user session and re
+     * Logout page. Destroys the user session and redirects.
      */
     public function logout()
     {

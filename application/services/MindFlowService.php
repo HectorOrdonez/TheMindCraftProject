@@ -39,8 +39,7 @@ class MindFlowService extends Service
          * @var \ActiveRecord\Model[] $ideas
          */
         $ideas = Idea::find('all', array('conditions' => array(
-            'user_id' => $userId,
-            'postponed' => false
+            'user_id' => $userId
         )));
 
         foreach ($ideas as $idea) {
@@ -130,27 +129,6 @@ class MindFlowService extends Service
         }
 
         $idea->delete();
-    }
-
-    /**
-     * Postpone idea for tomorrow.
-     * @param int $userId
-     * @param int $ideaId
-     * @throws Exception
-     */
-    public function postponeIdea($userId, $ideaId)
-    {
-        /**
-         * @var \ActiveRecord\Model $idea
-         */
-        $idea = Idea::find_by_id($ideaId);
-
-        if (is_null($idea) or $idea->user_id != $userId) {
-            throw new Exception('The idea you are trying to hold over does not exist or it is not yours.');
-        }
-
-        $idea->postponed = true;
-        $idea->save();
     }
 
     /**

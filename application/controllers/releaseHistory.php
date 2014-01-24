@@ -34,12 +34,17 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.266', '24/01/2013', array (
-            '[Feature] - Created Admin library for the amazing Admin crew that informs Admins of the existence of Users whose state is pending.',
+        $this->_setDevelopmentVersion('0.271', '24/01/2013', array (
+            '[Refactor] - Refactor MindFlow to contain all libraries in its place. ',
+            '[Refactor] - Prepared application for the new architecture regarding ideas, regular ideas and actions.',
             '[Code improvement] - Moved the Jquery UI libraries to the general Controller, so all logged users have it loaded, everywhere. This is done because this UI is pretty useful, not so heavy, and having it there avoids adding it in different specific controllers.',
         ));
         
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.266', '24/01/2013', array (
+            '[Feature] - Created Admin library for the amazing Admin crew that informs Admins of the existence of Users whose state is pending.',
+            '[Code improvement] - Moved the Jquery UI libraries to the general Controller, so all logged users have it loaded, everywhere. This is done because this UI is pretty useful, not so heavy, and having it there avoids adding it in different specific controllers.',
+        ));
         $this->_addHistoryLog('0.265', '23/01/2013', array (
             '[Feature] - Modified UserManagement page to include the new columns State and Mail.',
             '[Refactor] - Minor refactor of UserManagement page construction, to use similar methods than in other places. This requires a better refactor, together with the MindFlow tables.'

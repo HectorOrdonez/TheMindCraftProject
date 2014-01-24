@@ -38,7 +38,7 @@
 }
 
 #selection_grid .actions .postponeAction {
-    background: url('./../../../../public/images/Postpone.png');
+    background: url('../../../../public/images/Postpone.png');
 }
 
 /**********************************************************************************************************************/
@@ -96,7 +96,7 @@
  * ApplyTime_grid actions
 **/
 #applyTime_grid .actions .applyTimeAction {
-    background: url('./../../../../public/images/TMP_clock.gif');
+    background: url('../../../../public/images/TMP_clock.gif');
 }
 
 #applyTimeDialog {
@@ -106,7 +106,7 @@
     top: 0;
     left: 0;
     z-index: 2;
-    background: url('./../../../../public/images/TMP_transparent.png') repeat;
+    background: url('../../../../public/images/TMP_transparent.png') repeat;
     display: none;
 }
 

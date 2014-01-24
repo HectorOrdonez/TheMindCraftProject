@@ -56,12 +56,12 @@ class mindFlow extends Controller
         $this->_view->addLibrary('application/views/mindFlow/js/mindFlow.js');
 
         // Step related libraries
-        $this->_view->addLibrary('application/views/brainStorm/js/brainStorm.js');
-        $this->_view->addLibrary('application/views/workOut/js/selection.js');
-        $this->_view->addLibrary('application/views/workOut/js/applyTime.js');
-        $this->_view->addLibrary('application/views/workOut/js/prioritize.js');
-        $this->_view->addLibrary('application/views/brainStorm/css/brainStorm.css');
-        $this->_view->addLibrary('application/views/workOut/css/workOut.css');
+        $this->_view->addLibrary('application/views/mindFlow/js/brainStorm.js');
+        $this->_view->addLibrary('application/views/mindFlow/js/selection.js');
+        $this->_view->addLibrary('application/views/mindFlow/js/applyTime.js');
+        $this->_view->addLibrary('application/views/mindFlow/js/prioritize.js');
+        $this->_view->addLibrary('application/views/mindFlow/css/brainStorm.css');
+        $this->_view->addLibrary('application/views/mindFlow/css/workOut.css');
 
         // Additional libraries
         $this->_view->addLibrary('public/js/external/jquery.transit.js');
@@ -172,24 +172,6 @@ class mindFlow extends Controller
             $errorMessage = 'Invalid data: ' . $rEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
             exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
-            exit;
-        }
-    }
-
-    /**
-     * Postpone idea request.
-     */
-    public function postponeIdea()
-    {
-        try {
-            $inputIdeaId = Input::build('Number', 'id')->addRule('isInt');
-            $inputIdeaId->validate();
-            $this->_service->postponeIdea(Session::get('userId'), $inputIdeaId->getValue());
-        } catch (RuleException $rEx) {
-            header("HTTP/1.1 400 " . $rEx->getMessage());
-            exit;
         } catch (Exception $e) {
             header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
             exit;
