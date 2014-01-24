@@ -61,6 +61,8 @@ class Controller extends engineController
         if (Session::get('isUserLoggedIn') == TRUE)
         {
             $this->_view->addLibrary('application/views/general/logged/css/base.css');
+            $this->_view->addLibrary('public/css/external/jquery-ui-1.10.3.custom.css');
+            $this->_view->addLibrary('public/js/external/jquery-ui-1.10.3.custom.js');
             $headerPath = 'general/logged/header';
             $footerPath = 'general/logged/footer';
         } else {
@@ -72,6 +74,7 @@ class Controller extends engineController
         if (Session::get('userRole') == 'admin')
         {
             $this->_view->addLibrary('application/views/general/admin/css/base.css');
+            $this->_view->addLibrary('application/views/general/admin/js/admin.js');
             $footerPath = 'general/admin/footer';
         }
 

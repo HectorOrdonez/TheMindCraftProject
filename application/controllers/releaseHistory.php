@@ -34,12 +34,16 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.265', '23/01/2013', array (
-            '[Feature] - Modified UserManagement page to include the new columns State and Mail.',
-            '[Refactor] - Minor refactor of UserManagement page construction, to use similar methods than in other places. This requires a better refactor, together with the MindFlow tables.'
+        $this->_setDevelopmentVersion('0.266', '24/01/2013', array (
+            '[Feature] - Created Admin library for the amazing Admin crew that informs Admins of the existence of Users whose state is pending.',
+            '[Code improvement] - Moved the Jquery UI libraries to the general Controller, so all logged users have it loaded, everywhere. This is done because this UI is pretty useful, not so heavy, and having it there avoids adding it in different specific controllers.',
         ));
         
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.265', '23/01/2013', array (
+            '[Feature] - Modified UserManagement page to include the new columns State and Mail.',
+            '[Refactor] - Minor refactor of UserManagement page construction, to use similar methods than in other places. This requires a better refactor, together with the MindFlow tables.'
+        ));
         $this->_addHistoryLog('0.2642', '23/01/2013', array (
             '[Feature] - SignUp functionality implemented.',
             '[Database change] - User table modified; now Users can be active or inactive and can have a mail (actually it is a must for not so-cool people like we the Super Admins!). Changed field name to username.',

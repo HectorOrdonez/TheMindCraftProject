@@ -64,9 +64,7 @@ class mindFlow extends Controller
         $this->_view->addLibrary('application/views/workOut/css/workOut.css');
 
         // Additional libraries
-        $this->_view->addLibrary('public/css/external/jquery-ui-1.10.3.custom.css');
         $this->_view->addLibrary('public/js/external/jquery.transit.js');
-        $this->_view->addLibrary('public/js/external/jquery-ui-1.10.3.custom.js');
         $this->_view->addLibrary('public/js/external/jquery-timepicker.js');
 
         $this->_view->setParameter('initStep', $step);

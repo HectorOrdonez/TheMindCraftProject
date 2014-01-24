@@ -340,6 +340,7 @@ function openChangeStateDialog($element) {
         '<select class="stateSelector">' +
         '   <option>active</option>' +
         '   <option>inactive</option>' +
+        '   <option>pending</option>' +
         '</select>';
     $stateCell.html(stateCellContent);
     $stateCell.find('select').val(previousState);

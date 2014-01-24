@@ -69,6 +69,17 @@ class usersManagement extends Controller
     }
 
     /**
+     * Asynchronous Jquery Grid request to get the amount of Users whose State is pending.
+     * This request is design to provide Admins with warnings when Pending Users are waiting for confirmation.
+     */
+    public function countPendingUsers()
+    {
+        $amount = $this->_service->countPendingUsers();
+
+        print json_encode(array('pendingUsersAmount' => $amount));
+    }
+
+    /**
      * Asynchronous request for adding a new user.
      *
      * Notice that the only parameters required is the name. The role and password of the user needs to be set after
@@ -158,7 +169,7 @@ class usersManagement extends Controller
         try {
             $inputId = Input::build('Number', 'id')
                 ->addRule('isInt');
-            $inputState = Input::build('Select', 'state')->addRule('availableOptions', array('active', 'inactive'));
+            $inputState = Input::build('Select', 'state')->addRule('availableOptions', array('active', 'inactive', 'pending'));
 
             $inputId->validate();
             $inputState->validate();

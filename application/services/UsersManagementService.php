@@ -53,6 +53,17 @@ class UsersManagementService extends Service
     }
 
     /**
+     * Asynchronous request to get the amount of users whose state is pending.
+     * @return int Amount
+     */
+    public function countPendingUsers()
+    {
+        $amount = User::count(array('conditions' => "state = 'pending'"));
+
+        return $amount;
+    }
+
+    /**
      * Create user
      * /**
      * @param $username string

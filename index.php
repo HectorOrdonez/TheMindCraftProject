@@ -4,6 +4,7 @@
  *
  * @todo Redirection page. Build a page that is load when User tries to go somewhere it can not go, that redirects him or her to its place (index or main).
  * @todo Find a way to build the grid nicely, pretty, coooooly :)
+ * @todo Fix the Body - content css issues. No Position Absolute in the body, that is not nice :'(
  */
 
 // First thing ever, session_start.

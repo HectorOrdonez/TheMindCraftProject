@@ -11,7 +11,6 @@ var keyOutside = '30px';
 jQuery().ready(function () {
     // Initializing parameters
     var $loginSubmitText = jQuery('#loginSubmitText');
-    var $key = jQuery('#key');
     var $loginUpForm = jQuery('#loginForm');
 
     // On page start
@@ -92,7 +91,7 @@ function login(callback) {
                 jQuery('#loginConfirmation').fadeIn(function () {
                     setTimeout(function () {
                         window.location = root_url + '/main';
-                    }, 3000);
+                    }, 1000);
                 });
             });
         }
