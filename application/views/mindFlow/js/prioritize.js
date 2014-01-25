@@ -63,6 +63,7 @@ function Prioritize($element, callback) {
         // ApplyTime Grid parameters definition
         var gridParameters = {
             'url': root_url + 'mindFlow/getIdeas/Prioritize',
+            'extraData': {step: 'prioritize'},
             'eventDL': function () {
                 callback();
             }

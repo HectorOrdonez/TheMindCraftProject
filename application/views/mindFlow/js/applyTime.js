@@ -76,6 +76,7 @@ function ApplyTime($element, callback) {
         // ApplyTime Grid parameters definition
         var gridParameters = {
             'url': root_url + 'mindFlow/getIdeas/ApplyTime',
+            'extraData': {step: 'applyTime'},
             'eventDL': function () {
                 callback();
             }

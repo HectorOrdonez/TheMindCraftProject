@@ -83,6 +83,7 @@ function Selection($element, callback) {
         // Selection Grid parameters definition
         var gridParameters = {
             'url': root_url + 'mindFlow/getIdeas/Select',
+            'extraData': {step: 'select'},
             'eventDL': function () {
                 callback();
 

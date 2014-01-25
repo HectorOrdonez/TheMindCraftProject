@@ -34,13 +34,19 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.271', '24/01/2013', array (
+        $this->_setDevelopmentVersion('0.272', '24/01/2013', array (
+            '[Refactor] - Reorganized MindFlow - Prioritize goes before ApplyTime.', 
+            '[Refactor] - Now MindFlow steps request to MindFlow controller the step by post, not by get.', 
+            '[Feature] - MindFlow now verifies the step requested.',
+            '[Refactor] - Added toArray method in Idea Model to make it handier. Modified MindFlowService to use the new functionality.'
+        ));
+        
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.271', '24/01/2013', array (
             '[Refactor] - Refactor MindFlow to contain all libraries in its place. ',
             '[Refactor] - Prepared application for the new architecture regarding ideas, regular ideas and actions.',
             '[Code improvement] - Moved the Jquery UI libraries to the general Controller, so all logged users have it loaded, everywhere. This is done because this UI is pretty useful, not so heavy, and having it there avoids adding it in different specific controllers.',
         ));
-        
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.266', '24/01/2013', array (
             '[Feature] - Created Admin library for the amazing Admin crew that informs Admins of the existence of Users whose state is pending.',
             '[Code improvement] - Moved the Jquery UI libraries to the general Controller, so all logged users have it loaded, everywhere. This is done because this UI is pretty useful, not so heavy, and having it there avoids adding it in different specific controllers.',

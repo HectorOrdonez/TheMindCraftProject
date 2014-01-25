@@ -11,7 +11,6 @@ namespace application\services;
 
 use application\engine\Service;
 use application\models\Idea;
-use application\models\IdeaModel;
 use engine\drivers\Exception;
 
 class MindFlowService extends Service
@@ -33,35 +32,49 @@ class MindFlowService extends Service
      */
     public function getIdeas($userId, $step)
     {
-        $response = array();
-
+        // Initializing parameters
+        $response = array(); // Array that will be returned.
+        list($requiredFields, $requiredConditions) = $this->extractRequirements($step, $userId);
+        
+        // Getting ideas based on the set conditions.
         /**
-         * @var \ActiveRecord\Model[] $ideas
+         * @var Idea[] $ideas
          */
-        $ideas = Idea::find('all', array('conditions' => array(
-            'user_id' => $userId
-        )));
+        $ideas = Idea::find('all', array('conditions' => $requiredConditions));
 
         foreach ($ideas as $idea) {
-            $arr = array();
-            $arr['id'] = $idea->id;
-            $arr['title'] = $idea->title;
-            $arr['date_creation'] = $idea->date_creation->format('d/m/Y');
-
-            switch ($step) {
-                case 'ApplyTime':
-                    $arr['date_todo'] = (is_null($idea->date_todo)) ? '' : $idea->date_todo->format('d/m/Y');
-                    $arr['time_todo'] = (is_null($idea->time_todo)) ? '' : substr($idea->time_todo, 0, 5);
-                    $arr['frequency'] = $idea->frequency;
-                    break;
-                case 'Prioritize':
-                    $arr['priority'] = $idea->priority;
-                    break;
-            }
-
-            $response[] = $arr;
+            $response[] = $idea->toArray($requiredFields);
         }
         return $response;
+    }
+
+    /**
+     * This method is a helper for the getIdeas request. 
+     * Based on the request step, the required fields and conditions differ, hence this method.
+     * 
+     * @param string $step The requested step.
+     * @param int $userId The requesting user id.
+     * @return array The fields and conditions.
+     */
+    private function extractRequirements($step, $userId)
+    {
+        // Default fields and conditions, common in all steps
+        $requiredFields = array('id', 'title', 'date_creation'); // Fields to output, depending on step.
+        $requiredConditions = array('user_id' => $userId); // Conditions that ideas must accomplished to be added to the response.
+
+        // Setting the required fields and conditions depending on step.
+        switch ($step) {
+            case 'brainStorm':
+                break;
+            case 'select':
+                break;
+            case 'prioritize':
+                break;
+            case 'applyTime':
+                break;
+        }
+        
+        return array($requiredFields, $requiredConditions);
     }
 
     /**
@@ -74,7 +87,7 @@ class MindFlowService extends Service
     public function newIdea($userId, $title)
     {
         /**
-         * @var \ActiveRecord\Model $idea
+         * @var Idea $idea
          */
         $idea = Idea::create(array(
             'user_id' => $userId,
@@ -82,9 +95,7 @@ class MindFlowService extends Service
             'date_creation' => date('Y-m-d')
         ));
 
-        return array('id' => $idea->id,
-            'title' => $idea->title,
-            'date_creation' => $idea->date_creation->format('d/m/Y'));
+        return $idea->toArray(array('id', 'title', 'date_creation'));
     }
 
     /**

@@ -66,11 +66,12 @@ function BrainStorm($element, callback) {
                 {dataIndex: 'id', classList: ['id']},
                 {dataIndex: 'title', classList: ['title', 'ftype_contentA']},
                 {staticElement: function (rowId) {
+                    var cellWrapper = '<div class="cellWrapper">';
                     var actionBox = '<div class="actionBox">';
-                    var editAction = '<div class="action"><a class="editAction">' + rowId + '</a></div>';
-                    var delAction = '<div class="action"><a class="delAction">' + rowId + '</a></div>';
-                    actionBox = actionBox + editAction + delAction + '</div>';
-                    return actionBox;
+                    var editAction = '<div class="action"><a class="editAction" id="' + rowId + '"></a></div>';
+                    var delAction = '<div class="action"><a class="delAction" id="' + rowId + '"></a></div>';
+                    cell = cellWrapper + actionBox + editAction + delAction + '</div></div>';
+                    return cell;
                 },
                     classList: ['actions']
                 },
@@ -82,6 +83,7 @@ function BrainStorm($element, callback) {
         // Brainstorm Grid parameters definition
         var gridParameters = {
             'url': root_url + 'mindFlow/getIdeas',
+            'extraData': {step: 'brainStorm'},
             'eventEOI': function () {
             },
             'eventDL': function () {

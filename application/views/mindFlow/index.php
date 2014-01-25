@@ -46,18 +46,18 @@
         </li>
         <li class='miniFlowOption' id='step22'>
             <a class='imgBox'>
-                <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>ApplyTime.png' alt='ApplyTime'/>
-            </a>
-            <div class='text'>
-                <span class='ftype_contentA'>ApplyTime!</span>
-            </div>
-        </li>
-        <li class='miniFlowOption' id='step23'>
-            <a class='imgBox'>
                 <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>Prioritize.png' alt='Prioritize'/>
             </a>
             <div class='text'>
                 <span class='ftype_contentA'>Prioritize!</span>
+            </div>
+        </li>
+        <li class='miniFlowOption' id='step23'>
+            <a class='imgBox'>
+                <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>ApplyTime.png' alt='ApplyTime'/>
+            </a>
+            <div class='text'>
+                <span class='ftype_contentA'>ApplyTime!</span>
             </div>
         </li>
         <li class='flowOption' id='step3'>

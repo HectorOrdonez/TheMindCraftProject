@@ -75,16 +75,20 @@ class mindFlow extends Controller
     /**
      * Asynchronous idea list request.
      * The required parameter tells the MindFlow for which stage the list is for, as every stage needs different info.
-     *
-     * @param string $step (BrainStorm, Select, ApplyTime, Prioritize)
-     * @todo Validate Step as one of the permitted options. We lack the good old Validator :'(
      */
-    public function getIdeas($step = 'BrainStorm')
+    public function getIdeas()
     {
-        $response = $this->_service->getIdeas(
-            Session::get('userId'),
-            $step
-        );
+        try {
+            $selectedStep = Input::build('Select', 'step')
+                ->addRule('availableOptions', array('brainStorm', 'select', 'prioritize', 'applyTime'));
+            $selectedStep->validate();
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error.');
+            print($e->getMessage());
+            exit;
+        }
+        
+        $response = $this->_service->getIdeas(Session::get('userId'),$selectedStep->getValue());
 
         echo json_encode($response);
     }
