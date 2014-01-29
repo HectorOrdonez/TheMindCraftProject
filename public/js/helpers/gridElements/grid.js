@@ -165,8 +165,10 @@ function Grid(table, parameters) {
         self.table = table;
         dataSource = parameters['url'];
         extraData = parameters['extraData'] || {};
-        eventDL = parameters['eventDL'] || function () {};
-        eventEOI = parameters['eventEOI'] || function () {};
+        eventDL = parameters['eventDL'] || function () {
+        };
+        eventEOI = parameters['eventEOI'] || function () {
+        };
     }
 
     /**

@@ -18,7 +18,7 @@
  * Object Cell
  *
  * Public methods
- * + getCell
+ * + toHTML
  *
  * Private methods
  * - validateParameters
@@ -42,16 +42,16 @@ function Cell(parameters) {
     /*****************************************************************************************************************/
 
     /**
-     * Element that contains the cell as it has to be append to the desired parent.
-     * @type {HTMLElement}
+     * The HTML that goes inside the cell.
+     * @type {String}
      */
-    var cell;
+    var cellContent = '';
 
     /**
      * List of classes that the cell uses.
      * @type {Array}
      */
-    var classList;
+    var cellClassList = [];
 
     /*****************************************************************************************************************/
     /** Cell construction                                                                                           **/
@@ -82,7 +82,7 @@ function Cell(parameters) {
         }
 
         if (typeof(parameters['html']) == 'undefined') {
-            throw 'Parameter html is required..';
+            throw 'Parameter html is required.';
         }
     }
 
@@ -91,19 +91,14 @@ function Cell(parameters) {
      * Builds the TD element and sets it up depending on the parameters received.
      */
     function initializeCell() {
-        cell = document.createElement('TD');
-        cell.classList.add('cell');
-        cell.innerHTML = parameters['html'];
+        cellContent = parameters['html'];
 
         if (typeof(parameters['classList']) != 'undefined') {
-            var classList = parameters['classList'];
-            for (var i = 0; i < classList.length; i++) {
-                cell.classList.add(classList[i]);
-            }
+            cellClassList = parameters['classList'];
         }
 
         if (typeof(parameters['colspan']) != 'undefined') {
-            cell.setAttribute('colspan', parameters['colspan']);
+            cellColspan = parameters['colspan'];
         }
     }
 
@@ -120,14 +115,41 @@ function Cell(parameters) {
     }
 
     /*****************************************************************************************************************/
-    /** Public functions definition                                                                                **/
+    /** Public functions definition                                                                                 **/
     /*****************************************************************************************************************/
 
     /**
-     * Returns the cell property which contains the built TD element.
+     * Adds a class to the classList.
+     */
+    this.addClass = function (className) {
+        cellClassList.push(className);
+    };
+
+    this.addClassList = function (classList) {
+        for (var i = 0; i < classList.length; i++) {
+            cellClassList.push(classList[i]);
+        }
+    };
+
+    /**
+     * Returns the cell's content.
+     */
+    this.getContent = function () {
+        return cellContent;
+    };
+
+    /**
+     * Generates the html and returns it.
      * @returns {Element}
      */
-    this.getCell = function () {
-        return cell;
+    this.toHTML = function () {
+        var html = document.createElement('div');
+        html.classList.add('cell');
+        html.innerHTML = cellContent;
+
+        for (var i = 0; i < cellClassList.length; i++) {
+            html.classList.add(cellClassList[i]);
+        }
+        return html;
     };
 }

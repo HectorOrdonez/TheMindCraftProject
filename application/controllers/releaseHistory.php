@@ -34,14 +34,17 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.272', '24/01/2013', array (
-            '[Refactor] - Reorganized MindFlow - Prioritize goes before ApplyTime.', 
-            '[Refactor] - Now MindFlow steps request to MindFlow controller the step by post, not by get.', 
-            '[Feature] - MindFlow now verifies the step requested.',
-            '[Refactor] - Added toArray method in Idea Model to make it handier. Modified MindFlowService to use the new functionality.'
+        $this->_setDevelopmentVersion('0.273', '29/01/2013', array (
+            '[Core Update] - Updated GridElements library to Version 2.0, replacing tables for divs.'
         ));
         
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.272', '24/01/2013', array (
+            '[Refactor] - Reorganized MindFlow - Prioritize goes before ApplyTime.',
+            '[Refactor] - Now MindFlow steps request to MindFlow controller the step by post, not by get.',
+            '[Feature] - MindFlow now verifies the step requested.',
+            '[Refactor] - Added toArray method in Idea Model to make it handier. Modified MindFlowService to use the new functionality.'
+        ));
         $this->_addHistoryLog('0.271', '24/01/2013', array (
             '[Refactor] - Refactor MindFlow to contain all libraries in its place. ',
             '[Refactor] - Prepared application for the new architecture regarding ideas, regular ideas and actions.',

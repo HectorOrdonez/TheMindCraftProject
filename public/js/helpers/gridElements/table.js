@@ -9,8 +9,8 @@
  *
  * Required Parameters:
  *  colModel - Contains the columns that this table will use in the content section.
- *      colModel - dataIndex - Required parameter in every column. Specifies from which column the data will be loaded.
- *      colModel - staticContent - Required parameter in every column.
+ *      colModel[colIndex] - Required parameter in every column. Specifies from which column the data will be loaded.
+ *      colModel[customContent] - Optional parameter in every column. Specifies a function that receives the row Id in order to build a custom cell content.
  *
  * Optional Parameters:
  *
@@ -105,97 +105,6 @@ function Table(tableId, parameters) {
     }
 
     /*****************************************************************************************************************/
-    /** Private functions definition                                                                                **/
-    /*****************************************************************************************************************/
-
-    /**
-     * Private function validateParameters.
-     * Validates the parameters received in the constructor in order to verify that this table can be constructed properly.
-     */
-    function validateParameters() {
-        if (tableLocation == 'undefined' || tableLocation.tagName != 'TABLE') {
-            throw 'Table construction needs a valid Table Id';
-        }
-
-        if (typeof(parameters) == 'undefined') {
-            throw 'Table construction needs parameters.';
-        }
-
-        if (typeof(parameters['colModel']) == 'undefined') {
-            throw 'Table constructions needs the parameter colModel.';
-        }
-    }
-
-    /**
-     * Private function initializeBasics
-     * Builds the TBody element, sets it up and appends it to the table element.
-     */
-    function initializeBasics() {
-        var tbody = document.createElement('tbody');
-        tbody.setAttribute('id', tableId + '_workspace');
-        tbody.classList.add('workspace');
-        tableLocation.appendChild(tbody);
-        workspace = tbody;
-    }
-
-    /**
-     * Private function initializeColumnModel
-     * Verifies that all columns contain either a dataIndex parameter or a staticElement function.
-     * Counts the columns with dataIndex in the property dataColumn.
-     */
-    function initializeColumnModel() {
-        var receivedColModel = parameters['colModel'];
-
-        for (var i = 0; i < receivedColModel.length; i++) {
-            colModel[i] = receivedColModel[i];
-
-            if (typeof (colModel[i].dataIndex) == 'undefined') {
-                if (typeof (colModel[i].staticElement) == 'undefined') {
-                    throw 'A column without dataIndex needs to have a staticContent function defined.';
-                }
-            } else {
-                dataColumns++;
-            }
-        }
-    }
-
-    /**
-     * Private function headerLength
-     * Returns the current amount of rows that the header contains.
-     */
-    function headerLength() {
-        return Object.keys(headerRows).length;
-    }
-
-    /**
-     * Private function contentLength
-     * Returns the current amount of rows that the content contains.
-     */
-    function contentLength() {
-        return Object.keys(contentRows).length;
-    }
-
-    /**
-     * Private function footerLength
-     * Returns the current amount of rows that the footer contains.
-     */
-    function footerLength() {
-        return Object.keys(footerRows).length;
-    }
-
-    /**
-     * Private function displayError
-     * Logs the error.
-     * @param msg
-     */
-    function displayError(msg) {
-        if (typeof(msg.stack) != 'undefined') {
-            msg = msg.stack;
-        }
-        console.error(msg);
-    }
-
-    /*****************************************************************************************************************/
     /** Public functions definition                                                                                **/
     /*****************************************************************************************************************/
 
@@ -279,7 +188,7 @@ function Table(tableId, parameters) {
      * Public function addContentData
      * Uses the column model defined in the table to generate a content row that contains the data specified by the
      * passed parameter.
-     * @param data
+     * @param data Object
      */
     this.addContentData = function (data) {
         // Verify data content.
@@ -287,24 +196,26 @@ function Table(tableId, parameters) {
             throw 'Data received contains a number of cells that does not match with the expected number of cells defined by the colModel.';
         }
 
-        if (typeof(data['id']) == 'undefined') {
+        if (typeof(data.id) == 'undefined') {
             throw 'Data received does not contain an identification column.';
         }
 
         // Generate cells.
         var cells = [];
-
         jQuery.each(colModel, function (i, col) {
-            var newCell = {};
-
-            if (typeof(col.dataIndex) == 'undefined') {
-                newCell.html = col.staticElement(data['id']);
+            var newCell;
+            if (typeof(col.customContent) != 'undefined') {
+                newCell = new Cell({html: col.customContent(data.id)});
             } else {
-                newCell.html = data[col.dataIndex];
+                newCell = new Cell({html: data[col.colIndex]});
             }
 
+            // Adding to the cell the column related class
+            newCell.addClass('col_' + col.colIndex);
+
+            // Adding to the cell the user-specified classes for this column.
             if (typeof (col.classList) != 'undefined') {
-                newCell.classList = col.classList;
+                newCell.addClassList(col.classList);
             }
             cells.push(newCell);
         });
@@ -316,7 +227,7 @@ function Table(tableId, parameters) {
             });
 
         // Add to content.
-        this.addContentElement(newRow.getRow());
+        this.addContentElement(newRow.toHTML());
     };
 
     /**
@@ -347,4 +258,114 @@ function Table(tableId, parameters) {
             delete contentRows['content_' + i];
         }
     };
+
+    /*****************************************************************************************************************/
+    /** Private functions definition                                                                                **/
+    /*****************************************************************************************************************/
+
+    /**
+     * Private function validateParameters.
+     * Validates the parameters received in the constructor in order to verify that this table can be constructed properly.
+     */
+    function validateParameters() {
+        /** Checking that the location for the table has the right markup **/
+        if (tableLocation == 'undefined' || tableLocation.tagName != 'DIV') {
+            throw 'Table construction needs a valid div Id';
+        }
+
+        /** Checking that the Table object received parameters **/
+        if (typeof(parameters) == 'undefined') {
+            throw 'Table construction needs parameters.';
+        }
+
+        /** Checking that those parameters contain the column model **/
+        if (typeof(parameters['colModel']) == 'undefined') {
+            throw 'Table construction needs the parameter colModel.';
+        }
+
+        /** Checking that the column model contains colIndex or is a staticElement **/
+        /** Checking as well that the column model contains one id column, required for the content management **/
+        var modelHasId = false;
+        for (var i = 0; i < parameters['colModel'].length; i++) {
+
+            if (typeof (parameters['colModel'][i].colIndex) == 'undefined') {
+                throw 'Table construction requires all columns to have colIndex defined.';
+            } else {
+                if (parameters['colModel'][i].colIndex == 'id') {
+                    if (modelHasId == true) {
+                        throw 'Table construction requires only one Id column.';
+                    }
+                    modelHasId = true;
+                }
+            }
+        }
+        if (modelHasId == false) {
+            throw 'Table construction requires an Id column.';
+        }
+    }
+
+    /**
+     * Private function initializeBasics
+     * Builds the TBody element, sets it up and appends it to the table element.
+     */
+    function initializeBasics() {
+        var tableWrapper = document.createElement('div');
+        tableWrapper.setAttribute('id', tableId + '_workspace');
+        tableWrapper.classList.add('workspace');
+        tableLocation.appendChild(tableWrapper);
+        workspace = tableWrapper;
+    }
+
+    /**
+     * Private function initializeColumnModel
+     * Verifies that all columns contain either a colIndex.
+     */
+    function initializeColumnModel() {
+        colModel = parameters['colModel'];
+
+        for (var i = 0; i < colModel.length; i++) {
+
+            // dataColumns only increases if customContent is not defined, as that column will not receive data by 
+            // parameter; it will be calculated instead with the customContent provided function
+            if (typeof (colModel[i].customContent) == 'undefined') {
+                dataColumns++;
+            }
+        }
+    }
+
+    /**
+     * Private function headerLength
+     * Returns the current amount of rows that the header contains.
+     */
+    function headerLength() {
+        return Object.keys(headerRows).length;
+    }
+
+    /**
+     * Private function contentLength
+     * Returns the current amount of rows that the content contains.
+     */
+    function contentLength() {
+        return Object.keys(contentRows).length;
+    }
+
+    /**
+     * Private function footerLength
+     * Returns the current amount of rows that the footer contains.
+     */
+    function footerLength() {
+        return Object.keys(footerRows).length;
+    }
+
+    /**
+     * Private function displayError
+     * Logs the error.
+     * @param msg
+     */
+    function displayError(msg) {
+        if (typeof(msg.stack) != 'undefined') {
+            msg = msg.stack;
+        }
+        console.error(msg);
+    }
 }

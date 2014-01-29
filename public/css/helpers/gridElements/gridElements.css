@@ -6,85 +6,89 @@
  * Date: 27/07/13 20:30
  */
 
-/**
- * Workspace is the Tbody tag from which headers, content and footer will append.
- */
-.workspace {
-}
+/*************************************************/
+/** TABLE STYLES                                **/
+/*************************************************/
 
 /**
- * All Rows in workspace.
+ * Table Wrapper
+ */
+.workspace {
+    position: relative;
+    display: block;
+    /** height depends on the amount of rows. **/
+}
+
+/*************************************************/
+/** ROW STYLES                                  **/
+/*************************************************/
+
+/**
+ * All Rows
  */
 
 .workspace .row {
-    height: 30px;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: block;
 }
 
 /**
- * Rows of the header section
+ * Rows in the header section
  */
 .workspace .header {
-    text-indent: 20px;
-    background-color: #2a2724;
+
 }
 
 /**
- * Rows of the content section
+ * Rows in the content section
  */
 .workspace .content {
-    text-indent: 20px;
 }
 
 /**
- * Rows of the footer section
+ * Rows in the footer section
  */
 .workspace .footer {
-    background-color: #f4f2ef;
 }
 
+/*************************************************/
+/** CELL STYLES                                 **/
+/*************************************************/
+
 /**
- * Row color definitions
+ * All Cells
  */
-
-/** Pair rows **/
-.workspace .row.content:nth-child(2n+1) {
-    background-color: #dfd9c2;
-}
-
-/** Odd rows **/
-.workspace .row.content {
-    background-color: #f4f2ef;
-}
-
-.workspace .row.content:hover {
-    background-color: #FFF;
+.workspace .cell {
+    float: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 100%; /** Required for empty cells **/
 }
 
 /**
- * Cells of the header section
+ * Cells in the header section
  */
 .workspace .header .cell {
-    padding-top: 4px;
 }
 
 /**
- * Cells of the content section
+ * Cells in the content section
  */
 .workspace .content .cell {
-    padding-top: 4px;
-    border-left: none;
-    border-right: none;
 }
 
 /**
- * Cells of the footer section
+ * Cells in the footer section
  */
 .workspace .footer .cell {
 }
 
-
 /**
- * Extras
+ * Extra tools
  */
 .workspace .cell.centered {
     text-align: center;

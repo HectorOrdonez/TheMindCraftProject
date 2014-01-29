@@ -30,12 +30,18 @@
  */
 
 /**
- * Row constructor.
- * @param {Object} parameters - Required and optional parameters for the construction of the row.
+ * Row constructor. Needs "parameters" object to be initialized.
+ *
+ * Required attributes:
+ *   cells - Must be an array of objects, each of them definitions
+ *
+ * Additional optional attributes:
+ *  classList - An array of classes that will be attached to this row.
+ *
+ * @param {Object} parameters
  * @constructor
  */
 function Row(parameters) {
-
     /*****************************************************************************************************************/
     /** Parameters definition                                                                                       **/
     /*****************************************************************************************************************/
@@ -44,7 +50,7 @@ function Row(parameters) {
      * Element that contains the row as it has to be append to the desired parent.
      * @type {HTMLElement}
      */
-    var row;
+    var html;
 
     /**
      * List of cells that this row contains.
@@ -53,10 +59,9 @@ function Row(parameters) {
     var cells = [];
 
     /**
-     * List of classes that the cell uses.
-     * @type {Array}
+     * List of classes that the row uses.
      */
-    var classList;
+    var rowClassList = [];
 
     /*****************************************************************************************************************/
     /** Row construction                                                                                            **/
@@ -81,8 +86,7 @@ function Row(parameters) {
      * Private function validateParameters.
      * Validates the parameters received in the constructor in order to verify that this row can be constructed properly.
      */
-    function validateParameters()
-    {
+    function validateParameters() {
         if (typeof(parameters) == 'undefined') {
             throw 'Row construction needs parameters.';
         }
@@ -90,29 +94,28 @@ function Row(parameters) {
         if (typeof(parameters['cells']) == 'undefined') {
             throw 'Row construction needs cells.';
         }
+
+        for (var i = 0; i < parameters['cells'].length; i++) {
+            if (!(parameters['cells'][i] instanceof Cell)) {
+                throw 'Cell list must contain only Cell objects';
+            }
+        }
     }
 
     /**
      * Private function initializeRow
      * Builds the TR element and sets it up depending on the parameters received.
      */
-    function initializeRow()
-    {
-        row = document.createElement('TR');
-        row.classList.add('row');
+    function initializeRow() {
+        rowClassList.push('row');
 
-        jQuery.each(parameters['cells'], function(i, cellParameters){
-            var newCell = new Cell(cellParameters);
-            cells.push(newCell);
-            row.appendChild(newCell.getCell());
-        });
+        for (var i = 0; i < parameters['cells'].length; i++) {
+            cells.push(parameters['cells'][i]);
+        }
 
-        if (typeof(parameters['classList']) != 'undefined')
-        {
-            var classList = parameters['classList'];
-            for(var i=0; i < classList.length; i++ )
-            {
-                row.classList.add(classList[i]);
+        if (typeof(parameters['classList']) != 'undefined') {
+            for (i = 0; i < parameters['classList'].length; i++) {
+                rowClassList.push(parameters['classList'][i]);
             }
         }
     }
@@ -130,14 +133,32 @@ function Row(parameters) {
     }
 
     /*****************************************************************************************************************/
-    /** Public functions definition                                                                                **/
+    /** Public functions definition                                                                                 **/
     /*****************************************************************************************************************/
 
     /**
-     * Returns the row property which contains the built TR element.
+     * Returns this row in HTML, ready to be appended.
      * @returns {Element}
      */
-    this.getRow = function () {
-        return row;
+    this.toHTML = function () {
+        html = document.createElement('div');
+
+        for (var i = 0; i < cells.length; i++) {
+            html.appendChild(cells[i].toHTML());
+        }
+
+        for (i = 0; i < rowClassList.length; i++) {
+            html.classList.add(rowClassList[i]);
+        }
+
+        return html;
+    };
+
+    /**
+     * Returns this row cells.
+     * @returns {cells[]}
+     */
+    this.getCells = function () {
+        return cells;
     };
 }
