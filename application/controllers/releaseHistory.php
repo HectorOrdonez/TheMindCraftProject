@@ -34,11 +34,15 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.278', '29/01/2013', array (
-            '[Refactor] - Refactored Selection step to use the new GridElements construction. Not full functionality as postpone will be replaced by Selecting Idea for further working out.',
+        $this->_setDevelopmentVersion('0.279', '29/01/2013', array (
+            '[Refactor] - Refactored Prioritize and Apply Time step to use the new GridElements construction. Removed all functionality beyond basic one, as new developments are coming (yay!).',
+            '[Debug] - Fixed bug that allowed pending Users to login.'
         ));
         
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.278', '29/01/2013', array (
+            '[Refactor] - Refactored Selection step to use the new GridElements construction. Not full functionality as postpone will be replaced by Selecting Idea for further working out.',
+        ));
         $this->_addHistoryLog('0.277', '29/01/2013', array (
             '[Refactor] - Modified MindFlow in order to adapt it to the changes in CSS and in Grid Elements.',
             '[Refactor] - Refactored BrainStorm step to use the new GridElements construction. Made some improvements, too.',

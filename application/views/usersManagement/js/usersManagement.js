@@ -341,14 +341,14 @@ function openChangeStateDialog($stateCell) {
 
     // Now, changing visuals
     $stateCell.html(editableContent);
-    var stateSelector = jQuery('#stateSelector');
-    stateSelector.val(previousState);
-    stateSelector.focus();
+    var $stateSelector = jQuery('#stateSelector');
+    $stateSelector.val(previousState);
+    $stateSelector.focus();
 
     // Adding new Event Listeners
-    stateSelector.blur(function () {
+    $stateSelector.blur(function () {
         // Check if Status has changed
-        var newState = stateSelector.val();
+        var newState = $stateSelector.val();
         if (newState != previousState) {
             submitSetState(userId, newState, function () {
                 $stateCell.html(newState);

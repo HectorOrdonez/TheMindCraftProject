@@ -40,7 +40,7 @@ class IndexService extends Service
             throw new Exception('User does not exist or password does not match.', Exception::GENERAL_EXCEPTION, EXCEPTION_LOGIN_FAILED);
         }
 
-        if ('inactive' == $user->state) {
+        if ('active' != $user->state) {
             throw new Exception('User is not active. Try again later.', Exception::GENERAL_EXCEPTION, EXCEPTION_LOGIN_USER_NOT_ACTIVE);
         }
 
