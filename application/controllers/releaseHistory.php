@@ -34,11 +34,14 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.273', '29/01/2013', array (
-            '[Core Update] - Updated GridElements library to Version 2.0, replacing tables for divs.'
+        $this->_setDevelopmentVersion('0.274', '29/01/2013', array (
+            '[Refactor] - Refactored UsersManagement to use the new GridElements construction.'
         ));
         
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.273', '29/01/2013', array (
+            '[Core Update] - Updated GridElements library to Version 2.0, replacing tables for divs.'
+        ));
         $this->_addHistoryLog('0.272', '24/01/2013', array (
             '[Refactor] - Reorganized MindFlow - Prioritize goes before ApplyTime.',
             '[Refactor] - Now MindFlow steps request to MindFlow controller the step by post, not by get.',

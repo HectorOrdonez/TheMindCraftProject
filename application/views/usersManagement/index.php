@@ -11,13 +11,9 @@
 ?>
 <?php $this->printChunk('header'); ?>
 
-    <h1>
-        Users Management
-    </h1>
-    <div id='gridWrapper'>
-        <table id='usersManagement_grid'>
-        </table>
+    <div id='usersManagement_grid'>
     </div>
+
     <div id='infoDisplayer'>
     </div>
 

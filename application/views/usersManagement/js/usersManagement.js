@@ -19,13 +19,13 @@ jQuery().ready(function () {
     // Users management header construction
     var headerRow = new Row(
         {'cells': [
-            {'html': 'Id', 'classList': ['col_id']},
-            {'html': 'Username', 'classList': ['col_name', 'ftype_titleC']},
-            {'html': 'Mail', 'classList': ['col_mail', 'ftype_titleC']},
-            {'html': 'Role', 'classList': ['col_role', 'ftype_titleC']},
-            {'html': 'State', 'classList': ['col_state', 'ftype_titleC']},
-            {'html': 'Actions', 'classList': ['col_actions', 'ftype_titleC']},
-            {'html': 'Last login', 'classList': ['col_last_login', 'ftype_titleC', 'centered']}
+            new Cell({'html': 'Id', 'classList': ['col_id']}),
+            new Cell({'html': 'Username', 'classList': ['col_username', 'ftype_titleC']}),
+            new Cell({'html': 'Mail', 'classList': ['col_mail', 'ftype_titleC']}),
+            new Cell({'html': 'Role', 'classList': ['col_role', 'ftype_titleC', 'centered']}),
+            new Cell({'html': 'State', 'classList': ['col_state', 'ftype_titleC', 'centered']}),
+            new Cell({'html': 'Actions', 'classList': ['col_actions', 'ftype_titleC']}),
+            new Cell({'html': 'Last login', 'classList': ['col_last_login', 'ftype_titleC', 'centered']})
         ],
             'classList': ['header']
         });
@@ -33,22 +33,22 @@ jQuery().ready(function () {
     // Users management footer construction
     var footerRow = new Row(
         {'cells': [
-            {
-                'html': '<a href="#" id="linkNewUser"></a><form id="formNewUser" action="' + root_url + 'usersManagement/createUser"><input type="text" name="newUsername" class="ftype_contentA" id="inputNewUsername" /></form>',
-                'colspan': '6'
-            }
+            new Cell({
+                'html': '<a href="#" id="linkNewUser"></a><form id="formNewUser" action="' + root_url + 'usersManagement/createUser"><input type="text" name="newUsername" class="ftype_contentA" id="inputNewUsername" maxlength="100" /></form>',
+                'classList': ['newUserCell']
+            })
         ], 'classList': ['footer']}
     );
 
-    // Brainstorm table construction
+    // User Management table construction
     var table = new Table('usersManagement_grid', {
         colModel: [
-            {dataIndex: 'id', classList: ['id']},
-            {dataIndex: 'username', classList: ['username', 'ftype_contentA']},
-            {dataIndex: 'mail', classList: ['mail', 'ftype_contentA']},
-            {dataIndex: 'role', classList: ['role', 'ftype_contentA']},
-            {dataIndex: 'state', classList: ['state', 'ftype_contentA']},
-            {staticElement: function (rowId) {
+            {colIndex: 'id'},
+            {colIndex: 'username', classList: ['ftype_contentA']},
+            {colIndex: 'mail', classList: ['ftype_contentA']},
+            {colIndex: 'role', classList: ['ftype_contentA', 'centered']},
+            {colIndex: 'state', classList: ['ftype_contentA', 'centered']},
+            {colIndex: 'actions', customContent: function (rowId) {
                 var actionBox = '<div class="actionBox">';
                 var newPassword = '<div class="action"><a class="openNewPasswordDialog">' + rowId + '</a></div>';
                 var deleteUser = '<div class="action"><a class="deleteUser">' + rowId + '</a></div>';
@@ -57,10 +57,11 @@ jQuery().ready(function () {
             },
                 classList: ['actions']
             },
-            {dataIndex: 'last_login', classList: ['last_login', 'ftype_contentA', 'centered']}
+            {colIndex: 'last_login', classList: ['last_login', 'ftype_contentA', 'centered']}
         ]});
-    table.addHeaderElement(headerRow.getRow());
-    table.addFooterElement(footerRow.getRow());
+
+    table.addHeaderElement(headerRow.toHTML());
+    table.addFooterElement(footerRow.toHTML());
 
     // UsersManagement Grid parameters definition
     var gridParameters = {
@@ -70,31 +71,36 @@ jQuery().ready(function () {
     // UsersManagement Grid construction
     usersManagementGrid = new Grid(table, gridParameters);
 
-    // Adding effects to the grid buttons
+    // Adding Event Listeners
     jQuery('#linkNewUser').click(function () {
+        console.log('Click New User');
         submitNewUser();
     });
     jQuery('#formNewUser').keypress(function (event) {
         if (event.which == 13) {
+            console.log('New User Enter pressed');
             event.preventDefault();
             submitNewUser();
         }
     });
-
-    // Adding edit and delete triggers
-    $grid.delegate('.username', 'dblclick', function () {
-        openEditUsernameDialog(jQuery(this).parent());
+    $grid.delegate('.content .col_username', 'click', function () {
+        console.log('col_username clicked');
+        openEditUsernameDialog(jQuery(this));
     });
-    $grid.delegate('.role', 'dblclick', function () {
-        openChangeRoleDialog(jQuery(this).parent());
+    $grid.delegate('.content .col_role', 'click', function () {
+        console.log('col_role clicked');
+        openChangeRoleDialog(jQuery(this));
     });
-    $grid.delegate('.state', 'dblclick', function () {
-        openChangeStateDialog(jQuery(this).parent());
+    $grid.delegate('.content .col_state', 'click', function () {
+        console.log('col_state clicked');
+        openChangeStateDialog(jQuery(this));
     });
     $grid.delegate('.openNewPasswordDialog', 'click', function () {
+        console.log('openNewPasswordDialog clicked');
         openChangePasswordDialog(jQuery(this));
     });
     $grid.delegate('.deleteUser', 'click', function () {
+        console.log('Delete User clicked');
         deleteUser(jQuery(this));
     });
 });
@@ -104,93 +110,61 @@ jQuery().ready(function () {
  * @param $element
  */
 function openChangePasswordDialog($element) {
-
     uniqueUserRequest(function (allowNewUniqueRequests) {
         var userId = $element.html();
-        var passwordDialog = document.createElement('DIV');
-        passwordDialog.setAttribute('id', 'passwordDialog');
-        passwordDialog.innerHTML = '' +
-            '<div class="passwordInnerDialog">' +
+        var passwordBox = document.createElement('DIV');
+        passwordBox.setAttribute('id', 'passwordBox');
+        passwordBox.innerHTML = '' +
+            '<div id="passwordDialog">' +
             '   <form id="formChangePassword" action="' + root_url + 'usersManagement/editUserPassword">' +
-            '       <div class="title">New password</div>' +
             '       <input id="inputNewPassword" type="password" name="password" placeholder="Enter a new password" />' +
             '   </form>' +
             '   <div class="ftype_errorA" id="passwordDialogInfoDisplayer"></div>' +
             '</div>';
-        jQuery('.bodyContent').append(passwordDialog);
-        var $passwordDialog = jQuery('#passwordDialog');
+        jQuery('.bodyContent').append(passwordBox);
+        var $passwordBox = jQuery('#passwordBox');
 
         jQuery('.passwordInnerDialog').click(function (event) {
             event.stopPropagation();
         });
-        $passwordDialog.click(function () {
-            closePasswordDialog()
+        $passwordBox.click(function () {
+            closePasswordBox()
         });
         jQuery('body').bind('keyup.editPassword', function (event) {
             if (event.which == 27) {
-                closePasswordDialog();
+                closePasswordBox();
             }
         });
         jQuery('#formChangePassword').keypress(function (event) {
             if (event.which == 13) {
                 event.preventDefault();
-                submitNewPassword(userId, $passwordDialog.find('#inputNewPassword').val(), closePasswordDialog);
+                submitNewPassword(userId, $passwordBox.find('#inputNewPassword').val(), closePasswordBox);
             }
         });
 
         // Show Dialog!
-        $passwordDialog.fadeIn(function () {
-            $passwordDialog.find('#inputNewPassword').focus();
+        $passwordBox.fadeIn(function () {
+            jQuery('#inputNewPassword').focus();
             allowNewUniqueRequests();
         });
     });
 }
 
 /**
- * Function requested when User inputs a new password. Sets a new password to the user.
- * @param userId
- * @param newPassword
- * @param callback - To close the password dialog if the edition is successful.
+ * Fades out the password box and removes it from the DOM.
  */
-function submitNewPassword(userId, newPassword, callback) {
-    var $infoDisplayer = jQuery('#passwordDialogInfoDisplayer');
-    var url = root_url + 'usersManagement/editUserPassword';
-    var data = {
-        id: userId,
-        password: newPassword
-    };
+function closePasswordBox() {
+    // Defining box to close
+    var passwordBox = document.getElementById('passwordBox');
+    var $passwordBox = jQuery('#passwordBox');
 
-    jQuery.ajax({
-        type: 'post',
-        url: url,
-        data: data
-    }).done(function () {
-            callback();
-        }
-    ).fail(function (data) {
-            setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
-        }
-    );
-}
+    // Unbinding Escape event
+    jQuery('body').unbind('keyup.editPassword');
 
-/**
- * Fades out the password dialog and removes it from the DOM.
- */
-function closePasswordDialog() {
-    uniqueUserRequest(function (allowNewUniqueRequests) {
-        // Defining dialog to close
-        var passwordDialog = document.getElementById('passwordDialog');
-        var $passwordDialog = jQuery('#passwordDialog');
-
-        // Unbinding Escape event
-        jQuery('body').unbind('keyup.editPassword');
-
-        // Fading out dialog
-        $passwordDialog.fadeOut(function () {
-            // When dialog is faded, remove the dialog completely
-            document.getElementById('loggedContent').removeChild(passwordDialog);
-            allowNewUniqueRequests();
-        });
+    // Fading out dialog
+    $passwordBox.fadeOut(function () {
+        // When dialog is faded, remove the dialog completely
+        document.getElementById('loggedContent').removeChild(passwordBox);
     });
 }
 
@@ -206,9 +180,9 @@ function submitNewUser() {
     var username = jQuery('#inputNewUsername').val();
 
     if (username == '') {
-        setInfoMessage($infoDisplayer, 'error', 'Who you say?.', 2000);
+        setInfoMessage($infoDisplayer, 'error', 'Who you say?', 2000);
         return;
-    } else if (username.length > 200) {
+    } else if (username.length > 100) {
         setInfoMessage($infoDisplayer, 'error', 'That WAS a long name. We do not expect any Egyptian, I fear.', 2000);
         return;
     }
@@ -230,31 +204,40 @@ function submitNewUser() {
 
 /**
  * Opens the name edition dialog.
- * @param $element
+ * @param $usernameCell
  */
-function openEditUsernameDialog($element) {
-    var userId = $element.children().eq(0).html();
-    var $usernameCell = $element.children().eq(1);
+function openEditUsernameDialog($usernameCell) {
+    // Checking if this cell is already open
+    if ($usernameCell.hasClass('open')) {
+        return;
+    }
 
-    // Save previous user's name
-    var previousUsername = $usernameCell.html();
+    // Setting this cell as open to avoid multiple "opening" requests
+    $usernameCell.addClass('open');
 
-    // Replace name column text with input.
-    var nameCellContent = '<form id="formEditUsername"><input type="text" name="title" id="inputEditUsername" value="' + previousUsername + '"/></form>';
-    $usernameCell.html(nameCellContent);
+    // Declaring parameters
+    var userId = $usernameCell.parent().find('.col_id').html(); // The user id for the request
+    var previousUsername = $usernameCell.html();                // The previous username, in case no alteration is required
+    var editableContent = '' +
+        '<form id="formEditUsername">' +
+        '<input type="text" name="title" id="inputEditUsername" value="' + previousUsername + '" />' +
+        '</form>';                                              // The cell content to offer User the edit input
 
-    // Focus user on Input and restore normality when unfocus.
-    $usernameCell.find('#inputEditUsername').focus();
-    $usernameCell.find('#inputEditUsername').blur(function () {
+    // Now, changing visuals
+    $usernameCell.html(editableContent);
+    var inputEditUsername = jQuery('#inputEditUsername');
+    inputEditUsername.focus();
+
+    // Adding new Event Listeners
+    inputEditUsername.blur(function () {
         // Restore normality
         $usernameCell.html(previousUsername);
+        $usernameCell.removeClass('open');
     });
-
-    // Adding Enter event to the form
     jQuery('#formEditUsername').keypress(function (event) {
         if (event.which == 13) {
             event.preventDefault();
-            submitEditUser(userId, $usernameCell.find('#inputEditUsername').val(), function (newUsername) {
+            submitEditUser(userId, inputEditUsername.val(), function (newUsername) {
                 $usernameCell.html(newUsername);
             });
         }
@@ -291,29 +274,36 @@ function submitEditUser(userId, newUsername, callback) {
 
 /**
  * Opens the role edition dialog.
- * @param $element
+ * @param $roleCell
  */
-function openChangeRoleDialog($element) {
-    var userId = $element.children().eq(0).html();
-    var $roleCell = $element.children().eq(3);
+function openChangeRoleDialog($roleCell) {
+    // Checking if this cell is already open
+    if ($roleCell.hasClass('open')) {
+        return;
+    }
 
-    // Save previous user's role
-    var previousRole = $roleCell.html();
+    // Setting this cell as open to avoid multiple "opening" requests
+    $roleCell.addClass('open');
 
-    // Replace role column text with select.
-    var roleCellContent = '' +
-        '<select class="roleSelector">' +
+    // Declaring parameters
+    var userId = $roleCell.parent().find('.col_id').html(); // The user id for the request
+    var previousRole = $roleCell.html();                // The previous username, in case no alteration is required
+    var editableContent = '' +
+        '<select id="roleSelector">' +
         '   <option>admin</option>' +
         '   <option>basic</option>' +
-        '</select>';
-    $roleCell.html(roleCellContent);
-    $roleCell.find('select').val(previousRole);
+        '</select>';                                      // The cell content to offer User the role selection
 
-    // 5 - Focus user on Input
-    $roleCell.find('select').focus();
-    $roleCell.find('select').blur(function () {
+    // Now, changing visuals
+    $roleCell.html(editableContent);
+    var roleSelector = jQuery('#roleSelector');
+    roleSelector.val(previousRole);
+    roleSelector.focus();
+
+    // Adding new Event Listeners
+    roleSelector.blur(function () {
         // Check if Role has changed
-        var newRole = $roleCell.find('select').val();
+        var newRole = roleSelector.val();
         if (newRole != previousRole) {
             submitSetRole(userId, newRole, function () {
                 $roleCell.html(newRole);
@@ -321,42 +311,53 @@ function openChangeRoleDialog($element) {
         } else {
             $roleCell.html(previousRole);
         }
+
+        $roleCell.removeClass('open');
     });
 }
 
 /**
  * Opens the state edition dialog.
- * @param $element
+ * @param $stateCell
  */
-function openChangeStateDialog($element) {
-    var userId = $element.children().eq(0).html();
-    var $stateCell = $element.children().eq(4);
+function openChangeStateDialog($stateCell) {
+    // Checking if this cell is already open
+    if ($stateCell.hasClass('open')) {
+        return;
+    }
 
-    // Save previous user's state
-    var previousState = $stateCell.html();
+    // Setting this cell as open to avoid multiple "opening" requests
+    $stateCell.addClass('open');
 
-    // Replace state column text with select.
-    var stateCellContent = '' +
-        '<select class="stateSelector">' +
+    // Declaring parameters
+    var userId = $stateCell.parent().find('.col_id').html(); // The user id for the request
+    var previousState = $stateCell.html();                // The previous username, in case no alteration is required
+    var editableContent = '' +
+        '<select id="stateSelector">' +
         '   <option>active</option>' +
         '   <option>inactive</option>' +
         '   <option>pending</option>' +
-        '</select>';
-    $stateCell.html(stateCellContent);
-    $stateCell.find('select').val(previousState);
+        '</select>';                                      // The cell content to offer User the role selection
 
-    // 5 - Focus user on Input
-    $stateCell.find('select').focus();
-    $stateCell.find('select').blur(function () {
-        // Check if State has changed
-        var newRole = $stateCell.find('select').val();
-        if (newRole != previousState) {
-            submitSetState(userId, newRole, function () {
-                $stateCell.html(newRole);
+    // Now, changing visuals
+    $stateCell.html(editableContent);
+    var stateSelector = jQuery('#stateSelector');
+    stateSelector.val(previousState);
+    stateSelector.focus();
+
+    // Adding new Event Listeners
+    stateSelector.blur(function () {
+        // Check if Status has changed
+        var newState = stateSelector.val();
+        if (newState != previousState) {
+            submitSetState(userId, newState, function () {
+                $stateCell.html(newState);
             });
         } else {
             $stateCell.html(previousState);
         }
+
+        $stateCell.removeClass('open');
     });
 }
 
@@ -432,7 +433,36 @@ function deleteUser($element) {
         url: url,
         data: data
     }).done(function () {
-            usersManagementGrid.table.removeContentId($element.closest('tr').attr('id'));
+            usersManagementGrid.table.removeContentId($element.closest('.row').attr('id'));
+        }
+    ).fail(function (data) {
+            setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
+        }
+    );
+}
+
+
+/**
+ * Function requested when User inputs a new password. Sets a new password to the user.
+ * @param userId
+ * @param newPassword
+ * @param callback - To close the password dialog if the edition is successful.
+ */
+function submitNewPassword(userId, newPassword, callback) {
+    var $infoDisplayer = jQuery('#infoDisplayer');
+    var url = root_url + 'usersManagement/editUserPassword';
+    var data = {
+        id: userId,
+        password: newPassword
+    };
+
+    jQuery.ajax({
+        type: 'post',
+        url: url,
+        data: data
+    }).done(function () {
+            setInfoMessage($infoDisplayer, 'success', 'Password changed.', 2000);
+            callback();
         }
     ).fail(function (data) {
             setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);

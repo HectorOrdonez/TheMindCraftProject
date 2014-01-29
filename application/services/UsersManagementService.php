@@ -16,7 +16,7 @@ use engine\drivers\Exception;
 
 class UsersManagementService extends Service
 {
-    const DEFAULT_USER_STATE = 'inactive';
+    const DEFAULT_USER_STATE = 'pending';
     
     /**
      * Service constructor of UsersManagement logic.
