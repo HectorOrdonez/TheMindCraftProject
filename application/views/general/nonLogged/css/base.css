@@ -13,7 +13,7 @@
 #header {
     width: 1000px;
     height: 105px;
-    margin-bottom: 35px;
+    margin: 0 auto 35px auto;
 }
 
 #header #logo {
@@ -53,4 +53,25 @@
 
 #header #headerPanel .signUp {
     background: url('../../../../../public/images/SignUp.png') no-repeat;
+}
+
+/*********************************************/
+/**                   BODY                  **/
+/*********************************************/
+
+.bodyContent {
+    width: 1000px;
+    min-height: 200px;
+    max-height: 600px;
+    margin: 0 auto;
+    overflow: auto;
+}
+
+/*********************************************/
+/**                   FOOTER                **/
+/*********************************************/
+
+#footer {
+    width: auto;
+    height: 100px;
 }

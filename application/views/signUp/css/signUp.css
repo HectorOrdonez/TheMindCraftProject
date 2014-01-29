@@ -33,6 +33,7 @@
 /** Styles for the bottom box, which contains the SignUp! text, the images and their containers **/
 #signUpSubmitBox {
     margin-top: 30px;
+    height: 50px;
 }
 
 #signUpImageBox, #signUpSubmitText {
@@ -43,12 +44,12 @@
 #signUpImageBox {
     top: -53px;
     width: 120px;
+    height: 50px;
     z-index: 0;
 }
 
 #signUpSubmitText {
     width: 120px;
-    height: 30px;
     z-index: 1;
     cursor: pointer;
 }

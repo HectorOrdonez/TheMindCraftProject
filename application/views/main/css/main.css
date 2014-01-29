@@ -14,12 +14,15 @@
     z-index: 1;
 }
 
+#mainMenu {
+    height: 400px;
+}
 #mainMenu #spinningCircle {
     position: absolute;
     left: 50%;
     margin-left: -165px;
 
-    background: #FFF url('./../../../../public/images/Menu.png') no-repeat;
+    background: url('./../../../../public/images/Menu.png') no-repeat;
     height: 330px;
     width: 330px;
     z-index: 0;
@@ -28,6 +31,7 @@
 #mainMenu #processActions {
     position: relative;
     width: 330px;
+    height: 360px;
     margin: 0 auto;
     z-index: 1;
 }

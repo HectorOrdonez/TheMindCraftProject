@@ -16,18 +16,23 @@
 }
 
 #loginSubmitBox {
-    top: -54px;
+    margin-top: 30px;
+    height: 50px;
 }
 
-#loginSubmitBox, #loginSubmitText {
+#loginImageBox, #loginSubmitText {
     position: relative;
     margin: 0 auto;
-    width: 140px;
+}
+
+#loginImageBox {
+    top: -54px;
+    width: 120px;
+    height: 50px;
 }
 
 #loginSubmitText {
     width: 120px;
-    height: 30px;
     z-index: 4;
     cursor: pointer;
 }

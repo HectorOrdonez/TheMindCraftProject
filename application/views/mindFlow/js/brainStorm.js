@@ -70,8 +70,7 @@ function BrainStorm($element, callback) {
                     var actionBox = '<div class="actionBox">';
                     var editAction = '<div class="action"><a class="editAction" id="' + rowId + '"></a></div>';
                     var delAction = '<div class="action"><a class="delAction" id="' + rowId + '"></a></div>';
-                    cell = cellWrapper + actionBox + editAction + delAction + '</div></div>';
-                    return cell;
+                    return cellWrapper + actionBox + editAction + delAction + '</div></div>';
                 },
                     classList: ['actions']
                 },

@@ -34,6 +34,7 @@ class Controller extends engineController
 
         $this->_view->setTitle('The Mindcraft Project');
         $this->_view->addLibrary('public/css/default.css');
+        $this->_view->addLibrary('public/css/skins/default/mindCraft.css');
 
         $this->_view->addLibrary('public/js/external/jquery-1.10.1.js');
         $this->_view->addLibrary('public/js/general.js');

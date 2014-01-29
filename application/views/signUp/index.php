@@ -48,6 +48,8 @@
                 <div id='passwordError'></div>
             </div>
 
+            <div class='verticalSpace30'></div>
+
             <div id='signUpSubmitBox'>
                 <div id='signUpSubmitText'>
                     <span class='ftype_titleA1'>Sign</span><span class='ftype_titleA2'>Up</span><span
