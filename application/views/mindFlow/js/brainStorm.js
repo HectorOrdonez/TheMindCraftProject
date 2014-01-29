@@ -54,7 +54,7 @@ function BrainStorm($element, callback) {
         var footerRow = new Row(
             {'cells': [
                 new Cell({
-                    'html': '<a href="#" id="linkNewIdea"></a><form id="formNewIdea" action="' + root_url + 'mindFlow/newIdea"><input type="text" name="title" class="ftype_contentA" id="inputNewIdea"  maxlength="100" /></form>',
+                    'html': '<a href="#" id="linkNewIdea"></a><form id="formNewIdea"><input type="text" name="title" class="ftype_contentA" id="inputNewIdea"  maxlength="100" /></form>',
                     'classList': ['newIdeaCell']
                 })
             ], 'classList': ['footer']}
@@ -81,11 +81,8 @@ function BrainStorm($element, callback) {
         var gridParameters = {
             'url': root_url + 'mindFlow/getIdeas',
             'extraData': {step: 'brainStorm'},
-            'eventEOI': function () {
-            },
             'eventDL': function () {
                 callback();
-
                 // Initializing page focus on the add input
                 jQuery('#inputNewIdea').focus();
             }

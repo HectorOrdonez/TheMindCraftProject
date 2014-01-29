@@ -184,7 +184,6 @@
 #brainStormGrid .action .editAction {
     background: url('./../../../../public/images/Edit.png') no-repeat;
 }
-
 #brainStormGrid .action .delAction {
     background: url('./../../../../public/images/Delete.png') no-repeat;
 }
@@ -192,6 +191,61 @@
 /**********************************************************************************************************************/
 /**                                          Selection section styles                                                **/
 /**********************************************************************************************************************/
+
+/** Styles for the footer section that contains the new idea form. **/
+#selectionGrid #formNewIdea {
+    display: inline;
+}
+
+#selectionGrid #formNewIdea input {
+    height: 30px;
+    width: 100%;
+    border: none;
+    text-indent: 35px;
+}
+
+#selectionGrid .newIdeaCell {
+    width: 100%;
+}
+
+#selectionGrid #linkNewIdea {
+    position: absolute;
+    background: url('./../../../../public/images/Plus.png');
+    width: 15px;
+    height: 15px;
+    margin: 8px 0 0 12px;
+}
+
+/** Edit Idea styles **/
+
+#selectionGrid #formEditIdea #inputEditIdeaTitle {
+    width: calc(100% - 20px);
+}
+
+/** Column styles **/
+#selectionGrid .col_title {
+    text-indent: 20px;
+    width: 650px;
+}
+
+#selectionGrid .col_actions {
+    width: 100px;
+}
+
+#selectionGrid .col_date_creation {
+    width: 200px;
+}
+
+/** Selection Action icons **/
+#selectionGrid .action .editAction {
+    background: url('./../../../../public/images/Edit.png') no-repeat;
+}
+#selectionGrid .action .delAction {
+    background: url('./../../../../public/images/Delete.png') no-repeat;
+}
+#selectionGrid .action .postponeAction {
+    background: url('./../../../../public/images/Postpone.png') no-repeat;
+}
 
 /**********************************************************************************************************************/
 /**                                          Prioritize section styles                                               **/

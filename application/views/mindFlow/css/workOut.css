@@ -6,42 +6,6 @@
  */
 
 /**********************************************************************************************************************/
-/** Selection Grid Style                                                                                             **/
-/**********************************************************************************************************************/
-
-/**
- * Id of the Table that contains the Selection table.
-**/
-#selection_grid {
-}
-
-/**
- * Table columns
-**/
-#selection_grid .col_id {
-}
-
-#selection_grid .col_title {
-    width: 70%;
-}
-
-#selection_grid .col_actions {
-    width: 15%;
-}
-
-#selection_grid .col_date_creation {
-    width: 15%;
-}
-
-#selection_grid  .row .id, #selection_grid  .row .col_id {
-    display: none;
-}
-
-#selection_grid .actions .postponeAction {
-    background: url('../../../../public/images/Postpone.png');
-}
-
-/**********************************************************************************************************************/
 /** Timing Grid Style                                                                                                **/
 /**********************************************************************************************************************/
 
