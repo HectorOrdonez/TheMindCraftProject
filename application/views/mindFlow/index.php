@@ -74,5 +74,6 @@
 <div id='stepContent'>
 </div>
 
-<?php $this->printChunk('footer'); ?>
+<div id='infoDisplayer'>
 
+<?php $this->printChunk('footer'); ?>

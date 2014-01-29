@@ -73,12 +73,10 @@ jQuery().ready(function () {
 
     // Adding Event Listeners
     jQuery('#linkNewUser').click(function () {
-        console.log('Click New User');
         submitNewUser();
     });
     jQuery('#formNewUser').keypress(function (event) {
         if (event.which == 13) {
-            console.log('New User Enter pressed');
             event.preventDefault();
             submitNewUser();
         }
@@ -220,17 +218,17 @@ function openEditUsernameDialog($usernameCell) {
     var previousUsername = $usernameCell.html();                // The previous username, in case no alteration is required
     var editableContent = '' +
         '<form id="formEditUsername">' +
-        '<input type="text" name="title" id="inputEditUsername" value="" />' +
+        '<input type="text" name="username" id="inputEditUsername" maxlength="100" value="" />' +
         '</form>';                                              // The cell content to offer User the edit input
 
     // Now, changing visuals
     $usernameCell.html(editableContent);
-    var inputEditUsername = jQuery('#inputEditUsername');
-    inputEditUsername.focus();
-    inputEditUsername.val(previousUsername);
+    var $inputEditUsername = jQuery('#inputEditUsername');
+    $inputEditUsername.focus();
+    $inputEditUsername.val(previousUsername);
 
     // Adding new Event Listeners
-    inputEditUsername.blur(function () {
+    $inputEditUsername.blur(function () {
         // Restore normality
         $usernameCell.html(previousUsername);
         $usernameCell.removeClass('open');
@@ -238,8 +236,9 @@ function openEditUsernameDialog($usernameCell) {
     jQuery('#formEditUsername').keypress(function (event) {
         if (event.which == 13) {
             event.preventDefault();
-            submitEditUser(userId, inputEditUsername.val(), function (newUsername) {
+            submitEditUser(userId, $inputEditUsername.val(), function (newUsername) {
                 $usernameCell.html(newUsername);
+                $usernameCell.removeClass('open');
             });
         }
     });
@@ -357,7 +356,7 @@ function openChangeStateDialog($stateCell) {
             });
         } else {
             $stateCell.html(previousState);
-            $stateCell.removeClass('open');
+            $stateCell.removeClass('open'); 
         }
     });
 }

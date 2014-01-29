@@ -1,10 +1,22 @@
+/**
+ * Project: The Mindcraft Project
+ * Description: mindFlow CSS Library
+ * User: Hector Ordonez
+ * Date: 29/01/14 17:30
+ */
+
+/** initStep contains the starting step, which is just required by JavaScript, to know which step load first.       **/
+/** Once page is loaded, is used no more.  **/
 #initStep {
     display: none;
 }
 
+/** Styles for the flow selection in the top of the mindFlow page. **/
 #flowMenu {
-    display: block;
+    position: relative;
     height: 100px;
+    width: 1000px;
+    margin: 10px auto 0 auto;
 }
 
 #flowMenu ul {
@@ -23,21 +35,22 @@
 
 #flowMenu .flowOption, #flowMenu .miniFlowOption {
     display: inline-block;
-    width: 160px;
+    width: 161px;
 }
 
 #flowMenu .flowOption .text {
     position: relative;
     left: -26px;
 }
+
 #flowMenu .miniFlowOption .text {
     position: relative;
     left: -10px;
 }
 
 #flowMenu .flowOption img {
-    width: 60px;
-    height: 60px;
+    width: 61px;
+    height: 61px;
 }
 
 #flowMenu  .imgBox {
@@ -54,7 +67,7 @@
 
 #flowLine {
     position: absolute;
-    width: 100%;
+    width: calc(100% - 5px);
     height: 25px;
     z-index: 0;
     margin: 20px 0 0 5px;
@@ -75,72 +88,39 @@
     background-color: #b9a889;
 }
 
+/** Style for the step container **/
 #stepContent {
-    width: 1000px;
+    margin-top: 50px;
 }
 
+/**********************************************************************************************************************/
+/**                                             All section styles                                                   **/
+/**********************************************************************************************************************/
 
-/*************************/
-/**     Table styles    **/
-/*************************/
-
-/**
- * Id of the Table that contains the Brainstorm table.
-**/
-#gridWrapper table {
-    width: 100%;
+/** Grids **/
+.mindFlowGrid {
+    width: 950px;
+    margin: 0 auto;
     -moz-box-shadow: 2px 2px 5px #b9a889;
     -webkit-box-shadow: 2px 2px 5px #b9a889;
     box-shadow: 2px 2px 5px #b9a889;
 }
 
-#gridWrapper .row .id, #gridWrapper .row .col_id {
+/** Id columns are always hidden here **/
+.mindFlowGrid .row .col_id {
     display: none;
 }
 
-/**
- * Id of the footer button to add a new idea.
-**/
-#gridWrapper #linkNewIdea {
-    position: absolute;
-    background: url('./../../../../public/images/Plus.png');
-    width: 15px;
-    height: 15px;
-
-    margin: 8px 0 0 12px;
+/** Action column styles **/
+.mindFlowGrid .actionBox {
+    position: relative;
 }
 
-/**
- * Id of the footer form to add a new idea.
-**/
-#gridWrapper #formNewIdea {
-    display: inline;
-}
-
-#gridWrapper #formNewIdea input {
-    height: 30px;
-    width: 100%;
-    border: none;
-    text-indent: 35px;
-}
-
-#brainStorm_grid #formEditIdea .inputEditIdeaTitle {
-    width: calc(100% - 20px);
-}
-
-/**
- * Brainstorm actions
-**/
-#gridWrapper .actions {
-    padding-top: 0;
-}
-#gridWrapper .actionBox {
-    position: absolute;
-}
-#gridWrapper .actionBox div {
+.mindFlowGrid .actionBox div {
     float: left;
 }
-#gridWrapper .action a {
+
+.mindFlowGrid .action a{
     width: 30px;
     height: 30px;
     display: block;
@@ -148,14 +128,79 @@
     cursor: pointer;
 }
 
-#gridWrapper .action a:hover{
-    background-position: -30px 0;
+.mindFlowGrid .action a:hover {
+    background-position: -30px 0 !important;
 }
 
-#gridWrapper .action .editAction {
+/**********************************************************************************************************************/
+/**                                          BrainStorm section styles                                               **/
+/**********************************************************************************************************************/
+
+/** Styles for the footer section that contains the new idea form. **/
+#brainStormGrid #formNewIdea {
+    display: inline;
+}
+
+#brainStormGrid #formNewIdea input {
+    height: 30px;
+    width: 100%;
+    border: none;
+    text-indent: 35px;
+}
+
+#brainStormGrid .newIdeaCell {
+    width: 100%;
+}
+
+#brainStormGrid #linkNewIdea {
+    position: absolute;
+    background: url('./../../../../public/images/Plus.png');
+    width: 15px;
+    height: 15px;
+    margin: 8px 0 0 12px;
+}
+
+/** Edit Idea styles **/
+
+#brainStormGrid #formEditIdea #inputEditIdeaTitle {
+    width: calc(100% - 20px);
+}
+
+/** Column styles **/
+#brainStormGrid .col_title {
+    text-indent: 20px;
+    width: 650px;
+}
+
+#brainStormGrid .col_actions {
+    width: 100px;
+}
+
+#brainStormGrid .col_date_creation {
+    width: 200px;
+}
+
+/** BrainStorm Action icons **/
+#brainStormGrid .action .editAction {
     background: url('./../../../../public/images/Edit.png') no-repeat;
 }
 
-#gridWrapper .action .delAction {
+#brainStormGrid .action .delAction {
     background: url('./../../../../public/images/Delete.png') no-repeat;
 }
+
+/**********************************************************************************************************************/
+/**                                          Selection section styles                                                **/
+/**********************************************************************************************************************/
+
+/**********************************************************************************************************************/
+/**                                          Prioritize section styles                                               **/
+/**********************************************************************************************************************/
+
+/**********************************************************************************************************************/
+/**                                          ApplyTime section styles                                                **/
+/**********************************************************************************************************************/
+
+/**********************************************************************************************************************/
+/**                                          PerForm section styles                                                  **/
+/**********************************************************************************************************************/

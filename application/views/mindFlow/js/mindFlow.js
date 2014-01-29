@@ -92,7 +92,7 @@ function moveFlowToCurrentStep() {
 
     var $pastFlow = jQuery('#pastFlow');
     var $futureFlow = jQuery('#futureFlow');
-    var stepSize = 170;
+    var stepSize = 171;
     var fullSize = 1000;
     var multiplier;
 

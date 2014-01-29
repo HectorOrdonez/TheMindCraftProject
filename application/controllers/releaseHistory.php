@@ -34,14 +34,19 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.276', '29/01/2013', array (
+        $this->_setDevelopmentVersion('0.277', '29/01/2013', array (
+            '[Refactor] - Modified MindFlow in order to adapt it to the changes in CSS and in Grid Elements.',
+            '[Refactor] - Refactored BrainStorm step to use the new GridElements construction. Made some improvements, too.',
+            '[Debug] - The design requires to extend sometimes the Body width of 1000. Because of that it has been changed to 1050 to allow minor overflows.',
+        ));
+        
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.276', '29/01/2013', array (
             '[Debug] - SignUp Service had default user state as inactive, when should be pending. Changed!',
             '[Debug] - Fixed bug in UserManagement where username input was selecting all text when clicking it, while only should focus. Now does it nicely!',
             '[Visual improvement] - UserManagement selects for role and state were not properly shown in Firefox. Fixed!',
             '[Visual improvement] - SignUp structure changed and added some styles so it looks the same than Index, in all browsers.'
         ));
-        
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.275', '29/01/2013', array (
             '[Debug] - Fixed issue with Body style, now it is not required absolute in it.',
             '[Visual improvement] - Minor improvements in index and sign up, so they are build and look the same.',

@@ -51,10 +51,6 @@
 }
 
 /** Action column **/
-#usersManagement_grid .content .col_actions {
-    padding: 0;
-}
-
 #usersManagement_grid .actionBox {
     position: relative;
 }
