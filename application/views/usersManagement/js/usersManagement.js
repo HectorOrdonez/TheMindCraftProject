@@ -220,13 +220,14 @@ function openEditUsernameDialog($usernameCell) {
     var previousUsername = $usernameCell.html();                // The previous username, in case no alteration is required
     var editableContent = '' +
         '<form id="formEditUsername">' +
-        '<input type="text" name="title" id="inputEditUsername" value="' + previousUsername + '" />' +
+        '<input type="text" name="title" id="inputEditUsername" value="" />' +
         '</form>';                                              // The cell content to offer User the edit input
 
     // Now, changing visuals
     $usernameCell.html(editableContent);
     var inputEditUsername = jQuery('#inputEditUsername');
     inputEditUsername.focus();
+    inputEditUsername.val(previousUsername);
 
     // Adding new Event Listeners
     inputEditUsername.blur(function () {
@@ -352,12 +353,12 @@ function openChangeStateDialog($stateCell) {
         if (newState != previousState) {
             submitSetState(userId, newState, function () {
                 $stateCell.html(newState);
+                $stateCell.removeClass('open');
             });
         } else {
             $stateCell.html(previousState);
+            $stateCell.removeClass('open');
         }
-
-        $stateCell.removeClass('open');
     });
 }
 

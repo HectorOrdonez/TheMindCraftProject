@@ -5,35 +5,37 @@
  * @date 22/01/14 15:00
  */
 
-/** General styles **/
+/** All centered! **/
 #signUpBody {
     text-align: center;
+}
+
+/** Styles for the title **/
+#signUpTitle {
+    height: 50px;
+    margin-bottom: 65px;
 }
 
 #signUpNow {
     font-size: 27px;
 }
 
-#signUpBlock {
-    margin-top: 60px;
-}
-
-/** Styles for the Inputs, the error boxes and their containers **/
+/** Styles for the Inputs **/
 #signUpBlock input {
     width: 500px;
     height: 30px;
     text-align: center;
 }
 
+/** Styles for the error section **/
 #signUpBlock .errorText {
     height: 30px;
 }
 
-
 /** Styles for the bottom box, which contains the SignUp! text, the images and their containers **/
 #signUpSubmitBox {
     margin-top: 30px;
-    height: 50px;
+    height: 90px;
 }
 
 #signUpImageBox, #signUpSubmitText {
@@ -54,7 +56,7 @@
     cursor: pointer;
 }
 
-/** Styles for the new User and the crowd **/
+/** Styles for the new User and the crowd images**/
 
 #you, #signUpped {
     position: absolute;
@@ -67,6 +69,13 @@
 #signUpped {
     right: 0;
 }
+
+
+
+
+
+
+
 
 /** Styles for the Sign Up confirmation **/
 #signUpConfirmation {

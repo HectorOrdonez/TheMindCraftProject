@@ -45,39 +45,16 @@
     width: 100px;
 }
 
+/** Role and State column **/
+#usersManagement_grid .col_role.open , #usersManagement_grid .col_state.open {
+    line-height: 0;
+}
+
+/** Action column **/
 #usersManagement_grid .content .col_actions {
     padding: 0;
 }
 
-/**
- * Id of the footer button to add a new user.
-**/
-#usersManagement_grid #linkNewUser {
-    position: absolute;
-    background: url('./../../../../public/images/Plus.png');
-    width: 15px;
-    height: 15px;
-    margin: 8px 0 0 12px;
-}
-
-/**
- * Id of the footer form to add a new user.
-**/
-#usersManagement_grid .newUserCell {
-    padding: 0;
-    width: 100%;
-}
-
-#usersManagement_grid #formNewUser input {
-    height: 30px;
-    width: 100%;
-    border: none;
-    text-indent: 35px;
-}
-
-/**
- * Users actions
-**/
 #usersManagement_grid .actionBox {
     position: relative;
 }
@@ -106,24 +83,52 @@
     background: url('./../../../../public/images/Delete.png') no-repeat;
 }
 
+/**
+ * Id of the footer button to add a new user.
+**/
+#usersManagement_grid #linkNewUser {
+    position: absolute;
+    background: url('./../../../../public/images/Plus.png');
+    width: 15px;
+    height: 15px;
+    margin: 8px 0 0 12px;
+}
+
+/**
+ * Id of the footer form to add a new user.
+**/
+#usersManagement_grid .newUserCell {
+    padding: 0;
+    width: 100%;
+}
+
+/** New user input **/
+
+#usersManagement_grid #formNewUser input {
+    height: 30px;
+    width: 100%;
+    border: none;
+    text-indent: 35px;
+}
+
+/** Edit user input **/
+
 #usersManagement_grid #formEditUsername #inputEditUsername {
     width: 100%;
     border: none;
 }
 
-#usersManagement_grid #roleSelector {
+/** Role selector **/
+
+#roleSelector, #stateSelector {
     width: 100%;
     height: 100%;
+    padding: 5px 0;
     border: none;
     text-align: center;
 }
 
-#usersManagement_grid #stateSelector {
-    width: 100%;
-    height: 100%;
-    border: none;
-    text-align: center;
-}
+/** Password box and input **/
 
 .bodyContent #passwordBox {
     position: fixed;
@@ -155,6 +160,7 @@
     text-align: center;
 }
 
+/** Info displayer **/
 #infoDisplayer {
     width: 800px;
     margin: 10px auto 0 auto;

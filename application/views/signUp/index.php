@@ -12,11 +12,13 @@
 <?php $this->printChunk('header'); ?>
 
 <div id='signUpBody'>
-    <div class='ftype_contentA'>
-        New in here?
-        <p id='signUpNow'>
-            SignUp now!
-        </p>
+    <div id='signUpTitle'>
+        <div class='ftype_contentA'>
+            New in here?
+            <p id='signUpNow'>
+                SignUp now!
+            </p>
+        </div>
     </div>
 
     <div id='signUpBlock'>

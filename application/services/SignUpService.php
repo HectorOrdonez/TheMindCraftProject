@@ -21,7 +21,7 @@ use engine\drivers\Exception;
 class SignUpService extends Service
 {
     const DEFAULT_USER_ROLE = 'basic';
-    const DEFAULT_USER_STATE = 'inactive';
+    const DEFAULT_USER_STATE = 'pending';
 
     /**
      * SignUp Service constructor.
