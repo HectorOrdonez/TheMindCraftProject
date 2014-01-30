@@ -34,13 +34,13 @@
 
 <body>
 
-    <div id='header'>
-        <div id='logo'></div>
-        <div id='headerPanel'>
-            <a class='option learnMore' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory"></a>
-            <a class='option signUp' href="<?php echo _SYSTEM_BASE_URL; ?>signUp"></a>
-        </div>
+<div id='header'>
+    <div id='logo'></div>
+    <div id='headerPanel'>
+        <a class='option learnMore' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory"></a>
+        <a class='option signUp' href="<?php echo _SYSTEM_BASE_URL; ?>signUp"></a>
     </div>
+</div>
 
-    <!-- Opening non-logged Content -->
-    <div class='bodyContent' id='nonLoggedContent'>
+<!-- Opening non-logged Content -->
+<div class='bodyContent' id='nonLoggedContent'>

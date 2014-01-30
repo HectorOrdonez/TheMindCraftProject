@@ -9,13 +9,11 @@
  * @var \application\engine\View $this
  */
 ?>
-
-
 </div>
-    <!-- Closing non-Logged Content -->
+<!-- Closing non-Logged Content -->
 
-    <div id='footer'>
-    </div>
+<div id='footer'>
+</div>
 
 </body>
 </html>

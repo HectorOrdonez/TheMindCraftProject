@@ -67,6 +67,7 @@ class MindFlowService extends Service
             case 'brainStorm':
                 break;
             case 'select':
+                $requiredFields[] = 'selected';
                 break;
             case 'prioritize':
                 break;
@@ -95,7 +96,7 @@ class MindFlowService extends Service
             'date_creation' => date('Y-m-d')
         ));
 
-        return $idea->toArray(array('id', 'title', 'date_creation'));
+        return $idea->toArray(array('id', 'title', 'date_creation', 'selected'));
     }
 
     /**
@@ -237,5 +238,45 @@ class MindFlowService extends Service
 
         $idea->priority = $ideaPriority;
         $idea->save();
+    }
+
+    /**
+     * Set idea selection state
+     * @param $userId
+     * @param $ideaId
+     * @param string $selectionState True or false. 
+     * @throws \engine\drivers\Exception
+     */
+    public function setIdeaSelectionState($userId, $ideaId, $selectionState)
+    {
+        echo '<pre>';   
+        echo 'setIdeaSelectionState requested. SelectionState: ' . var_export($selectionState, true). '</br>';
+
+        // Parsing boolean to num
+        $selectedValue = ('true' === $selectionState)? 1 : 0;
+        
+        echo '... parsed to ' . $selectedValue. '</br>';
+
+        /**
+         * @var \ActiveRecord\Model $idea
+         */
+        $idea = Idea::find_by_id($ideaId);
+
+        if (is_null($idea) or $idea->user_id != $userId) {
+            throw new Exception('The idea you are trying to select or unselect does not exist or it is not yours.');
+        }
+        
+        echo ("Idea {$ideaId} is ..." . $idea->selected). '</br>';
+
+        echo ("Switching to " . $selectedValue). '</br>';
+        
+        $idea->selected = $selectedValue;
+        $idea->save();
+
+        /**
+         * @var \ActiveRecord\Model $idea
+         */
+        $ideaAgain = Idea::find_by_id($ideaId);
+        echo ("Idea {$ideaId} now is ..." . $ideaAgain->selected);
     }
 }

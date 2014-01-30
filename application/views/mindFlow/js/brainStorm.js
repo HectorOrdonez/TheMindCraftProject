@@ -65,10 +65,10 @@ function BrainStorm($element, callback) {
             colModel: [
                 {colIndex: 'id'},
                 {colIndex: 'title', classList: ['ftype_contentA']},
-                {colIndex: 'actions', customContent: function (rowId) {
+                {colIndex: 'actions', customContent: function (rowData) {
                     var actionBox = '<div class="actionBox">';
-                    var editAction = '<div class="action"><a class="editAction">' + rowId + '</a></div>';
-                    var delAction = '<div class="action"><a class="delAction">' + rowId + '</a></div>';
+                    var editAction = '<div class="action"><a class="editAction">' + rowData.id + '</a></div>';
+                    var delAction = '<div class="action"><a class="delAction">' + rowData.id + '</a></div>';
                     return actionBox + editAction + delAction + '</div>';
                 }},
                 {colIndex: 'date_creation', classList: ['ftype_contentA', 'centered']}
@@ -246,8 +246,15 @@ function BrainStorm($element, callback) {
             type: 'post',
             url: url,
             data: data
-        }).done(function (data) {
-                grid.table.addContentData(jQuery.parseJSON(data));
+        }).done(function (rawData) {
+                var data = jQuery.parseJSON(rawData);
+                var newRow = {
+                    id : data.id,
+                    title : data.title,
+                    date_creation : data.date_creation
+                };
+
+                grid.table.addContentData(newRow);
                 $input.val('');
             }
         ).fail(function (data) {

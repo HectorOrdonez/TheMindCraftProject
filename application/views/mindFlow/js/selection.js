@@ -7,6 +7,16 @@
  */
 
 function Selection($element, callback) {
+    /**
+     * Constant that defines select and unSelected class for select action.
+     * @type {string}
+     */
+    const selectedClass = 'selected';
+    const unSelectedClass = 'unSelected';
+    const selectedState= 1;
+    const unSelectedState = 0;
+
+    
     // Variable that contains the Grid Object.
     var grid;
 
@@ -44,6 +54,7 @@ function Selection($element, callback) {
             {'cells': [
                 new Cell({'html': 'id', 'classList': ['col_id']}),
                 new Cell({'html': 'title', 'classList': ['col_title', 'ftype_titleC']}),
+                new Cell({'html': '', 'classList': ['col_selected']}),
                 new Cell({'html': '', 'classList': ['col_actions']}),
                 new Cell({'html': 'input date', 'classList': ['col_date_creation', 'ftype_titleC', 'centered']})
             ],
@@ -65,12 +76,15 @@ function Selection($element, callback) {
             colModel: [
                 {colIndex: 'id'},
                 {colIndex: 'title', classList: ['ftype_contentA']},
-                {colIndex: 'actions', customContent: function (rowId) {
-                    var actionBox = '<div class="actionBox">';
-                    var postponeAction = '<div class="action"><a class="postponeAction">' + rowId + '</a></div>';
-                    var editAction = '<div class="action"><a class="editAction">' + rowId + '</a></div>';
-                    var delAction = '<div class="action"><a class="delAction">' + rowId + '</a></div>';
-                    return actionBox + postponeAction + editAction + delAction + '</div>';
+                {colIndex: 'selected'},
+                {colIndex: 'actions', customContent: function (rowData) {
+                    var select = (rowData.selected) ? selectedClass : unSelectedClass;
+                    
+                    var selectAction = '<div class="action"><a class="selectAction ' + select + '">' + rowData.id + '</a></div>';
+                    var editAction = '<div class="action"><a class="editAction">' + rowData.id + '</a></div>';
+                    var delAction = '<div class="action"><a class="delAction">' + rowData.id + '</a></div>';
+                    
+                    return '<div class="actionBox">' + selectAction + editAction + delAction + '</div>';
                 }},
                 {colIndex: 'date_creation', classList: ['ftype_contentA', 'centered']}
             ]});
@@ -113,8 +127,8 @@ function Selection($element, callback) {
         $grid.delegate('.delAction', 'click', function () {
             deleteIdea(jQuery(this));
         });
-        $grid.delegate('.postponeAction', 'click', function () {
-            postponeDialog(jQuery(this));
+        $grid.delegate('.selectAction', 'click', function () {
+            selectIdea(jQuery(this));
         });
     }
 
@@ -252,8 +266,16 @@ function Selection($element, callback) {
             type: 'post',
             url: url,
             data: data
-        }).done(function (data) {
-                grid.table.addContentData(jQuery.parseJSON(data));
+        }).done(function (rawData) {
+                var data = jQuery.parseJSON(rawData);
+                var newRow = {
+                    id : data.id,
+                    title : data.title,
+                    date_creation : data.date_creation,
+                    selected : data.selected
+                };
+                
+                grid.table.addContentData(newRow);
                 $input.val('');
             }
         ).fail(function (data) {
@@ -263,11 +285,40 @@ function Selection($element, callback) {
     }
 
     /**
-     * Requests User confirmation and, if received, postpones the idea for tomorrow.
-     * @todo This is going to be removed in short-term.
+     * Selects or un-selects this idea.
      * 
      */
-    function postponeDialog($element) {
-        alert('Functionality under development');
+    function selectIdea($clickedLink) {
+        // Declaring parameters
+        var $infoDisplayer = jQuery('#infoDisplayer');
+        var url = root_url + 'mindFlow/setIdeaSelection';
+        var ideaId = $clickedLink.html();
+        var ideaCurrentState = ($clickedLink.hasClass(selectedClass))? selectedClass : unSelectedClass;
+        var ideaDesiredState = ($clickedLink.hasClass(selectedClass))? unSelectedClass : selectedClass;
+
+        var data = {
+            'id': $clickedLink.html(),
+            'selected': !($clickedLink.hasClass(selectedClass))
+        };
+
+        // Now, changing the visuals
+        $clickedLink.removeClass(ideaCurrentState);
+        $clickedLink.addClass(ideaDesiredState);
+
+        // Request to the Server
+        jQuery.ajax({
+            type: 'post',
+            url: url,
+            data: data
+        }).done(function () {
+            }
+        ).fail(function (data) {
+                setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
+                
+                // Restoring previous visuals
+                $clickedLink.removeClass(ideaDesiredState);
+                $clickedLink.addClass(ideaCurrentState);
+            }
+        );
     }
 }

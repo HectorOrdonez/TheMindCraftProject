@@ -205,7 +205,7 @@ function Table(tableId, parameters) {
         jQuery.each(colModel, function (i, col) {
             var newCell;
             if (typeof(col.customContent) != 'undefined') {
-                newCell = new Cell({html: col.customContent(data.id)});
+                newCell = new Cell({html: col.customContent(data)});
             } else {
                 newCell = new Cell({html: data[col.colIndex]});
             }

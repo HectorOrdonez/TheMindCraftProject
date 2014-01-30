@@ -9,7 +9,6 @@
  * @var \application\engine\View $this
  */
 ?>
-
 </div>
 <!-- Closing logged-in Content -->
 

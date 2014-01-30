@@ -60,8 +60,6 @@ class mindFlow extends Controller
         $this->_view->addLibrary('application/views/mindFlow/js/selection.js');
         $this->_view->addLibrary('application/views/mindFlow/js/applyTime.js');
         $this->_view->addLibrary('application/views/mindFlow/js/prioritize.js');
-        $this->_view->addLibrary('application/views/mindFlow/css/brainStorm.css');
-        $this->_view->addLibrary('application/views/mindFlow/css/workOut.css');
 
         // Additional libraries
         $this->_view->addLibrary('public/js/external/jquery.transit.js');
@@ -244,6 +242,36 @@ class mindFlow extends Controller
 
             $this->_service->prioritizeIdea(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaPriority->getValue());
 
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
+    /**
+     * Set idea selection state request.
+     */
+    public function setIdeaSelection()
+    {
+        try {
+            $inputIdeaId = Input::build('Number', 'id')
+                ->addRule('isInt');
+            $inputIdeaSelectionState = Input::build('Select', 'selected')
+                ->addRule('availableOptions', array('true', 'false'));
+                
+            $inputIdeaId->validate();
+            $inputIdeaSelectionState->validate();
+
+            $this->_service->setIdeaSelectionState(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaSelectionState->getValue());
+            
         } catch (InputException $iEx) {
             $errorMessage = 'Input error: ' . $iEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");

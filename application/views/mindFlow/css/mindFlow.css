@@ -104,6 +104,8 @@
     -moz-box-shadow: 2px 2px 5px #b9a889;
     -webkit-box-shadow: 2px 2px 5px #b9a889;
     box-shadow: 2px 2px 5px #b9a889;
+    max-height: 330px;
+    overflow-y: auto;
 }
 
 /** Id columns are always hidden here **/
@@ -129,7 +131,7 @@
 }
 
 .mindFlowGrid .action a:hover {
-    background-position: -30px 0 !important;
+    background-position-x: -30px !important;
 }
 
 /**********************************************************************************************************************/
@@ -227,6 +229,9 @@
     text-indent: 20px;
     width: 650px;
 }
+#selectionGrid .col_selected {
+    display: none;
+}
 
 #selectionGrid .col_actions {
     width: 100px;
@@ -243,8 +248,20 @@
 #selectionGrid .action .delAction {
     background: url('./../../../../public/images/Delete.png') no-repeat;
 }
-#selectionGrid .action .postponeAction {
-    background: url('./../../../../public/images/Postpone.png') no-repeat;
+#selectionGrid .action .selectAction {
+    background: url('./../../../../public/images/SelectArrow.png') no-repeat;
+}
+#selectionGrid .action .selectAction.unSelected {
+    background-position: 0 0 !important;
+}
+#selectionGrid .action .selectAction.selected {
+    background-position: 0 -30px !important;
+}
+#selectionGrid .action:hover .selectAction.unSelected {
+    background-position: -30px 0 !important;
+}
+#selectionGrid .action:hover .selectAction.selected {
+    background-position: -30px -30px !important;
 }
 
 /**********************************************************************************************************************/

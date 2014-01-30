@@ -48,10 +48,10 @@ jQuery().ready(function () {
             {colIndex: 'mail', classList: ['ftype_contentA']},
             {colIndex: 'role', classList: ['ftype_contentA', 'centered']},
             {colIndex: 'state', classList: ['ftype_contentA', 'centered']},
-            {colIndex: 'actions', customContent: function (rowId) {
+            {colIndex: 'actions', customContent: function (rowData) {
                 var actionBox = '<div class="actionBox">';
-                var newPassword = '<div class="action"><a class="openNewPasswordDialog">' + rowId + '</a></div>';
-                var deleteUser = '<div class="action"><a class="deleteUser">' + rowId + '</a></div>';
+                var newPassword = '<div class="action"><a class="openNewPasswordDialog">' + rowData.id + '</a></div>';
+                var deleteUser = '<div class="action"><a class="deleteUser">' + rowData.id + '</a></div>';
                 actionBox = actionBox + newPassword + deleteUser + '</div>';
                 return actionBox;
             },
