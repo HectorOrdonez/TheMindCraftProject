@@ -15,6 +15,13 @@ use engine\drivers\Exception;
 
 class MindFlowService extends Service
 {
+    const SELECTED_TRUE = 1;
+    const SELECTED_FALSE = 0;
+    const IMPORTANT_TRUE = 1;
+    const IMPORTANT_FALSE = 0;
+    const URGENT_TRUE = 1;
+    const URGENT_FALSE = 0;
+    
     /**
      * Service constructor of MindFlow logic.
      */
@@ -70,8 +77,12 @@ class MindFlowService extends Service
                 $requiredFields[] = 'selected';
                 break;
             case 'prioritize':
+                $requiredFields[] = 'important';
+                $requiredFields[] = 'urgent';
+                $requiredConditions['selected'] = self::SELECTED_TRUE; // Conditions that ideas must accomplished to be added to the response.
                 break;
             case 'applyTime':
+                $requiredConditions['selected'] = self::SELECTED_TRUE; // Conditions that ideas must accomplished to be added to the response.
                 break;
         }
         
@@ -249,13 +260,8 @@ class MindFlowService extends Service
      */
     public function setIdeaSelectionState($userId, $ideaId, $selectionState)
     {
-        echo '<pre>';   
-        echo 'setIdeaSelectionState requested. SelectionState: ' . var_export($selectionState, true). '</br>';
-
         // Parsing boolean to num
-        $selectedValue = ('true' === $selectionState)? 1 : 0;
-        
-        echo '... parsed to ' . $selectedValue. '</br>';
+        $selectedValue = ('true' === $selectionState)? self::SELECTED_TRUE: self::SELECTED_FALSE;
 
         /**
          * @var \ActiveRecord\Model $idea
@@ -266,17 +272,57 @@ class MindFlowService extends Service
             throw new Exception('The idea you are trying to select or unselect does not exist or it is not yours.');
         }
         
-        echo ("Idea {$ideaId} is ..." . $idea->selected). '</br>';
-
-        echo ("Switching to " . $selectedValue). '</br>';
-        
         $idea->selected = $selectedValue;
         $idea->save();
+    }
+
+    /**
+     * Set idea important state
+     * @param $userId
+     * @param $ideaId
+     * @param string $importantState True or false. 
+     * @throws \engine\drivers\Exception
+     */
+    public function setIdeaImportantState($userId, $ideaId, $importantState)
+    {
+        // Parsing boolean to num
+        $importantValue = ('true' === $importantState)? self::IMPORTANT_TRUE: self::IMPORTANT_FALSE;
 
         /**
          * @var \ActiveRecord\Model $idea
          */
-        $ideaAgain = Idea::find_by_id($ideaId);
-        echo ("Idea {$ideaId} now is ..." . $ideaAgain->selected);
+        $idea = Idea::find_by_id($ideaId);
+
+        if (is_null($idea) or $idea->user_id != $userId) {
+            throw new Exception('The idea you are trying to set to important or not important does not exist or it is not yours.');
+        }
+        
+        $idea->important = $importantValue;
+        $idea->save();
+    }
+
+    /**
+     * Set idea urgent state
+     * @param $userId
+     * @param $ideaId
+     * @param string $urgentState True or false. 
+     * @throws \engine\drivers\Exception
+     */
+    public function setIdeaUrgentState($userId, $ideaId, $urgentState)
+    {
+        // Parsing boolean to num
+        $urgentValue = ('true' === $urgentState)? self::URGENT_TRUE: self::URGENT_FALSE;
+
+        /**
+         * @var \ActiveRecord\Model $idea
+         */
+        $idea = Idea::find_by_id($ideaId);
+
+        if (is_null($idea) or $idea->user_id != $userId) {
+            throw new Exception('The idea you are trying to set to urgent or not urgent does not exist or it is not yours.');
+        }
+        
+        $idea->important = $urgentValue;
+        $idea->save();
     }
 }

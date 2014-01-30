@@ -7,13 +7,16 @@
  */
 
 function Selection($element, callback) {
-    /**
-     * Constant that defines select and unSelected class for select action.
-     * @type {string}
+    /** 
+     * Constants that defines select class and values 
      */
+    /** @type {string} */
     const selectedClass = 'selected';
+    /** @type {string} */
     const unSelectedClass = 'unSelected';
+    /** @type {number} */
     const selectedState= 1;
+    /** @type {number} */
     const unSelectedState = 0;
 
     
@@ -78,9 +81,9 @@ function Selection($element, callback) {
                 {colIndex: 'title', classList: ['ftype_contentA']},
                 {colIndex: 'selected'},
                 {colIndex: 'actions', customContent: function (rowData) {
-                    var select = (rowData.selected) ? selectedClass : unSelectedClass;
+                    var selectValue = (rowData.selected) ? selectedClass : unSelectedClass;
                     
-                    var selectAction = '<div class="action"><a class="selectAction ' + select + '">' + rowData.id + '</a></div>';
+                    var selectAction = '<div class="action"><a class="selectAction ' + selectValue + '">' + rowData.id + '</a></div>';
                     var editAction = '<div class="action"><a class="editAction">' + rowData.id + '</a></div>';
                     var delAction = '<div class="action"><a class="delAction">' + rowData.id + '</a></div>';
                     

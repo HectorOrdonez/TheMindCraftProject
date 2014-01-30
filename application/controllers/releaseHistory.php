@@ -34,15 +34,19 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.280', '30/01/2013', array (
+        $this->_setDevelopmentVersion('0.281', '30/01/2013', array (
+            '[Feature] - Implemented new Prioritize step visuals and functionality.',
+            '[Refactor] - Changed importance and urgency Idea columns to important and urgent. Changed affected code.',
+        ));
+        
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.280', '30/01/2013', array (
             '[Code improvement] - Minor changes in headers and footers to make source-code look even more awesome.',
             '[Core Update] - Updated GridElements library, which gives customContent all row data instead id.',
             '[Refactor] - All JS using customContent modified to access rowData.id instead rowId.',
             '[Feature] - Implemented new Selection step visuals and functionality. This required some changes in newIdea.',
             '[Refactor] - Because of the changes in newIdea for Selection, BrainStorm step changed so newIdea reads the data coming from the server and only uses what it needs (before it was using all!)',
         ));
-        
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.279', '29/01/2013', array (
             '[Refactor] - Refactored Prioritize and Apply Time step to use the new GridElements construction. Removed all functionality beyond basic one, as new developments are coming (yay!).',
             '[Debug] - Fixed bug that allowed pending Users to login.'

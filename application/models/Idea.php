@@ -38,7 +38,7 @@ class Idea extends Model
             'time_from' => (is_null($this->time_from)) ? '' : substr($this->time_from, 0, 5),
             'time_till' => (is_null($this->time_till)) ? '' : substr($this->time_till, 0, 5),
             'selected' => $this->selected,
-            'importance' => $this->importance,
+            'important' => $this->important,
             'urgent' => $this->urgent,
         );
         

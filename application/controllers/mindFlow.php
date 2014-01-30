@@ -285,4 +285,64 @@ class mindFlow extends Controller
             exit;
         }
     }
+
+    /**
+     * Set idea important state request.
+     */
+    public function setIdeaImportant()
+    {
+        try {
+            $inputIdeaId = Input::build('Number', 'id')
+                ->addRule('isInt');
+            $inputIdeaImportantState = Input::build('Select', 'important')
+                ->addRule('availableOptions', array('true', 'false'));
+                
+            $inputIdeaId->validate();
+            $inputIdeaImportantState->validate();
+
+            $this->_service->setIdeaImportantState(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaImportantState->getValue());
+            
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
+    /**
+     * Set idea urgent state request.
+     */
+    public function setIdeaUrgent()
+    {
+        try {
+            $inputIdeaId = Input::build('Number', 'id')
+                ->addRule('isInt');
+            $inputIdeaUrgentState = Input::build('Select', 'urgent')
+                ->addRule('availableOptions', array('true', 'false'));
+                
+            $inputIdeaId->validate();
+            $inputIdeaUrgentState->validate();
+
+            $this->_service->setIdeaUrgentState(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaUrgentState->getValue());
+            
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
 }
