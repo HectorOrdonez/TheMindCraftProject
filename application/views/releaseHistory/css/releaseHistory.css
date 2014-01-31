@@ -5,6 +5,14 @@
  * Date: 23/07/13 10:00
  */
 
+#websiteHistory {
+    display: none;
+}
+
+#showMe {
+    cursor: pointer;
+}
+
 ul {
     list-style-type: disc;
     margin: 10px 20px;

@@ -34,12 +34,17 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.281', '30/01/2013', array (
-            '[Feature] - Implemented new Prioritize step visuals and functionality.',
-            '[Refactor] - Changed importance and urgency Idea columns to important and urgent. Changed affected code.',
+        $this->_setDevelopmentVersion('0.282', '31/01/2013', array (
+            '[Feature] - Minor changes here and there to make the website stable - no ugly stuff like broken links',
+            '[Debug] - Profile points to Settings page, meanwhile Profile itself is not developed.',
+            '[Feature] - LearnMore points to Release History, meanwhile LearnMore itself is not developed.',
         ));
         
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.281', '30/01/2013', array (
+            '[Feature] - Implemented new Prioritize step visuals and functionality.',
+            '[Refactor] - Changed importance and urgency Idea columns to important and urgent. Changed affected code.',
+        ));
         $this->_addHistoryLog('0.280', '30/01/2013', array (
             '[Code improvement] - Minor changes in headers and footers to make source-code look even more awesome.',
             '[Core Update] - Updated GridElements library, which gives customContent all row data instead id.',
@@ -298,6 +303,7 @@ class releaseHistory extends Controller
     public function index()
     {
         $this->_view->addLibrary('application/views/releaseHistory/css/releaseHistory.css');
+        $this->_view->addLibrary('application/views/releaseHistory/js/learnMore.js');
 
         $this->_view->setParameter('developmentVersion', $this->_getDevelopmentVersion());
         $this->_view->setParameter('historicalLog', $this->_getHistoryLog());

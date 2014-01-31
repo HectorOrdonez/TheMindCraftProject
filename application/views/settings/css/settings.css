@@ -23,16 +23,6 @@
     display: inline-block;
 }
 
-#settingsSection .setting .change {
-    position: relative;
-    top: 2px;
-
-    display: inline-block;
-
-    background: url('./../../../../public/images/Edit.png') no-repeat;
-    width: 16px;
-    height: 16px;
-}
 #settingsSection .setting .processing {
     background: url('./../../../../public/images/TMP_clock.gif') no-repeat;
 }

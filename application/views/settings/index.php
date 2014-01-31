@@ -14,7 +14,7 @@
     <div id='settingsSection' class='ftype_contentA'>
 
         <div class='settingsTitle'>
-            Settings.
+            <span class='ftype_titleA1'>Your </span><span class='ftype_titleA2'>profile</span><span class='ftype_titleA3'>!</span>
         </div>
 
         <div class='setting name'>
@@ -27,8 +27,6 @@
             <form class='formSetting'>
                 <input type='text' class='ftype_contentA' name='name' placeholder='new username'/>
             </form>
-
-            <a href='#' class='change' id='name_change'></a>
 
             <div class='info' id='name_info'></div>
         </div>
@@ -43,8 +41,6 @@
             <form class='formSetting'>
                 <input type='password' class='ftype_contentA' name='password' placeholder='new password'/>
             </form>
-
-            <a href='#' class='change' id="password_change"></a>
 
             <div class='info' id='password_info'></div>
         </div>

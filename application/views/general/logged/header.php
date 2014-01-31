@@ -37,8 +37,8 @@
 <div id='header'>
     <div id='logo'></div>
     <div id='headerPanel'>
-        <a class='option learnMore' href="<?php echo _SYSTEM_BASE_URL; ?>learnMore"></a>
-        <a class='option profile' href="<?php echo _SYSTEM_BASE_URL; ?>profile"></a>
+        <a class='option learnMore' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory"></a>
+        <a class='option profile' href="<?php echo _SYSTEM_BASE_URL; ?>settings"></a>
         <a class='option logOut' href="<?php echo _SYSTEM_BASE_URL; ?>index/logout"></a>
     </div>
 </div>

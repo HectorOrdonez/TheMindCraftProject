@@ -11,31 +11,53 @@
 ?>
 <?php $this->printChunk('header'); ?>
 
-    <div>
+    <div class='ftype_contentA' id='learnMore'>
+        <p>
+            Learn More will be where you can learn to use this website. Cool, huh?
+        </p>
+
+        <div class='verticalSpace15'></div>
+        
+        <p>
+            Sadly though, right now it is not developed - it is not even developed what the website will do!
+        </p>
+
+        <div class='verticalSpace15'></div>
+        
+        <p>
+            So a bit of patience here! In the meantime you can see all the updates: time ain't wasted for nothing here!
+        </p>
+        
+        <div class='verticalSpace30'></div>
+        <a id='showMe'><span class='ftype_titleA1'>Alright, </span><span class='ftype_titleA2'>show me </span><span class='ftype_titleA3'>what you are doing!</span></a>
+    </div>
+
+    <div id='websiteHistory'>
         <h1>
-            Version <?php echo $this->getParameter('developmentVersion')['version']; ?> released
-            on <?php echo $this->getParameter('developmentVersion')['date']; ?>.
+            Version <?=$this->getParameter('developmentVersion')['version']; ?> released
+            on <?=$this->getParameter('developmentVersion')['date']; ?>.
         </h1>
 
         <ul>
-            <?php foreach ($this->getParameter('developmentVersion')['changes'] as $change) : ?>
-                <li><?php echo $change; ?></li>
-            <?php endforeach; ?>
+<?php   foreach ($this->getParameter('developmentVersion')['changes'] as $change) : ?>
+            <li><?=$change; ?></li>
+<?php   endforeach; ?>
         </ul>
-
         <hr/>
 
         <h1>
             Historical Log
         </h1>
-        <?php foreach ($this->getParameter('historicalLog') as $log) : ?>
-            <h2>Version <?php echo $log['version']; ?>, released <?php echo $log['date']; ?></h2>
-            <ul>
-                <?php foreach ($log['changes'] as $change) : ?>
-                    <li><?php echo $change; ?></li>
-                <?php endforeach; ?>
-            </ul>
-        <?php endforeach; ?>
+
+<?php   foreach ($this->getParameter('historicalLog') as $log) : ?>
+        <h2>Version <?php echo $log['version']; ?>, released <?php echo $log['date']; ?></h2>
+        <ul>
+<?php       foreach ($log['changes'] as $change) : ?>
+            <li><?=$change; ?></li>
+<?php       endforeach; ?>
+        </ul>
+
+<?php   endforeach; ?>
     </div>
     <div id='test'>
     </div>
