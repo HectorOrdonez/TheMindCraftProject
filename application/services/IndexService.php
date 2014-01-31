@@ -49,5 +49,13 @@ class IndexService extends Service
         Session::set('userId', $user->id);
         Session::set('userName', $user->username);
         Session::set('userRole', $user->role);
+
+        // In case the User is logged a different day than the last time...
+        if ($user->last_login != date('Y-m-d'))
+        {
+            // Setting last login of User to today.
+            $user->last_login = date('Y-m-d');
+            $user->save();
+        }
     }
 }

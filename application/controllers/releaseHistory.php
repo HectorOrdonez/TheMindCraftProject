@@ -34,13 +34,16 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.282', '31/01/2013', array (
+        $this->_setDevelopmentVersion('0.2821', '31/01/2013', array (
+            '[Feature] - User last login re-implemented.'
+        ));
+        
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.282', '31/01/2013', array (
             '[Feature] - Minor changes here and there to make the website stable - no ugly stuff like broken links',
             '[Debug] - Profile points to Settings page, meanwhile Profile itself is not developed.',
             '[Feature] - LearnMore points to Release History, meanwhile LearnMore itself is not developed.',
         ));
-        
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.281', '30/01/2013', array (
             '[Feature] - Implemented new Prioritize step visuals and functionality.',
             '[Refactor] - Changed importance and urgency Idea columns to important and urgent. Changed affected code.',
