@@ -34,11 +34,14 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.2821', '31/01/2013', array (
-            '[Feature] - User last login re-implemented.'
+        $this->_setDevelopmentVersion('0.2822', '31/01/2013', array (
+            '[Debug] - User mail was not being saved on Sign Up.'
         ));
         
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.2821', '31/01/2013', array (
+            '[Feature] - User last login re-implemented.'
+        ));
         $this->_addHistoryLog('0.282', '31/01/2013', array (
             '[Feature] - Minor changes here and there to make the website stable - no ugly stuff like broken links',
             '[Debug] - Profile points to Settings page, meanwhile Profile itself is not developed.',

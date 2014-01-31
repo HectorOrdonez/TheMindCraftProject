@@ -58,6 +58,7 @@ class SignUpService extends Service
         // Create new User
         $newUser = User::create(array(
             'username' => $username,
+            'mail' => $mail,
             'password' => Encrypter::encrypt($password),
             'role' => self::DEFAULT_USER_ROLE,
             'state' => self::DEFAULT_USER_STATE
