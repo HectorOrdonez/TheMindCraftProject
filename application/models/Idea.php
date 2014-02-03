@@ -12,23 +12,44 @@ namespace application\models;
 use ActiveRecord\ActiveRecordException;
 use \ActiveRecord\Model as Model;
 
+/**
+ * Class Idea
+ * @package application\models
+ *
+ * Magic methods ...
+ * @method static Idea find_by_id(\int $id) Returns the Idea with given id.
+ *
+ * Magically accessed attributes ...
+ * @property int id
+ * @property int $user_id
+ * @property string $title
+ * @property \DateTime $date_creation
+ * @property \DateTime $date_todo
+ * @property \DateTime $date_from
+ * @property \DateTime $date_till
+ * @property string $time_from Time in 24-hour format.
+ * @property string $time_till Time in 24-hour format.
+ * @property int $selected Either this idea is selected or not. 0 as false, 1 as true.
+ * @property int $important Either this idea is important or not. 0 as false, 1 as true.
+ * @property int $urgent Either this idea is urgent or not. 0 as false, 1 as true.
+ */
 class Idea extends Model
 {
     public static $table_name = 'idea'; // Table name
-    
+
     static $belongs_to = array(
         array('user')
     );
 
     /**
      * Returns an array with this idea parameters.
-     * 
+     *
      * @param array $requiredFields
      * @return array
      * @throws ActiveRecordException
      */
     public function toArray($requiredFields = array())
-    {        
+    {
         $rawIdeaArray = array(
             'id' => $this->id,
             'user_id' => $this->user_id,
@@ -41,19 +62,16 @@ class Idea extends Model
             'important' => $this->important,
             'urgent' => $this->urgent,
         );
-        
+
         // If no required fields specified, all fields are returned.
-        if (empty($requiredFields))
-        {
+        if (empty($requiredFields)) {
             return $rawIdeaArray;
         }
-        
+
         // Otherwise, only specified fields are returned.
         $ideaArray = array();
-        foreach ($requiredFields as $field)
-        {
-            if (!array_key_exists($field, $this->attributes()))
-            {
+        foreach ($requiredFields as $field) {
+            if (!array_key_exists($field, $this->attributes())) {
                 throw new ActiveRecordException("Requested field {$field} does not belong to idea Model.");
             }
             $ideaArray[$field] = $rawIdeaArray[$field];

@@ -3839,6 +3839,7 @@ function Datepicker() {
 			// [0] = true if selectable, false if not, [1] = custom CSS class name(s) or "",
 			// [2] = cell title (optional), e.g. $.datepicker.noWeekends
 		beforeShow: null, // Function that takes an input field and
+		afterDisplay: null, // Custom function that is called once the calendar is shown and everytime it is updated.
 			// returns a set of custom settings for the date picker
 		onSelect: null, // Define a callback function when a date is selected
 		onChangeMonthYear: null, // Define a callback function when the month or year is changed
@@ -4544,6 +4545,10 @@ $.extend(Datepicker.prototype, {
 				origyearshtml = inst.yearshtml = null;
 			}, 0);
 		}
+
+        // Calling afterDisplay, if defined.
+        var afterDisplay = $.datepicker._get(inst, "afterDisplay");
+        if (afterDisplay) afterDisplay();
 	},
 
 	// #6694 - don't focus the input if it's already focused

@@ -21,7 +21,6 @@
 
 #flowMenu ul {
     position: absolute;
-    z-index: 1;
 }
 
 #flowMenu ul li, .text {
@@ -69,7 +68,6 @@
     position: absolute;
     width: calc(100% - 5px);
     height: 25px;
-    z-index: 0;
     margin: 20px 0 0 5px;
     background-color: #e94f3b;
 }
@@ -120,9 +118,10 @@
 
 .mindFlowGrid .actionBox div {
     float: left;
+    width: 45px;
 }
 
-.mindFlowGrid .action a{
+.mindFlowGrid .action a {
     width: 30px;
     height: 30px;
     display: block;
@@ -131,7 +130,7 @@
 }
 
 .mindFlowGrid .action a:hover {
-    background-position-x: -30px !important;
+    background-position: -30px 0 !important;
 }
 
 /**********************************************************************************************************************/
@@ -171,21 +170,22 @@
 /** Column styles **/
 #brainStormGrid .col_title {
     text-indent: 20px;
-    width: 650px;
+    width: 710px;
 }
 
 #brainStormGrid .col_actions {
-    width: 100px;
+    width: 90px; /** 2 actions x 45 each **/
 }
 
 #brainStormGrid .col_date_creation {
-    width: 200px;
+    width: 150px;
 }
 
 /** BrainStorm Action icons **/
 #brainStormGrid .action .editAction {
     background: url('./../../../../public/images/Edit.png') no-repeat;
 }
+
 #brainStormGrid .action .delAction {
     background: url('./../../../../public/images/Delete.png') no-repeat;
 }
@@ -227,39 +227,46 @@
 /** Column styles **/
 #selectionGrid .col_title {
     text-indent: 20px;
-    width: 650px;
+    width: 665px;
 }
+
 #selectionGrid .col_selected {
     display: none;
 }
 
 #selectionGrid .col_actions {
-    width: 100px;
+    width: 135px; /** 3 actions x 45 each **/
 }
 
 #selectionGrid .col_date_creation {
-    width: 200px;
+    width: 150px;
 }
 
 /** Selection Action icons **/
 #selectionGrid .action .editAction {
     background: url('./../../../../public/images/Edit.png') no-repeat;
 }
+
 #selectionGrid .action .delAction {
     background: url('./../../../../public/images/Delete.png') no-repeat;
 }
+
 #selectionGrid .action .selectAction {
     background: url('./../../../../public/images/SelectArrow.png') no-repeat;
 }
+
 #selectionGrid .action .selectAction.unSelected {
     background-position: 0 0 !important;
 }
+
 #selectionGrid .action .selectAction.selected {
     background-position: 0 -30px !important;
 }
+
 #selectionGrid .action:hover .selectAction.unSelected {
     background-position: -30px 0 !important;
 }
+
 #selectionGrid .action:hover .selectAction.selected {
     background-position: -30px -30px !important;
 }
@@ -271,11 +278,15 @@
 /** Column styles **/
 #prioritizeGrid .col_title {
     text-indent: 20px;
-    width: 700px;
+    width: 710px;
+}
+
+#prioritizeGrid .col_actions {
+    width: 90px; /** 2 actions x 45 each **/
 }
 
 #prioritizeGrid .col_date_creation {
-    width: 250px;
+    width: 150px;
 }
 
 #prioritizeGrid .col_important, #prioritizeGrid .col_urgent {
@@ -286,33 +297,43 @@
 #prioritizeGrid .action .importantAction {
     background: url('./../../../../public/images/Important.png') no-repeat;
 }
+
 #prioritizeGrid .action .urgentAction {
     background: url('./../../../../public/images/Urgent.png') no-repeat;
 }
+
 #prioritizeGrid .action .importantAction.notImportant {
     background-position: 0 0 !important;
 }
+
 #prioritizeGrid .action .importantAction.important {
     background-position: -30px 0 !important;
 }
+
 #prioritizeGrid .action:hover .importantAction.notImportant {
     background-position: 0 0 !important;
 }
+
 #prioritizeGrid .action:hover .importantAction.important {
     background-position: -30px 0 !important;
 }
+
 #prioritizeGrid .action .urgentAction.notUrgent {
     background-position: 0 0 !important;
 }
+
 #prioritizeGrid .action .urgentAction.urgent {
     background-position: -30px 0 !important;
 }
+
 #prioritizeGrid .action:hover .urgentAction.notUrgent {
     background-position: 0 0 !important;
 }
+
 #prioritizeGrid .action:hover .urgentAction.urgent {
     background-position: -30px 0 !important;
 }
+
 /**********************************************************************************************************************/
 /**                                          ApplyTime section styles                                                **/
 /**********************************************************************************************************************/
@@ -320,12 +341,47 @@
 /** Column styles **/
 #applyTimeGrid .col_title {
     text-indent: 20px;
-    width: 700px;
+    width: 585px;
 }
 
-#applyTimeGrid .col_date_creation {
-    width: 250px;
+#applyTimeGrid .col_date_todo, #applyTimeGrid .col_time_from, #applyTimeGrid .col_time_till {
+    /** display: none; **/
+    width: 75px;
 }
+
+#applyTimeGrid .col_actions {
+    width: 90px; /** 2 actions x 45 each **/
+}
+
+/** ApplyTime Action icons **/
+#applyTimeGrid .action .setTodoAction {
+    background: url('./../../../../public/images/Timing.png') no-repeat;
+}
+
+#applyTimeGrid .action .setRoutineAction {
+    background: url('./../../../../public/images/Routine.png') no-repeat;
+}
+
+/** ApplyTime setTodoDialog style **/
+#setTodoDialogWrapper {
+    display: none;
+}
+
+#setTodoDialogWrapper #dialogContent {
+    position: fixed;
+    width: 210px;
+    height: 420px;
+    top: 50%;
+    left: 50%;
+    margin-left: -105px;
+    margin-top: -210px;
+
+    background-color: #fff;
+    opacity: 1;
+    filter: Alpha(Opacity:100);
+    z-index: 11;
+}
+
 /**********************************************************************************************************************/
 /**                                          PerForm section styles                                                  **/
 /**********************************************************************************************************************/

@@ -44,7 +44,10 @@ function ApplyTime($element, callback) {
             {'cells': [
                 new Cell({'html': 'id', 'classList': ['col_id']}),
                 new Cell({'html': 'title', 'classList': ['col_title', 'ftype_titleC']}),
-                new Cell({'html': 'input date', 'classList': ['col_date_creation', 'ftype_titleC', 'centered']})
+                new Cell({'html': '', 'classList': ['col_date_todo']}),
+                new Cell({'html': '', 'classList': ['col_time_from']}),
+                new Cell({'html': '', 'classList': ['col_time_till']}),
+                new Cell({'html': '', 'classList': ['col_actions']})
             ],
                 'classList': ['header']
             });
@@ -54,7 +57,15 @@ function ApplyTime($element, callback) {
             colModel: [
                 {colIndex: 'id'},
                 {colIndex: 'title', classList: ['ftype_contentA']},
-                {colIndex: 'date_creation', classList: ['ftype_contentA', 'centered']}
+                {colIndex: 'date_todo'},
+                {colIndex: 'time_from'},
+                {colIndex: 'time_till'},
+                {colIndex: 'actions', customContent: function (rowData) {
+                    var setTodo = '<div class="action"><a class="setTodoAction"></a></div>';
+                    var setRoutine = '<div class="action"><a class="setRoutineAction"></a></div>';
+
+                    return '<div class="actionBox">' + setTodo + setRoutine + '</div>';
+                }}
             ]});
         table.addHeaderElement(headerRow.toHTML());
 
@@ -69,5 +80,66 @@ function ApplyTime($element, callback) {
 
         // ApplyTime Grid construction
         grid = new Grid(table, gridParameters);
+
+        $grid.delegate('.setTodoAction', 'click', function () {
+            openSetTodoDialog();
+        });
+        $grid.delegate('.setRoutineAction', 'click', function () {
+            openSetRoutineDialog(jQuery(this));
+        });
     }
+}
+
+function openSetTodoDialog() {
+
+    // Initializing
+    createTodoDialogElement();
+    var $dialogElement = jQuery('#setTodoDialogWrapper');
+    var $datePicker = jQuery('#datePicker');
+    $datePicker.datepicker({
+        showOtherMonths: true,
+        dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        afterDisplay: function() {
+            console.log('after Display!');
+            // Making odd cells being... odd!
+            var oddHelper = 1;
+            jQuery.each($datePicker.find('td'), function (index, element) {
+                if (1 === oddHelper % 2) {
+                    jQuery(element).addClass('odd');
+                }
+                oddHelper++;
+            });
+        }
+    });
+
+    // Displaying dialog
+    $dialogElement.fadeIn();
+
+    // Adding Event Listeners
+    $dialogElement.find('.fullOverlay').click(function () {
+        $dialogElement.fadeOut(function () {
+            $dialogElement.remove();
+        });
+    });
+}
+
+function openSetRoutineDialog() {
+
+}
+
+function createTodoDialogElement() {
+    var dialog = document.createElement('DIV');
+    dialog.setAttribute('id', 'setTodoDialogWrapper');
+    dialog.innerHTML = '' +
+        '<div class="fullOverlay"></div>' +
+        '<div id="dialogContent">' +
+        '   <div id="datePickerWrapper">' +
+        '       <div id="datePicker"></div>' +
+        '   </div>' +
+        '   <div id="timeSelectionWrapper"></div>' +
+        '   <div id="moreOftenWrapper"></div>' +
+        '   <div id="applyTimeWrapper">Apply Time!</div>' +
+        '</div>';
+
+    document.body.appendChild(dialog);
 }

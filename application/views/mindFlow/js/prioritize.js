@@ -66,6 +66,7 @@ function Prioritize($element, callback) {
                 new Cell({'html': 'title', 'classList': ['col_title', 'ftype_titleC']}),
                 new Cell({'html': '', 'classList': ['col_important']}),
                 new Cell({'html': '', 'classList': ['col_urgent']}),
+                new Cell({'html': '', 'classList': ['col_actions']}),
                 new Cell({'html': 'input date', 'classList': ['col_date_creation', 'ftype_titleC', 'centered']})
             ],
                 'classList': ['header']
@@ -100,7 +101,7 @@ function Prioritize($element, callback) {
             }
         };
 
-        // ApplyTime Grid construction
+        // Prioritize Grid construction
         grid = new Grid(table, gridParameters);
 
         $grid.delegate('.importantAction', 'click', function () {

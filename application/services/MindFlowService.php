@@ -66,22 +66,28 @@ class MindFlowService extends Service
     private function extractRequirements($step, $userId)
     {
         // Default fields and conditions, common in all steps
-        $requiredFields = array('id', 'title', 'date_creation'); // Fields to output, depending on step.
+        $requiredFields = array('id', 'title'); // Fields to output, depending on step.
         $requiredConditions = array('user_id' => $userId); // Conditions that ideas must accomplished to be added to the response.
 
         // Setting the required fields and conditions depending on step.
         switch ($step) {
             case 'brainStorm':
+                $requiredFields[] = 'date_creation';
                 break;
             case 'select':
+                $requiredFields[] = 'date_creation';
                 $requiredFields[] = 'selected';
                 break;
             case 'prioritize':
+                $requiredFields[] = 'date_creation';
                 $requiredFields[] = 'important';
                 $requiredFields[] = 'urgent';
                 $requiredConditions['selected'] = self::SELECTED_TRUE; // Conditions that ideas must accomplished to be added to the response.
                 break;
             case 'applyTime':
+                $requiredFields[] = 'date_todo';
+                $requiredFields[] = 'time_from';
+                $requiredFields[] = 'time_till';
                 $requiredConditions['selected'] = self::SELECTED_TRUE; // Conditions that ideas must accomplished to be added to the response.
                 break;
         }
@@ -121,7 +127,7 @@ class MindFlowService extends Service
     public function editIdea($userId, $ideaId, $newTitle)
     {
         /**
-         * @var \ActiveRecord\Model $idea
+         * @var Idea $idea
          */
         $idea = Idea::find_by_id($ideaId);
 
@@ -143,7 +149,7 @@ class MindFlowService extends Service
     public function deleteIdea($userId, $ideaId)
     {
         /**
-         * @var \ActiveRecord\Model $idea
+         * @var Idea $idea
          */
         $idea = Idea::find_by_id($ideaId);
 
@@ -215,7 +221,7 @@ class MindFlowService extends Service
         $parsedFrequency = implode('', $parsedFrequency);
 
         /**
-         * @var \ActiveRecord\Model $idea
+         * @var Idea $idea
          */
         $idea = Idea::find_by_id($ideaId);
 
@@ -226,28 +232,6 @@ class MindFlowService extends Service
         $idea->date_todo = $date;
         $idea->time_todo = $time;
         $idea->frequency = $parsedFrequency;
-        $idea->save();
-    }
-
-    /**
-     * Prioritize idea.
-     * @param int $userId
-     * @param int $ideaId
-     * @param int $ideaPriority
-     * @throws Exception
-     */
-    public function prioritizeIdea($userId, $ideaId, $ideaPriority)
-    {
-        /**
-         * @var \ActiveRecord\Model $idea
-         */
-        $idea = Idea::find_by_id($ideaId);
-
-        if (is_null($idea) or $idea->user_id != $userId) {
-            throw new Exception('The idea you are trying to hold over does not exist or it is not yours.');
-        }
-
-        $idea->priority = $ideaPriority;
         $idea->save();
     }
 
@@ -264,7 +248,7 @@ class MindFlowService extends Service
         $selectedValue = ('true' === $selectionState)? self::SELECTED_TRUE: self::SELECTED_FALSE;
 
         /**
-         * @var \ActiveRecord\Model $idea
+         * @var Idea $idea
          */
         $idea = Idea::find_by_id($ideaId);
 
@@ -289,7 +273,7 @@ class MindFlowService extends Service
         $importantValue = ('true' === $importantState)? self::IMPORTANT_TRUE: self::IMPORTANT_FALSE;
 
         /**
-         * @var \ActiveRecord\Model $idea
+         * @var Idea $idea
          */
         $idea = Idea::find_by_id($ideaId);
 
@@ -314,7 +298,7 @@ class MindFlowService extends Service
         $urgentValue = ('true' === $urgentState)? self::URGENT_TRUE: self::URGENT_FALSE;
 
         /**
-         * @var \ActiveRecord\Model $idea
+         * @var Idea $idea
          */
         $idea = Idea::find_by_id($ideaId);
 
