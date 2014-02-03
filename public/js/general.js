@@ -12,7 +12,7 @@
  * @type {string}
  */
 var root_url = 'http://localhost/projects/themindcraftproject/';
-// var root_url = 'http://themindcraftproject.org/';
+// var root_url = 'http://www.themindcraftproject.org/';
 
 /**
  * Boolean global variable that allows us to know in any place if there is an ongoing ajax request.

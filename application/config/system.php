@@ -13,7 +13,7 @@ define ('_PRODUCTION', FALSE);
 
 // Base path of the website.
 if (_PRODUCTION === TRUE) {
-    define ('_SYSTEM_BASE_URL', 'http://themindcraftproject.org/');
+    define ('_SYSTEM_BASE_URL', 'http://www.themindcraftproject.org/');
 } else {
     //define ('_SYSTEM_BASE_URL', 'http://192.168.1.55/projects/themindcraftproject/');
     define ('_SYSTEM_BASE_URL', 'http://localhost/projects/themindcraftproject/');
