@@ -23,7 +23,7 @@
     position: absolute;
 }
 
-#flowMenu ul li, .text {
+#flowMenu ul li .text {
     display: inline;
 }
 
@@ -375,11 +375,74 @@
     left: 50%;
     margin-left: -105px;
     margin-top: -210px;
+    z-index:11;
+}
 
-    background-color: #fff;
-    opacity: 1;
-    filter: Alpha(Opacity:100);
-    z-index: 11;
+#timeSelectionWrapper .text {
+    text-indent: 5px;
+    line-height: 30px;
+    float: left;
+}
+
+#timeSelectionWrapper #fromSelectionWrapper, 
+#timeSelectionWrapper #tillSelectionWrapper {
+    height: 30px;
+    background-color: #2a2724;
+}
+#timeSelectionWrapper .inputs {
+    float: right;
+}
+#timeSelectionWrapper .inputs input {
+    width: 30px;
+    height: 30px;
+    float: left;
+    text-align: center;
+}
+#fromSelectionWrapper .inputs .hours{
+    background-color: #dfd9c2;
+}
+#fromSelectionWrapper .inputs .minutes{
+    background-color: #f4f2ef;
+}
+#tillSelectionWrapper .inputs .hours{
+    background-color: #f4f2ef;
+}
+#tillSelectionWrapper .inputs .minutes{
+    background-color: #dfd9c2;
+}
+
+#moreOftenWrapper {
+    background-color: #FFF;
+    height: 30px;
+}
+
+#moreOftenWrapper .text{
+    text-indent: 5px;
+    line-height: 30px;
+    float: left;
+}
+#moreOftenWrapper .action{
+    float: right;
+}
+
+#moreOftenWrapper .action .setRoutineAction {
+    background: url('./../../../../public/images/Routine.png') no-repeat;
+    width: 30px;
+    height: 30px;
+    display: block;
+    font-size: 0;
+    cursor: pointer;
+}
+#moreOftenWrapper .action .setRoutineAction:hover {
+    background-position: -30px 0 !important;
+}
+
+#setTodoDialogWrapper #submitApplyTime {
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
 }
 
 /**********************************************************************************************************************/

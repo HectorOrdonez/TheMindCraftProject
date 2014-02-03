@@ -96,6 +96,16 @@ body {
     font: 16px Tahoma;
     color: #5e5755;
 }
+/** Font Style - contentB **/
+.ftype_contentB {
+    font: 16px Tahoma;
+    color: #FFF;
+}
+/** Font Style - contentC **/
+.ftype_contentC {
+    font: 16px Tahoma;
+    color: #2a2724;
+}
 
 /** Font Style - successA **/
 .ftype_successA {
@@ -165,7 +175,7 @@ input {
 /** Date picker size **/
 .ui-datepicker {
     width: 210px; /** 7 days a week x 30px each block **/
-    height: 180px; /** Title +  5 week rows **/
+    background-color: #FFF;
 }
 .ui-datepicker table {
     width: 100%;

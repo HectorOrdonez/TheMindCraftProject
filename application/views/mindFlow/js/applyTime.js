@@ -100,7 +100,6 @@ function openSetTodoDialog() {
         showOtherMonths: true,
         dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
         afterDisplay: function() {
-            console.log('after Display!');
             // Making odd cells being... odd!
             var oddHelper = 1;
             jQuery.each($datePicker.find('td'), function (index, element) {
@@ -136,10 +135,40 @@ function createTodoDialogElement() {
         '   <div id="datePickerWrapper">' +
         '       <div id="datePicker"></div>' +
         '   </div>' +
-        '   <div id="timeSelectionWrapper"></div>' +
-        '   <div id="moreOftenWrapper"></div>' +
-        '   <div id="applyTimeWrapper">Apply Time!</div>' +
+        '   <div class="verticalSpace30"></div>' +
+        '   <div id="timeSelectionWrapper">' +
+        '       <div id="fromSelectionWrapper">' +
+        '           <div class="text ftype_contentB">' +
+        '               from:' +
+        '           </div>' +
+        '           <div class="inputs">' +
+        '               <input class="hours ftype_contentC" type="text" maxlength="2" />' +
+        '               <input class="minutes ftype_contentC" type="text" maxlength="2" />' +
+        '           </div>' +
+        '       </div>' +
+        '       <div id="tillSelectionWrapper">' +
+        '           <div class="text ftype_contentB">' +
+        '               till:' +
+        '           </div>' +
+        '           <div class="inputs">' +
+        '               <input class="hours ftype_contentC" type="text" maxlength="2" />' +
+        '               <input class="minutes ftype_contentC" type="text" maxlength="2" />' +
+        '           </div>' +
+        '       </div>' +
+        '   </div>' +
+        '   <div class="verticalSpace30"></div>' +
+        '   <div id="moreOftenWrapper">' +
+        '       <div class="text ftype_contentC">' +
+        '           More often?' +
+        '       </div>' +
+        '       <div class="action">' +
+        '           <a class="setRoutineAction"></a>' +
+        '       </div>' +
+        '   </div>' +
+        '   <div class="verticalSpace30"></div>' +
+        '   <div class="ftype_titleC" id="submitApplyTime">Apply Time!</div>' +
         '</div>';
 
     document.body.appendChild(dialog);
 }
+
