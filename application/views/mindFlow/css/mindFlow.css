@@ -99,11 +99,9 @@
 .mindFlowGrid {
     width: 950px;
     margin: 0 auto;
-    -moz-box-shadow: 2px 2px 5px #b9a889;
-    -webkit-box-shadow: 2px 2px 5px #b9a889;
-    box-shadow: 2px 2px 5px #b9a889;
     max-height: 330px;
     overflow-y: auto;
+    padding-bottom: 5px;
 }
 
 /** Id columns are always hidden here **/
@@ -362,12 +360,15 @@
     background: url('./../../../../public/images/Routine.png') no-repeat;
 }
 
-/** ApplyTime setTodoDialog style **/
-#setTodoDialogWrapper {
+/** ApplyTime dialogs style **/
+
+/** Container **/
+#applyTimeDialog {
     display: none;
 }
 
-#setTodoDialogWrapper #dialogContent {
+/** To do dialog **/
+#setTodoDialogWrapper {
     position: fixed;
     width: 210px;
     height: 420px;
@@ -378,26 +379,39 @@
     z-index:11;
 }
 
-#timeSelectionWrapper .text {
+/** Routine dialog **/
+#setRoutineDialogWrapper {
+    position: fixed;
+    width: 210px;
+    height: 420px;
+    top: 50%;
+    left: 50%;
+    margin-left: -105px;
+    margin-top: -210px;
+    z-index:11;
+}
+
+#timeRangeWrapper .text {
     text-indent: 5px;
     line-height: 30px;
     float: left;
 }
 
-#timeSelectionWrapper #fromSelectionWrapper, 
-#timeSelectionWrapper #tillSelectionWrapper {
+#timeRangeWrapper #fromSelectionWrapper, 
+#timeRangeWrapper #tillSelectionWrapper {
     height: 30px;
     background-color: #2a2724;
 }
-#timeSelectionWrapper .inputs {
+#timeRangeWrapper .inputs {
     float: right;
 }
-#timeSelectionWrapper .inputs input {
+#timeRangeWrapper .inputs div {
     width: 30px;
     height: 30px;
     float: left;
     text-align: center;
 }
+
 #fromSelectionWrapper .inputs .hours{
     background-color: #dfd9c2;
 }
@@ -437,7 +451,7 @@
     background-position: -30px 0 !important;
 }
 
-#setTodoDialogWrapper #submitApplyTime {
+#setTodoDialogWrapper #submitTodo {
     height: 30px;
     line-height: 30px;
     width: 100%;

@@ -90,11 +90,10 @@ function ApplyTime($element, callback) {
     }
 }
 
-function openSetTodoDialog() {
-
+function openSetTodoDialog() {    
     // Initializing
-    createTodoDialogElement();
-    var $dialogElement = jQuery('#setTodoDialogWrapper');
+    var $dialogElement = jQuery('#applyTimeDialog');
+    jQuery('#setTodoDialogWrapper').css('display', 'block');
     var $datePicker = jQuery('#datePicker');
     $datePicker.datepicker({
         showOtherMonths: true,
@@ -115,60 +114,11 @@ function openSetTodoDialog() {
     $dialogElement.fadeIn();
 
     // Adding Event Listeners
-    $dialogElement.find('.fullOverlay').click(function () {
-        $dialogElement.fadeOut(function () {
-            $dialogElement.remove();
-        });
+    jQuery('#applyTimeOverlay').click(function () {
+        $dialogElement.fadeOut();
     });
 }
 
 function openSetRoutineDialog() {
 
 }
-
-function createTodoDialogElement() {
-    var dialog = document.createElement('DIV');
-    dialog.setAttribute('id', 'setTodoDialogWrapper');
-    dialog.innerHTML = '' +
-        '<div class="fullOverlay"></div>' +
-        '<div id="dialogContent">' +
-        '   <div id="datePickerWrapper">' +
-        '       <div id="datePicker"></div>' +
-        '   </div>' +
-        '   <div class="verticalSpace30"></div>' +
-        '   <div id="timeSelectionWrapper">' +
-        '       <div id="fromSelectionWrapper">' +
-        '           <div class="text ftype_contentB">' +
-        '               from:' +
-        '           </div>' +
-        '           <div class="inputs">' +
-        '               <input class="hours ftype_contentC" type="text" maxlength="2" />' +
-        '               <input class="minutes ftype_contentC" type="text" maxlength="2" />' +
-        '           </div>' +
-        '       </div>' +
-        '       <div id="tillSelectionWrapper">' +
-        '           <div class="text ftype_contentB">' +
-        '               till:' +
-        '           </div>' +
-        '           <div class="inputs">' +
-        '               <input class="hours ftype_contentC" type="text" maxlength="2" />' +
-        '               <input class="minutes ftype_contentC" type="text" maxlength="2" />' +
-        '           </div>' +
-        '       </div>' +
-        '   </div>' +
-        '   <div class="verticalSpace30"></div>' +
-        '   <div id="moreOftenWrapper">' +
-        '       <div class="text ftype_contentC">' +
-        '           More often?' +
-        '       </div>' +
-        '       <div class="action">' +
-        '           <a class="setRoutineAction"></a>' +
-        '       </div>' +
-        '   </div>' +
-        '   <div class="verticalSpace30"></div>' +
-        '   <div class="ftype_titleC" id="submitApplyTime">Apply Time!</div>' +
-        '</div>';
-
-    document.body.appendChild(dialog);
-}
-
