@@ -89,11 +89,15 @@
     <div id='applyTimeDialog'>
         <div class='fullOverlay' id='applyTimeOverlay'></div>
 
+        <!-- To do sub-dialog -->
         <div id='setTodoDialogWrapper'>
+
             <div id='datePickerWrapper'>
                 <div id='datePicker'></div>
             </div>
+
             <div class='verticalSpace30'></div>
+
             <div id='timeRangeWrapper'>
                 <div id='fromSelectionWrapper'>
                     <div class='text ftype_contentB'>
@@ -114,19 +118,108 @@
                     </div>
                 </div>
             </div>
+
             <div class='verticalSpace30'></div>
+
             <div id='moreOftenWrapper'>
                 <div class='text ftype_contentC'>
                     More often?
                 </div>
                 <div class='action'>
-                    <a class='setRoutineAction'></a>
+                    <a id='moreOftenAction'></a>
                 </div>
             </div>
+
             <div class='verticalSpace30'></div>
+
             <div id='submitTodo'>
-                <a class='ftype_titleC'>Apply Time!</div>
+                <a class='ftype_titleC'>Apply Time!</a>
+            </div>
+
         </div>
-    </div>
+        <!-- End to do sub-dialog -->
+
+        <!-- Routine sub-dialog -->
+        <div id='setRoutineDialogWrapper'>
+
+            <div id='weeklyRepetitionWrapper'>
+                <span class='left ftype_contentB'>
+                    Repeat every
+                </span>
+                <span class='right ftype_contentB'>
+                    week
+                </span>
+                <div id='weeklyRepetitionSelector'></div>
+            </div>
+
+            <div class='verticalSpace30'></div>
+
+            <div id='weekdaysSelectionWrapper'>
+                <p class='ftype_contentB'>
+                    Repeat on:
+                </p>
+                <ul class='weekdays ftype_contentC'>
+                    <li>M</li>
+                    <li>T</li>
+                    <li>W</li>
+                    <li>T</li>
+                    <li>F</li>
+                    <li>S</li>
+                    <li>S</li>
+                </ul>
+            </div>
+
+            <div class='verticalSpace30'></div>
+
+            <div id='dateRangeWrapper'>
+                <div id='startsSelectionWrapper'>
+                    <label for='startDate' class='text ftype_contentB'>
+                        starts:
+                    </label>
+                    <div class='datePickerWrapper'>
+                        <input class='ftype_contentC' type='text' id='startDate'/>
+                    </div>
+                </div>
+                <div id='finishesSelectionWrapper'>
+                    <label for='finishDate' class='text ftype_contentB'>
+                        finishes:
+                    </label>
+                    <div class='datePickerWrapper'>
+                        <input class='ftype_contentC' type='text' id='finishDate'/>
+                    </div>
+                </div>
+            </div>
+
+            <div class='verticalSpace30'></div>
+
+            <div id='timeRangeWrapper'>
+                <div id='fromSelectionWrapper'>
+                    <div class='text ftype_contentB'>
+                        from:
+                    </div>
+                    <div class='inputs'>
+                        <div class='hours'></div>
+                        <div class='minutes'></div>
+                    </div>
+                </div>
+                <div id='tillSelectionWrapper'>
+                    <div class='text ftype_contentB'>
+                        till:
+                    </div>
+                    <div class='inputs'>
+                        <div class='hours'></div>
+                        <div class='minutes'></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class='verticalSpace30'></div>
+
+            <div id='submitRoutine'>
+                <a class='ftype_titleC'>Apply Time!</a>
+            </div>
+
+        </div>
+    </div> <!-- End routine sub-dialog -->
 
 <?php $this->printChunk('footer'); ?>

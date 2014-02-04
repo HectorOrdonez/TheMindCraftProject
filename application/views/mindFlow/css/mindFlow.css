@@ -377,6 +377,75 @@
     margin-left: -105px;
     margin-top: -210px;
     z-index:11;
+    display: none;
+}
+
+#setTodoDialogWrapper #timeRangeWrapper .text {
+    text-indent: 5px;
+    line-height: 30px;
+    float: left;
+}
+
+#setTodoDialogWrapper #timeRangeWrapper #fromSelectionWrapper,
+#setTodoDialogWrapper #timeRangeWrapper #tillSelectionWrapper {
+    height: 30px;
+    background-color: #2a2724;
+}
+#setTodoDialogWrapper #timeRangeWrapper .inputs {
+    float: right;
+}
+#setTodoDialogWrapper #timeRangeWrapper .inputs div {
+    width: 30px;
+    height: 30px;
+    float: left;
+    text-align: center;
+}
+
+#setTodoDialogWrapper #fromSelectionWrapper .inputs .hours{
+    background-color: #dfd9c2;
+}
+#setTodoDialogWrapper #fromSelectionWrapper .inputs .minutes{
+    background-color: #f4f2ef;
+}
+#setTodoDialogWrapper #tillSelectionWrapper .inputs .hours{
+    background-color: #f4f2ef;
+}
+#setTodoDialogWrapper #tillSelectionWrapper .inputs .minutes{
+    background-color: #dfd9c2;
+}
+
+#setTodoDialogWrapper #moreOftenWrapper {
+    background-color: #FFF;
+    height: 30px;
+}
+
+#setTodoDialogWrapper #moreOftenWrapper .text{
+    text-indent: 5px;
+    line-height: 30px;
+    float: left;
+}
+#setTodoDialogWrapper #moreOftenWrapper .action{
+    float: right;
+}
+
+#setTodoDialogWrapper #moreOftenWrapper #moreOftenAction {
+    background: url('./../../../../public/images/Routine.png') no-repeat;
+    width: 30px;
+    height: 30px;
+    display: block;
+    font-size: 0;
+    cursor: pointer;
+}
+#setTodoDialogWrapper #moreOftenWrapper .action .setRoutineAction:hover {
+    background-position: -30px 0 !important;
+}
+
+#setTodoDialogWrapper #submitTodo {
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
 }
 
 /** Routine dialog **/
@@ -389,69 +458,89 @@
     margin-left: -105px;
     margin-top: -210px;
     z-index:11;
+    display: none;
 }
 
-#timeRangeWrapper .text {
-    text-indent: 5px;
-    line-height: 30px;
+#setRoutineDialogWrapper #weeklyRepetitionWrapper {
+    height: 30px;
+    width: 100%;
+    background-color: #2a2724;
+}
+#setRoutineDialogWrapper #weeklyRepetitionWrapper span.left {
     float: left;
+    line-height: 30px;
+    text-indent: 5px;
+}
+#setRoutineDialogWrapper #weeklyRepetitionWrapper span.right {
+    float: right;
+    line-height: 30px;
+    width: 60px;
+    height: 30px;
+    text-align: center;
+}
+#setRoutineDialogWrapper #weeklyRepetitionWrapper #weeklyRepetitionSelector {
+    width: 30px;
+    height: 30px;
+    float: right;
+    background-color: #dfd9c2;
 }
 
-#timeRangeWrapper #fromSelectionWrapper, 
-#timeRangeWrapper #tillSelectionWrapper {
+#setRoutineDialogWrapper #weekdaysSelectionWrapper {
+    height: 60px;
+}
+#setRoutineDialogWrapper #weekdaysSelectionWrapper p {
+    height: 30px;
+    line-height: 30px;
+    text-indent: 5px;
+}
+
+#setRoutineDialogWrapper #weekdaysSelectionWrapper ul li{
+    float: left;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+#setRoutineDialogWrapper #weekdaysSelectionWrapper ul li:nth-child(2n+1) {
+    background-color: #dfd9c2;
+}
+#setRoutineDialogWrapper #weekdaysSelectionWrapper ul li {
+    background-color: #f4f2ef;
+}
+
+#setRoutineDialogWrapper #dateRangeWrapper #startsSelectionWrapper {
     height: 30px;
     background-color: #2a2724;
 }
-#timeRangeWrapper .inputs {
-    float: right;
-}
-#timeRangeWrapper .inputs div {
-    width: 30px;
-    height: 30px;
+
+#setRoutineDialogWrapper #dateRangeWrapper label {
     float: left;
+    padding-left: 5px;
+}
+#setRoutineDialogWrapper #dateRangeWrapper .datePickerWrapper{
+    float: right;
+    height: 30px;
+    width: 90px;
+}
+#setRoutineDialogWrapper #startDate{
+    background-color: #dfd9c2;
+}
+#setRoutineDialogWrapper #finishDate{
+    background-color: #f4f2ef;
+}
+#setRoutineDialogWrapper .datePickerWrapper input{
     text-align: center;
+    width: 100%;
+    height: 100%;
 }
 
-#fromSelectionWrapper .inputs .hours{
-    background-color: #dfd9c2;
-}
-#fromSelectionWrapper .inputs .minutes{
-    background-color: #f4f2ef;
-}
-#tillSelectionWrapper .inputs .hours{
-    background-color: #f4f2ef;
-}
-#tillSelectionWrapper .inputs .minutes{
-    background-color: #dfd9c2;
-}
-
-#moreOftenWrapper {
-    background-color: #FFF;
+#setRoutineDialogWrapper #dateRangeWrapper #finishesSelectionWrapper {
     height: 30px;
+    background-color: #2a2724;
 }
 
-#moreOftenWrapper .text{
-    text-indent: 5px;
-    line-height: 30px;
-    float: left;
-}
-#moreOftenWrapper .action{
-    float: right;
-}
 
-#moreOftenWrapper .action .setRoutineAction {
-    background: url('./../../../../public/images/Routine.png') no-repeat;
-    width: 30px;
-    height: 30px;
-    display: block;
-    font-size: 0;
-    cursor: pointer;
-}
-#moreOftenWrapper .action .setRoutineAction:hover {
-    background-position: -30px 0 !important;
-}
-
-#setTodoDialogWrapper #submitTodo {
+#setRoutineDialogWrapper #submitRoutine {
     height: 30px;
     line-height: 30px;
     width: 100%;
@@ -459,6 +548,41 @@
     cursor: pointer;
 }
 
+#setRoutineDialogWrapper #timeRangeWrapper .text {
+    text-indent: 5px;
+    line-height: 30px;
+    float: left;
+}
+
+#setRoutineDialogWrapper #timeRangeWrapper #fromSelectionWrapper,
+#setRoutineDialogWrapper #timeRangeWrapper #tillSelectionWrapper {
+    height: 30px;
+    background-color: #2a2724;
+}
+#setRoutineDialogWrapper #timeRangeWrapper .inputs {
+    float: right;
+}
+#setRoutineDialogWrapper #timeRangeWrapper .inputs div {
+    width: 30px;
+    height: 30px;
+    float: left;
+    text-align: center;
+}
+
+#setRoutineDialogWrapper #fromSelectionWrapper .inputs .hours{
+    background-color: #dfd9c2;
+}
+#setRoutineDialogWrapper #fromSelectionWrapper .inputs .minutes{
+    background-color: #f4f2ef;
+}
+#setRoutineDialogWrapper #tillSelectionWrapper .inputs .hours{
+    background-color: #f4f2ef;
+}
+#setRoutineDialogWrapper #tillSelectionWrapper .inputs .minutes{
+    background-color: #dfd9c2;
+}
+
+
 /**********************************************************************************************************************/
 /**                                          PerForm section styles                                                  **/
-/**********************************************************************************************************************/
+    /**********************************************************************************************************************/

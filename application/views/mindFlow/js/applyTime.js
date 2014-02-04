@@ -85,20 +85,23 @@ function ApplyTime($element, callback) {
             openSetTodoDialog();
         });
         $grid.delegate('.setRoutineAction', 'click', function () {
-            openSetRoutineDialog(jQuery(this));
+            openSetRoutineDialog('new');
         });
     }
 }
 
-function openSetTodoDialog() {    
+function openSetTodoDialog() {
     // Initializing
-    var $dialogElement = jQuery('#applyTimeDialog');
-    jQuery('#setTodoDialogWrapper').css('display', 'block');
     var $datePicker = jQuery('#datePicker');
+    var $todoElement = jQuery('#setTodoDialogWrapper');
+    var $dialogElement = jQuery('#applyTimeDialog');
+
+    // Setting up
     $datePicker.datepicker({
+        firstDay: 1,
         showOtherMonths: true,
-        dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-        afterDisplay: function() {
+        dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+        afterDisplay: function () {
             // Making odd cells being... odd!
             var oddHelper = 1;
             jQuery.each($datePicker.find('td'), function (index, element) {
@@ -109,16 +112,78 @@ function openSetTodoDialog() {
             });
         }
     });
-
-    // Displaying dialog
+    $todoElement.css('display', 'block');
     $dialogElement.fadeIn();
 
     // Adding Event Listeners
     jQuery('#applyTimeOverlay').click(function () {
-        $dialogElement.fadeOut();
+        $dialogElement.fadeOut(function () {
+            $todoElement.css('display', 'none');
+        });
+    });
+    jQuery('#moreOftenAction').click(function () {
+        $todoElement.fadeOut(function () {
+            openSetRoutineDialog('renewed');
+        });
     });
 }
 
-function openSetRoutineDialog() {
+/**
+ * 
+ * @param openingType Indicates if Routine Dialog needs to be open together with ApplyTime dialog or if this one is already opened.
+ */
+function openSetRoutineDialog(openingType) {
+    // Initializing
+    var $startInputDate = jQuery('#startDate');
+    var $finishInputDate = jQuery('#finishDate');
+    var $routineElement = jQuery('#setRoutineDialogWrapper');
+    var $dialogElement = jQuery('#applyTimeDialog');
 
+    // Setting up
+    $startInputDate.datepicker({
+        firstDay: 1,
+        showOtherMonths: true,
+        dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+        afterDisplay: function () {
+            // Making odd cells being... odd!
+            var oddHelper = 1;
+            jQuery.each(jQuery('#ui-datepicker-div').find('td'), function (index, element) {
+                if (1 === oddHelper % 2) {
+                    jQuery(element).addClass('odd');
+                }
+                oddHelper++;
+            });
+        }
+    });
+    $finishInputDate.datepicker({
+        firstDay: 1,
+        showOtherMonths: true,
+        dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+        afterDisplay: function () {
+            // Making odd cells being... odd!
+            var oddHelper = 1;
+            jQuery.each(jQuery('#ui-datepicker-div').find('td'), function (index, element) {
+                if (1 === oddHelper % 2) {
+                    jQuery(element).addClass('odd');
+                }
+                oddHelper++;
+            });
+        }
+    });
+    
+    if (openingType == 'new')
+    {
+        $routineElement.css('display', 'block');
+        $dialogElement.fadeIn();   
+    } else if (openingType == 'renewed')
+    {
+        $routineElement.fadeIn();
+    }
+
+    // Adding Event Listeners
+    jQuery('#applyTimeOverlay').click(function () {
+        $dialogElement.fadeOut(function () {
+            $routineElement.css('display', 'none');
+        });
+    });
 }
