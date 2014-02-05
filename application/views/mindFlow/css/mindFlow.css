@@ -399,6 +399,15 @@
     height: 30px;
     float: left;
     text-align: center;
+    line-height: 30px;
+
+    /** Disabling text selection here **/
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #setTodoDialogWrapper #fromSelectionWrapper .inputs .hours{
@@ -479,10 +488,20 @@
     text-align: center;
 }
 #setRoutineDialogWrapper #weeklyRepetitionWrapper #weeklyRepetitionSelector {
+    background-color: #dfd9c2;
+    float: right;
     width: 30px;
     height: 30px;
-    float: right;
-    background-color: #dfd9c2;
+    line-height: 30px;
+    text-align: center;
+
+    /** Disabling text selection here **/
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #setRoutineDialogWrapper #weekdaysSelectionWrapper {
@@ -507,8 +526,11 @@
 #setRoutineDialogWrapper #weekdaysSelectionWrapper ul li {
     background-color: #f4f2ef;
 }
+#setRoutineDialogWrapper #weekdaysSelectionWrapper ul li.selected {
+    background-color: #2a2724;
+}
 
-#setRoutineDialogWrapper #dateRangeWrapper #startsSelectionWrapper {
+#setRoutineDialogWrapper #dateRangeWrapper #startsSelectionWrapper, #setRoutineDialogWrapper #dateRangeWrapper #finishesSelectionWrapper {
     height: 30px;
     background-color: #2a2724;
 }
@@ -516,6 +538,7 @@
 #setRoutineDialogWrapper #dateRangeWrapper label {
     float: left;
     padding-left: 5px;
+    line-height: 30px;
 }
 #setRoutineDialogWrapper #dateRangeWrapper .datePickerWrapper{
     float: right;
@@ -533,12 +556,6 @@
     width: 100%;
     height: 100%;
 }
-
-#setRoutineDialogWrapper #dateRangeWrapper #finishesSelectionWrapper {
-    height: 30px;
-    background-color: #2a2724;
-}
-
 
 #setRoutineDialogWrapper #submitRoutine {
     height: 30px;
@@ -567,6 +584,15 @@
     height: 30px;
     float: left;
     text-align: center;
+    line-height: 30px;
+
+    /** Disabling text selection here **/
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #setRoutineDialogWrapper #fromSelectionWrapper .inputs .hours{

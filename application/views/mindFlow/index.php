@@ -104,8 +104,8 @@
                         from:
                     </div>
                     <div class='inputs'>
-                        <div class='hours'></div>
-                        <div class='minutes'></div>
+                        <div class='hours ftype_contentC' id='todoFromHoursSelector'></div>
+                        <div class='minutes ftype_contentC' id='todoFromMinutesSelector'></div>
                     </div>
                 </div>
                 <div id='tillSelectionWrapper'>
@@ -113,8 +113,8 @@
                         till:
                     </div>
                     <div class='inputs'>
-                        <div class='hours'></div>
-                        <div class='minutes'></div>
+                        <div class='hours ftype_contentC' id='todoTillHoursSelector'></div>
+                        <div class='minutes ftype_contentC' id='todoTillMinutesSelector'></div>
                     </div>
                 </div>
             </div>
@@ -149,7 +149,7 @@
                 <span class='right ftype_contentB'>
                     week
                 </span>
-                <div id='weeklyRepetitionSelector'></div>
+                <div class='ftype_contentC' id='weeklyRepetitionSelector'></div>
             </div>
 
             <div class='verticalSpace30'></div>
@@ -198,8 +198,8 @@
                         from:
                     </div>
                     <div class='inputs'>
-                        <div class='hours'></div>
-                        <div class='minutes'></div>
+                        <div class='hours ftype_contentC' id='routineFromHoursSelector'></div>
+                        <div class='minutes ftype_contentC' id='routineFromMinutesSelector'></div>
                     </div>
                 </div>
                 <div id='tillSelectionWrapper'>
@@ -207,8 +207,8 @@
                         till:
                     </div>
                     <div class='inputs'>
-                        <div class='hours'></div>
-                        <div class='minutes'></div>
+                        <div class='hours ftype_contentC' id='routineTillHoursSelector'></div>
+                        <div class='minutes ftype_contentC' id='routineTillMinutesSelector'></div>
                     </div>
                 </div>
             </div>
