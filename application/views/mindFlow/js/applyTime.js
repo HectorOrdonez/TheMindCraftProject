@@ -168,8 +168,8 @@ function openSetTodoDialog(data) {
             weekdays: '1111100',
             startDate: data.initDate,
             finishDate: data.initDate,
-            fromTime: data.fromTime,
-            tillTime: data.tillTime
+            fromTime: getTime($fromHoursSelector, $fromMinSelector),
+            tillTime: getTime($tillHoursSelector, $tillMinSelector)
         };
 
         $todoElement.fadeOut(function () {
@@ -378,4 +378,9 @@ function initWeekdaysSelector($element, content) {
             jQuery($liElements[i]).addClass('selected ftype_contentB');
         }
     }
+}
+
+function getTime($hours, $minutes)
+{
+    return $hours.html() + ':' + $minutes.html();
 }
