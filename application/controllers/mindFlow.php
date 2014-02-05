@@ -225,38 +225,6 @@ class mindFlow extends Controller
     }
 
     /**
-     * Prioritize idea request.
-     */
-    public function prioritizeIdea()
-    {
-        try {
-            $inputIdeaId = Input::build('Number', 'id')
-                ->addRule('isInt');
-            $inputIdeaPriority = Input::build('Number', 'priority')
-                ->addRule('isInt')
-                ->addRule('min', 1)
-                ->addRule('max', 10);
-                
-            $inputIdeaId->validate();
-            $inputIdeaPriority->validate();
-
-            $this->_service->prioritizeIdea(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaPriority->getValue());
-
-        } catch (InputException $iEx) {
-            $errorMessage = 'Input error: ' . $iEx->getMessage();
-            header("HTTP/1.1 400 {$errorMessage}");
-            exit($errorMessage);
-        } catch (RuleException $rEx) {
-            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
-            header("HTTP/1.1 400 {$errorMessage}");
-            exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
-            exit;
-        }
-    }
-
-    /**
      * Set idea selection state request.
      */
     public function setIdeaSelection()
@@ -342,6 +310,37 @@ class mindFlow extends Controller
             exit($errorMessage);
         } catch (Exception $e) {
             header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
+    /**
+     * Set idea urgent state request.
+     */
+    public function setIdeaTodo()
+    {
+        $rand = rand(0,1);
+
+        if ($rand == 0)
+        {
+            print json_encode(array('success'));
+        } else {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . 'This is a random error.');
+            exit;
+        }
+    }
+    /**
+     * Set idea urgent state request.
+     */
+    public function setIdeaRoutine()
+    {
+        $rand = rand(0,1);
+        
+        if ($rand == 0)
+        {
+            print json_encode(array('success'));
+        } else {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . 'This is a random error.');
             exit;
         }
     }

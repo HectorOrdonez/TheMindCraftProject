@@ -6,6 +6,18 @@
  * Date: 11/01/14 14:30
  */
 
+var sampleData = {
+    ideaId: 125,
+    ideaType: 'unique',
+    initDate: '14/04/2014',
+    fromTime: '14:00',
+    tillTime: '15:00',
+    weeklyRepetition: null,
+    weekdays: null,
+    startDate: null,
+    finishDate: null
+};
+
 function ApplyTime($element, callback) {
     // Variable that contains the Grid Object.
     var grid;
@@ -83,23 +95,16 @@ function ApplyTime($element, callback) {
 
         // Add Event Listeners
         $grid.delegate('.setTodoAction', 'click', function () {
-            var data = {
-                initDate: '14/04/2014',
-                fromTime: '14:00',
-                tillTime: '15:00'
-            };
-            openSetTodoDialog(data);
+            openSetTodoDialog(sampleData);
         });
         $grid.delegate('.setRoutineAction', 'click', function () {
-            var data = {
-                weeklyRepetition: '1',
-                weekdays: '1001000',
-                startDate: '14/04/2014',
-                finishDate: '20/04/2014',
-                fromTime: '14:00',
-                tillTime: '15:00'
-            };
-            openSetRoutineDialog('new', data);
+            openSetRoutineDialog('new', sampleData);
+        });
+        jQuery('#submitTodo').click(function () {
+            submitTodo();
+        });
+        jQuery('#submitRoutine').click(function () {
+            submitRoutine();
         });
     }
 }
@@ -115,7 +120,7 @@ function openSetTodoDialog(data) {
     var $tillMinSelector = jQuery('#todoTillMinutesSelector');
 
     // Parsing parameters
-    var startDate = getDateFromString(data.initDate);
+    var startDate = null; //getDateFromString(data.initDate);
 
     // Setting up
     $datePicker.datepicker({
@@ -138,6 +143,8 @@ function openSetTodoDialog(data) {
     initTimeSelector('minutes', $fromMinSelector, data.fromTime);
     initTimeSelector('hours', $tillHoursSelector, data.tillTime);
     initTimeSelector('minutes', $tillMinSelector, data.tillTime);
+    jQuery('#ideaId').val(data.ideaId);
+    jQuery('#ideaType').val(data.ideaType);
 
     // Displaying dialog
     $todoElement.css('display', 'block');
@@ -150,7 +157,7 @@ function openSetTodoDialog(data) {
             jQuery('#applyTimeOverlay').unbind('click');
             $dialogElement.find('.inputs div').unbind('click');
             jQuery('#moreOftenAction').unbind('click');
-            
+
             $todoElement.css('display', 'none');
         });
     });
@@ -163,23 +170,17 @@ function openSetTodoDialog(data) {
         }
     });
     jQuery('#moreOftenAction').click(function () {
-        var routineData = {
-            weeklyRepetition: '1',
-            weekdays: '1111100',
-            startDate: data.initDate,
-            finishDate: data.initDate,
-            fromTime: getTime($fromHoursSelector, $fromMinSelector),
-            tillTime: getTime($tillHoursSelector, $tillMinSelector)
-        };
+        data.fromTime = getTime($fromHoursSelector, $fromMinSelector);
+        data.tillTime = getTime($tillHoursSelector, $tillMinSelector);
 
         $todoElement.fadeOut(function () {
-            
+
             // Unbinding Events
             jQuery('#applyTimeOverlay').unbind('click');
             $dialogElement.find('.inputs div').unbind('click');
             jQuery('#moreOftenAction').unbind('click');
-            
-            openSetRoutineDialog('renewed', routineData);
+
+            openSetRoutineDialog('renewed', data);
         });
     });
 }
@@ -203,9 +204,9 @@ function openSetRoutineDialog(openingType, data) {
     var $tillMinSelector = jQuery('#routineTillMinutesSelector');
 
     // Parsing parameters
-    var startDate = getDateFromString(data.startDate);
-    var finishDate = getDateFromString(data.finishDate);
-    
+    var startDate = (null == data.startDate) ? new Date() : getDateFromString(data.startDate);
+    var finishDate = (null == data.finishDate) ? new Date() : getDateFromString(data.finishDate);
+
     // Setting up
     $startInputDate.datepicker({
         firstDay: 1,
@@ -252,6 +253,8 @@ function openSetRoutineDialog(openingType, data) {
     initTimeSelector('minutes', $fromMinSelector, data.fromTime);
     initTimeSelector('hours', $tillHoursSelector, data.tillTime);
     initTimeSelector('minutes', $tillMinSelector, data.tillTime);
+    jQuery('#ideaId').val(data.ideaId);
+    jQuery('#ideaType').val(data.ideaType);
 
     $dialogElement.find('.inputs div').click(function () {
         var $element = jQuery(this);
@@ -270,7 +273,7 @@ function openSetRoutineDialog(openingType, data) {
             $weeklyRepetitionSelector.unbind('click');
             $weekdaysSelector.find('li').unbind('click');
             $dialogElement.find('.inputs div').unbind('click');
-            
+
             $routineElement.css('display', 'none');
         });
     });
@@ -278,7 +281,7 @@ function openSetRoutineDialog(openingType, data) {
         var $this = jQuery(this);
         switchWeeklyRepetitionSelector($this, $this.html());
     });
-    $weekdaysSelector.find('li').click(function(){
+    $weekdaysSelector.find('li').click(function () {
         switchWeekdaySelection(jQuery(this));
     });
 }
@@ -303,6 +306,9 @@ function getDateFromString(string) {
  * @param initValue
  */
 function initTimeSelector(type, $element, initValue) {
+    if (null == initValue || initValue.length < 5) {
+        return;
+    }
     if (type == 'hours') {
         $element.html(initValue.substr(0, 2));
     } else {
@@ -311,7 +317,11 @@ function initTimeSelector(type, $element, initValue) {
 }
 
 function switchHoursSelector($element, content) {
-    var hours = ['6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
+    var hours = [null, '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
+
+    if ('' == content) {
+        content = null;
+    }
 
     var currentHour = hours.indexOf(content);
 
@@ -327,7 +337,11 @@ function switchHoursSelector($element, content) {
 }
 
 function switchMinutesSelector($element, content) {
-    var minutes = ['00', '15', '30', '45'];
+    var minutes = [null, '00', '15', '30', '45'];
+
+    if ('' == content) {
+        content = null;
+    }
 
     var currentMinutes = minutes.indexOf(content);
 
@@ -366,13 +380,21 @@ function switchWeekdaySelection($liElement) {
 }
 
 function initWeeklyRepetitionSelector($element, content) {
-    $element.html(content);
+    if (null == content) {
+        $element.html('1');
+    } else {
+        $element.html(content);
+    }
 }
 
 function initWeekdaysSelector($element, content) {
+    if (null == content) {
+        content = '1111100';
+    }
+
     var initSelection = content.split('');
     var $liElements = $element.find('li');
-    
+
     for (var i = 0; i < $liElements.length; i++) {
         if (initSelection[i] == '1') {
             jQuery($liElements[i]).addClass('selected ftype_contentB');
@@ -380,7 +402,146 @@ function initWeekdaysSelector($element, content) {
     }
 }
 
-function getTime($hours, $minutes)
-{
+function getTime($hours, $minutes) {
+    if ($hours.html().length != 2 || $minutes.html().length != 2) {
+        return null;
+    }
     return $hours.html() + ':' + $minutes.html();
+}
+
+function submitTodo() {
+    // Initialize parameters
+    var $ideaId = jQuery('#ideaId');
+    var $ideaType = jQuery('#ideaType');
+    var $datePicker = jQuery('#datePicker');
+    var $fromHoursSelector = jQuery('#todoFromHoursSelector');
+    var $fromMinSelector = jQuery('#todoFromMinutesSelector');
+    var $tillHoursSelector = jQuery('#todoTillHoursSelector');
+    var $tillMinSelector = jQuery('#todoTillMinutesSelector');
+
+    // Collecting data
+    var data = {
+        ideaId: $ideaId.val(),
+        ideaType: $ideaType.val(),
+        date_todo: $datePicker.datepicker('getDate'),
+        time_from: getTime($fromHoursSelector, $fromMinSelector),
+        time_till: getTime($tillHoursSelector, $tillMinSelector)
+    };
+
+    // Validate request
+    var $infoDisplayer = jQuery('#setTodoInfo');
+    try {
+        validateUniqueApplyTimeRequest(data.date_todo, data.time_from, data.time_till);
+    } catch (err) {
+        setInfoMessage($infoDisplayer, 'error', err, 5000);
+        return;
+    }
+
+    submitApplyTime($infoDisplayer, 'setTodo', data, function () {
+        console.log('Set Todo Callback');
+    });
+}
+function submitRoutine() {
+    // Initialize parameters
+    var $ideaId = jQuery('#ideaId');
+    var $ideaType = jQuery('#ideaType');
+    var $startInputDate = jQuery('#startDate');
+    var $finishInputDate = jQuery('#finishDate');
+    var $fromHoursSelector = jQuery('#routineFromHoursSelector');
+    var $fromMinSelector = jQuery('#routineFromMinutesSelector');
+    var $tillHoursSelector = jQuery('#routineTillHoursSelector');
+    var $tillMinSelector = jQuery('#routineTillMinutesSelector');
+    var $weeklyRepetitionSelector = jQuery('#weeklyRepetitionSelector');
+    var $weekdaysSelector = jQuery('#weekdaysSelectionWrapper');
+
+    // Collecting data
+    var data = {
+        ideaId: $ideaId.val(),
+        ideaType: $ideaType.val(),
+        date_start: $startInputDate.datepicker('getDate'),
+        date_finish: $finishInputDate.datepicker('getDate'),
+        time_from: getTime($fromHoursSelector, $fromMinSelector),
+        time_till: getTime($tillHoursSelector, $tillMinSelector),
+        weeklyRepetition: $weeklyRepetitionSelector.html(),
+        weekdays: getWeekdays($weekdaysSelector)
+    };
+
+    // Validate request
+    var $infoDisplayer = jQuery('#setRoutineInfo');
+    try {
+        validateRoutineApplyTimeRequest(data.date_start, data.date_finish, data.time_from, data.time_till, data.weekdays);
+    } catch (err) {
+        setInfoMessage($infoDisplayer, 'error', err, 5000);
+    }
+
+    submitApplyTime($infoDisplayer, 'setRoutine', data, function () {
+        console.log('Set Routine Callback');
+    });
+}
+
+function getWeekdays($element) {
+    var string = '';
+    $element.find('li').each(function () {
+        if (jQuery(this).hasClass('selected')) {
+            string += '1';
+        } else {
+            string += '0';
+        }
+    });
+
+    return string;
+}
+
+function validateUniqueApplyTimeRequest(date_todo, time_from, time_till) {
+    validateTimeFrame(time_from, time_till);
+}
+
+function validateRoutineApplyTimeRequest(date_start, date_finish, time_from, time_till, weekdays) {
+    validateDateFrame(date_start, date_finish);
+    validateTimeFrame(time_from, time_till);
+    if (weekdays == '0000000') {
+        throw 'At least one weekday must be selected.';
+    }
+}
+
+function validateTimeFrame(time_from, time_till) {
+    if (null != time_from && null != time_till) {
+        if (time_from >= time_till) {
+            throw 'From time has to be before Till time!';
+        }
+    } else if (null != time_from || null != time_till) {
+        throw 'A time frame needs both from and till being set.';
+    }
+}
+
+function validateDateFrame(date_start, date_finish) {
+    if (null != date_start && !(date_start instanceof Date)) {
+        throw 'Start date is in a wrong format.';
+    }
+    if (null != date_finish && !(date_finish instanceof Date)) {
+        throw 'Finish date is in a wrong format.';
+    }
+
+    if (null != date_start && null != date_finish) {
+        if (date_start > date_finish) {
+            throw 'Starting date must be after finishing one!';
+        }
+    }
+}
+
+function submitApplyTime($infoDiv, requestType, data, callback) {
+    var url = root_url + 'mindFlow/' + ((requestType == 'setTodo') ? 'setIdeaTodo' : 'setIdeaRoutine');
+    
+    jQuery.ajax({
+        type: 'post',
+        url: url,
+        data: data
+    }).done(function () {
+            setInfoMessage($infoDiv, 'success', 'Idea changed.', 2000);
+            callback();
+        }
+    ).fail(function (data) {
+            setInfoMessage($infoDiv, 'error', data.statusText, 2000);
+        }
+    );
 }

@@ -88,6 +88,8 @@
     <!-- Helpers -->
     <div id='applyTimeDialog'>
         <div class='fullOverlay' id='applyTimeOverlay'></div>
+        <input type='hidden' id='ideaId' />
+        <input type='hidden' id='ideaType' />
 
         <!-- To do sub-dialog -->
         <div id='setTodoDialogWrapper'>
@@ -136,6 +138,7 @@
                 <a class='ftype_titleC'>Apply Time!</a>
             </div>
 
+            <div id='setTodoInfo'></div>
         </div>
         <!-- End to do sub-dialog -->
 
@@ -219,7 +222,8 @@
                 <a class='ftype_titleC'>Apply Time!</a>
             </div>
 
-        </div>
-    </div> <!-- End routine sub-dialog -->
+            <div id='setRoutineInfo'></div>
+        </div> <!-- End routine sub-dialog -->
+    </div>
 
 <?php $this->printChunk('footer'); ?>
