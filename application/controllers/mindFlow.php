@@ -319,13 +319,31 @@ class mindFlow extends Controller
      */
     public function setIdeaTodo()
     {
-        $rand = rand(0,1);
+        try {
+            $inputIdeaId = Input::build('Number', 'id')
+                ->addRule('isInt');
+            $inputIdeaDateTodo = Input::build('Date', 'date_todo');
+            $inputIdeaTimeFrom = Input::build('Text', 'time_from');
+            $inputIdeaTimeTill = Input::build('Text', 'time_till');
+            
+            $inputIdeaId->validate();
+            $inputIdeaDateTodo->validate();
+            $inputIdeaTimeFrom->validate();
+            $inputIdeaTimeTill->validate();
+            
+            $date_todo = \DateTime::createFromFormat('d/m/Y', $inputIdeaDateTodo->getValue());
+            $this->_service->setIdeaTodo(Session::get('userId'), $inputIdeaId->getValue(), $date_todo, $inputIdeaTimeFrom->getValue(), $inputIdeaTimeTill->getValue());
 
-        if ($rand == 0)
-        {
-            print json_encode(array('success'));
-        } else {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . 'This is a random error.');
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
             exit;
         }
     }

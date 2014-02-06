@@ -6,18 +6,6 @@
  * Date: 11/01/14 14:30
  */
 
-var sampleData = {
-    ideaId: 125,
-    ideaType: 'unique',
-    initDate: '14/04/2014',
-    fromTime: '14:00',
-    tillTime: '15:00',
-    weeklyRepetition: null,
-    weekdays: null,
-    startDate: null,
-    finishDate: null
-};
-
 function ApplyTime($element, callback) {
     // Variable that contains the Grid Object.
     var grid;
@@ -95,22 +83,39 @@ function ApplyTime($element, callback) {
 
         // Add Event Listeners
         $grid.delegate('.setTodoAction', 'click', function () {
-            openSetTodoDialog(sampleData);
+            openSetTodoDialog(this);
         });
         $grid.delegate('.setRoutineAction', 'click', function () {
-            openSetRoutineDialog('new', sampleData);
+            openSetRoutineDialog('new', getDataFromTable(this));
         });
-        jQuery('#submitTodo').click(function () {
-            submitTodo();
-        });
+
         jQuery('#submitRoutine').click(function () {
             submitRoutine();
+        });
+
+        // Setting up
+        jQuery('#datePicker').datepicker({
+            dateFormat: 'dd/mm/yy',
+            firstDay: 1,
+            showOtherMonths: true,
+            dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+            afterDisplay: function () {
+                // Making odd cells being... odd!
+                var oddHelper = 1;
+                jQuery.each(jQuery('#datePicker').find('td'), function (index, element) {
+                    if (1 === oddHelper % 2) {
+                        jQuery(element).addClass('odd');
+                    }
+                    oddHelper++;
+                });
+            }
         });
     }
 }
 
-function openSetTodoDialog(data) {
+function openSetTodoDialog(triggeringElement) {
     // Initializing
+    var data = getDataFromTable(triggeringElement);
     var $datePicker = jQuery('#datePicker');
     var $todoElement = jQuery('#setTodoDialogWrapper');
     var $dialogElement = jQuery('#applyTimeDialog');
@@ -120,31 +125,15 @@ function openSetTodoDialog(data) {
     var $tillMinSelector = jQuery('#todoTillMinutesSelector');
 
     // Parsing parameters
-    var startDate = null; //getDateFromString(data.initDate);
+    var startDate = getDateFromString(data.date_todo);
 
     // Setting up
-    $datePicker.datepicker({
-        defaultDate: startDate,
-        firstDay: 1,
-        showOtherMonths: true,
-        dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-        afterDisplay: function () {
-            // Making odd cells being... odd!
-            var oddHelper = 1;
-            jQuery.each($datePicker.find('td'), function (index, element) {
-                if (1 === oddHelper % 2) {
-                    jQuery(element).addClass('odd');
-                }
-                oddHelper++;
-            });
-        }
-    });
-    initTimeSelector('hours', $fromHoursSelector, data.fromTime);
-    initTimeSelector('minutes', $fromMinSelector, data.fromTime);
-    initTimeSelector('hours', $tillHoursSelector, data.tillTime);
-    initTimeSelector('minutes', $tillMinSelector, data.tillTime);
-    jQuery('#ideaId').val(data.ideaId);
-    jQuery('#ideaType').val(data.ideaType);
+    $datePicker.datepicker("setDate", startDate);
+    initTimeSelector('hours', $fromHoursSelector, data.time_from);
+    initTimeSelector('minutes', $fromMinSelector, data.time_from);
+    initTimeSelector('hours', $tillHoursSelector, data.time_till);
+    initTimeSelector('minutes', $tillMinSelector, data.time_till);
+    jQuery('#ideaId').val(data.id);
 
     // Displaying dialog
     $todoElement.css('display', 'block');
@@ -157,6 +146,7 @@ function openSetTodoDialog(data) {
             jQuery('#applyTimeOverlay').unbind('click');
             $dialogElement.find('.inputs div').unbind('click');
             jQuery('#moreOftenAction').unbind('click');
+            jQuery('#submitTodo').unbind('click');
 
             $todoElement.css('display', 'none');
         });
@@ -179,9 +169,13 @@ function openSetTodoDialog(data) {
             jQuery('#applyTimeOverlay').unbind('click');
             $dialogElement.find('.inputs div').unbind('click');
             jQuery('#moreOftenAction').unbind('click');
-
+            jQuery('#submitTodo').unbind('click');
+            
             openSetRoutineDialog('renewed', data);
         });
+    });
+    jQuery('#submitTodo').click(function () {
+        submitTodo(triggeringElement);
     });
 }
 
@@ -209,6 +203,7 @@ function openSetRoutineDialog(openingType, data) {
 
     // Setting up
     $startInputDate.datepicker({
+        dateFormat: 'dd/mm/yy',
         firstDay: 1,
         defaultDate: startDate,
         showOtherMonths: true,
@@ -225,6 +220,7 @@ function openSetRoutineDialog(openingType, data) {
         }
     });
     $finishInputDate.datepicker({
+        dateFormat: 'dd/mm/yy',
         firstDay: 1,
         defaultDate: finishDate,
         showOtherMonths: true,
@@ -287,15 +283,14 @@ function openSetRoutineDialog(openingType, data) {
 }
 
 /**
- * String containing the date in format dd/mm/yyyy.
+ * String containing the date in format dd/mm/yy.
  * Example: 14/04/2014
  * @param string
  */
 
 function getDateFromString(string) {
     var pieces = string.split('/');
-    var date = new Date(pieces[2], pieces[1], pieces[0]);
-    return date;
+    return new Date(pieces[2], pieces[1], pieces[0]);
 }
 
 /**
@@ -409,10 +404,9 @@ function getTime($hours, $minutes) {
     return $hours.html() + ':' + $minutes.html();
 }
 
-function submitTodo() {
+function submitTodo(triggeringElement) {
     // Initialize parameters
     var $ideaId = jQuery('#ideaId');
-    var $ideaType = jQuery('#ideaType');
     var $datePicker = jQuery('#datePicker');
     var $fromHoursSelector = jQuery('#todoFromHoursSelector');
     var $fromMinSelector = jQuery('#todoFromMinutesSelector');
@@ -421,9 +415,8 @@ function submitTodo() {
 
     // Collecting data
     var data = {
-        ideaId: $ideaId.val(),
-        ideaType: $ideaType.val(),
-        date_todo: $datePicker.datepicker('getDate'),
+        id: $ideaId.val(),
+        date_todo: $datePicker.val(),
         time_from: getTime($fromHoursSelector, $fromMinSelector),
         time_till: getTime($tillHoursSelector, $tillMinSelector)
     };
@@ -438,7 +431,8 @@ function submitTodo() {
     }
 
     submitApplyTime($infoDisplayer, 'setTodo', data, function () {
-        console.log('Set Todo Callback');
+        jQuery('#applyTimeOverlay').click();
+        setDataFromTable(triggeringElement,data);
     });
 }
 function submitRoutine() {
@@ -475,7 +469,6 @@ function submitRoutine() {
     }
 
     submitApplyTime($infoDisplayer, 'setRoutine', data, function () {
-        console.log('Set Routine Callback');
     });
 }
 
@@ -531,7 +524,7 @@ function validateDateFrame(date_start, date_finish) {
 
 function submitApplyTime($infoDiv, requestType, data, callback) {
     var url = root_url + 'mindFlow/' + ((requestType == 'setTodo') ? 'setIdeaTodo' : 'setIdeaRoutine');
-    
+
     jQuery.ajax({
         type: 'post',
         url: url,
@@ -544,4 +537,22 @@ function submitApplyTime($infoDiv, requestType, data, callback) {
             setInfoMessage($infoDiv, 'error', data.statusText, 2000);
         }
     );
+}
+
+function getDataFromTable(triggeringElement) {
+    var $row = jQuery(triggeringElement).closest('.row');
+    return {
+        id: $row.find('.col_id').html(),
+        title: $row.find('.col_title').html(),
+        date_todo: $row.find('.col_date_todo').html(),
+        time_from: $row.find('.col_time_from').html(),
+        time_till: $row.find('.col_time_till').html()
+    };
+}
+
+function setDataFromTable(triggeringElement, data) {
+    var $row = jQuery(triggeringElement).closest('.row');
+    $row.find('.col_date_todo').html(data.date_todo);
+    $row.find('.col_time_from').html(data.time_from);
+    $row.find('.col_time_till').html(data.time_till);
 }

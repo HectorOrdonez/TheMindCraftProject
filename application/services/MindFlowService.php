@@ -309,4 +309,24 @@ class MindFlowService extends Service
         $idea->important = $urgentValue;
         $idea->save();
     }
+
+    /**
+     * 
+     */
+    public function setIdeaTodo($userId, $ideaId, $ideaDateTodo, $ideaTimeFrom, $ideaTimeTill)
+    {
+        /**
+         * @var Idea $idea
+         */
+        $idea = Idea::find_by_id($ideaId);
+
+        if (is_null($idea) or $idea->user_id != $userId) {
+            throw new Exception('The idea you are trying to set to urgent or not urgent does not exist or it is not yours.');
+        }
+        
+        $idea->date_todo = $ideaDateTodo;
+        $idea->time_from = $ideaTimeFrom;
+        $idea->time_till = $ideaTimeTill;
+        $idea->save();
+    }
 }

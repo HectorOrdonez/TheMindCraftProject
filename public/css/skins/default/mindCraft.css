@@ -241,6 +241,7 @@ input {
 /** Active days **/
 .ui-datepicker-calendar .ui-state-active {
     background: #e94f3b;
+    color: #FFF !important;
 }
 
 /** Font styles for inside the days **/
