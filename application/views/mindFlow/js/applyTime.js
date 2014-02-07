@@ -47,7 +47,8 @@ function ApplyTime($element, callback) {
                 new Cell({'html': '', 'classList': ['col_date_todo']}),
                 new Cell({'html': '', 'classList': ['col_time_from']}),
                 new Cell({'html': '', 'classList': ['col_time_till']}),
-                new Cell({'html': '', 'classList': ['col_actions']})
+                new Cell({'html': '', 'classList': ['col_actions']}),
+                new Cell({'html': 'time', 'classList': ['col_time', 'ftype_titleC', 'centered']})
             ],
                 'classList': ['header']
             });
@@ -60,11 +61,14 @@ function ApplyTime($element, callback) {
                 {colIndex: 'date_todo'},
                 {colIndex: 'time_from'},
                 {colIndex: 'time_till'},
-                {colIndex: 'actions', customContent: function (rowData) {
+                {colIndex: 'actions', customContent: function () {
                     var setTodo = '<div class="action"><a class="setTodoAction"></a></div>';
                     var setRoutine = '<div class="action"><a class="setRoutineAction"></a></div>';
 
                     return '<div class="actionBox">' + setTodo + setRoutine + '</div>';
+                }},
+                {colIndex: 'time', classList: ['centered', 'ftype_contentA'], customContent: function (rowData) {
+                    return rowData.date_todo + ' ' + rowData.time_from;
                 }}
             ]});
         table.addHeaderElement(headerRow.toHTML());
@@ -302,6 +306,7 @@ function getDateFromString(string) {
  */
 function initTimeSelector(type, $element, initValue) {
     if (null == initValue || initValue.length < 5) {
+        $element.html('');
         return;
     }
     if (type == 'hours') {
@@ -398,9 +403,16 @@ function initWeekdaysSelector($element, content) {
 }
 
 function getTime($hours, $minutes) {
-    if ($hours.html().length != 2 || $minutes.html().length != 2) {
-        return null;
+    // In case neither hours nor minutes are defined, no time is requested.
+    if ($hours.html().length == 0 && $minutes.html().length == 0) {
+        return '';
     }
+    
+    // As one of them are defined, they have to be properly defined. Otherwise, exception is thrown.
+    if ($hours.html().length != 2 || $minutes.html().length != 2) {
+        throw 'Time frame is not properly defined.';
+    }
+
     return $hours.html() + ':' + $minutes.html();
 }
 
@@ -413,17 +425,17 @@ function submitTodo(triggeringElement) {
     var $tillHoursSelector = jQuery('#todoTillHoursSelector');
     var $tillMinSelector = jQuery('#todoTillMinutesSelector');
 
-    // Collecting data
-    var data = {
-        id: $ideaId.val(),
-        date_todo: $datePicker.val(),
-        time_from: getTime($fromHoursSelector, $fromMinSelector),
-        time_till: getTime($tillHoursSelector, $tillMinSelector)
-    };
-
     // Validate request
     var $infoDisplayer = jQuery('#setTodoInfo');
     try {
+        // Collecting data
+        var data = {
+            id: $ideaId.val(),
+            date_todo: $datePicker.val(),
+            time_from: getTime($fromHoursSelector, $fromMinSelector),
+            time_till: getTime($tillHoursSelector, $tillMinSelector)
+        };
+
         validateUniqueApplyTimeRequest(data.date_todo, data.time_from, data.time_till);
     } catch (err) {
         setInfoMessage($infoDisplayer, 'error', err, 5000);
@@ -498,11 +510,11 @@ function validateRoutineApplyTimeRequest(date_start, date_finish, time_from, tim
 }
 
 function validateTimeFrame(time_from, time_till) {
-    if (null != time_from && null != time_till) {
+    if ('' != time_from && '' != time_till) {
         if (time_from >= time_till) {
             throw 'From time has to be before Till time!';
         }
-    } else if (null != time_from || null != time_till) {
+    } else if ('' != time_from || '' != time_till) {
         throw 'A time frame needs both from and till being set.';
     }
 }
@@ -555,4 +567,5 @@ function setDataFromTable(triggeringElement, data) {
     $row.find('.col_date_todo').html(data.date_todo);
     $row.find('.col_time_from').html(data.time_from);
     $row.find('.col_time_till').html(data.time_till);
+    $row.find('.col_time').html(data.date_todo + ' ' + data.time_from);
 }

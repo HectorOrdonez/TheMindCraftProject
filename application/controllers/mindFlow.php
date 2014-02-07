@@ -323,16 +323,31 @@ class mindFlow extends Controller
             $inputIdeaId = Input::build('Number', 'id')
                 ->addRule('isInt');
             $inputIdeaDateTodo = Input::build('Date', 'date_todo');
-            $inputIdeaTimeFrom = Input::build('Text', 'time_from');
-            $inputIdeaTimeTill = Input::build('Text', 'time_till');
+            $inputIdeaTimeFrom = Input::build('Text', 'time_from')
+                ->addRule('minLength', 5)
+                ->addRule('maxLength', 5);
+            $inputIdeaTimeTill = Input::build('Text', 'time_till')
+                ->addRule('minLength', 5)
+                ->addRule('maxLength', 5);
             
             $inputIdeaId->validate();
             $inputIdeaDateTodo->validate();
-            $inputIdeaTimeFrom->validate();
-            $inputIdeaTimeTill->validate();
-            
+
+            // Time frame is verified in case they are not sent empty, in which case time frame is not set.
+            if ('' != $inputIdeaTimeFrom->getValue() || '' != $inputIdeaTimeTill->getValue())
+            {
+                $inputIdeaTimeFrom->validate();
+                $inputIdeaTimeTill->validate();
+
+                $timeFrom = $inputIdeaTimeFrom->getValue();
+                $timeTill = $inputIdeaTimeTill->getValue();
+            } else {
+                $timeFrom = null;
+                $timeTill = null;
+            }            
             $date_todo = \DateTime::createFromFormat('d/m/Y', $inputIdeaDateTodo->getValue());
-            $this->_service->setIdeaTodo(Session::get('userId'), $inputIdeaId->getValue(), $date_todo, $inputIdeaTimeFrom->getValue(), $inputIdeaTimeTill->getValue());
+
+            $this->_service->setIdeaTodo(Session::get('userId'), $inputIdeaId->getValue(), $date_todo, $timeFrom, $timeTill);
 
         } catch (InputException $iEx) {
             $errorMessage = 'Input error: ' . $iEx->getMessage();

@@ -13,7 +13,7 @@ use ActiveRecord\ActiveRecordException;
 use \ActiveRecord\Model as Model;
 
 /**
- * Class Idea
+ * Class Routine
  * @package application\models
  *
  * Magic methods ...
@@ -24,16 +24,19 @@ use \ActiveRecord\Model as Model;
  * @property int $user_id
  * @property string $title
  * @property \DateTime $date_creation
- * @property \DateTime $date_todo
- * @property string $time_from Time in 24-hour format.
- * @property string $time_till Time in 24-hour format.
  * @property int $selected Either this idea is selected or not. 0 as false, 1 as true.
  * @property int $important Either this idea is important or not. 0 as false, 1 as true.
  * @property int $urgent Either this idea is urgent or not. 0 as false, 1 as true.
+ * @property string $frequency_days
+ * @property string $frequency_weeks
+ * @property \DateTime $date_start
+ * @property \DateTime $date_finish
+ * @property string $time_from Time in 24-hour format.
+ * @property string $time_till Time in 24-hour format.
  */
-class Idea extends Model
+class Routine extends Model
 {
-    public static $table_name = 'idea'; // Table name
+    public static $table_name = 'routine'; // Table name
 
     static $belongs_to = array(
         array('user')
@@ -53,12 +56,15 @@ class Idea extends Model
             'user_id' => $this->user_id,
             'title' => $this->title,
             'date_creation' => $this->date_creation->format('d/m/Y'),
-            'date_todo' => (is_null($this->date_todo)) ? '' : $this->date_todo->format('d/m/Y'),
-            'time_from' => (is_null($this->time_from)) ? '' : substr($this->time_from, 0, 5),
-            'time_till' => (is_null($this->time_till)) ? '' : substr($this->time_till, 0, 5),
             'selected' => $this->selected,
             'important' => $this->important,
             'urgent' => $this->urgent,
+            'frequency_days' => $this->frequency_days,
+            'frequency_weeks' => $this->frequency_weeks,
+            'date_start' => (is_null($this->date_start)) ? '' : $this->date_start->format('d/m/Y'),
+            'date_finish' => (is_null($this->date_finish)) ? '' : $this->date_finish->format('d/m/Y'),
+            'time_from' => (is_null($this->time_from)) ? '' : substr($this->time_from, 0, 5),
+            'time_till' => (is_null($this->time_till)) ? '' : substr($this->time_till, 0, 5),
         );
 
         // If no required fields specified, all fields are returned.

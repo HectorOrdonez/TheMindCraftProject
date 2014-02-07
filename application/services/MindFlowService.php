@@ -11,6 +11,8 @@ namespace application\services;
 
 use application\engine\Service;
 use application\models\Idea;
+
+use application\models\Routine;
 use engine\drivers\Exception;
 
 class MindFlowService extends Service
@@ -21,7 +23,7 @@ class MindFlowService extends Service
     const IMPORTANT_FALSE = 0;
     const URGENT_TRUE = 1;
     const URGENT_FALSE = 0;
-    
+
     /**
      * Service constructor of MindFlow logic.
      */
@@ -37,33 +39,68 @@ class MindFlowService extends Service
      * @param string $step Stage for which the list is for.
      * @return array
      */
-    public function getIdeas($userId, $step)
+    public function getData($userId, $step)
     {
         // Initializing parameters
         $response = array(); // Array that will be returned.
-        list($requiredFields, $requiredConditions) = $this->extractRequirements($step, $userId);
-        
-        // Getting ideas based on the set conditions.
-        /**
-         * @var Idea[] $ideas
-         */
-        $ideas = Idea::find('all', array('conditions' => $requiredConditions));
+
+        $ideas = $this->getIdeas($userId, $step);
+        $routines = $this->getRoutines($userId, $step);
 
         foreach ($ideas as $idea) {
-            $response[] = $idea->toArray($requiredFields);
+            $response[$idea['id']] = $idea;
         }
+        foreach ($routines as $routine) {
+            $response[$routine['id']] = $routine;
+        }
+        ksort($response);
         return $response;
     }
 
+    function getIdeas($userId, $step)
+    {
+        $ideasArray = array();
+
+        list($requiredFields, $requiredConditions) = $this->extractRequirements($step, 'idea', $userId);
+
+        /**
+         * @var Idea[] $rawIdeas
+         */
+        $rawIdeas = Idea::find('all', array('conditions' => $requiredConditions));
+
+        foreach ($rawIdeas as $rawIdea) {
+            $ideasArray[] = $rawIdea->toArray($requiredFields);
+        }
+        return $ideasArray;
+    }
+
+    function getRoutines($userId, $step)
+    {
+        $routinesArray = array();
+
+        list($requiredFields, $requiredConditions) = $this->extractRequirements($step, 'routine', $userId);
+
+        /**
+         * @var Routine[] $rawRoutines
+         */
+        $rawRoutines = Routine::find('all', array('conditions' => $requiredConditions));
+
+        foreach ($rawRoutines as $rawRoutine) {
+            $routinesArray[] = $rawRoutine->toArray($requiredFields);
+        }
+        return $routinesArray;
+    }
+
     /**
-     * This method is a helper for the getIdeas request. 
+     * This method is a helper for the getIdeas request.
      * Based on the request step, the required fields and conditions differ, hence this method.
-     * 
+     *
      * @param string $step The requested step.
      * @param int $userId The requesting user id.
+     * @param string $ideaType Either onetime or routine
      * @return array The fields and conditions.
      */
-    private function extractRequirements($step, $userId)
+    private function extractRequirements($step, $ideaType, $userId)
     {
         // Default fields and conditions, common in all steps
         $requiredFields = array('id', 'title'); // Fields to output, depending on step.
@@ -85,13 +122,24 @@ class MindFlowService extends Service
                 $requiredConditions['selected'] = self::SELECTED_TRUE; // Conditions that ideas must accomplished to be added to the response.
                 break;
             case 'applyTime':
-                $requiredFields[] = 'date_todo';
-                $requiredFields[] = 'time_from';
-                $requiredFields[] = 'time_till';
+                if ($ideaType == 'idea') {
+                    $requiredFields[] = 'date_todo';
+                    $requiredFields[] = 'time_from';
+                    $requiredFields[] = 'time_till';
+                }
+
+                if ($ideaType == 'routine') {
+                    $requiredFields[] = 'date_start';
+                    $requiredFields[] = 'date_finish';
+                    $requiredFields[] = 'time_from';
+                    $requiredFields[] = 'time_till';
+                    $requiredFields[] = 'frequency_days';
+                    $requiredFields[] = 'frequency_weeks';
+                }
                 $requiredConditions['selected'] = self::SELECTED_TRUE; // Conditions that ideas must accomplished to be added to the response.
                 break;
         }
-        
+
         return array($requiredFields, $requiredConditions);
     }
 
@@ -239,13 +287,13 @@ class MindFlowService extends Service
      * Set idea selection state
      * @param $userId
      * @param $ideaId
-     * @param string $selectionState True or false. 
+     * @param string $selectionState True or false.
      * @throws \engine\drivers\Exception
      */
     public function setIdeaSelectionState($userId, $ideaId, $selectionState)
     {
         // Parsing boolean to num
-        $selectedValue = ('true' === $selectionState)? self::SELECTED_TRUE: self::SELECTED_FALSE;
+        $selectedValue = ('true' === $selectionState) ? self::SELECTED_TRUE : self::SELECTED_FALSE;
 
         /**
          * @var Idea $idea
@@ -255,7 +303,7 @@ class MindFlowService extends Service
         if (is_null($idea) or $idea->user_id != $userId) {
             throw new Exception('The idea you are trying to select or unselect does not exist or it is not yours.');
         }
-        
+
         $idea->selected = $selectedValue;
         $idea->save();
     }
@@ -264,13 +312,13 @@ class MindFlowService extends Service
      * Set idea important state
      * @param $userId
      * @param $ideaId
-     * @param string $importantState True or false. 
+     * @param string $importantState True or false.
      * @throws \engine\drivers\Exception
      */
     public function setIdeaImportantState($userId, $ideaId, $importantState)
     {
         // Parsing boolean to num
-        $importantValue = ('true' === $importantState)? self::IMPORTANT_TRUE: self::IMPORTANT_FALSE;
+        $importantValue = ('true' === $importantState) ? self::IMPORTANT_TRUE : self::IMPORTANT_FALSE;
 
         /**
          * @var Idea $idea
@@ -280,7 +328,7 @@ class MindFlowService extends Service
         if (is_null($idea) or $idea->user_id != $userId) {
             throw new Exception('The idea you are trying to set to important or not important does not exist or it is not yours.');
         }
-        
+
         $idea->important = $importantValue;
         $idea->save();
     }
@@ -289,13 +337,13 @@ class MindFlowService extends Service
      * Set idea urgent state
      * @param $userId
      * @param $ideaId
-     * @param string $urgentState True or false. 
+     * @param string $urgentState True or false.
      * @throws \engine\drivers\Exception
      */
     public function setIdeaUrgentState($userId, $ideaId, $urgentState)
     {
         // Parsing boolean to num
-        $urgentValue = ('true' === $urgentState)? self::URGENT_TRUE: self::URGENT_FALSE;
+        $urgentValue = ('true' === $urgentState) ? self::URGENT_TRUE : self::URGENT_FALSE;
 
         /**
          * @var Idea $idea
@@ -305,13 +353,13 @@ class MindFlowService extends Service
         if (is_null($idea) or $idea->user_id != $userId) {
             throw new Exception('The idea you are trying to set to urgent or not urgent does not exist or it is not yours.');
         }
-        
+
         $idea->important = $urgentValue;
         $idea->save();
     }
 
     /**
-     * 
+     *
      */
     public function setIdeaTodo($userId, $ideaId, $ideaDateTodo, $ideaTimeFrom, $ideaTimeTill)
     {
@@ -323,7 +371,7 @@ class MindFlowService extends Service
         if (is_null($idea) or $idea->user_id != $userId) {
             throw new Exception('The idea you are trying to set to urgent or not urgent does not exist or it is not yours.');
         }
-        
+
         $idea->date_todo = $ideaDateTodo;
         $idea->time_from = $ideaTimeFrom;
         $idea->time_till = $ideaTimeTill;

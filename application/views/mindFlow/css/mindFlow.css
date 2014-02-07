@@ -339,16 +339,21 @@
 /** Column styles **/
 #applyTimeGrid .col_title {
     text-indent: 20px;
-    width: 585px;
+    width: 700px;
+    /** width: 435px; For testing **/
 }
 
 #applyTimeGrid .col_date_todo, #applyTimeGrid .col_time_from, #applyTimeGrid .col_time_till {
-    /** display: none; **/
-    width: 75px;
+    display: none;
+    /** width: 75px; /** 75 * 3 = 225 **/
 }
 
 #applyTimeGrid .col_actions {
     width: 90px; /** 2 actions x 45 each **/
+}
+
+#applyTimeGrid .col_time{
+    width: 160px; /** 2 actions x 45 each **/
 }
 
 /** ApplyTime Action icons **/
