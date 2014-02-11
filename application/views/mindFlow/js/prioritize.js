@@ -18,17 +18,9 @@ function Prioritize($element, callback) {
     const urgentClass = 'urgent';
     /** @type {string} */
     const notUrgentClass = 'notUrgent';
-    /** @type {number} */
-    const importantState= 1;
-    /** @type {number} */
-    const notImportantState = 0;
-    /** @type {number} */
-    const urgentState= 1;
-    /** @type {number} */
-    const notUrgentState = 0;
-
-    // Variable that contains the Grid Object.
-    var grid;
+    
+    // Variable that contains the Table Object.
+    var table;
 
     // Step content
     var $workspace;
@@ -73,7 +65,7 @@ function Prioritize($element, callback) {
             });
 
         // ApplyTime Table construction
-        var table = new Table('prioritizeGrid', {
+        table = new Table('prioritizeGrid', {
             colModel: [
                 {colIndex: 'id'},
                 {colIndex: 'title', classList: ['ftype_contentA']},
@@ -92,17 +84,7 @@ function Prioritize($element, callback) {
             ]});
         table.addHeaderElement(headerRow.toHTML());
 
-        // ApplyTime Grid parameters definition
-        var gridParameters = {
-            'url': root_url + 'mindFlow/getIdeas',
-            'extraData': {step: 'prioritize'},
-            'eventDL': function () {
-                callback();
-            }
-        };
-
-        // Prioritize Grid construction
-        grid = new Grid(table, gridParameters);
+        loadPrioritize(table, callback);
 
         $grid.delegate('.importantAction', 'click', function () {
             toggleIdeaImportance(jQuery(this));
@@ -120,7 +102,6 @@ function Prioritize($element, callback) {
         // Declaring parameters
         var $infoDisplayer = jQuery('#infoDisplayer');
         var url = root_url + 'mindFlow/setIdeaImportant';
-        var ideaId = $importanceLink.html();
         var ideaCurrentState = ($importanceLink.hasClass(importantClass))? importantClass : notImportantClass;
         var ideaDesiredState = ($importanceLink.hasClass(importantClass))? notImportantClass : importantClass;
 
@@ -158,7 +139,6 @@ function Prioritize($element, callback) {
         // Declaring parameters
         var $infoDisplayer = jQuery('#infoDisplayer');
         var url = root_url + 'mindFlow/setIdeaUrgent';
-        var ideaId = $urgencyLink.html();
         var ideaCurrentState = ($urgencyLink.hasClass(urgentClass))? urgentClass : notUrgentClass;
         var ideaDesiredState = ($urgencyLink.hasClass(urgentClass))? notUrgentClass : urgentClass;
 
@@ -187,4 +167,42 @@ function Prioritize($element, callback) {
             }
         );
     }
+}
+
+/**
+ * Prioritize loader
+ * @param table
+ * @param callback
+ */
+function loadPrioritize(table, callback) {
+    var url = root_url + 'mindFlow/getIdeas';
+    var data = {step: 'prioritize'};
+
+    jQuery.ajax({
+        type: 'post',
+        url: url,
+        data: data
+    }).done(
+        function (dataList) {
+            var i, data;
+            var jsonObject = jQuery.parseJSON(dataList);
+
+            for (i = 0; i < jsonObject.length; i++) {
+                data = {
+                    id: jsonObject[i]['id'],
+                    title: jsonObject[i]['title'],
+                    date_creation: jsonObject[i]['date_creation'],
+                    urgent: jsonObject[i]['urgent'],
+                    important: jsonObject[i]['important']
+                };
+
+                table.addContentData(data);
+            }
+            callback();
+        }
+    ).fail(
+        function () {
+            setInfoMessage(jQuery('#infoDisplayer'), 'error', 'Data could not be load. Try again later.', 50000);
+        }
+    );
 }

@@ -64,7 +64,7 @@ function loadCurrentStep(callback) {
                 break;
             case 'step2':
             case 'step21':
-                MindFlowGrid = new Selection($stepContent, afterLoadCallback);
+                MindFlowGrid = new Select($stepContent, afterLoadCallback);
                 break;
             case 'step22':
                 MindFlowGrid = new Prioritize($stepContent, afterLoadCallback);

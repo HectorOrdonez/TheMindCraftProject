@@ -8,7 +8,6 @@
 var applyTimeData = {};
 
 function ApplyTime($element, callback) {
-
     // Step content
     var $workspace;
 
@@ -88,232 +87,59 @@ function ApplyTime($element, callback) {
             routineDialog.open('new', jQuery(this).closest('.row'), getDataFromTable(jQuery(this).html()));
         });
     }
-
-    function loadApplyTime(table, callback) {
-        var url = root_url + 'mindFlow/getIdeas';
-        var data = {step: 'applyTime'};
-
-        jQuery.ajax({
-            type: 'post',
-            url: url,
-            data: data
-        }).done(
-            function (dataList) {
-                var i, data;
-                var jsonObject = jQuery.parseJSON(dataList);
-
-                for (i = 0; i < jsonObject['missions'].length; i++) {
-                    applyTimeData[jsonObject['missions'][i]['id']] = jsonObject['missions'][i];
-                    applyTimeData[jsonObject['missions'][i]['id']].type = 'mission';
-
-                    data = {
-                        id: jsonObject['missions'][i]['id'],
-                        type: 'mission',
-                        title: jsonObject['missions'][i]['title']
-                    };
-
-                    table.addContentData(data);
-                }
-                for (i = 0; i < jsonObject['routines'].length; i++) {
-                    applyTimeData[jsonObject['routines'][i]['id']] = jsonObject['routines'][i];
-                    applyTimeData[jsonObject['routines'][i]['id']].type = 'routine';
-
-                    data = {
-                        id: jsonObject['routines'][i]['id'],
-                        type: 'routine',
-                        title: jsonObject['routines'][i]['title']
-                    };
-                    table.addContentData(data);
-                }
-                callback();
-            }
-        ).fail(
-            function () {
-                setInfoMessage(jQuery('#infoDisplayer'), 'error', 'Data could not be load. Try again later.', 50000);
-            }
-        );
-    }
-
-    function submitTodo(triggeringElement) {
-        // Initialize parameters
-        var $ideaId = jQuery('#ideaId');
-        var $ideaType = jQuery('#ideaType');
-        var $datePicker = jQuery('#datePicker');
-        var $fromHoursSelector = jQuery('#todoFromHoursSelector');
-        var $fromMinSelector = jQuery('#todoFromMinutesSelector');
-        var $tillHoursSelector = jQuery('#todoTillHoursSelector');
-        var $tillMinSelector = jQuery('#todoTillMinutesSelector');
-
-        // Validate request
-        var $infoDisplayer = jQuery('#setTodoInfo');
-        try {
-            // Collecting data
-            var data = {
-                id: $ideaId.val(),
-                type: $ideaType.val(),
-                date_todo: $datePicker.val(),
-                time_from: getTime($fromHoursSelector, $fromMinSelector),
-                time_till: getTime($tillHoursSelector, $tillMinSelector),
-                date_start: '',
-                date_finish: '',
-                frequency_days: '',
-                frequency_weeks: ''
-            };
-
-            validateUniqueApplyTimeRequest(data.date_todo, data.time_from, data.time_till);
-        } catch (err) {
-            setInfoMessage($infoDisplayer, 'error', err, 5000);
-            return;
-        }
-
-        submitApplyTime($infoDisplayer, 'setTodo', data, function () {
-            jQuery('#applyTimeOverlay').click();
-            data.type = 'idea';
-            setDataFromTable(triggeringElement, data);
-        });
-    }
-
-    function submitRoutine() {
-        // Initialize parameters
-        var $ideaId = jQuery('#ideaId');
-        var $ideaType = jQuery('#ideaType');
-        var $startInputDate = jQuery('#startDate');
-        var $finishInputDate = jQuery('#finishDate');
-        var $fromHoursSelector = jQuery('#routineFromHoursSelector');
-        var $fromMinSelector = jQuery('#routineFromMinutesSelector');
-        var $tillHoursSelector = jQuery('#routineTillHoursSelector');
-        var $tillMinSelector = jQuery('#routineTillMinutesSelector');
-        var $weeklyRepetitionSelector = jQuery('#weeklyRepetitionSelector');
-        var $weekdaysSelector = jQuery('#weekdaysSelectionWrapper');
-
-        // Collecting data
-        var data = {
-            ideaId: $ideaId.val(),
-            ideaType: $ideaType.val(),
-            date_start: $startInputDate.datepicker('getDate'),
-            date_finish: $finishInputDate.datepicker('getDate'),
-            time_from: getTime($fromHoursSelector, $fromMinSelector),
-            time_till: getTime($tillHoursSelector, $tillMinSelector),
-            weeklyRepetition: $weeklyRepetitionSelector.html(),
-            weekdays: getWeekdays($weekdaysSelector)
-        };
-
-        // Validate request
-        var $infoDisplayer = jQuery('#setRoutineInfo');
-        try {
-            validateRoutineApplyTimeRequest(data.date_start, data.date_finish, data.time_from, data.time_till, data.weekdays);
-        } catch (err) {
-            setInfoMessage($infoDisplayer, 'error', err, 5000);
-        }
-
-        submitApplyTime($infoDisplayer, 'setRoutine', data, function () {
-        });
-    }
 } // End ApplyTime Object
 
 /**
- * Type can be either hours or minutes.
- * Initializes the time selector with given init value.
- * @param type
- * @param $element
- * @param initValue
+ * ApplyTime loader
+ * @param table
+ * @param callback
  */
-function initTimeSelector(type, $element, initValue) {
-    if (null == initValue || initValue.length < 5) {
-        $element.html('');
-        return;
-    }
-    if (type == 'hours') {
-        $element.html(initValue.substr(0, 2));
-    } else {
-        $element.html(initValue.substr(3, 2));
-    }
-}
-
-function switchHoursSelector($element, content) {
-    var hours = [null, '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
-
-    if ('' == content) {
-        content = null;
-    }
-
-    var currentHour = hours.indexOf(content);
-
-    if (currentHour < 0) {
-        throw 'Something is very wrong in here.';
-    }
-
-    if (currentHour == (hours.length - 1)) {
-        $element.html(hours[0]);
-    } else {
-        $element.html(hours[currentHour + 1]);
-    }
-}
-
-function switchMinutesSelector($element, content) {
-    var minutes = [null, '00', '15', '30', '45'];
-
-    if ('' == content) {
-        content = null;
-    }
-
-    var currentMinutes = minutes.indexOf(content);
-
-    if (currentMinutes < 0) {
-        throw 'Something is very wrong in here.';
-    }
-    if (currentMinutes == (minutes.length - 1)) {
-        $element.html(minutes[0]);
-    } else {
-        $element.html(minutes[currentMinutes + 1]);
-    }
-}
-
-function getTime($hours, $minutes) {
-    // In case neither hours nor minutes are defined, no time is requested.
-    if ($hours.html().length == 0 && $minutes.html().length == 0) {
-        return '';
-    }
-
-    // As one of them are defined, they have to be properly defined. Otherwise, exception is thrown.
-    if ($hours.html().length != 2 || $minutes.html().length != 2) {
-        throw 'Time frame is not properly defined.';
-    }
-
-    return $hours.html() + ':' + $minutes.html();
-}
-
-function getWeekdays($element) {
-    var string = '';
-    $element.find('li').each(function () {
-        if (jQuery(this).hasClass('selected')) {
-            string += '1';
-        } else {
-            string += '0';
-        }
-    });
-
-    return string;
-}
-
-
-function submitApplyTime($infoDiv, requestType, data, callback) {
-    var url = root_url + 'mindFlow/' + ((requestType == 'setTodo') ? 'setIdeaTodo' : 'setIdeaRoutine');
+function loadApplyTime(table, callback) {
+    var url = root_url + 'mindFlow/getIdeas';
+    var data = {step: 'applyTime'};
 
     jQuery.ajax({
         type: 'post',
         url: url,
         data: data
-    }).done(function () {
-            setInfoMessage($infoDiv, 'success', 'Idea changed.', 2000);
+    }).done(
+        function (dataList) {
+            var i, data;
+            var jsonObject = jQuery.parseJSON(dataList);
+
+            for (i = 0; i < jsonObject['missions'].length; i++) {
+                applyTimeData[jsonObject['missions'][i]['id']] = jsonObject['missions'][i];
+                applyTimeData[jsonObject['missions'][i]['id']].type = 'mission';
+            }
+            for (i = 0; i < jsonObject['routines'].length; i++) {
+                applyTimeData[jsonObject['routines'][i]['id']] = jsonObject['routines'][i];
+                applyTimeData[jsonObject['routines'][i]['id']].type = 'routine';
+            }
+            
+            for (var ideaId in applyTimeData)
+            {
+                data = {
+                    id: applyTimeData[ideaId].id,
+                    type: applyTimeData[ideaId].type,
+                    title: applyTimeData[ideaId].title
+                };
+                table.addContentData(data);
+            }
+            
             callback();
         }
-    ).fail(function (data) {
-            setInfoMessage($infoDiv, 'error', data.statusText, 2000);
+    ).fail(
+        function () {
+            setInfoMessage(jQuery('#infoDisplayer'), 'error', 'Data could not be load. Try again later.', 50000);
         }
     );
 }
 
+/**
+ * The MissionDialog object
+ * @param routineDialog To be opened when clicked on MoreOften button.
+ * @constructor
+ */
 function MissionDialog(routineDialog) {
     var assignedTableRow;
     var $datePicker;
@@ -414,7 +240,11 @@ function MissionDialog(routineDialog) {
         $submitTodo.unbind('click');
     }
 
-
+    /**
+     * Opens the dialog
+     * @param tableRow Related row, to be updated if MissionDialog updates the idea.
+     * @param data Current idea data
+     */
     this.open = function (tableRow, data) {
         assignedTableRow = tableRow;
 
@@ -428,6 +258,10 @@ function MissionDialog(routineDialog) {
         bindMissionEvents();
     };
 
+    /**
+     * Closes the dialog
+     * @param closureType
+     */
     this.close = function (closureType) {
         if (closureType == 'full') {
             $dialogElement.fadeOut(function () {
@@ -442,6 +276,9 @@ function MissionDialog(routineDialog) {
         }
     };
 
+    /**
+     * Submits the dialog
+     */
     this.submit = function () {
         try {
             // Collects new idea data
@@ -450,19 +287,18 @@ function MissionDialog(routineDialog) {
             currentData.time_till = getTime($tillHoursSelector, $tillMinSelector);
 
             // In case no data is changed, close dialog directly.
-            if (previousData === currentData) {
+            if (previousData.date_todo == currentData.date_todo &&
+                previousData.time_from == currentData.time_from &&
+                previousData.time_till == currentData.time_till) {
                 $applyTimeOverlay.click();
                 return;
             }
 
-            // Validate            
             validate();
-
-            var url = root_url + 'mindFlow/setMissionDateTime';
 
             jQuery.ajax({
                 type: 'post',
-                url: url,
+                url: root_url + 'mindFlow/setMissionDateTime',
                 data: currentData
             }).done(function () {
                     setDataFromTable(assignedTableRow, currentData);
@@ -477,11 +313,19 @@ function MissionDialog(routineDialog) {
         }
     };
 
+    /**
+     * Shows a mission dialog error
+     * @param err
+     */
     this.showError = function (err) {
         setInfoMessage($infoDisplayer, 'error', err, 5000);
     };
 }
 
+/**
+ * The RoutineDialog object
+ * @constructor
+ */
 function RoutineDialog() {
     var assignedTableRow;
     var $startInputDate;
@@ -563,12 +407,12 @@ function RoutineDialog() {
         var startDate = getDateFromString(currentData.date_start);
         var finishDate = getDateFromString(currentData.date_finish);
         $startInputDate.datepicker({defaultDate: startDate});
-        $finishInputDate.datepicker({defaultDate: startDate});
+        $finishInputDate.datepicker({defaultDate: finishDate});
         $startInputDate.val(currentData.date_start);
         $finishInputDate.val(currentData.date_finish);
 
-        initWeeklyRepetitionSelector($weeklyRepetitionSelector, currentData.weeklyRepetition);
-        initWeekdaysSelector($weekdaysSelector, currentData.weekdays);
+        initWeeklyRepetitionSelector($weeklyRepetitionSelector, currentData.frequency_weeks);
+        initWeekdaysSelector($weekdaysSelector, currentData.frequency_days);
         initTimeSelector('hours', $fromHoursSelector, currentData.time_from);
         initTimeSelector('minutes', $fromMinSelector, currentData.time_from);
         initTimeSelector('hours', $tillHoursSelector, currentData.time_till);
@@ -608,6 +452,9 @@ function RoutineDialog() {
     }
 
     function initWeeklyRepetitionSelector($element, content) {
+        console.log('Init weekly repetition!');
+        console.log(content);
+        
         if (null == content) {
             $element.html('1');
         } else {
@@ -616,6 +463,9 @@ function RoutineDialog() {
     }
 
     function initWeekdaysSelector($element, content) {
+        console.log('Init weekdays selector!');
+        console.log(content);
+        
         if (null == content) {
             content = '1111100';
         }
@@ -662,9 +512,16 @@ function RoutineDialog() {
         $submitRoutine.unbind('click');
     }
 
+
+    /**
+     * Opens the dialog
+     * @param openingType When RoutineDialog is opened by MissionDialog, the overlay is already there.
+     * @param tableRow Related row, to be updated if MissionDialog updates the idea.
+     * @param data Current idea data
+     */
     this.open = function (openingType, tableRow, data) {
         assignedTableRow = tableRow;
-        
+
         setRoutineParameters(data);
 
         bindRoutineEvents();
@@ -678,6 +535,10 @@ function RoutineDialog() {
         }
     };
 
+
+    /**
+     * Closes the dialog
+     */
     this.close = function () {
         $dialogElement.fadeOut(function () {
             unbindRoutineEvents();
@@ -685,27 +546,36 @@ function RoutineDialog() {
         });
     };
 
+
+    /**
+     * Submits the dialog
+     */
     this.submit = function () {
         try {
             // Collects new idea data
+            currentData.frequency_days = getWeekdays($weekdaysSelector);
+            currentData.frequency_weeks = $weeklyRepetitionSelector.html();
             currentData.date_start = $startInputDate.val();
             currentData.date_finish = $finishInputDate.val();
             currentData.time_from = getTime($fromHoursSelector, $fromMinSelector);
             currentData.time_till = getTime($tillHoursSelector, $tillMinSelector);
 
             // In case no data is changed, close dialog directly.
-            if (previousData === currentData) {
+            if (previousData.frequency_days == currentData.frequency_days &&
+                previousData.frequency_weeks == currentData.frequency_weeks &&
+                previousData.date_start == currentData.date_start &&
+                previousData.date_finish == currentData.date_finish &&
+                previousData.time_from == currentData.time_from &&
+                previousData.time_till == currentData.time_till) {
                 $applyTimeOverlay.click();
                 return;
             }
-            
+
             validate();
-            
-            var url = root_url + 'mindFlow/setRoutineDateTime';
 
             jQuery.ajax({
                 type: 'post',
-                url: url,
+                url: root_url + 'mindFlow/setRoutineDateTime',
                 data: currentData
             }).done(function () {
                     setDataFromTable(assignedTableRow, currentData);
@@ -720,6 +590,10 @@ function RoutineDialog() {
         }
     };
 
+    /**
+     * Shows a mission dialog error
+     * @param err
+     */
     this.showError = function (err) {
         setInfoMessage($infoDisplayer, 'error', err, 5000);
     };
@@ -757,7 +631,7 @@ function validateTimeFrame(time_from, time_till) {
     }
 }
 
-function validateDateFrame(date_start, date_finish) { 
+function validateDateFrame(date_start, date_finish) {
     if ('' != date_start && !(date_start instanceof Date)) {
         throw 'Start date is in a wrong format.';
     }
@@ -772,6 +646,112 @@ function validateDateFrame(date_start, date_finish) {
     }
 }
 
+/**
+ * Builds a weekdays string.
+ * @param $element
+ * @returns {string}
+ */
+function getWeekdays($element) {
+    var string = '';
+    $element.find('li').each(function () {
+        if (jQuery(this).hasClass('selected')) {
+            string += '1';
+        } else {
+            string += '0';
+        }
+    });
+
+    return string;
+}
+
+
+/**
+ * Type can be either hours or minutes.
+ * Initializes the time selector with given init value.
+ * @param type
+ * @param $element
+ * @param initValue
+ */
+function initTimeSelector(type, $element, initValue) {
+    if (null == initValue || initValue.length < 5) {
+        $element.html('');
+        return;
+    }
+    if (type == 'hours') {
+        $element.html(initValue.substr(0, 2));
+    } else {
+        $element.html(initValue.substr(3, 2));
+    }
+}
+
+/**
+ * Switches hour selector to next position
+ * @param $element The element to be switched
+ * @param content The current content
+ */
+function switchHoursSelector($element, content) {
+    var hours = [null, '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
+
+    if ('' == content) {
+        content = null;
+    }
+
+    var currentHour = hours.indexOf(content);
+
+    if (currentHour < 0) {
+        throw 'Something is very wrong in here.';
+    }
+
+    if (currentHour == (hours.length - 1)) {
+        $element.html(hours[0]);
+    } else {
+        $element.html(hours[currentHour + 1]);
+    }
+}
+
+/**
+ * Switches minutes selector to next position
+ * @param $element The element to be switched
+ * @param content The current content
+ */
+function switchMinutesSelector($element, content) {
+    var minutes = [null, '00', '15', '30', '45'];
+
+    if ('' == content) {
+        content = null;
+    }
+
+    var currentMinutes = minutes.indexOf(content);
+
+    if (currentMinutes < 0) {
+        throw 'Something is very wrong in here.';
+    }
+    if (currentMinutes == (minutes.length - 1)) {
+        $element.html(minutes[0]);
+    } else {
+        $element.html(minutes[currentMinutes + 1]);
+    }
+}
+
+/**
+ * Builds a time string [00:00], if possible. If not, returns empty string.
+ * @param $hours
+ * @param $minutes
+ * @returns {string}
+ */
+function getTime($hours, $minutes) {
+    // In case neither hours nor minutes are defined, no time is requested.
+    if ($hours.html().length == 0 && $minutes.html().length == 0) {
+        return '';
+    }
+
+    // As one of them are defined, they have to be properly defined. Otherwise, exception is thrown.
+    if ($hours.html().length != 2 || $minutes.html().length != 2) {
+        throw 'Time frame is not properly defined.';
+    }
+
+    return $hours.html() + ':' + $minutes.html();
+}
 
 function getDataFromTable(ideaId) {
     return applyTimeData[ideaId];

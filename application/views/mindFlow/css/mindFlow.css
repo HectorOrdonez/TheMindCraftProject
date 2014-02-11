@@ -189,26 +189,26 @@
 }
 
 /**********************************************************************************************************************/
-/**                                          Selection section styles                                                **/
+/**                                          Select section styles                                                **/
 /**********************************************************************************************************************/
 
 /** Styles for the footer section that contains the new idea form. **/
-#selectionGrid #formNewIdea {
+#selectGrid #formNewIdea {
     display: inline;
 }
 
-#selectionGrid #formNewIdea input {
+#selectGrid #formNewIdea input {
     height: 30px;
     width: 100%;
     border: none;
     text-indent: 35px;
 }
 
-#selectionGrid .newIdeaCell {
+#selectGrid .newIdeaCell {
     width: 100%;
 }
 
-#selectionGrid #linkNewIdea {
+#selectGrid #linkNewIdea {
     position: absolute;
     background: url('./../../../../public/images/Plus.png');
     width: 15px;
@@ -218,54 +218,54 @@
 
 /** Edit Idea styles **/
 
-#selectionGrid #formEditIdea #inputEditIdeaTitle {
+#selectGrid #formEditIdea #inputEditIdeaTitle {
     width: calc(100% - 20px);
 }
 
 /** Column styles **/
-#selectionGrid .col_title {
+#selectGrid .col_title {
     text-indent: 20px;
     width: 665px;
 }
 
-#selectionGrid .col_selected {
+#selectGrid .col_selected {
     display: none;
 }
 
-#selectionGrid .col_actions {
+#selectGrid .col_actions {
     width: 135px; /** 3 actions x 45 each **/
 }
 
-#selectionGrid .col_date_creation {
+#selectGrid .col_date_creation {
     width: 150px;
 }
 
-/** Selection Action icons **/
-#selectionGrid .action .editAction {
+/** Select Action icons **/
+#selectGrid .action .editAction {
     background: url('./../../../../public/images/Edit.png') no-repeat;
 }
 
-#selectionGrid .action .delAction {
+#selectGrid .action .delAction {
     background: url('./../../../../public/images/Delete.png') no-repeat;
 }
 
-#selectionGrid .action .selectAction {
+#selectGrid .action .selectAction {
     background: url('./../../../../public/images/SelectArrow.png') no-repeat;
 }
 
-#selectionGrid .action .selectAction.unSelected {
+#selectGrid .action .selectAction.unSelected {
     background-position: 0 0 !important;
 }
 
-#selectionGrid .action .selectAction.selected {
+#selectGrid .action .selectAction.selected {
     background-position: 0 -30px !important;
 }
 
-#selectionGrid .action:hover .selectAction.unSelected {
+#selectGrid .action:hover .selectAction.unSelected {
     background-position: -30px 0 !important;
 }
 
-#selectionGrid .action:hover .selectAction.selected {
+#selectGrid .action:hover .selectAction.selected {
     background-position: -30px -30px !important;
 }
 

@@ -16,14 +16,15 @@ use \ActiveRecord\Model as Model;
  * Class Mission
  * @package application\models
  *
- * Magic methods ...
- * @method static Mission find_by_id(\int $id) Returns the Mission with given idea_id.
+ * Magic methods 
+ * @method static Mission find_by_id(\int $id) Returns the Mission with given idea_id
  *
- * Magically accessed attributes ...
- * @property int idea_id
- * @property \DateTime $date_todo
- * @property string $time_from Time in 24-hour format.
- * @property string $time_till Time in 24-hour format.
+ * Magically accessed attributes
+ * @property int idea_id Id
+ * @property Idea idea Related idea
+ * @property \DateTime $date_todo When this mission has to be done
+ * @property string $time_from Time in 24-hour format
+ * @property string $time_till Time in 24-hour format
  */
 class Mission extends Model
 {

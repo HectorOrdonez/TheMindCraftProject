@@ -60,13 +60,12 @@ class mindFlow extends Controller
 
         // Step related libraries
         $this->_view->addLibrary('application/views/mindFlow/js/brainStorm.js');
-        $this->_view->addLibrary('application/views/mindFlow/js/selection.js');
+        $this->_view->addLibrary('application/views/mindFlow/js/select.js');
         $this->_view->addLibrary('application/views/mindFlow/js/applyTime.js');
         $this->_view->addLibrary('application/views/mindFlow/js/prioritize.js');
 
         // Additional libraries
         $this->_view->addLibrary('public/js/external/jquery.transit.js');
-        $this->_view->addLibrary('public/js/external/jquery-timepicker.js');
 
         $this->_view->setParameter('initStep', $step);
         $this->_view->addChunk('mindFlow/index');
@@ -82,16 +81,19 @@ class mindFlow extends Controller
         try {
             $selectedStep = Input::build('Select', 'step')
                 ->addRule('availableOptions', array('brainStorm', 'select', 'prioritize', 'applyTime'));
+
             $selectedStep->validate();
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error.');
-            print($e->getMessage());
+
+            $response = $this->_service->getIdeas(Session::get('userId'), $selectedStep->getValue());
+
+            print json_encode($response);
+
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
             exit;
         }
 
-        $response = $this->_service->getIdeas(Session::get('userId'), $selectedStep->getValue());
-
-        echo json_encode($response);
     }
 
     /**
@@ -118,8 +120,9 @@ class mindFlow extends Controller
             $errorMessage = 'Invalid data: ' . $rEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
             exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
             exit;
         }
     }
@@ -149,8 +152,9 @@ class mindFlow extends Controller
             $errorMessage = 'Invalid data: ' . $rEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
             exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
             exit;
         }
     }
@@ -177,51 +181,8 @@ class mindFlow extends Controller
             header("HTTP/1.1 400 {$errorMessage}");
             exit($errorMessage);
         } catch (\Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
-            exit;
-        }
-    }
-
-    /**
-     * Request to apply time to an idea.
-     */
-    public function applyTimeToIdea()
-    {
-        try {
-            $inputIdeaId = Input::build('Number', 'id')
-                ->addRule('isInt');
-            $inputIdeaDate = Input::build('Date', 'date');
-            $inputIdeaTime = Input::build('Text', 'time')
-                ->addRule('minLength', 5)
-                ->addRule('maxLength', 5);
-            $inputIdeaFrequency = Input::build('Multiselect', 'howOften')
-                ->addRule('availableOptions', array(
-                    'monday',
-                    'tuesday',
-                    'wednesday',
-                    'thursday',
-                    'friday',
-                    'saturday',
-                    'sunday'
-                ));
-
-            $inputIdeaId->validate();
-            $inputIdeaDate->validate();
-            $inputIdeaTime->validate();
-            $inputIdeaFrequency->validate();
-
-            $this->_service->applyTimeToIdea(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaDate->getValue(), $inputIdeaTime->getValue(), $inputIdeaFrequency->getValue());
-
-        } catch (InputException $iEx) {
-            $errorMessage = 'Input error: ' . $iEx->getMessage();
-            header("HTTP/1.1 400 {$errorMessage}");
-            exit($errorMessage);
-        } catch (RuleException $rEx) {
-            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
-            header("HTTP/1.1 400 {$errorMessage}");
-            exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
             exit;
         }
     }
@@ -250,8 +211,9 @@ class mindFlow extends Controller
             $errorMessage = 'Invalid data: ' . $rEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
             exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
             exit;
         }
     }
@@ -280,8 +242,9 @@ class mindFlow extends Controller
             $errorMessage = 'Invalid data: ' . $rEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
             exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
             exit;
         }
     }
@@ -317,35 +280,13 @@ class mindFlow extends Controller
     }
 
     /**
-     * Set idea urgent state request.
+     * Set idea as mission with specified Date and Time.
+     *
+     * Note:
+     * Parameter date_todo can be an empty string. In that case no date_todo is considered.
+     * Parameters time_from and time_till can be empty strings. In that case no time frame is considered.
+     * However, if one of the time parameters is set, the other one must too.
      */
-    public function setIdeaRoutine()
-    {
-        $rand = rand(0, 1);
-
-        if ($rand == 0) {
-            print json_encode(array('success'));
-        } else {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . 'This is a random error.');
-            exit;
-        }
-    }
-
-    public function test()
-    {
-        echo '<pre>';
-
-        echo '<br><br><br>Getting all Missions owned by User 11' . "<hr>";
-
-        $missions = Mission::find('all', array(
-            'user_id' => 11
-        ));
-
-        foreach ($missions as $mission) {
-            echo var_export($mission->toArray(), true);
-        }
-    }
-
     public function setMissionDateTime()
     {
         try {
@@ -391,17 +332,32 @@ class mindFlow extends Controller
             $errorMessage = 'Invalid data: ' . $rEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
             exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
             exit;
         }
     }
-    
+
+    /**
+     * Set idea as routine with specified date and time frames, frequency_days and frequency_weeks.
+     *
+     * Note:
+     * Parameter date_start can be an empty string. In that case no date_start is considered.
+     * Parameter date_finish can be an empty string. In that case no date_finish is considered.
+     * Parameters time_from and time_till can be empty strings. In that case no time frame is considered.
+     * However, if one of the time parameters is set, the other one must too.
+     */
     public function setRoutineDateTime()
     {
         try {
             $inputRoutineId = Input::build('Number', 'id')
                 ->addRule('isInt');
+            $inputRoutineFrequencyDays = Input::build('Text', 'frequency_days')
+                ->addRule('minLength', 7)
+                ->addRule('maxLength', 7);
+            $inputRoutineFrequencyWeeks = Input::build('Select', 'frequency_weeks')
+                ->addRule('availableOptions', array('1', '2', '3', '4'));
             $inputRoutineDateStart = Input::build('Date', 'date_start');
             $inputRoutineDateFinish = Input::build('Date', 'date_finish');
             $inputRoutineTimeFrom = Input::build('Text', 'time_from')
@@ -410,8 +366,10 @@ class mindFlow extends Controller
             $inputRoutineTimeTill = Input::build('Text', 'time_till')
                 ->addRule('minLength', 5)
                 ->addRule('maxLength', 5);
-
+            
             $inputRoutineId->validate();
+            $inputRoutineFrequencyDays->validate();
+            $inputRoutineFrequencyWeeks->validate();
 
             if ('' != $inputRoutineDateStart->getValue()) {
                 $inputRoutineDateStart->validate();
@@ -419,7 +377,7 @@ class mindFlow extends Controller
             } else {
                 $dateStart = null;
             }
-            
+
             if ('' != $inputRoutineDateFinish->getValue()) {
                 $inputRoutineDateFinish->validate();
                 $dateFinish = \DateTime::createFromFormat('d/m/Y', $inputRoutineDateFinish->getValue());
@@ -439,7 +397,7 @@ class mindFlow extends Controller
                 $timeTill = null;
             }
 
-            $this->_service->setRoutineDateTime(Session::get('userId'), $inputRoutineId->getValue(), $dateStart, $dateFinish, $timeFrom, $timeTill);
+            $this->_service->setRoutineDateTime(Session::get('userId'), $inputRoutineId->getValue(), $inputRoutineFrequencyDays->getValue(), $inputRoutineFrequencyWeeks->getValue(), $dateStart, $dateFinish, $timeFrom, $timeTill);
 
         } catch (InputException $iEx) {
             $errorMessage = 'Input error: ' . $iEx->getMessage();
@@ -449,8 +407,9 @@ class mindFlow extends Controller
             $errorMessage = 'Invalid data: ' . $rEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
             exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
             exit;
         }
     }

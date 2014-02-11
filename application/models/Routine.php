@@ -3,7 +3,7 @@
  * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Description:
- * Model that manages the interactions to the table idea.
+ * Model that manages the interactions to the table routine.
  * Date: 07/01/14 02:30
  */
 
@@ -16,17 +16,18 @@ use \ActiveRecord\Model as Model;
  * Class Routine
  * @package application\models
  *
- * Magic methods ...
- * @method static Routine find_by_id(\int $id) Returns the Routine with given idea_id.
+ * Magic methods
+ * @method static Routine find_by_id(\int $id) Returns the Routine with given idea_id
  *
- * Magically accessed attributes ...
- * @property int idea_id
- * @property string $frequency_days
- * @property string $frequency_weeks
- * @property \DateTime $date_start
- * @property \DateTime $date_finish
- * @property string $time_from Time in 24-hour format.
- * @property string $time_till Time in 24-hour format.
+ * Magically accessed attributes
+ * @property int idea_id Id
+ * @property Idea idea Related idea
+ * @property string $frequency_days Which days this Routine is to be applied
+ * @property string $frequency_weeks Every how many weeks this Routine is active
+ * @property \DateTime $date_start When this Routine starts
+ * @property \DateTime $date_finish When this Routine ends
+ * @property string $time_from Time in 24-hour format
+ * @property string $time_till Time in 24-hour format
  */
 class Routine extends Model
 {
