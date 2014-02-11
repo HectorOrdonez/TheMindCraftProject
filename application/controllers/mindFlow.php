@@ -10,6 +10,9 @@
 namespace application\controllers;
 
 use application\engine\Controller;
+use application\models\Idea;
+use application\models\Mission;
+use application\models\Routine;
 use application\services\MindFlowService;
 use engine\Input;
 use engine\Session;
@@ -57,13 +60,12 @@ class mindFlow extends Controller
 
         // Step related libraries
         $this->_view->addLibrary('application/views/mindFlow/js/brainStorm.js');
-        $this->_view->addLibrary('application/views/mindFlow/js/selection.js');
+        $this->_view->addLibrary('application/views/mindFlow/js/select.js');
         $this->_view->addLibrary('application/views/mindFlow/js/applyTime.js');
         $this->_view->addLibrary('application/views/mindFlow/js/prioritize.js');
 
         // Additional libraries
         $this->_view->addLibrary('public/js/external/jquery.transit.js');
-        $this->_view->addLibrary('public/js/external/jquery-timepicker.js');
 
         $this->_view->setParameter('initStep', $step);
         $this->_view->addChunk('mindFlow/index');
@@ -79,16 +81,19 @@ class mindFlow extends Controller
         try {
             $selectedStep = Input::build('Select', 'step')
                 ->addRule('availableOptions', array('brainStorm', 'select', 'prioritize', 'applyTime'));
+
             $selectedStep->validate();
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error.');
-            print($e->getMessage());
+
+            $response = $this->_service->getIdeas(Session::get('userId'), $selectedStep->getValue());
+
+            print json_encode($response);
+
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
             exit;
         }
-        
-        $response = $this->_service->getIdeas(Session::get('userId'),$selectedStep->getValue());
 
-        echo json_encode($response);
     }
 
     /**
@@ -115,11 +120,11 @@ class mindFlow extends Controller
             $errorMessage = 'Invalid data: ' . $rEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
             exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
             exit;
         }
-
     }
 
     /**
@@ -147,8 +152,9 @@ class mindFlow extends Controller
             $errorMessage = 'Invalid data: ' . $rEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
             exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
             exit;
         }
     }
@@ -174,84 +180,9 @@ class mindFlow extends Controller
             $errorMessage = 'Invalid data: ' . $rEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
             exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
-            exit;
-        }
-    }
-
-    /**
-     * Request to apply time to an idea.
-     */
-    public function applyTimeToIdea()
-    {
-        try {
-            $inputIdeaId = Input::build('Number', 'id')
-                ->addRule('isInt');
-            $inputIdeaDate = Input::build('Date', 'date');
-            $inputIdeaTime = Input::build('Text', 'time')
-                ->addRule('minLength', 5)
-                ->addRule('maxLength', 5);
-            $inputIdeaFrequency = Input::build('Multiselect', 'howOften')
-                ->addRule('availableOptions', array(
-                    'monday',
-                    'tuesday',
-                    'wednesday',
-                    'thursday',
-                    'friday',
-                    'saturday',
-                    'sunday'
-                ));
-
-            $inputIdeaId->validate();
-            $inputIdeaDate->validate();
-            $inputIdeaTime->validate();
-            $inputIdeaFrequency->validate();
-
-            $this->_service->applyTimeToIdea(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaDate->getValue(), $inputIdeaTime->getValue(), $inputIdeaFrequency->getValue());
-
-        } catch (InputException $iEx) {
-            $errorMessage = 'Input error: ' . $iEx->getMessage();
-            header("HTTP/1.1 400 {$errorMessage}");
-            exit($errorMessage);
-        } catch (RuleException $rEx) {
-            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
-            header("HTTP/1.1 400 {$errorMessage}");
-            exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
-            exit;
-        }
-    }
-
-    /**
-     * Prioritize idea request.
-     */
-    public function prioritizeIdea()
-    {
-        try {
-            $inputIdeaId = Input::build('Number', 'id')
-                ->addRule('isInt');
-            $inputIdeaPriority = Input::build('Number', 'priority')
-                ->addRule('isInt')
-                ->addRule('min', 1)
-                ->addRule('max', 10);
-                
-            $inputIdeaId->validate();
-            $inputIdeaPriority->validate();
-
-            $this->_service->prioritizeIdea(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaPriority->getValue());
-
-        } catch (InputException $iEx) {
-            $errorMessage = 'Input error: ' . $iEx->getMessage();
-            header("HTTP/1.1 400 {$errorMessage}");
-            exit($errorMessage);
-        } catch (RuleException $rEx) {
-            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
-            header("HTTP/1.1 400 {$errorMessage}");
-            exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
             exit;
         }
     }
@@ -266,12 +197,12 @@ class mindFlow extends Controller
                 ->addRule('isInt');
             $inputIdeaSelectionState = Input::build('Select', 'selected')
                 ->addRule('availableOptions', array('true', 'false'));
-                
+
             $inputIdeaId->validate();
             $inputIdeaSelectionState->validate();
 
             $this->_service->setIdeaSelectionState(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaSelectionState->getValue());
-            
+
         } catch (InputException $iEx) {
             $errorMessage = 'Input error: ' . $iEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
@@ -280,8 +211,9 @@ class mindFlow extends Controller
             $errorMessage = 'Invalid data: ' . $rEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
             exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
             exit;
         }
     }
@@ -296,12 +228,43 @@ class mindFlow extends Controller
                 ->addRule('isInt');
             $inputIdeaImportantState = Input::build('Select', 'important')
                 ->addRule('availableOptions', array('true', 'false'));
-                
+
             $inputIdeaId->validate();
             $inputIdeaImportantState->validate();
 
             $this->_service->setIdeaImportantState(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaImportantState->getValue());
-            
+
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
+            exit;
+        }
+    }
+
+    /**
+     * Set idea urgent state request.
+     */
+    public function setIdeaUrgent()
+    {
+        try {
+            $inputIdeaId = Input::build('Number', 'id')
+                ->addRule('isInt');
+            $inputIdeaUrgentState = Input::build('Select', 'urgent')
+                ->addRule('availableOptions', array('true', 'false'));
+
+            $inputIdeaId->validate();
+            $inputIdeaUrgentState->validate();
+
+            $this->_service->setIdeaUrgentState(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaUrgentState->getValue());
+
         } catch (InputException $iEx) {
             $errorMessage = 'Input error: ' . $iEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
@@ -317,21 +280,50 @@ class mindFlow extends Controller
     }
 
     /**
-     * Set idea urgent state request.
+     * Set idea as mission with specified Date and Time.
+     *
+     * Note:
+     * Parameter date_todo can be an empty string. In that case no date_todo is considered.
+     * Parameters time_from and time_till can be empty strings. In that case no time frame is considered.
+     * However, if one of the time parameters is set, the other one must too.
      */
-    public function setIdeaUrgent()
+    public function setMissionDateTime()
     {
         try {
-            $inputIdeaId = Input::build('Number', 'id')
+            $inputMissionId = Input::build('Number', 'id')
                 ->addRule('isInt');
-            $inputIdeaUrgentState = Input::build('Select', 'urgent')
-                ->addRule('availableOptions', array('true', 'false'));
-                
-            $inputIdeaId->validate();
-            $inputIdeaUrgentState->validate();
+            $inputMissionDateTodo = Input::build('Date', 'date_todo');
+            $inputMissionTimeFrom = Input::build('Text', 'time_from')
+                ->addRule('minLength', 5)
+                ->addRule('maxLength', 5);
+            $inputMissionTimeTill = Input::build('Text', 'time_till')
+                ->addRule('minLength', 5)
+                ->addRule('maxLength', 5);
 
-            $this->_service->setIdeaUrgentState(Session::get('userId'), $inputIdeaId->getValue(), $inputIdeaUrgentState->getValue());
-            
+            $inputMissionId->validate();
+
+            if ('' != $inputMissionDateTodo->getValue()) {
+                $inputMissionDateTodo->validate();
+
+                $date_todo = \DateTime::createFromFormat('d/m/Y', $inputMissionDateTodo->getValue());
+            } else {
+                $date_todo = null;
+            }
+
+            // Time frame is verified in case they are not sent empty, in which case time frame is not set.
+            if ('' != $inputMissionTimeFrom->getValue() || '' != $inputMissionTimeTill->getValue()) {
+                $inputMissionTimeFrom->validate();
+                $inputMissionTimeTill->validate();
+
+                $timeFrom = $inputMissionTimeFrom->getValue();
+                $timeTill = $inputMissionTimeTill->getValue();
+            } else {
+                $timeFrom = null;
+                $timeTill = null;
+            }
+
+            $this->_service->setMissionDateTime(Session::get('userId'), $inputMissionId->getValue(), $date_todo, $timeFrom, $timeTill);
+
         } catch (InputException $iEx) {
             $errorMessage = 'Input error: ' . $iEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
@@ -340,8 +332,84 @@ class mindFlow extends Controller
             $errorMessage = 'Invalid data: ' . $rEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
             exit($errorMessage);
-        } catch (Exception $e) {
-            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
+            exit;
+        }
+    }
+
+    /**
+     * Set idea as routine with specified date and time frames, frequency_days and frequency_weeks.
+     *
+     * Note:
+     * Parameter date_start can be an empty string. In that case no date_start is considered.
+     * Parameter date_finish can be an empty string. In that case no date_finish is considered.
+     * Parameters time_from and time_till can be empty strings. In that case no time frame is considered.
+     * However, if one of the time parameters is set, the other one must too.
+     */
+    public function setRoutineDateTime()
+    {
+        try {
+            $inputRoutineId = Input::build('Number', 'id')
+                ->addRule('isInt');
+            $inputRoutineFrequencyDays = Input::build('Text', 'frequency_days')
+                ->addRule('minLength', 7)
+                ->addRule('maxLength', 7);
+            $inputRoutineFrequencyWeeks = Input::build('Select', 'frequency_weeks')
+                ->addRule('availableOptions', array('1', '2', '3', '4'));
+            $inputRoutineDateStart = Input::build('Date', 'date_start');
+            $inputRoutineDateFinish = Input::build('Date', 'date_finish');
+            $inputRoutineTimeFrom = Input::build('Text', 'time_from')
+                ->addRule('minLength', 5)
+                ->addRule('maxLength', 5);
+            $inputRoutineTimeTill = Input::build('Text', 'time_till')
+                ->addRule('minLength', 5)
+                ->addRule('maxLength', 5);
+            
+            $inputRoutineId->validate();
+            $inputRoutineFrequencyDays->validate();
+            $inputRoutineFrequencyWeeks->validate();
+
+            if ('' != $inputRoutineDateStart->getValue()) {
+                $inputRoutineDateStart->validate();
+                $dateStart = \DateTime::createFromFormat('d/m/Y', $inputRoutineDateStart->getValue());
+            } else {
+                $dateStart = null;
+            }
+
+            if ('' != $inputRoutineDateFinish->getValue()) {
+                $inputRoutineDateFinish->validate();
+                $dateFinish = \DateTime::createFromFormat('d/m/Y', $inputRoutineDateFinish->getValue());
+            } else {
+                $dateFinish = null;
+            }
+
+            // Time frame is verified in case they are not sent empty, in which case time frame is not set.
+            if ('' != $inputRoutineTimeFrom->getValue() || '' != $inputRoutineTimeTill->getValue()) {
+                $inputRoutineTimeFrom->validate();
+                $inputRoutineTimeTill->validate();
+
+                $timeFrom = $inputRoutineTimeFrom->getValue();
+                $timeTill = $inputRoutineTimeTill->getValue();
+            } else {
+                $timeFrom = null;
+                $timeTill = null;
+            }
+
+            $this->_service->setRoutineDateTime(Session::get('userId'), $inputRoutineId->getValue(), $inputRoutineFrequencyDays->getValue(), $inputRoutineFrequencyWeeks->getValue(), $dateStart, $dateFinish, $timeFrom, $timeTill);
+
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
             exit;
         }
     }

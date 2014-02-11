@@ -1574,12 +1574,12 @@ class Model
 	 * Finder method which will find by a single or array of primary keys for this model.
 	 *
 	 * @see find
-	 * @param array $values An array containing values for the pk
+	 * @param int|array $values An array containing values for the pk
 	 * @param array $options An options array
 	 * @return Model
-	 * @throws {@link RecordNotFound} if a record could not be found
+	 * @throws RecordNotFound if a record could not be found
 	 */
-	public static function find_by_pk($values, $options)
+	public static function find_by_pk($values, $options = array())
 	{
 		$options['conditions'] = static::pk_conditions($values);
 		$list = static::table()->find($options);

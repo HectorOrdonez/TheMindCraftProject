@@ -19,10 +19,12 @@
     margin: 10px auto 0 auto;
 }
 
-#flowMenu ul li {
-    position: relative;
-    display: inline-block;
-    width: 161px;
+#flowMenu ul {
+    position: absolute;
+}
+
+#flowMenu ul li .text {
+    display: inline;
 }
 
 #flowMenu ul li a {
@@ -30,18 +32,19 @@
     text-decoration: none;
 }
 
-#flowMenu .flowOption .text, #flowMenu .miniFlowOption .text {
-    position: absolute;
+#flowMenu .flowOption, #flowMenu .miniFlowOption {
+    display: inline-block;
+    width: 161px;
 }
 
 #flowMenu .flowOption .text {
-    top: 44px;
-    left: 39px;
+    position: relative;
+    left: -26px;
 }
 
 #flowMenu .miniFlowOption .text {
-    top: 26px;
-    left: 37px;
+    position: relative;
+    left: -10px;
 }
 
 #flowMenu .flowOption img {
@@ -51,7 +54,7 @@
 
 #flowMenu  .imgBox {
     width: 43px;
-    height: 45px;
+    height: 43px;
     display: inline-block;
     overflow: hidden;
 }
@@ -65,7 +68,6 @@
     position: absolute;
     width: calc(100% - 5px);
     height: 25px;
-    z-index: 0;
     margin: 20px 0 0 5px;
     background-color: #e94f3b;
 }
@@ -97,11 +99,9 @@
 .mindFlowGrid {
     width: 950px;
     margin: 0 auto;
-    -moz-box-shadow: 2px 2px 5px #b9a889;
-    -webkit-box-shadow: 2px 2px 5px #b9a889;
-    box-shadow: 2px 2px 5px #b9a889;
     max-height: 330px;
     overflow-y: auto;
+    padding: 5px;
 }
 
 /** Id columns are always hidden here **/
@@ -116,9 +116,10 @@
 
 .mindFlowGrid .actionBox div {
     float: left;
+    width: 45px;
 }
 
-.mindFlowGrid .action a{
+.mindFlowGrid .action a {
     width: 30px;
     height: 30px;
     display: block;
@@ -127,7 +128,7 @@
 }
 
 .mindFlowGrid .action a:hover {
-    background-position-x: -30px !important;
+    background-position: -30px 0 !important;
 }
 
 /**********************************************************************************************************************/
@@ -167,46 +168,47 @@
 /** Column styles **/
 #brainStormGrid .col_title {
     text-indent: 20px;
-    width: 650px;
+    width: 710px;
 }
 
 #brainStormGrid .col_actions {
-    width: 100px;
+    width: 90px; /** 2 actions x 45 each **/
 }
 
 #brainStormGrid .col_date_creation {
-    width: 200px;
+    width: 150px;
 }
 
 /** BrainStorm Action icons **/
 #brainStormGrid .action .editAction {
     background: url('./../../../../public/images/Edit.png') no-repeat;
 }
+
 #brainStormGrid .action .delAction {
     background: url('./../../../../public/images/Delete.png') no-repeat;
 }
 
 /**********************************************************************************************************************/
-/**                                          Selection section styles                                                **/
+/**                                          Select section styles                                                **/
 /**********************************************************************************************************************/
 
 /** Styles for the footer section that contains the new idea form. **/
-#selectionGrid #formNewIdea {
+#selectGrid #formNewIdea {
     display: inline;
 }
 
-#selectionGrid #formNewIdea input {
+#selectGrid #formNewIdea input {
     height: 30px;
     width: 100%;
     border: none;
     text-indent: 35px;
 }
 
-#selectionGrid .newIdeaCell {
+#selectGrid .newIdeaCell {
     width: 100%;
 }
 
-#selectionGrid #linkNewIdea {
+#selectGrid #linkNewIdea {
     position: absolute;
     background: url('./../../../../public/images/Plus.png');
     width: 15px;
@@ -216,47 +218,54 @@
 
 /** Edit Idea styles **/
 
-#selectionGrid #formEditIdea #inputEditIdeaTitle {
+#selectGrid #formEditIdea #inputEditIdeaTitle {
     width: calc(100% - 20px);
 }
 
 /** Column styles **/
-#selectionGrid .col_title {
+#selectGrid .col_title {
     text-indent: 20px;
-    width: 650px;
+    width: 665px;
 }
-#selectionGrid .col_selected {
+
+#selectGrid .col_selected {
     display: none;
 }
 
-#selectionGrid .col_actions {
-    width: 100px;
+#selectGrid .col_actions {
+    width: 135px; /** 3 actions x 45 each **/
 }
 
-#selectionGrid .col_date_creation {
-    width: 200px;
+#selectGrid .col_date_creation {
+    width: 150px;
 }
 
-/** Selection Action icons **/
-#selectionGrid .action .editAction {
+/** Select Action icons **/
+#selectGrid .action .editAction {
     background: url('./../../../../public/images/Edit.png') no-repeat;
 }
-#selectionGrid .action .delAction {
+
+#selectGrid .action .delAction {
     background: url('./../../../../public/images/Delete.png') no-repeat;
 }
-#selectionGrid .action .selectAction {
+
+#selectGrid .action .selectAction {
     background: url('./../../../../public/images/SelectArrow.png') no-repeat;
 }
-#selectionGrid .action .selectAction.unSelected {
+
+#selectGrid .action .selectAction.unSelected {
     background-position: 0 0 !important;
 }
-#selectionGrid .action .selectAction.selected {
+
+#selectGrid .action .selectAction.selected {
     background-position: 0 -30px !important;
 }
-#selectionGrid .action:hover .selectAction.unSelected {
+
+#selectGrid .action:hover .selectAction.unSelected {
     background-position: -30px 0 !important;
 }
-#selectionGrid .action:hover .selectAction.selected {
+
+#selectGrid .action:hover .selectAction.selected {
     background-position: -30px -30px !important;
 }
 
@@ -267,11 +276,15 @@
 /** Column styles **/
 #prioritizeGrid .col_title {
     text-indent: 20px;
-    width: 700px;
+    width: 710px;
+}
+
+#prioritizeGrid .col_actions {
+    width: 90px; /** 2 actions x 45 each **/
 }
 
 #prioritizeGrid .col_date_creation {
-    width: 250px;
+    width: 150px;
 }
 
 #prioritizeGrid .col_important, #prioritizeGrid .col_urgent {
@@ -282,33 +295,43 @@
 #prioritizeGrid .action .importantAction {
     background: url('./../../../../public/images/Important.png') no-repeat;
 }
+
 #prioritizeGrid .action .urgentAction {
     background: url('./../../../../public/images/Urgent.png') no-repeat;
 }
+
 #prioritizeGrid .action .importantAction.notImportant {
     background-position: 0 0 !important;
 }
+
 #prioritizeGrid .action .importantAction.important {
     background-position: -30px 0 !important;
 }
+
 #prioritizeGrid .action:hover .importantAction.notImportant {
     background-position: 0 0 !important;
 }
+
 #prioritizeGrid .action:hover .importantAction.important {
     background-position: -30px 0 !important;
 }
+
 #prioritizeGrid .action .urgentAction.notUrgent {
     background-position: 0 0 !important;
 }
+
 #prioritizeGrid .action .urgentAction.urgent {
     background-position: -30px 0 !important;
 }
+
 #prioritizeGrid .action:hover .urgentAction.notUrgent {
     background-position: 0 0 !important;
 }
+
 #prioritizeGrid .action:hover .urgentAction.urgent {
     background-position: -30px 0 !important;
 }
+
 /**********************************************************************************************************************/
 /**                                          ApplyTime section styles                                                **/
 /**********************************************************************************************************************/
@@ -316,12 +339,288 @@
 /** Column styles **/
 #applyTimeGrid .col_title {
     text-indent: 20px;
-    width: 700px;
+    width: 710px;
 }
 
-#applyTimeGrid .col_date_creation {
-    width: 250px;
+#applyTimeGrid .col_type {
+    display: none;
 }
+
+#applyTimeGrid .col_actions {
+    width: 90px; /** 2 actions x 45 each **/
+}
+
+#applyTimeGrid .col_time{
+    width: 150px;
+}
+
+/** ApplyTime Action icons **/
+#applyTimeGrid .action .setTodoAction {
+    background: url('./../../../../public/images/Timing.png') no-repeat;
+}
+
+#applyTimeGrid .action .setRoutineAction {
+    background: url('./../../../../public/images/Routine.png') no-repeat;
+}
+
+/** ApplyTime dialogs style **/
+
+/** Container **/
+#applyTimeDialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+/** To do dialog **/
+#setTodoDialogWrapper {
+    position: fixed;
+    width: 210px;
+    height: 420px;
+    top: 50%;
+    left: 50%;
+    margin-left: -105px;
+    margin-top: -210px;
+    z-index:11;
+    display: none;
+}
+
+#setTodoDialogWrapper #timeRangeWrapper .text {
+    text-indent: 5px;
+    line-height: 30px;
+    float: left;
+}
+
+#setTodoDialogWrapper #timeRangeWrapper #fromSelectionWrapper,
+#setTodoDialogWrapper #timeRangeWrapper #tillSelectionWrapper {
+    height: 30px;
+    background-color: #2a2724;
+}
+#setTodoDialogWrapper #timeRangeWrapper .inputs {
+    float: right;
+}
+#setTodoDialogWrapper #timeRangeWrapper .inputs div {
+    width: 30px;
+    height: 30px;
+    float: left;
+    text-align: center;
+    line-height: 30px;
+
+    /** Disabling text selection here **/
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#setTodoDialogWrapper #fromSelectionWrapper .inputs .hours{
+    background-color: #dfd9c2;
+}
+#setTodoDialogWrapper #fromSelectionWrapper .inputs .minutes{
+    background-color: #f4f2ef;
+}
+#setTodoDialogWrapper #tillSelectionWrapper .inputs .hours{
+    background-color: #f4f2ef;
+}
+#setTodoDialogWrapper #tillSelectionWrapper .inputs .minutes{
+    background-color: #dfd9c2;
+}
+
+#setTodoDialogWrapper #moreOftenWrapper {
+    background-color: #FFF;
+    height: 30px;
+}
+
+#setTodoDialogWrapper #moreOftenWrapper .text{
+    text-indent: 5px;
+    line-height: 30px;
+    float: left;
+}
+#setTodoDialogWrapper #moreOftenWrapper .action{
+    float: right;
+}
+
+#setTodoDialogWrapper #moreOftenWrapper #moreOftenAction {
+    background: url('./../../../../public/images/Routine.png') no-repeat;
+    width: 30px;
+    height: 30px;
+    display: block;
+    font-size: 0;
+    cursor: pointer;
+}
+#setTodoDialogWrapper #moreOftenWrapper .action .setRoutineAction:hover {
+    background-position: -30px 0 !important;
+}
+
+#setTodoDialogWrapper #submitTodo {
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+#setTodoInfo, #setRoutineInfo {
+    background-color: #dfd9c2;
+}
+
+/** Routine dialog **/
+#setRoutineDialogWrapper {
+    position: fixed;
+    width: 210px;
+    height: 420px;
+    top: 50%;
+    left: 50%;
+    margin-left: -105px;
+    margin-top: -210px;
+    z-index:11;
+    display: none;
+}
+
+#setRoutineDialogWrapper #weeklyRepetitionWrapper {
+    height: 30px;
+    width: 100%;
+    background-color: #2a2724;
+}
+#setRoutineDialogWrapper #weeklyRepetitionWrapper span.left {
+    float: left;
+    line-height: 30px;
+    text-indent: 5px;
+}
+#setRoutineDialogWrapper #weeklyRepetitionWrapper span.right {
+    float: right;
+    line-height: 30px;
+    width: 60px;
+    height: 30px;
+    text-align: center;
+}
+#setRoutineDialogWrapper #weeklyRepetitionWrapper #weeklyRepetitionSelector {
+    background-color: #dfd9c2;
+    float: right;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+
+    /** Disabling text selection here **/
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#setRoutineDialogWrapper #weekdaysSelectionWrapper {
+    height: 60px;
+}
+#setRoutineDialogWrapper #weekdaysSelectionWrapper p {
+    height: 30px;
+    line-height: 30px;
+    text-indent: 5px;
+}
+
+#setRoutineDialogWrapper #weekdaysSelectionWrapper ul li{
+    float: left;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+#setRoutineDialogWrapper #weekdaysSelectionWrapper ul li:nth-child(2n+1) {
+    background-color: #dfd9c2;
+}
+#setRoutineDialogWrapper #weekdaysSelectionWrapper ul li {
+    background-color: #f4f2ef;
+}
+#setRoutineDialogWrapper #weekdaysSelectionWrapper ul li.selected {
+    background-color: #2a2724;
+}
+
+#setRoutineDialogWrapper #dateRangeWrapper #startsSelectionWrapper, #setRoutineDialogWrapper #dateRangeWrapper #finishesSelectionWrapper {
+    height: 30px;
+    background-color: #2a2724;
+}
+
+#setRoutineDialogWrapper #dateRangeWrapper label {
+    float: left;
+    padding-left: 5px;
+    line-height: 30px;
+}
+#setRoutineDialogWrapper #dateRangeWrapper .datePickerWrapper{
+    float: right;
+    height: 30px;
+    width: 90px;
+}
+#setRoutineDialogWrapper #startDate{
+    background-color: #dfd9c2;
+}
+#setRoutineDialogWrapper #finishDate{
+    background-color: #f4f2ef;
+}
+#setRoutineDialogWrapper .datePickerWrapper input{
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+#setRoutineDialogWrapper #submitRoutine {
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+#setRoutineDialogWrapper #timeRangeWrapper .text {
+    text-indent: 5px;
+    line-height: 30px;
+    float: left;
+}
+
+#setRoutineDialogWrapper #timeRangeWrapper #fromSelectionWrapper,
+#setRoutineDialogWrapper #timeRangeWrapper #tillSelectionWrapper {
+    height: 30px;
+    background-color: #2a2724;
+}
+#setRoutineDialogWrapper #timeRangeWrapper .inputs {
+    float: right;
+}
+#setRoutineDialogWrapper #timeRangeWrapper .inputs div {
+    width: 30px;
+    height: 30px;
+    float: left;
+    text-align: center;
+    line-height: 30px;
+
+    /** Disabling text selection here **/
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#setRoutineDialogWrapper #fromSelectionWrapper .inputs .hours{
+    background-color: #dfd9c2;
+}
+#setRoutineDialogWrapper #fromSelectionWrapper .inputs .minutes{
+    background-color: #f4f2ef;
+}
+#setRoutineDialogWrapper #tillSelectionWrapper .inputs .hours{
+    background-color: #f4f2ef;
+}
+#setRoutineDialogWrapper #tillSelectionWrapper .inputs .minutes{
+    background-color: #dfd9c2;
+}
+
+
 /**********************************************************************************************************************/
 /**                                          PerForm section styles                                                  **/
-/**********************************************************************************************************************/
+    /**********************************************************************************************************************/

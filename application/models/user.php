@@ -16,6 +16,8 @@ class User extends Model
     public static $table_name = 'user'; // Table name
 
     static $has_many = array(
-        array('idea')
+        array('idea', 'class_name' => 'Idea'),
+        array('mission', 'through' => 'Idea', 'class_name' => 'Mission')
     );
+    
 }

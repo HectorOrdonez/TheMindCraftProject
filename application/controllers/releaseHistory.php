@@ -34,11 +34,19 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.2822', '31/01/2013', array (
-            '[Debug] - User mail was not being saved on Sign Up.'
+        $this->_setDevelopmentVersion('0.283', '03/02/2013', array (
+            '[Feature] - Added new feature to JQuery date-picker; an AfterDisplay event.',
+            '[Feature] - Build ApplyTime basic structure',
+            '[Feature] - Created MindCraft Calendar awesome style!'
         ));
         
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.2823', '01/02/2013', array (
+            '[Core Update] - In order to create the customized Calendar, JQuery UI is updated and the CSS removed.'
+        ));
+        $this->_addHistoryLog('0.2822', '31/01/2013', array (
+            '[Debug] - User mail was not being saved on Sign Up.'
+        ));
         $this->_addHistoryLog('0.2821', '31/01/2013', array (
             '[Feature] - User last login re-implemented.'
         ));
