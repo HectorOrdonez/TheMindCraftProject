@@ -101,7 +101,7 @@
     margin: 0 auto;
     max-height: 330px;
     overflow-y: auto;
-    padding-bottom: 5px;
+    padding: 5px;
 }
 
 /** Id columns are always hidden here **/
@@ -339,13 +339,11 @@
 /** Column styles **/
 #applyTimeGrid .col_title {
     text-indent: 20px;
-    width: 700px;
-    /** width: 435px; For testing **/
+    width: 710px;
 }
 
-#applyTimeGrid .col_date_todo, #applyTimeGrid .col_time_from, #applyTimeGrid .col_time_till {
+#applyTimeGrid .col_type {
     display: none;
-    /** width: 75px; /** 75 * 3 = 225 **/
 }
 
 #applyTimeGrid .col_actions {
@@ -353,7 +351,7 @@
 }
 
 #applyTimeGrid .col_time{
-    width: 160px; /** 2 actions x 45 each **/
+    width: 150px;
 }
 
 /** ApplyTime Action icons **/
@@ -465,6 +463,10 @@
     width: 100%;
     text-align: center;
     cursor: pointer;
+}
+
+#setTodoInfo, #setRoutineInfo {
+    background-color: #dfd9c2;
 }
 
 /** Routine dialog **/

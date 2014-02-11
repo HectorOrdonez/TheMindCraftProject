@@ -3,7 +3,7 @@
  * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Description:
- * Model that manages the interactions to the table idea.
+ * Model that manages the interactions to the table mission.
  * Date: 07/01/14 02:30
  */
 
@@ -13,37 +13,31 @@ use ActiveRecord\ActiveRecordException;
 use \ActiveRecord\Model as Model;
 
 /**
- * Class Routine
+ * Class Mission
  * @package application\models
  *
  * Magic methods ...
- * @method static Routine find_by_id(\int $id) Returns the Routine with given idea_id.
+ * @method static Mission find_by_id(\int $id) Returns the Mission with given idea_id.
  *
  * Magically accessed attributes ...
  * @property int idea_id
- * @property string $frequency_days
- * @property string $frequency_weeks
- * @property \DateTime $date_start
- * @property \DateTime $date_finish
+ * @property \DateTime $date_todo
  * @property string $time_from Time in 24-hour format.
  * @property string $time_till Time in 24-hour format.
  */
-class Routine extends Model
+class Mission extends Model
 {
-    public static $table_name = 'routine'; // Table name
+    public static $table_name = 'mission'; // Table name
 
     static $belongs_to = array(
-        array('idea',
-            'class_name' => 'Idea'
-        )
+        array('idea', 'class_name' => 'Idea'),
+        array('user', 'through' => 'Idea', 'class_name' => 'User')
     );
     
     static $primary_key = 'idea_id';
 
-
-
     /**
-     * Returns an array with this routine parameters.
+     * Returns an array with this mission parameters.
      *
      * @param array $requiredFields
      * @return array
@@ -51,15 +45,12 @@ class Routine extends Model
      */
     public function toArray($requiredFields = array())
     {
-        $rawRoutineArray = array(
+        $rawMissionArray = array(
             'id' => $this->idea_id,
             'user_id' => $this->idea->user_id,
             'title' => $this->idea->title,
             'date_creation' => $this->idea->date_creation->format('d/m/Y'),
-            'frequency_days' => $this->frequency_days,
-            'frequency_weeks' => $this->frequency_weeks,
-            'date_start' => (is_null($this->date_start)) ? '' : $this->date_start->format('d/m/Y'),
-            'date_finish' => (is_null($this->date_finish)) ? '' : $this->date_finish->format('d/m/Y'),
+            'date_todo' => (is_null($this->date_todo)) ? '' : $this->date_todo->format('d/m/Y'),
             'time_from' => (is_null($this->time_from)) ? '' : substr($this->time_from, 0, 5),
             'time_till' => (is_null($this->time_till)) ? '' : substr($this->time_till, 0, 5),
             'selected' => $this->idea->selected,
@@ -69,17 +60,17 @@ class Routine extends Model
 
         // If no required fields specified all fields are returned.
         if (empty($requiredFields)) {
-            return $rawRoutineArray;
+            return $rawMissionArray;
         }
 
         // Otherwise only specified fields are returned.
-        $routineArray = array();
+        $missionArray = array();
         foreach ($requiredFields as $field) {
-            if (!array_key_exists($field, $rawRoutineArray)) {
+            if (!array_key_exists($field, $rawMissionArray)) {
                 throw new ActiveRecordException("Requested field {$field} does not belong to mission Model.");
             }
-            $routineArray[$field] = $rawRoutineArray[$field];
+            $missionArray[$field] = $rawMissionArray[$field];
         }
-        return $routineArray;
+        return $missionArray;
     }
 }
