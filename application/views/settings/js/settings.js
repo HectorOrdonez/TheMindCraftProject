@@ -9,13 +9,13 @@ jQuery().ready(function () {
     jQuery('.change').click(function () {
         var $input = jQuery(this).parent().find('form').find('input');
 
-        updateSetting($input.attr('name'), $input.val());
+        updateSetting($input);
     });
 
     jQuery('.formSetting').keypress(function (event) {
         if (event.which == 13) {
             var $input = jQuery(this).find('input');
-            updateSetting($input.attr('name'), $input.val());
+            updateSetting($input);
 
             event.preventDefault();
         }
@@ -28,10 +28,12 @@ jQuery().ready(function () {
  * While this function is running, other unique ajax calls cannot be done.
  * Once this function ends, the callback is executed, which will allow further unique ajax calls.
  *
- * @param type Setting being modified.
- * @param newValue New value of the setting.
+ * @param $input JQueried input
  */
-function updateSetting(type, newValue) {
+function updateSetting($input) {
+    var type = $input.attr('name');
+    var value = $input.val();
+    
     uniqueUserRequest(function (callback) {
         var $infoDiv = jQuery('#' + type + '_info');
         var $labelDiv = jQuery('#' + type + '_label');
@@ -43,12 +45,13 @@ function updateSetting(type, newValue) {
             url: root_url + 'settings/updateSetting',
             data: {
                 'type': type,
-                'newValue': newValue
+                'newValue': value
             }
         }).done(function () {
                 if (type != 'password') {
-                    $labelDiv.html(newValue);
+                    jQuery('span[data-field="username"]').html(value);
                 }
+                $input.val('');
                 $change.removeClass('processing');
                 callback();
                 setInfoMessage($infoDiv, 'success', ':-)', 1000);

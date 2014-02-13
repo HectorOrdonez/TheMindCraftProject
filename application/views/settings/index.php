@@ -17,18 +17,18 @@
             <span class='ftype_titleA1'>Your </span><span class='ftype_titleA2'>profile</span><span class='ftype_titleA3'>!</span>
         </div>
 
-        <div class='setting name'>
+        <div class='setting username'>
             <label>
-                A different name?
+                A different username?
             </label>
 
-            <div class='current ftype_contentA' id='name_label'><?php echo $this->getParameter('currentUsername'); ?></div>
+            <span class='current ftype_contentA' data-field='username' id='username_label'><?php echo $this->getParameter('currentUsername'); ?></span>
 
             <form class='formSetting'>
-                <input type='text' class='ftype_contentA' name='name' placeholder='new username'/>
+                <input type='text' class='ftype_contentA' name='username' placeholder='new username'/>
             </form>
 
-            <div class='info' id='name_info'></div>
+            <div class='info' id='username_info'></div>
         </div>
 
         <div class='setting password'>
@@ -36,7 +36,7 @@
                 A new password?
             </label>
 
-            <div class='current ftype_contentA' id='password_label'> * * * * *</div>
+            <span class='current ftype_contentA' id='password_label'> * * * * *</span>
 
             <form class='formSetting'>
                 <input type='password' class='ftype_contentA' name='password' placeholder='new password'/>

@@ -6,17 +6,20 @@
  */
 
 #settingsSection > div {
-    margin: 10px;
+    margin: 30px;
+}
+#settingsSection input {
+    text-align: center;
 }
 
 #settingsSection .setting label {
     display: inline-block;
-    width: 150px;
+    width: 180px;
 }
 
 #settingsSection .setting .current{
     display: inline-block;
-    width: 100px;
+    width: 120px;
 }
 
 #settingsSection .setting form {

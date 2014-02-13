@@ -34,15 +34,19 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.290', '11/02/2013', array (
+        $this->_setDevelopmentVersion('0.291', '13/02/2013', array (
+            '[Debug] - Fixed issue in Settings page where Username could not be changed.',
+            '[Feature] - Documented User model class',
+        ));
+        
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.290', '11/02/2013', array (
             '[Refactor] - Database design modified - Idea, Mission and Routines come to play. Refactored models accordingly',
             '[Feature] - ApplyTime step has been implemented and it is just AWESOME!',
             '[Refactor] - Improved other MindFlow steps, for faster loading and code cleaning,',
             '[Feature] - New visuals for date picker.',
             '[Delete] - Website does not use anymore the Jquery Ui styles.'
         ));
-        
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.283', '03/02/2013', array (
             '[Feature] - Added new feature to JQuery date-picker; an AfterDisplay event.',
             '[Feature] - Build ApplyTime basic structure',

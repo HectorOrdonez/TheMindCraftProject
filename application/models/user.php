@@ -11,6 +11,21 @@ namespace application\models;
 
 use \ActiveRecord\Model as Model;
 
+/**
+ * Class User
+ * @package application\models
+ *
+ * Magic methods ...
+ *
+ * Magically accessed attributes ...
+ * @property int id
+ * @property string $username
+ * @property string $mail
+ * @property string $password
+ * @property string $role (admin|basic)
+ * @property string $state (active|inactive|pending)
+ * @property \DateTime $last_login
+ */
 class User extends Model
 {
     public static $table_name = 'user'; // Table name

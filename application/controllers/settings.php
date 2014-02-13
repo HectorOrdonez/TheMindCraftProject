@@ -55,10 +55,10 @@ class settings extends Controller
     {
         try {
             $inputType = Input::build('Select', 'type')
-                ->addRule('availableOptions', array('name', 'password'));
+                ->addRule('availableOptions', array('username', 'password'));
             $inputValue = Input::build('Text', 'newValue')
                 ->addRule('minLength', 1)
-                ->addRule('maxLength', 100);
+                ->addRule('maxLength', 50);
 
             $inputType->validate();
             $inputValue->validate();
