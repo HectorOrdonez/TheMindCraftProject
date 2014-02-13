@@ -10,9 +10,6 @@
 namespace application\controllers;
 
 use application\engine\Controller;
-use application\models\Idea;
-use application\models\Mission;
-use application\models\Routine;
 use application\services\MindFlowService;
 use engine\Input;
 use engine\Session;
@@ -63,6 +60,7 @@ class mindFlow extends Controller
         $this->_view->addLibrary('application/views/mindFlow/js/select.js');
         $this->_view->addLibrary('application/views/mindFlow/js/applyTime.js');
         $this->_view->addLibrary('application/views/mindFlow/js/prioritize.js');
+        $this->_view->addLibrary('application/views/mindFlow/js/perForm.js');
 
         // Additional libraries
         $this->_view->addLibrary('public/js/external/jquery.transit.js');
@@ -93,7 +91,6 @@ class mindFlow extends Controller
             print $e->getMessage();
             exit;
         }
-
     }
 
     /**
@@ -407,6 +404,20 @@ class mindFlow extends Controller
             $errorMessage = 'Invalid data: ' . $rEx->getMessage();
             header("HTTP/1.1 400 {$errorMessage}");
             exit($errorMessage);
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
+            exit;
+        }
+    }
+    
+    public function getActions()
+    {
+        try {
+            $response = $this->_service->getActions(Session::get('userId'));
+
+            print json_encode($response);
+
         } catch (\Exception $e) {
             header('HTTP/1.1 500 Unexpected error.');
             print $e->getMessage();

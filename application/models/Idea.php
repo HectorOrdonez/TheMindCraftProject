@@ -38,7 +38,7 @@ class Idea extends Model
     public static $table_name = 'idea'; // Table name
 
     static $belongs_to = array(
-        array('user')
+        array('user', 'class_name' => 'User'),
     );
 
     /**

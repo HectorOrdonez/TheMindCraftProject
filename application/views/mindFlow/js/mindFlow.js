@@ -73,8 +73,7 @@ function loadCurrentStep(callback) {
                 MindFlowGrid = new ApplyTime($stepContent, afterLoadCallback);
                 break;
             case 'step3':
-                MindFlowGrid = new Prioritize();
-                //generateActionPlan(afterLoadCallback);
+                MindFlowGrid = new PerForm($stepContent, afterLoadCallback);
                 break;
         }
     };

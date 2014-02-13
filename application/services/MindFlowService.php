@@ -18,6 +18,7 @@
 namespace application\services;
 
 use application\engine\Service;
+use application\models\Action;
 use application\models\Idea;
 
 use application\models\Mission;
@@ -397,5 +398,28 @@ class MindFlowService extends Service
             default:
                 throw new Exception('Unknown Idea type.');
         }
+    }
+    
+    public function getActions($userId)
+    {
+        $this->generateActions($userId);
+        
+        $response = array();
+
+        /**
+         * @var Action[] $rawActionsArray
+         */
+        $rawActionsArray = Action::find('all');
+
+        foreach ($rawActionsArray as $action) {
+            $response[] = $action->toArray(array('id', 'title'));
+        }
+        
+        return $response;
+    }
+
+    public function generateActions()
+    {
+        
     }
 }
