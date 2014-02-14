@@ -406,7 +406,9 @@
                 <!-- 00:00 not added as does not need a line -->
             </ul>
         </div>
+
         <div class='perFormColumn' id='perFormUnlisted'>
+            <div class='blockHeader'></div>
         </div>
     </div>
 <?php $this->printChunk('footer'); ?>

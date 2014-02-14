@@ -134,7 +134,7 @@ class MindFlowService extends Service
      * Creates an idea related to given user.
      *
      * @param int $userId User id.
-     * @param string $title 
+     * @param string $title
      * @return array
      */
     public function newIdea($userId, $title)
@@ -198,7 +198,7 @@ class MindFlowService extends Service
 
     /**
      * Set idea selection state
-     * 
+     *
      * @param int $userId User id.
      * @param int $ideaId Idea id.
      * @param string $selectionState True or false.
@@ -306,7 +306,7 @@ class MindFlowService extends Service
     /**
      * Sets an idea as a Routine, updating it with given dateStart, dateFinish, timeFrom and timeTill.
      * Note: dateStart, dateFinish, timeFrom and timeTill can be null.
-     * 
+     *
      * @param int $userId User id
      * @param int $ideaId Idea id
      * @param string $inputRoutineFrequencyDays Days of the week to apply this routine
@@ -372,7 +372,7 @@ class MindFlowService extends Service
     /**
      * Receives an idea whose type is unknown.
      * Converts it, if required, into a Routine and returns it.
-     * 
+     *
      * @param Idea $idea Idea to be returned as Routine.
      * @return Routine What is requested.
      * @throws Exception If idea's type is unknown.
@@ -399,27 +399,39 @@ class MindFlowService extends Service
                 throw new Exception('Unknown Idea type.');
         }
     }
-    
+
     public function getActions($userId)
     {
         $this->generateActions($userId);
-        
+
         $response = array();
 
         /**
          * @var Action[] $rawActionsArray
          */
-        $rawActionsArray = Action::find('all');
+        $rawActionsArray = Action::find('all', array(
+                'conditions' => array(
+                    'user_id = ? AND
+                    date_todo IS NULL AND (
+                        date_done IS NULL OR 
+                            date_done BETWEEN DATE(NOW() - INTERVAL 1 DAY) AND DATE(NOW() + INTERVAL 1 DAY)
+                        )
+                    OR (
+                        date_todo BETWEEN DATE(NOW() - INTERVAL 1 DAY) AND DATE(NOW() + INTERVAL 1 DAY)
+                    )',
+                    $userId
+                ))
+        );
 
         foreach ($rawActionsArray as $action) {
             $response[] = $action->toArray(array('id', 'title', 'date_todo', 'time_from', 'time_till'));
         }
-        
+
         return $response;
     }
 
     public function generateActions()
     {
-        
+
     }
 }

@@ -666,6 +666,9 @@
     margin-left: 30px;
     width: 170px;
 }
+#perFormUnlisted .blockHeader {
+    background-color: transparent;
+}
 
 .dayBlock li {
     width: 100%;

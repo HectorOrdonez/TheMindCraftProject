@@ -154,6 +154,7 @@ function Action(data) {
     /** Construct                     **/
     /***********************************/
 
+    self = this;
     this.id = data.id;
     this.title = data.title;
     this.date_creation = data.date_creation;
@@ -189,9 +190,7 @@ function Action(data) {
         actionElement.innerHTML =
             "    <div class='perFormActionId'></div>" +
                 "    <span class='perFormAction-button-done'></span>" +
-                "    <span class='perFormActionTitle'>" +
-                "    Test" +
-                "    </span>" +
+                "    <span class='perFormActionTitle'>" + self.title + "    </span>" +
                 "    <span class='perFormAction-button-important'></span>" +
                 "    <span class='perFormAction-button-urgent'></span>";
         return actionElement;

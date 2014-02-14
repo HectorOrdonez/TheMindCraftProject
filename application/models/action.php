@@ -27,7 +27,7 @@ use \ActiveRecord\Model as Model;
  * @property \DateTime $date_todo When this action is planned to be done
  * @property string $time_from Time in 24-hour format
  * @property string $time_till Time in 24-hour format
- * @property int $done Either this action is done or not. 0 as false, 1 as true.
+ * @property \DateTime $date_done When this action has been done
  * @property int $important Either this idea is important or not. 0 as false, 1 as true.
  * @property int $urgent Either this idea is urgent or not. 0 as false, 1 as true.
  */
@@ -56,7 +56,7 @@ class Action extends Model
             'date_todo' => (is_null($this->date_todo)) ? '' : $this->date_todo->format('d/m/Y'),
             'time_from' => (is_null($this->time_from)) ? '' : substr($this->time_from, 0, 5),
             'time_till' => (is_null($this->time_till)) ? '' : substr($this->time_till, 0, 5),
-            'done' => $this->done,
+            'date_done' => (is_null($this->date_done)) ? '' : $this->date_done->format('d/m/Y'),
             'important' => $this->important,
             'urgent' => $this->urgent,
         );
