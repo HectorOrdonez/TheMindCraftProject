@@ -88,7 +88,6 @@
 
 /** Style for the step container **/
 #stepContent {
-    margin-top: 50px;
 }
 
 /**********************************************************************************************************************/
@@ -620,11 +619,61 @@
     background-color: #dfd9c2;
 }
 
-
 /**********************************************************************************************************************/
 /**                                          PerForm section styles                                                  **/
 /**********************************************************************************************************************/
 
 /** PerForm Layout styles **/
+#perFormLayout {
+    height: 615px; /** header 30px + 19 hours x 30px = 570 + bottom 15px **/
+    display: none;
+}
+
+.perFormColumn .blockHeader {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    background-color: #2a2724;
+    text-align: center;
+}
+
+.perFormColumn {
+    height: 100%;
+    float: left;
+}
+
+#perFormYesterday {
+    width: 180px;
+}
+
+#perFormToday {
+    width: 500px;
+}
+
+#perFormTomorrow {
+    width: 120px;
+}
+
+#perFormUnlisted {
+    width: 150px;
+}
+
+.dayBlock li {
+    width: 100%;
+    height: 29px;
+    border-bottom: 1px solid #b9a889;
+}
+
+/** Time Markup styles **/
+.timeMarkups ul {
+    margin-top: 45px;
+}
+
+.timeMarkups li {
+    height: 30px;
+    line-height: 30px;
+    width: 30px;
+    text-align: center;
+}
 
 /** Action block styles **/

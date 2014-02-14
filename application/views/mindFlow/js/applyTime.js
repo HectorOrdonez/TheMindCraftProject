@@ -14,11 +14,26 @@ function ApplyTime($element, callback) {
     var missionDialog;
     var routineDialog;
 
-    // Initializing ApplyTime
+    /***********************************/
+    /** Construct                     **/
+    /***********************************/
+
     $workspace = $element;
-    $workspace.empty();
     $workspace.html(builtStepContent());
     builtGrid(callback);
+
+    /***********************************/
+    /** Public functions              **/
+    /***********************************/
+
+    this.close = function (afterFadeOut) {
+        $workspace.fadeOut(
+            function () {
+                $workspace.empty();
+                afterFadeOut();
+            }
+        );
+    };
 
     /***********************************/
     /** Private functions             **/

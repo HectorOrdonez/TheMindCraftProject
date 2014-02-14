@@ -88,8 +88,8 @@
     <!-- Helpers -->
     <div id='applyTimeDialog'>
         <div class='fullOverlay' id='applyTimeOverlay'></div>
-        <input type='hidden' id='ideaId' />
-        <input type='hidden' id='ideaType' />
+        <input type='hidden' id='ideaId'/>
+        <input type='hidden' id='ideaType'/>
 
         <!-- To do sub-dialog -->
         <div id='setTodoDialogWrapper'>
@@ -152,6 +152,7 @@
                 <span class='right ftype_contentB'>
                     week
                 </span>
+
                 <div class='ftype_contentC' id='weeklyRepetitionSelector'></div>
             </div>
 
@@ -179,6 +180,7 @@
                     <label for='startDate' class='text ftype_contentB'>
                         starts:
                     </label>
+
                     <div class='datePickerWrapper'>
                         <input class='ftype_contentC' type='text' id='startDate'/>
                     </div>
@@ -187,6 +189,7 @@
                     <label for='finishDate' class='text ftype_contentB'>
                         finishes:
                     </label>
+
                     <div class='datePickerWrapper'>
                         <input class='ftype_contentC' type='text' id='finishDate'/>
                     </div>
@@ -223,7 +226,188 @@
             </div>
 
             <div id='setRoutineInfo'></div>
-        </div> <!-- End routine sub-dialog -->
+        </div>
+        <!-- End routine sub-dialog -->
+    </div>
+
+    <div id='perFormLayout'>
+        <div class='perFormColumn dayBlock' id='perFormYesterday'>
+            <div class='blockHeader ftype_contentB'>yesterday</div>
+            <ul class='hourList'>
+                <!-- 06:00 -->
+                <li></li>
+                <!-- 07:00 -->
+                <li></li>
+                <!-- 08:00 -->
+                <li></li>
+                <!-- 09:00 -->
+                <li></li>
+                <!-- 10:00 -->
+                <li></li>
+                <!-- 11:00 -->
+                <li></li>
+                <!-- 12:00 -->
+                <li></li>
+                <!-- 13:00 -->
+                <li></li>
+                <!-- 14:00 -->
+                <li></li>
+                <!-- 15:00 -->
+                <li></li>
+                <!-- 16:00 -->
+                <li></li>
+                <!-- 17:00 -->
+                <li></li>
+                <!-- 18:00 -->
+                <li></li>
+                <!-- 19:00 -->
+                <li></li>
+                <!-- 20:00 -->
+                <li></li>
+                <!-- 21:00 -->
+                <li></li>
+                <!-- 22:00 -->
+                <li></li>
+                <!-- 23:00 -->
+                <li></li>
+                <!-- 00:00 not added as does not need a line -->
+            </ul>
+        </div>
+
+        <div class='perFormColumn timeMarkups'>
+            <ul class='ftype_contentA'>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+                <li>10</li>
+                <li>11</li>
+                <li>12</li>
+                <li>13</li>
+                <li>14</li>
+                <li>15</li>
+                <li>16</li>
+                <li>17</li>
+                <li>18</li>
+                <li>19</li>
+                <li>20</li>
+                <li>21</li>
+                <li>22</li>
+                <li>23</li>
+                <li>00</li>
+            </ul>
+        </div>
+
+        <div class='perFormColumn dayBlock' id='perFormToday'>
+            <div class='blockHeader ftype_contentB'>today</div>
+            <ul class='hourList'>
+                <!-- 06:00 -->
+                <li></li>
+                <!-- 07:00 -->
+                <li></li>
+                <!-- 08:00 -->
+                <li></li>
+                <!-- 09:00 -->
+                <li></li>
+                <!-- 10:00 -->
+                <li></li>
+                <!-- 11:00 -->
+                <li></li>
+                <!-- 12:00 -->
+                <li></li>
+                <!-- 13:00 -->
+                <li></li>
+                <!-- 14:00 -->
+                <li></li>
+                <!-- 15:00 -->
+                <li></li>
+                <!-- 16:00 -->
+                <li></li>
+                <!-- 17:00 -->
+                <li></li>
+                <!-- 18:00 -->
+                <li></li>
+                <!-- 19:00 -->
+                <li></li>
+                <!-- 20:00 -->
+                <li></li>
+                <!-- 21:00 -->
+                <li></li>
+                <!-- 22:00 -->
+                <li></li>
+                <!-- 23:00 -->
+                <li></li>
+                <!-- 00:00 not added as does not need a line -->
+            </ul>
+        </div>
+        <div class='perFormColumn timeMarkups'>
+            <ul class='ftype_contentA'>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+                <li>10</li>
+                <li>11</li>
+                <li>12</li>
+                <li>13</li>
+                <li>14</li>
+                <li>15</li>
+                <li>16</li>
+                <li>17</li>
+                <li>18</li>
+                <li>19</li>
+                <li>20</li>
+                <li>21</li>
+                <li>22</li>
+                <li>23</li>
+                <li>00</li>
+            </ul>
+        </div>
+
+        <div class='perFormColumn dayBlock' id='perFormTomorrow'>
+            <div class='blockHeader ftype_contentB'>tomorrow</div>
+            <ul class='hourList'>
+                <!-- 06:00 -->
+                <li></li>
+                <!-- 07:00 -->
+                <li></li>
+                <!-- 08:00 -->
+                <li></li>
+                <!-- 09:00 -->
+                <li></li>
+                <!-- 10:00 -->
+                <li></li>
+                <!-- 11:00 -->
+                <li></li>
+                <!-- 12:00 -->
+                <li></li>
+                <!-- 13:00 -->
+                <li></li>
+                <!-- 14:00 -->
+                <li></li>
+                <!-- 15:00 -->
+                <li></li>
+                <!-- 16:00 -->
+                <li></li>
+                <!-- 17:00 -->
+                <li></li>
+                <!-- 18:00 -->
+                <li></li>
+                <!-- 19:00 -->
+                <li></li>
+                <!-- 20:00 -->
+                <li></li>
+                <!-- 21:00 -->
+                <li></li>
+                <!-- 22:00 -->
+                <li></li>
+                <!-- 23:00 -->
+                <li></li>
+                <!-- 00:00 not added as does not need a line -->
+            </ul>
+        </div>
+        <div class='perFormColumn' id='perFormUnlisted'>
+        </div>
     </div>
 
 <?php $this->printChunk('footer'); ?>

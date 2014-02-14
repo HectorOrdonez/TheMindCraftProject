@@ -10,29 +10,43 @@ function PerForm($element, callback) {
     // Step content
     var $workspace;
     var $perFormSpace;
-    
-    // Initializing PerForm
+
+    /***********************************/
+    /** Construct                     **/
+    /***********************************/
+
     $workspace = $element;
-    $workspace.empty();
-    $workspace.html(buildLayout());
-    
+    buildLayout();
+
     loadData(callback);
+
+    /***********************************/
+    /** Public functions              **/
+    /***********************************/
+    
+    this.close = function (afterFadeOut) {
+        var $perFormLayout = jQuery('#perFormLayout');
+        $perFormLayout.fadeOut(function () {
+            $workspace.after($perFormLayout);
+            $workspace.empty();
+            afterFadeOut();
+        });
+    };
 
     /***********************************/
     /** Private functions             **/
     /***********************************/
-    
-    function buildLayout()
-    {
-        console.log('Build Layout');
-        return "<div id='perFormContent'></div>";
+
+    function buildLayout() {
+        var $perFormLayout = jQuery('#perFormLayout');
+        $perFormLayout.appendTo($workspace);
+        $perFormLayout.fadeIn();
     }
-    
-    function loadData()
-    {
+
+    function loadData() {
         console.log('Build Data');
         var url = root_url + 'mindFlow/getActions';
-        
+
         jQuery.ajax({
             type: 'post',
             url: url
@@ -41,14 +55,14 @@ function PerForm($element, callback) {
                 var i, data;
                 console.log('Data list received : ');
                 console.log(dataList);
-                
+
                 var jsonObject = jQuery.parseJSON(dataList);
 
                 for (i = 0; i < jsonObject.length; i++) {
                     var action = new Action(jsonObject[i]);
                     action.showOn(jQuery('#perFormContent'));
                 }
-                
+
                 callback();
             }
         ).fail(
@@ -59,8 +73,7 @@ function PerForm($element, callback) {
     }
 }
 
-function Action(data)
-{
+function Action(data) {
     var title;
     var date_creation;
     var date_todo;
@@ -69,35 +82,32 @@ function Action(data)
     var done;
     var important;
     var urgent;
-    
+
     /***********************************/
     /** Construct                     **/
     /***********************************/
     initialize();
-    
+
     /***********************************/
     /** Public functions              **/
     /***********************************/
-    this.showOn = function($location)
-    {
+    this.showOn = function ($location) {
         console.log('Showing action on this location -> ');
         console.log($location);
-        
+
         var actionHTML = '<div class="action">' + title + '</div>';
         $location.append(actionHTML);
     };
-    
-    this.toggleDone = function()
-    {
+
+    this.toggleDone = function () {
         console.log('Toggling Done');
     };
 
     /***********************************/
     /** Private functions             **/
     /***********************************/
-    
-    function initialize()
-    {
+
+    function initialize() {
         console.log('Initializing Action');
         title = data.title;
         date_creation = data.date_creation;
