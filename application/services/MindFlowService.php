@@ -412,7 +412,7 @@ class MindFlowService extends Service
         $rawActionsArray = Action::find('all');
 
         foreach ($rawActionsArray as $action) {
-            $response[] = $action->toArray(array('id', 'title'));
+            $response[] = $action->toArray(array('id', 'title', 'date_todo', 'time_from', 'time_till'));
         }
         
         return $response;

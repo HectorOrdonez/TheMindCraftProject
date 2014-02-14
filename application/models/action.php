@@ -53,6 +53,9 @@ class Action extends Model
             'user_id' => $this->user_id,
             'title' => $this->title,
             'date_creation' => $this->date_creation->format('d/m/Y'),
+            'date_todo' => (is_null($this->date_todo)) ? '' : $this->date_todo->format('d/m/Y'),
+            'time_from' => (is_null($this->time_from)) ? '' : substr($this->time_from, 0, 5),
+            'time_till' => (is_null($this->time_till)) ? '' : substr($this->time_till, 0, 5),
             'done' => $this->done,
             'important' => $this->important,
             'urgent' => $this->urgent,
@@ -64,13 +67,13 @@ class Action extends Model
         }
 
         // Otherwise only specified fields are returned.
-        $ideaArray = array();
+        $actionArray = array();
         foreach ($requiredFields as $field) {
             if (!array_key_exists($field, $this->attributes())) {
                 throw new ActiveRecordException("Requested field {$field} does not belong to action Model.");
             }
-            $ideaArray[$field] = $rawActionArray[$field];
+            $actionArray[$field] = $rawActionArray[$field];
         }
-        return $ideaArray;
+        return $actionArray;
     }
 }
