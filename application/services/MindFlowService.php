@@ -424,7 +424,7 @@ class MindFlowService extends Service
         );
 
         foreach ($rawActionsArray as $action) {
-            $response[] = $action->toArray(array('id', 'title', 'date_todo', 'time_from', 'time_till'));
+            $response[] = $action->toArray();
         }
 
         return $response;

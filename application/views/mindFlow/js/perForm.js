@@ -5,6 +5,8 @@
  * Description: PerForm JS Library
  * Date: 13/02/14 23:00
  */
+var baseHeight = 30;
+var heightPerUnitPosition = 7.5;
 
 function PerForm($element, callback) {
     // Step content
@@ -22,7 +24,7 @@ function PerForm($element, callback) {
     var today;
     var tomorrow;
     var afterTomorrow;
-    
+
     // Info displayer
     var $infoDisplayer = jQuery('#infoDisplayer');
 
@@ -117,6 +119,7 @@ function PerForm($element, callback) {
         var actionDateTime = getDateTimeFromString(action.date_todo, action.time_from);
 
         if (actionDateTime == '') {
+            action.setAsDoable();
             action.showOn($unlistedLoc);
             return;
         }
@@ -129,16 +132,21 @@ function PerForm($element, callback) {
         }
 
         if (actionDateTime < today) {
+            action.setAsDoable();
+            action.setPosition();
             action.showOn($yesterdayLoc);
             return;
         }
 
         if (actionDateTime < tomorrow) {
+            action.setAsDoable();
+            action.setPosition();
             action.showOn($todayLoc);
             return;
         }
 
         if (actionDateTime < afterTomorrow) {
+            action.setPosition();
             action.showOn($tomorrowLoc);
             return;
         }
@@ -154,14 +162,15 @@ function Action(data) {
     /** Construct                     **/
     /***********************************/
 
-    self = this;
+    var self = this;
     this.id = data.id;
+    this.routine_id = data.routine_id;
     this.title = data.title;
     this.date_creation = data.date_creation;
     this.date_todo = data.date_todo;
     this.time_from = data.time_from;
     this.time_till = data.time_till;
-    this.done = data.done;
+    this.date_done = data.date_done;
     this.important = data.important;
     this.urgent = data.urgent;
     var actionHTMLElement = buildActionHTML();
@@ -174,10 +183,35 @@ function Action(data) {
     };
 
     this.toggleDone = function () {
+        if (self.date_done == '') {
+            self.date_done = 'something';
+            jQuery(actionHTMLElement).find('.perFormAction-button-done').addClass('done');
+        } else {
+            self.date_done = '';
+            jQuery(actionHTMLElement).find('.perFormAction-button-done').removeClass('done');
+        }
     };
 
     this.destroy = function () {
         jQuery(actionHTMLElement).remove();
+    };
+
+    this.setAsDoable = function () {
+        var doableElement = document.createElement('span');
+        doableElement.className = 'image perFormAction-button-done';
+        jQuery(actionHTMLElement).find('.actionDo').append(doableElement);
+        jQuery(doableElement).click(function () {
+            self.toggleDone();
+        });
+    };
+
+    this.setPosition = function() {
+        var timeFromQuarters = timeToQuarters(self.time_from);
+        var timeTillQuarters = timeToQuarters(self.time_till);
+        var timeDuration = timeTillQuarters - timeFromQuarters;
+        
+        jQuery(actionHTMLElement).css('top', timeFromQuarters * heightPerUnitPosition);
+        jQuery(actionHTMLElement).css('height', timeDuration * heightPerUnitPosition);
     };
 
     /***********************************/
@@ -187,13 +221,44 @@ function Action(data) {
     function buildActionHTML() {
         var actionElement = document.createElement('div');
         actionElement.className = 'perFormAction';
-        actionElement.innerHTML =
-            "    <div class='perFormActionId'></div>" +
-                "    <span class='perFormAction-button-done'></span>" +
-                "    <span class='perFormActionTitle'>" + self.title + "    </span>" +
-                "    <span class='perFormAction-button-important'></span>" +
-                "    <span class='perFormAction-button-urgent'></span>";
+        actionElement.innerHTML = "" +
+            "<div class='perFormActionId'></div>" +
+            "<div class='actionDo'></div>" +
+            "<div class='perFormActionTitle'><span class='ftype_contentC'>" + self.title + "    </span></div>" +
+            "<div class='actionExtras'>" +
+            "</div>";
+
+        if (self.important) {
+            makeImportant(actionElement);
+        }
+
+        if (self.urgent) {
+            makeUrgent(actionElement);
+        }
+
+        if (self.routine_id) {
+            makePartOfRoutine(actionElement);
+        }
+
         return actionElement;
+    }
+
+    function makePartOfRoutine(actionElement) {
+        var routineElement = document.createElement('span');
+        routineElement.className = 'image perFormAction-extra-routine';
+        jQuery(actionElement).find('.actionExtras').append(routineElement);
+    }
+
+    function makeImportant(actionElement) {
+        var importantElement = document.createElement('span');
+        importantElement.className = 'image perFormAction-extra-important';
+        jQuery(actionElement).find('.actionExtras').append(importantElement);
+    }
+
+    function makeUrgent(actionElement) {
+        var urgentElement = document.createElement('span');
+        urgentElement.className = 'image perFormAction-extra-urgent';
+        jQuery(actionElement).find('.actionExtras').append(urgentElement);
     }
 }
 
@@ -223,4 +288,20 @@ function getDateTimeFromString(date, time) {
         return '';
     }
     return dateTime;
+}
+
+function timeToQuarters(time)
+{
+    var timePieces = time.split(':');
+    var hour = parseInt(timePieces[0]);
+    var minutes = parseInt(timePieces[1]);
+
+    // Base time is 06:00, so counting from there.
+    var hourAux = hour - 6;
+    
+    // Calculating total amount of minutes
+    var totalMinutes = hourAux * 60 + minutes;
+    
+    // And finally calculating amount of hour quarters this time has.    
+    return (totalMinutes / 15);
 }

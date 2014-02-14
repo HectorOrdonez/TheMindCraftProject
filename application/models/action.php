@@ -51,6 +51,7 @@ class Action extends Model
         $rawActionArray = array(
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'routine_id' => $this->routine_id,
             'title' => $this->title,
             'date_creation' => $this->date_creation->format('d/m/Y'),
             'date_todo' => (is_null($this->date_todo)) ? '' : $this->date_todo->format('d/m/Y'),

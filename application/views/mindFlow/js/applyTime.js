@@ -466,10 +466,7 @@ function RoutineDialog() {
         }
     }
 
-    function initWeeklyRepetitionSelector($element, content) {
-        console.log('Init weekly repetition!');
-        console.log(content);
-        
+    function initWeeklyRepetitionSelector($element, content) {        
         if (null == content) {
             $element.html('1');
         } else {
@@ -477,10 +474,7 @@ function RoutineDialog() {
         }
     }
 
-    function initWeekdaysSelector($element, content) {
-        console.log('Init weekdays selector!');
-        console.log(content);
-        
+    function initWeekdaysSelector($element, content) {        
         if (null == content) {
             content = '1111100';
         }
