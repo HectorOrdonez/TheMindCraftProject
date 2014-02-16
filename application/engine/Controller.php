@@ -38,6 +38,7 @@ class Controller extends engineController
 
         $this->_view->addLibrary('public/js/external/jquery-1.10.1.js');
         $this->_view->addLibrary('public/js/general.js');
+        $this->_view->addLibrary('public/js/tools.js');
 
         $this->_view->setMeta('description', array(
             'name' => 'description',

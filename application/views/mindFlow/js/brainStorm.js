@@ -13,11 +13,26 @@ function BrainStorm($element, callback) {
     // Step content
     var $workspace;
 
-    // Initializing BrainStorm
+    /***********************************/
+    /** Construct                     **/
+    /***********************************/
+
     $workspace = $element;
-    $workspace.empty();
     $workspace.html(builtStepContent());
     builtGrid(callback);
+
+    /***********************************/
+    /** Public functions              **/
+    /***********************************/
+
+    this.close = function (afterFadeOut) {
+        $workspace.fadeOut(
+            function () {
+                $workspace.empty();
+                afterFadeOut();
+            }
+        );
+    };
 
     /***********************************/
     /** Private functions             **/
@@ -77,7 +92,7 @@ function BrainStorm($element, callback) {
         table.addHeaderElement(headerRow.toHTML());
         table.addFooterElement(footerRow.toHTML());
 
-        loadBrainStorm(table, function() {
+        loadBrainStorm(table, function () {
             callback();
             // Initializing page focus on the add input
             jQuery('#inputNewIdea').focus();
@@ -241,9 +256,9 @@ function BrainStorm($element, callback) {
         }).done(function (rawData) {
                 var data = jQuery.parseJSON(rawData);
                 var newRow = {
-                    id : data.id,
-                    title : data.title,
-                    date_creation : data.date_creation
+                    id: data.id,
+                    title: data.title,
+                    date_creation: data.date_creation
                 };
 
                 table.addContentData(newRow);
@@ -264,7 +279,7 @@ function BrainStorm($element, callback) {
 function loadBrainStorm(table, callback) {
     var url = root_url + 'mindFlow/getIdeas';
     var data = {step: 'brainStorm'};
-    
+
     jQuery.ajax({
         type: 'post',
         url: url,
@@ -274,13 +289,20 @@ function loadBrainStorm(table, callback) {
             var i, data;
             var jsonObject = jQuery.parseJSON(dataList);
 
-            for (i = 0; i < jsonObject.length; i++) {
+            for (i = 0; i < jsonObject['missions'].length; i++) {
                 data = {
-                    id: jsonObject[i]['id'],
-                    title: jsonObject[i]['title'],
-                    date_creation: jsonObject[i]['date_creation']
+                    id: jsonObject['missions'][i]['id'],
+                    title: jsonObject['missions'][i]['title'],
+                    date_creation: jsonObject['missions'][i]['date_creation']
                 };
-
+                table.addContentData(data);
+            }
+            for (i = 0; i < jsonObject['routines'].length; i++) {
+                data = {
+                    id: jsonObject['routines'][i]['id'],
+                    title: jsonObject['routines'][i]['title'],
+                    date_creation: jsonObject['routines'][i]['date_creation']
+                };
                 table.addContentData(data);
             }
             callback();

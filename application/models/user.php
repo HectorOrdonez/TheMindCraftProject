@@ -32,7 +32,9 @@ class User extends Model
 
     static $has_many = array(
         array('idea', 'class_name' => 'Idea'),
-        array('mission', 'through' => 'Idea', 'class_name' => 'Mission')
+        array('mission', 'through' => 'Idea', 'class_name' => 'Mission'),
+        array('routine', 'through' => 'Idea', 'class_name' => 'Mission'),
+        array('action', 'class_name' => 'Action')
     );
     
 }

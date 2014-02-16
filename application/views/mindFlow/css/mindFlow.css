@@ -88,7 +88,7 @@
 
 /** Style for the step container **/
 #stepContent {
-    margin-top: 50px;
+    overflow: hidden;
 }
 
 /**********************************************************************************************************************/
@@ -363,6 +363,19 @@
     background: url('./../../../../public/images/Routine.png') no-repeat;
 }
 
+/** showRoutinesWrapper style **/
+#showRoutinesWrapper {
+    margin: 10px 0 0 50px;
+    height: 30px;
+    display: none;
+    cursor: pointer;
+}
+#showRoutinesWrapper span {
+    height: 30px;
+    line-height: 30px;
+    float: left;
+}
+
 /** ApplyTime dialogs style **/
 
 /** Container **/
@@ -620,7 +633,182 @@
     background-color: #dfd9c2;
 }
 
-
 /**********************************************************************************************************************/
 /**                                          PerForm section styles                                                  **/
-    /**********************************************************************************************************************/
+/**********************************************************************************************************************/
+
+/** PerForm Layout styles **/
+#perFormLayout {
+    height: 615px; /** header 30px + 19 hours x 30px = 570 + bottom 15px **/
+    display: none;
+}
+
+.perFormColumn .blockHeader {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    background-color: #2a2724;
+    text-align: center;
+}
+
+.perFormColumn {
+    position: relative;
+    height: 100%;
+    float: left;
+    z-index: 1;
+}
+
+.perFormColumn .hourList {
+    position: absolute;
+    width: 100%;
+    height: 585px; /** perFormColumn height (615px) - perFormColumn header (30px) **/
+}
+
+#perFormYesterday {
+    width: 200px;
+}
+
+#perFormToday {
+    width: 400px;
+}
+
+#perFormTomorrow {
+    width: 140px;
+}
+
+#perFormUnlisted {
+    margin-left: 30px;
+    width: 170px;
+}
+#perFormUnlisted .blockHeader {
+    background-color: transparent;
+}
+
+.dayBlock li {
+    width: 100%;
+    height: 29px;
+    border-bottom: 1px solid #b9a889;
+}
+
+/** Time Markup styles **/
+.timeMarkups ul {
+    margin-top: 45px;
+}
+
+.timeMarkups li {
+    height: 30px;
+    line-height: 30px;
+    width: 30px;
+    text-align: center;
+}
+
+/** Action block styles **/
+.perFormAction {
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    z-index: 2;
+    text-align: center;
+
+    -moz-box-shadow: 2px 2px 5px #b9a889;
+    -webkit-box-shadow: 2px 2px 5px #b9a889;
+    box-shadow: 2px 2px 5px #b9a889;    
+}
+
+#perFormYesterday .perFormAction {
+    background-color: #5e5755;
+}
+
+#perFormTomorrow .perFormAction {
+    background-color: #b9a889;
+}
+
+/** Pair today actions **/
+
+#perFormToday .perFormAction:nth-child(2n+1) {
+    background-color: #dfd9c2;
+}
+
+/** Odd today actions **/
+#perFormToday .perFormAction {
+    background-color: #f4f2ef;
+}
+
+/** Pair unlisted actions **/
+
+#perFormUnlisted .perFormAction:nth-child(2n+1) {
+    background-color: #dfd9c2;
+}
+
+/** Odd unlisted actions **/
+#perFormUnlisted .perFormAction {
+    background-color: #f4f2ef;
+}
+
+
+/** Inner Action styles **/
+
+.perFormActionTitle {
+    position: absolute;
+    top: 50%;
+    margin-top: -15px;
+    left: 50%;
+}
+
+.perFormActionTitle span {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 30px;
+}
+
+#perFormToday .perFormActionTitle{
+    width: 300px;
+    margin-left: -150px;
+}
+
+#perFormYesterday .perFormActionTitle{
+    width: 160px;
+    margin-left: -70px;
+}
+
+#perFormTomorrow .perFormActionTitle{
+    width: 120px;
+    margin-left: -60px;
+}
+
+#perFormUnlisted .perFormAction {
+    margin-bottom: 15px;
+}
+#perFormUnlisted .perFormActionTitle{
+    width: 120px;
+    margin-left: -50px;
+}
+
+.perFormAction .actionDo {
+    left: 0;
+} 
+.perFormAction .actionExtras {
+    right: 0;
+}
+.perFormAction .actionDo, .perFormAction .actionExtras {
+    position: absolute;
+    top: 50%;
+    height: 30px;
+    margin-top: -15px;
+} 
+
+.perFormAction span.image {
+} 
+
+.perFormAction span.perFormAction-extra-important {
+    background: url('./../../../../public/images/Important.png') no-repeat;
+}
+.perFormAction span.perFormAction-extra-urgent{
+    background: url('./../../../../public/images/Urgent.png') no-repeat;
+}
+.perFormAction span.perFormAction-extra-routine{
+    background: url('./../../../../public/images/Routine.png') no-repeat;
+}

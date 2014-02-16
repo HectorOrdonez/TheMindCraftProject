@@ -10,19 +10,168 @@ var applyTimeData = {};
 function ApplyTime($element, callback) {
     // Step content
     var $workspace;
+    var $showRoutines;
+    var table;
 
     var missionDialog;
     var routineDialog;
 
-    // Initializing ApplyTime
+    /***********************************/
+    /** Construct                     **/
+    /***********************************/
+
     $workspace = $element;
-    $workspace.empty();
+    $showRoutines = jQuery('#showRoutinesWrapper');
     $workspace.html(builtStepContent());
+    $showRoutines.appendTo($workspace);
+    $showRoutines.find('span').click(function () {
+        toggleShowRoutines($showRoutines);
+    });
     builtGrid(callback);
+
+    /***********************************/
+    /** Public functions              **/
+    /***********************************/
+
+    this.close = function (afterFadeOut) {
+        $workspace.fadeOut(
+            function () {
+                $showRoutines.find('span').unbind('click');
+                $workspace.after($showRoutines);
+                $showRoutines.hide();
+                applyTimeData = {};
+                $workspace.empty();
+                afterFadeOut();
+            }
+        );
+    };
 
     /***********************************/
     /** Private functions             **/
     /***********************************/
+
+    /**
+     * ApplyTime loader
+     * @param table
+     * @param callback
+     */
+    function loadApplyTime(table, callback) {
+        var url = root_url + 'mindFlow/getIdeas';
+        var data = {step: 'applyTime'};
+
+        jQuery.ajax({
+            type: 'post',
+            url: url,
+            data: data
+        }).done(
+            function (dataList) {
+                var i, data;
+                var jsonObject = jQuery.parseJSON(dataList);
+
+                for (i = 0; i < jsonObject['missions'].length; i++) {
+                    applyTimeData[jsonObject['missions'][i]['id']] = jsonObject['missions'][i];
+                    applyTimeData[jsonObject['missions'][i]['id']].type = 'mission';
+                }
+                for (i = 0; i < jsonObject['routines'].length; i++) {
+                    applyTimeData[jsonObject['routines'][i]['id']] = jsonObject['routines'][i];
+                    applyTimeData[jsonObject['routines'][i]['id']].type = 'routine';
+                }
+
+                for (var ideaId in applyTimeData) {
+                    if (applyTimeData[ideaId].type == 'routine' &&
+                        applyTimeData[ideaId].selected == false) {
+                        continue;
+                    }
+                    data = {
+                        id: applyTimeData[ideaId].id,
+                        type: applyTimeData[ideaId].type,
+                        title: applyTimeData[ideaId].title
+                    };
+                    table.addContentData(data);
+                }
+
+                initShowRoutinesOption(jsonObject['routines']);
+                callback();
+            }
+        ).fail(
+            function () {
+                setInfoMessage(jQuery('#infoDisplayer'), 'error', 'Data could not be load. Try again later.', 50000);
+            }
+        );
+    }
+
+    function initShowRoutinesOption(routineObjects) {
+        var $showRoutines = jQuery('#showRoutinesWrapper');
+        var allRoutinesShown = true;
+
+        if (0 != routineObjects.length) {
+            $showRoutines.show();
+        }
+
+        for (var i = 0; i < routineObjects.length; i++) {
+            if (routineObjects[i].selected == false) {
+                allRoutinesShown = false;
+            }
+        }
+
+        if (allRoutinesShown) {
+            $showRoutines.find('span').first().addClass('mark');
+        } else {
+            $showRoutines.find('span').first().removeClass('mark');
+        }
+    }
+
+    /**
+     * Toggles the routine vision to shown or hidden.
+     * @param $showRoutines
+     */
+    function toggleShowRoutines($showRoutines) {
+        uniqueUserRequest(function (callback) {
+            var i;
+            var $mark = $showRoutines.find('span').first();
+            var toggleTo = ($mark.hasClass('mark')) ? 'hide' : 'show';
+
+            var url = root_url + 'mindFlow/toggleShowRoutines';
+            var data = {'to': toggleTo};
+
+            // Request to the Server
+            jQuery.ajax({
+                type: 'post',
+                url: url,
+                data: data
+            }).done(function () {
+                    if (toggleTo == 'show') {
+                        for (var ideaId in applyTimeData) {
+                            if (applyTimeData[ideaId].type == 'routine' && applyTimeData[ideaId].selected == false) {
+                                applyTimeData[ideaId].selected = true;
+
+                                var data = {
+                                    id: applyTimeData[ideaId].id,
+                                    type: applyTimeData[ideaId].type,
+                                    title: applyTimeData[ideaId].title
+                                };
+                                table.addContentData(data);
+                            }
+                        }
+                        $mark.addClass('mark');
+                    } else {
+                        for (var ideaId in applyTimeData) {
+                            if (applyTimeData[ideaId].type == 'routine' && applyTimeData[ideaId].selected == true) {
+                                applyTimeData[ideaId].selected = false;
+                                table.removeContentId(findRowByIdeaId($workspace, ideaId));
+                            }
+                        }
+                        $mark.removeClass('mark');
+                    }
+
+                    callback();
+                }).fail(function (data) {
+                    var $infoDisplayer = jQuery('#infoDisplayer');
+                    setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
+                    callback();
+                });
+        });
+    }
 
     /**
      * Step Content for Selection section
@@ -53,7 +202,7 @@ function ApplyTime($element, callback) {
             });
 
         // ApplyTime Table construction
-        var table = new Table('applyTimeGrid', {
+        table = new Table('applyTimeGrid', {
             colModel: [
                 {colIndex: 'id'},
                 {colIndex: 'type'},
@@ -88,52 +237,6 @@ function ApplyTime($element, callback) {
         });
     }
 } // End ApplyTime Object
-
-/**
- * ApplyTime loader
- * @param table
- * @param callback
- */
-function loadApplyTime(table, callback) {
-    var url = root_url + 'mindFlow/getIdeas';
-    var data = {step: 'applyTime'};
-
-    jQuery.ajax({
-        type: 'post',
-        url: url,
-        data: data
-    }).done(
-        function (dataList) {
-            var i, data;
-            var jsonObject = jQuery.parseJSON(dataList);
-
-            for (i = 0; i < jsonObject['missions'].length; i++) {
-                applyTimeData[jsonObject['missions'][i]['id']] = jsonObject['missions'][i];
-                applyTimeData[jsonObject['missions'][i]['id']].type = 'mission';
-            }
-            for (i = 0; i < jsonObject['routines'].length; i++) {
-                applyTimeData[jsonObject['routines'][i]['id']] = jsonObject['routines'][i];
-                applyTimeData[jsonObject['routines'][i]['id']].type = 'routine';
-            }
-            
-            for (var ideaId in applyTimeData)
-            {
-                data = {
-                    id: applyTimeData[ideaId].id,
-                    type: applyTimeData[ideaId].type,
-                    title: applyTimeData[ideaId].title
-                };
-                table.addContentData(data);
-            }
-            
-            callback();
-        }
-    ).fail(
-        function () {
-            setInfoMessage(jQuery('#infoDisplayer'), 'error', 'Data could not be load. Try again later.', 50000);
-        }
-    );
-}
 
 /**
  * The MissionDialog object
@@ -215,14 +318,24 @@ function MissionDialog(routineDialog) {
         $applyTimeOverlay.click(function () {
             self.close('full');
         });
-        $dialogElement.find('.inputs div').click(function () {
-            var $element = jQuery(this);
-            if ($element.hasClass('hours') == true) {
-                switchHoursSelector($element, $element.html());
-            } else {
-                switchMinutesSelector($element, $element.html());
+
+        $fromHoursSelector.click(function () {
+            switchHoursSelector($fromHoursSelector, $fromHoursSelector.html());
+            if ($fromHoursSelector.html() == '23') {
+                switchHoursSelector($fromHoursSelector, $fromHoursSelector.html());
             }
+            $tillHoursSelector.html($fromHoursSelector.html());
+            switchHoursSelector($tillHoursSelector, $tillHoursSelector.html());
         });
+
+        $tillHoursSelector.click(function () {
+            switchHoursSelector($tillHoursSelector, $tillHoursSelector.html());
+        });
+
+        $dialogElement.find('.inputs .minutes').click(function () {
+            switchMinutesSelector(jQuery(this), jQuery(this).html());
+        });
+
         $moreOftenAction.click(function () {
             currentData.time_from = getTime($fromHoursSelector, $fromMinSelector);
             currentData.time_till = getTime($tillHoursSelector, $tillMinSelector);
@@ -271,7 +384,7 @@ function MissionDialog(routineDialog) {
         } else {
             $todoElement.fadeOut(function () {
                 unbindMissionEvents();
-                routineDialog.open('renewed', currentData);
+                routineDialog.open('renewed', assignedTableRow, currentData);
             });
         }
     };
@@ -452,9 +565,6 @@ function RoutineDialog() {
     }
 
     function initWeeklyRepetitionSelector($element, content) {
-        console.log('Init weekly repetition!');
-        console.log(content);
-        
         if (null == content) {
             $element.html('1');
         } else {
@@ -463,9 +573,6 @@ function RoutineDialog() {
     }
 
     function initWeekdaysSelector($element, content) {
-        console.log('Init weekdays selector!');
-        console.log(content);
-        
         if (null == content) {
             content = '1111100';
         }
@@ -484,14 +591,24 @@ function RoutineDialog() {
         $applyTimeOverlay.click(function () {
             self.close();
         });
-        $dialogElement.find('.inputs div').click(function () {
-            var $element = jQuery(this);
-            if ($element.hasClass('hours') == true) {
-                switchHoursSelector($element, $element.html());
-            } else {
-                switchMinutesSelector($element, $element.html());
+
+        $fromHoursSelector.click(function () {
+            switchHoursSelector($fromHoursSelector, $fromHoursSelector.html());
+            if ($fromHoursSelector.html() == '23') {
+                switchHoursSelector($fromHoursSelector, $fromHoursSelector.html());
             }
+            $tillHoursSelector.html($fromHoursSelector.html());
+            switchHoursSelector($tillHoursSelector, $tillHoursSelector.html());
         });
+
+        $tillHoursSelector.click(function () {
+            switchHoursSelector($tillHoursSelector, $tillHoursSelector.html());
+        });
+
+        $dialogElement.find('.inputs .minutes').click(function () {
+            switchMinutesSelector(jQuery(this), jQuery(this).html());
+        });
+
         $weeklyRepetitionSelector.click(function () {
             var $this = jQuery(this);
             switchWeeklyRepetitionSelector($this, $this.html());
@@ -598,53 +715,6 @@ function RoutineDialog() {
         setInfoMessage($infoDisplayer, 'error', err, 5000);
     };
 }
-/************************************************************************************************/
-/**     UTILITIES                                                                              **/
-/************************************************************************************************/
-
-/**
- * String containing the date in format dd/mm/yy.
- * Example: 14/04/2014
- * @param string
- */
-
-function getDateFromString(string) {
-    if (typeof(string) == 'undefined') {
-        return '';
-    }
-    var pieces = string.split('/');
-    var date = new Date(pieces[2], (pieces[1] - 1), pieces[0]);
-
-    if (date == 'Invalid Date') {
-        return '';
-    }
-    return date;
-}
-
-function validateTimeFrame(time_from, time_till) {
-    if ('' != time_from && '' != time_till) {
-        if (time_from >= time_till) {
-            throw 'From time has to be before Till time!';
-        }
-    } else if ('' != time_from || '' != time_till) {
-        throw 'A time frame needs both from and till being set.';
-    }
-}
-
-function validateDateFrame(date_start, date_finish) {
-    if ('' != date_start && !(date_start instanceof Date)) {
-        throw 'Start date is in a wrong format.';
-    }
-    if ('' != date_finish && !(date_finish instanceof Date)) {
-        throw 'Finish date is in a wrong format.';
-    }
-
-    if ('' != date_start && '' != date_finish) {
-        if (date_start > date_finish) {
-            throw 'Starting date must be after finishing one!';
-        }
-    }
-}
 
 /**
  * Builds a weekdays string.
@@ -734,6 +804,7 @@ function switchMinutesSelector($element, content) {
 }
 
 /**
+ * Expects two jQuery elements which html content are hours and minutes.
  * Builds a time string [00:00], if possible. If not, returns empty string.
  * @param $hours
  * @param $minutes
@@ -769,4 +840,20 @@ function setDataFromTable(tableRow, data) {
 
     // Changing data
     applyTimeData[data.id] = data;
+}
+
+function findRowByIdeaId($location, ideaId) {
+    var rowId;
+
+    var colIds = $location.find('.cell.col_id');
+    jQuery(colIds).each(function (colId) {
+        if (jQuery(this).html() == ideaId) {
+            rowId = jQuery(this).closest('.row').attr('id');
+        }
+    });
+
+    if (typeof(rowId) == 'undefined') {
+        throw 'Not found';
+    }
+    return rowId;
 }

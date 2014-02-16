@@ -25,11 +25,26 @@ function Prioritize($element, callback) {
     // Step content
     var $workspace;
 
-    // Initializing Prioritize
+    /***********************************/
+    /** Construct                     **/
+    /***********************************/
+    
     $workspace = $element;
-    $workspace.empty();
     $workspace.html(builtStepContent());
     builtGrid(callback);
+
+    /***********************************/
+    /** Public functions              **/
+    /***********************************/
+
+    this.close = function (afterFadeOut) {
+        $workspace.fadeOut(
+            function () {
+                $workspace.empty();
+                afterFadeOut();
+            }
+        );
+    };
 
     /***********************************/
     /** Private functions             **/
@@ -187,17 +202,27 @@ function loadPrioritize(table, callback) {
             var i, data;
             var jsonObject = jQuery.parseJSON(dataList);
 
-            for (i = 0; i < jsonObject.length; i++) {
+            for (i = 0; i < jsonObject['missions'].length; i++) {
                 data = {
-                    id: jsonObject[i]['id'],
-                    title: jsonObject[i]['title'],
-                    date_creation: jsonObject[i]['date_creation'],
-                    urgent: jsonObject[i]['urgent'],
-                    important: jsonObject[i]['important']
+                    id: jsonObject['missions'][i]['id'],
+                    title: jsonObject['missions'][i]['title'],
+                    date_creation: jsonObject['missions'][i]['date_creation'],
+                    urgent: jsonObject['missions'][i]['urgent'],
+                    important: jsonObject['missions'][i]['important']
                 };
-
                 table.addContentData(data);
             }
+            for (i = 0; i < jsonObject['routines'].length; i++) {
+                data = {
+                    id: jsonObject['routines'][i]['id'],
+                    title: jsonObject['routines'][i]['title'],
+                    date_creation: jsonObject['routines'][i]['date_creation'],
+                    urgent: jsonObject['routines'][i]['urgent'],
+                    important: jsonObject['routines'][i]['important']
+                };
+                table.addContentData(data);
+            }
+            
             callback();
         }
     ).fail(

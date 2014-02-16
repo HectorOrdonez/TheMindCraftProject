@@ -74,4 +74,25 @@ class Mission extends Model
         }
         return $missionArray;
     }
+
+    /**
+     * Turns this mission into an action.
+     * Creates the action with its data based on this mission.
+     * Calls to this mission idea's delete method, which will delete this mission record too.
+     */
+    public function turnIntoAction()
+    {
+        Action::create(array(
+            'user_id' => $this->idea->user_id,
+            'title' => $this->idea->title,
+            'date_creation' => date('Y-m-d'),
+            'date_todo' => ('' == $this->date_todo)? null : $this->date_todo->format('Y-m-d'),
+            'time_from' => $this->time_from,
+            'time_till' => $this->time_till,
+            'important' => $this->idea->important,
+            'urgent' => $this->idea->urgent
+        ));
+        
+        $this->idea->delete();
+    }
 }
