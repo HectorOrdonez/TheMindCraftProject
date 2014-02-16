@@ -289,13 +289,20 @@ function loadBrainStorm(table, callback) {
             var i, data;
             var jsonObject = jQuery.parseJSON(dataList);
 
-            for (i = 0; i < jsonObject.length; i++) {
+            for (i = 0; i < jsonObject['missions'].length; i++) {
                 data = {
-                    id: jsonObject[i]['id'],
-                    title: jsonObject[i]['title'],
-                    date_creation: jsonObject[i]['date_creation']
+                    id: jsonObject['missions'][i]['id'],
+                    title: jsonObject['missions'][i]['title'],
+                    date_creation: jsonObject['missions'][i]['date_creation']
                 };
-
+                table.addContentData(data);
+            }
+            for (i = 0; i < jsonObject['routines'].length; i++) {
+                data = {
+                    id: jsonObject['routines'][i]['id'],
+                    title: jsonObject['routines'][i]['title'],
+                    date_creation: jsonObject['routines'][i]['date_creation']
+                };
                 table.addContentData(data);
             }
             callback();

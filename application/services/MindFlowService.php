@@ -60,73 +60,101 @@ class MindFlowService extends Service
 
         switch ($step) {
             case 'brainStorm':
-                /**
-                 * @var Idea[] $rawIdeasArray
-                 */
-                $rawIdeasArray = Idea::find('all', array('user_id' => $userId));
+                $conditions = array('selected = ? AND user_id = ?', self::SELECTED_TRUE, $userId);
+                $fields = array('id', 'title', 'date_creation');
 
-                foreach ($rawIdeasArray as $idea) {
-                    $response[] = $idea->toArray(array('id', 'title', 'date_creation'));
-                }
-                break;
-            case 'select':
-                /**
-                 * @var Idea[] $rawIdeasArray
-                 */
-                $rawIdeasArray = Idea::find('all', array('user_id' => $userId));
-
-                foreach ($rawIdeasArray as $idea) {
-                    $response[] = $idea->toArray(array('id', 'title', 'date_creation', 'selected'));
-                }
-                break;
-            case 'prioritize':
-                /**
-                 * @var Idea[] $rawIdeasArray
-                 */
-                $rawIdeasArray = Idea::find('all', array(
-                        'user_id' => $userId,
-                        'selected' => self::SELECTED_TRUE)
-                );
-
-                foreach ($rawIdeasArray as $idea) {
-                    $response[] = $idea->toArray(array('id', 'title', 'date_creation', 'important', 'urgent'));
-                }
-                break;
-            case 'applyTime':
                 // Getting missions
-                $response['missions'] = array();
-                /**
-                 * @var Mission[] $rawMissionsArray
-                 */
-                $rawMissionsArray = Mission::all(array(
-                    'joins' => array('idea'),
-                    'conditions' => array(
-                        'selected = ? AND user_id = ?', self::SELECTED_TRUE, $userId
-                    )));
-
-                foreach ($rawMissionsArray as $mission) {
-                    $response['missions'][] = $mission->toArray(array('id', 'title', 'date_todo', 'time_from', 'time_till'));
-                }
+                $response['missions'] = $this->getMissions($fields, $conditions);
 
                 // Getting routines
-                $response['routines'] = array();
-                /**
-                 * @var Routine[] $rawRoutinesArray
-                 */
-                $rawRoutinesArray = Routine::all(array(
-                    'joins' => array('idea'),
-                    'conditions' => array(
-                        'selected = ? AND user_id = ?', self::SELECTED_TRUE, $userId
-                    )));
+                $response['routines'] = $this->getRoutines($fields, $conditions);
+                break;
+            case 'select':
+                $conditions = array('selected = ? AND user_id = ?', self::SELECTED_TRUE, $userId);
+                $fields = array('id', 'title', 'date_creation', 'selected');
 
-                foreach ($rawRoutinesArray as $routine) {
-                    $response['routines'][] = $routine->toArray(array('id', 'title', 'frequency_days', 'frequency_weeks', 'date_start', 'date_finish', 'time_from', 'time_till'));
-                }
+                // Getting missions
+                $response['missions'] = $this->getMissions($fields, $conditions);
+
+                // Getting routines
+                $response['routines'] = $this->getRoutines($fields, $conditions);
+                break;
+            case 'prioritize':
+                $conditions = array('selected = ? AND user_id = ?', self::SELECTED_TRUE, $userId);
+                $fields = array('id', 'title', 'date_creation', 'important', 'urgent');
+
+                // Getting missions
+                $response['missions'] = $this->getMissions($fields, $conditions);
+
+                // Getting routines
+                $response['routines'] = $this->getRoutines($fields, $conditions);
+                break;
+            case 'applyTime':
+                $conditions = array('user_id = ?', $userId);
+                $missionFields = array('id', 'title', 'date_todo', 'time_from', 'time_till');
+                $routineFields = array('id', 'title', 'selected', 'frequency_days', 'frequency_weeks', 'date_start', 'date_finish', 'time_from', 'time_till');
+
+                // Getting missions
+                $response['missions'] = $this->getMissions($missionFields, $conditions);
+
+                // Getting routines
+                $response['routines'] = $this->getRoutines($routineFields, $conditions);
                 break;
             default:
                 throw new Exception('Unexpected step ' . $step . ' ');
         }
 
+        return $response;
+    }
+
+    /**
+     * Given passed conditions, requests the missions for this user.
+     * Returns them in an array with passed fields.
+     *
+     * @param $fields
+     * @param $conditions
+     * @return array
+     */
+    private function getMissions($fields, $conditions)
+    {
+        $response = array();
+
+        /**
+         * @var Mission[] $rawMissionsArray
+         */
+        $rawMissionsArray = Mission::all(array(
+            'joins' => array('idea'),
+            'conditions' => $conditions));
+
+        foreach ($rawMissionsArray as $mission) {
+            $response[] = $mission->toArray($fields);
+        }
+        return $response;
+    }
+
+    /**
+     * Given passed conditions, requests the routines for this user.
+     * Returns them in an array with passed fields.
+     *
+     * @param $fields
+     * @param $conditions
+     * @return array
+     */
+    private function getRoutines($fields, $conditions)
+    {
+        $response = array();
+
+        /**
+         * @var Routine[] $rawRoutinesArray
+         */
+        $rawRoutinesArray = Routine::all(array(
+                'joins' => array('idea'),
+                'conditions' => $conditions)
+        );
+
+        foreach ($rawRoutinesArray as $routine) {
+            $response[] = $routine->toArray($fields);
+        }
         return $response;
     }
 
@@ -335,6 +363,7 @@ class MindFlowService extends Service
         $routine->date_finish = $dateFinish;
         $routine->time_from = $timeFrom;
         $routine->time_till = $timeTill;
+        $routine->last_update = null;
         $routine->save();
     }
 
@@ -430,8 +459,83 @@ class MindFlowService extends Service
         return $response;
     }
 
-    public function generateActions()
+    private function generateActions($userId)
     {
+        // Missions to Actions
+        /**
+         * @var Mission[] $missions
+         */
+        $missions = Mission::all(array(
+            'joins' => array('idea'),
+            'conditions' => array(
+                'selected = ? AND user_id = ?', self::SELECTED_TRUE, $userId
+            )));
 
+        foreach ($missions as $mission) {
+            $mission->turnIntoAction();
+        }
+
+        // Generating routine Actions
+        /**
+         * @var Routine[] $routines
+         */
+        $routines = Routine::all(array(
+                'joins' => array('idea'),
+                'conditions' => array('user_id = ?', $userId))
+        );
+
+        foreach ($routines as $routine) {
+            $routine->generateAction();
+        }
+    }
+
+    /**
+     * Toggles the Action date_done from date to empty or from empty to current date.
+     *
+     * @param int $userId User id
+     * @param int $actionId Action id
+     * @return array Action id with the new date_done, which can be a date or empty string-
+     * @throws Exception If Action being toggled is not found or not owned by user.
+     */
+    public function toggleActionDoneState($userId, $actionId)
+    {
+        /**
+         * @var Action $action
+         */
+        $action = Action::find_by_pk($actionId);
+
+        if (is_null($action) or $action->user_id != $userId) {
+            throw new Exception('The action trying to do or undo does not exist or does not belong to you.');
+        }
+
+        if ($action->date_done == null) {
+            $action->date_done = date('Y-m-d');
+
+        } else {
+            $action->date_done = null;
+        }
+
+        $action->save();
+        return $action->toArray(array('id', 'date_done'));
+    }
+
+    public function toggleShowRoutines($userId, $to)
+    {
+        $setToSelect = ($to == 'show') ? self::SELECTED_TRUE : self::SELECTED_FALSE;
+
+        /**
+         * @var Routine[] $routinesList
+         */
+        $routinesList = Routine::all(array(
+            'joins' => array('idea'),
+            'conditions' => array(
+                'selected != ? AND user_id = ?', $setToSelect, $userId
+            )
+        ));
+
+        foreach ($routinesList as $routine) {
+            $routine->idea->selected = $setToSelect;
+            $routine->idea->save();
+        }
     }
 }

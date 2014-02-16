@@ -85,7 +85,7 @@ function Select($element, callback) {
         );
 
         // Select Table construction
-        var table = new Table('selectGrid', {
+        table = new Table('selectGrid', {
             colModel: [
                 {colIndex: 'id'},
                 {colIndex: 'title', classList: ['ftype_contentA']},
@@ -343,17 +343,26 @@ function loadSelect(table, callback) {
         function (dataList) {
             var i, data;
             var jsonObject = jQuery.parseJSON(dataList);
-
-            for (i = 0; i < jsonObject.length; i++) {
+            
+            for (i = 0; i < jsonObject['missions'].length; i++) {
                 data = {
-                    id: jsonObject[i]['id'],
-                    title: jsonObject[i]['title'],
-                    date_creation: jsonObject[i]['date_creation'],
-                    selected: jsonObject[i]['selected']
+                    id: jsonObject['missions'][i]['id'],
+                    title: jsonObject['missions'][i]['title'],
+                    date_creation: jsonObject['missions'][i]['date_creation'],
+                    selected: jsonObject['missions'][i]['selected']
                 };
-
                 table.addContentData(data);
             }
+            for (i = 0; i < jsonObject['routines'].length; i++) {
+                data = {
+                    id: jsonObject['routines'][i]['id'],
+                    title: jsonObject['routines'][i]['title'],
+                    date_creation: jsonObject['routines'][i]['date_creation'],
+                    selected: jsonObject['routines'][i]['selected']
+                };
+                table.addContentData(data);
+            }
+
             callback();
         }
     ).fail(

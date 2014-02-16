@@ -5,7 +5,7 @@
  * Description: PerForm JS Library
  * Date: 13/02/14 23:00
  */
-var baseHeight = 30;
+var baseHeight = 60;
 var heightPerUnitPosition = 7.5;
 
 function PerForm($element, callback) {
@@ -44,7 +44,6 @@ function PerForm($element, callback) {
 
     initDates();
     buildLayout();
-
     loadData();
 
     /***********************************/
@@ -73,14 +72,14 @@ function PerForm($element, callback) {
         afterTomorrow = new Date();
 
         // Removing time from today date
-        today.setHours(6, 0, 0);
+        today.setHours(5, 59, 0);
 
         yesterday.setDate(today.getDate() - 1);
-        yesterday.setHours(6, 0, 0);
+        yesterday.setHours(5, 59, 0);
         tomorrow.setDate(today.getDate() + 1);
-        tomorrow.setHours(6, 0, 0);
+        tomorrow.setHours(5, 59, 0);
         afterTomorrow.setDate(today.getDate() + 2);
-        afterTomorrow.setHours(0, 0, 0);
+        afterTomorrow.setHours(5, 59, 0);
     }
 
     function buildLayout() {
@@ -105,7 +104,6 @@ function PerForm($element, callback) {
                     actionList.push(newAction);
                     setActionLocation(newAction);
                 }
-
                 callback();
             }
         ).fail(
@@ -117,7 +115,8 @@ function PerForm($element, callback) {
 
     function setActionLocation(action) {
         var actionDateTime = getDateTimeFromString(action.date_todo, action.time_from);
-
+        var errMsg;
+        
         if (actionDateTime == '') {
             action.setAsDoable();
             action.showOn($unlistedLoc);
@@ -125,7 +124,7 @@ function PerForm($element, callback) {
         }
 
         if (actionDateTime < yesterday) {
-            var errMsg = 'This action [' + action.id + '] is set to be done in the past beyond yesterday';
+            errMsg = 'This action [' + action.id + '] is set to be done in the past beyond yesterday';
             setInfoMessage($infoDisplayer, 'error', errMsg, 5000);
             console.error(errMsg);
             return;
@@ -151,12 +150,31 @@ function PerForm($element, callback) {
             return;
         }
 
-        var errMsg = 'This action [' + action.id + '] is set to be done in the future beyond tomorrow.';
+        errMsg = 'This action [' + action.id + '] is set to be done in the future beyond tomorrow.';
         setInfoMessage($infoDisplayer, 'error', errMsg, 5000);
         console.error(errMsg);
     }
 }
 
+/**
+ * Action object.
+ *
+ * Public methods
+ *  showOn($location) - Appends this Action html in the indicated place.
+ *  toggleDone() - Requests to server to toggle this action done state. Changes the related Mark state.
+ *  setAsDoable() - Allows this action to be set as done or undone, and therefore shows a button in its left side.
+ *  setPosition - Requests this Action to be set in the column depending on its time_from and time_till.
+ *  destroy - Removes this action html.
+ *
+ *  Private methods
+ *      buildActionHTML - Builds the basic Action HTML with startup data.
+ *      makePartOfRoutine - Indicates this Action as part of a routine, showing the Routine image at right.
+ *      makeImportant - Indicates this Action as important, showing the Important image at right.
+ *      makeUrgent - Indicates this Action as urgent, showing the Urgent image at right.
+ *
+ * @param data Related Action data.
+ * @constructor
+ */
 function Action(data) {
     /***********************************/
     /** Construct                     **/
@@ -178,40 +196,62 @@ function Action(data) {
     /***********************************/
     /** Public functions              **/
     /***********************************/
+
     this.showOn = function ($location) {
         jQuery(actionHTMLElement).appendTo($location);
     };
 
     this.toggleDone = function () {
-        if (self.date_done == '') {
-            self.date_done = 'something';
-            jQuery(actionHTMLElement).find('.perFormAction-button-done').addClass('done');
-        } else {
-            self.date_done = '';
-            jQuery(actionHTMLElement).find('.perFormAction-button-done').removeClass('done');
-        }
-    };
+        uniqueUserRequest(function (callback) {
+            var url = root_url + 'mindFlow/toggleActionDoneState';
+            var data = {'id': self.id};
 
-    this.destroy = function () {
-        jQuery(actionHTMLElement).remove();
+            // Request to the Server
+            jQuery.ajax({
+                type: 'post',
+                url: url,
+                data: data
+            }).done(function (data) {
+                    var jsonObject = jQuery.parseJSON(data);
+                    self.date_done = jsonObject['date_done'];
+                    // Toggling succeed in server-side. Proceeding in client-side.
+                    var $actionDoneButton = jQuery(actionHTMLElement).find('.mindCraft-button-done');
+
+                    if ($actionDoneButton.hasClass('mark')) {
+                        $actionDoneButton.removeClass('mark');
+                    } else {
+                        $actionDoneButton.addClass('mark');
+                    }
+                    callback();
+                }).fail(function (data) {
+                    var $infoDisplayer = jQuery('#infoDisplayer');
+                    setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
+                    callback();
+                });
+        });
     };
 
     this.setAsDoable = function () {
         var doableElement = document.createElement('span');
-        doableElement.className = 'image perFormAction-button-done';
+        doableElement.className = (self.date_done == '') ? 'image mindCraft-button-done' : 'image mindCraft-button-done done';
+
         jQuery(actionHTMLElement).find('.actionDo').append(doableElement);
         jQuery(doableElement).click(function () {
             self.toggleDone();
         });
     };
 
-    this.setPosition = function() {
+    this.setPosition = function () {
         var timeFromQuarters = timeToQuarters(self.time_from);
         var timeTillQuarters = timeToQuarters(self.time_till);
         var timeDuration = timeTillQuarters - timeFromQuarters;
-        
-        jQuery(actionHTMLElement).css('top', timeFromQuarters * heightPerUnitPosition);
+
+        jQuery(actionHTMLElement).css('top', baseHeight + timeFromQuarters * heightPerUnitPosition);
         jQuery(actionHTMLElement).css('height', timeDuration * heightPerUnitPosition);
+    };
+
+    this.destroy = function () {
+        jQuery(actionHTMLElement).remove();
     };
 
     /***********************************/
@@ -260,48 +300,4 @@ function Action(data) {
         urgentElement.className = 'image perFormAction-extra-urgent';
         jQuery(actionElement).find('.actionExtras').append(urgentElement);
     }
-}
-
-
-/************************************************************************************************/
-/**     UTILITIES                                                                              **/
-/************************************************************************************************/
-
-/**
- * String containing the date in format dd/mm/yy.
- * String containing the time in format hh:mm.
- * Example: 14/04/2014 14:00
- * @param date
- * @param time
- */
-
-function getDateTimeFromString(date, time) {
-    if (typeof(date) == 'undefined' || typeof(time) == 'undefined') {
-        return '';
-    }
-
-    var datePieces = date.split('/');
-    var timePieces = time.split(':');
-    var dateTime = new Date(datePieces[2], (datePieces[1] - 1), datePieces[0], timePieces[0], timePieces[1]);
-
-    if (dateTime == 'Invalid Date') {
-        return '';
-    }
-    return dateTime;
-}
-
-function timeToQuarters(time)
-{
-    var timePieces = time.split(':');
-    var hour = parseInt(timePieces[0]);
-    var minutes = parseInt(timePieces[1]);
-
-    // Base time is 06:00, so counting from there.
-    var hourAux = hour - 6;
-    
-    // Calculating total amount of minutes
-    var totalMinutes = hourAux * 60 + minutes;
-    
-    // And finally calculating amount of hour quarters this time has.    
-    return (totalMinutes / 15);
 }

@@ -22,7 +22,7 @@ use \ActiveRecord\Model as Model;
  *
  * Magically accessed attributes ...
  * @property int id
- * @property int $user_id
+ * @property int user_id
  * @property string $title
  * @property string $type ['mission', 'routine']
  * @property \DateTime $date_creation

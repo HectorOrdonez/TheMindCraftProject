@@ -363,7 +363,7 @@ class mindFlow extends Controller
             $inputRoutineTimeTill = Input::build('Text', 'time_till')
                 ->addRule('minLength', 5)
                 ->addRule('maxLength', 5);
-            
+
             $inputRoutineId->validate();
             $inputRoutineFrequencyDays->validate();
             $inputRoutineFrequencyWeeks->validate();
@@ -410,7 +410,7 @@ class mindFlow extends Controller
             exit;
         }
     }
-    
+
     public function getActions()
     {
         try {
@@ -421,6 +421,60 @@ class mindFlow extends Controller
         } catch (\Exception $e) {
             header('HTTP/1.1 500 Unexpected error.');
             print $e->getMessage();
+            exit;
+        }
+    }
+
+    /**
+     * Toggles action done state.
+     * In case of setting the action to done state, returns the date_done generated.
+     */
+    public function toggleActionDoneState()
+    {
+        try {
+            $inputIdeaId = Input::build('Number', 'id')
+                ->addRule('isInt');
+
+            $inputIdeaId->validate();
+
+            $response = $this->_service->toggleActionDoneState(Session::get('userId'), $inputIdeaId->getValue());
+
+            print json_encode($response);
+
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
+    public function toggleShowRoutines()
+    {
+        try {
+            $inputTo = Input::build('Select', 'to')
+                ->addRule('availableOptions', array('show', 'hide'));
+            
+            $inputTo->validate();
+
+             $this->_service->toggleShowRoutines(Session::get('userId'), $inputTo->getValue());
+
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
             exit;
         }
     }

@@ -86,6 +86,11 @@
     <div id='infoDisplayer'></div>
 
     <!-- Helpers -->
+    <div id='showRoutinesWrapper'>
+        <span class='mindCraft-button-done'></span>
+        <span class='ftype_contentC'>Show all routines</span>
+    </div>
+
     <div id='applyTimeDialog'>
         <div class='fullOverlay' id='applyTimeOverlay'></div>
         <input type='hidden' id='ideaId'/>

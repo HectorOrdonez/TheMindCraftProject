@@ -88,6 +88,7 @@
 
 /** Style for the step container **/
 #stepContent {
+    overflow: hidden;
 }
 
 /**********************************************************************************************************************/
@@ -360,6 +361,19 @@
 
 #applyTimeGrid .action .setRoutineAction {
     background: url('./../../../../public/images/Routine.png') no-repeat;
+}
+
+/** showRoutinesWrapper style **/
+#showRoutinesWrapper {
+    margin: 10px 0 0 50px;
+    height: 30px;
+    display: none;
+    cursor: pointer;
+}
+#showRoutinesWrapper span {
+    height: 30px;
+    line-height: 30px;
+    float: left;
 }
 
 /** ApplyTime dialogs style **/
@@ -690,7 +704,7 @@
 
 /** Action block styles **/
 .perFormAction {
-    position: relative;
+    position: absolute;
     width: 100%;
     height: 30px;
     line-height: 30px;
@@ -787,17 +801,8 @@
 } 
 
 .perFormAction span.image {
-    width: 30px;
-    height: 30px;
-    display: inline-block;
 } 
 
-.perFormAction span.perFormAction-button-done {
-    background: url('./../../../../public/images/Mark.png') no-repeat;
-}
-.perFormAction span.perFormAction-button-done.done {
-    background-position: -30px 0 !important;
-}
 .perFormAction span.perFormAction-extra-important {
     background: url('./../../../../public/images/Important.png') no-repeat;
 }
