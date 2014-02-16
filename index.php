@@ -3,7 +3,7 @@
  * General TODOS in the The Mindcraft Project Application
  *
  * @todo Redirection page. Build a page that is load when User tries to go somewhere it can not go, that redirects him or her to its place (index or main).
- * @todo Find a way to build the grid nicely, pretty, coooooly :)
+ * @todo Remove shaking effect when hovering effects in the images of the Main menu and the MindFlow top menu.
  */
 
 // First thing ever, session_start.

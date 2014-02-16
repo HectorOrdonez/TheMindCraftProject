@@ -5,6 +5,7 @@
  * @date 8/01/14 15:00
  */
 
+var mindFlowGrid;
 var currentStep = '';
 
 jQuery(document).ready(function () {
@@ -51,7 +52,6 @@ jQuery(document).ready(function () {
 
 function loadCurrentStep(callback) {
     // Init parameters
-    var MindFlowGrid;
     var $stepContent = jQuery('#stepContent');
     var afterLoadCallback = function () {
         $stepContent.fadeIn();
@@ -60,29 +60,32 @@ function loadCurrentStep(callback) {
     var doAfterFadeOut = function () {
         switch (currentStep) {
             case 'step1':
-                MindFlowGrid = new BrainStorm($stepContent, afterLoadCallback);
+                mindFlowGrid = new BrainStorm($stepContent, afterLoadCallback);
                 break;
             case 'step2':
             case 'step21':
-                MindFlowGrid = new Selection($stepContent, afterLoadCallback);
+                mindFlowGrid = new Select($stepContent, afterLoadCallback);
                 break;
             case 'step22':
-                MindFlowGrid = new Prioritize($stepContent, afterLoadCallback);
+                mindFlowGrid = new Prioritize($stepContent, afterLoadCallback);
                 break;
             case 'step23':
-                MindFlowGrid = new ApplyTime($stepContent, afterLoadCallback);
+                mindFlowGrid = new ApplyTime($stepContent, afterLoadCallback);
                 break;
             case 'step3':
-                MindFlowGrid = new Prioritize();
-                //generateActionPlan(afterLoadCallback);
+                mindFlowGrid = new PerForm($stepContent, afterLoadCallback);
                 break;
         }
     };
 
     // Execute
-    $stepContent.fadeOut(function () {
-        doAfterFadeOut()
-    });
+    if (typeof(mindFlowGrid) != 'undefined') {
+        mindFlowGrid.close(function () {
+            doAfterFadeOut();
+        });
+    } else {
+        doAfterFadeOut();
+    }
 }
 
 /**

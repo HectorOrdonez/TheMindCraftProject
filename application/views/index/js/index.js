@@ -90,7 +90,7 @@ function login(callback) {
             jQuery('#loginBlock').fadeOut(function () {
                 jQuery('#loginConfirmation').fadeIn(function () {
                     setTimeout(function () {
-                        window.location = root_url + '/main';
+                        window.location = root_url + 'main';
                     }, 1000);
                 });
             });

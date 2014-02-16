@@ -24,7 +24,7 @@ abstract class Input
      */
     const MSG_EMPTY_INPUT = 'The input %s is empty.';
     const MSG_INVALID_RULE = 'The input type %s does not allow the rule %s.';
-    const MSG_INVALID_VALUE = 'Can not provide the value of the input $s because it did not pass validation.';
+    const MSG_INVALID_VALUE = 'Can not provide the value of the input %s because it did not pass validation.';
 
     /**
      * Field name related to this input.

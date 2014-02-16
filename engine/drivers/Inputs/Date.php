@@ -4,8 +4,9 @@
  * User: Hector Ordonez
  * Description:
  * Date Input.
- * 
- * @note Due the current incompatibility of Input type 'Date' (cross-browsing), Date Input must be of Text type. 
+ *
+ * @note Due the current incompatibility of Input type 'Date' (cross-browsing), Date Input must be of Text type.
+ * @todo Add rule isSet in order to disable possibility to contain an empty string
  * Date: 26/12/13 00:30
  */
 
@@ -53,7 +54,8 @@ class Date extends Input
 
     /**
      * This function checks and sets the Date input.
-     * In case no date is set, a RuleException is sent.
+     * An empty date is considered valid.
+     *
      * @throws RuleException
      * @todo Notice that, at this point, this function validates dates in Spanish format - dd/mm/yyyy i.e - 21/03/2014.
      */
@@ -67,17 +69,24 @@ class Date extends Input
 
         // Validating the Date as date.
         $this->setValue($_POST[$this->getFieldName()]);
-        
-        $amount = substr_count($this->getValue(), '/');
-        if (2 != $amount)
-        {
-            throw new RuleException($this, 'set', $this->getValue(), sprintf(self::MSG_INVALID_DATE, $this->getValue(), $this->getFieldName()));
+
+        // If value is an empty string, it does not validate it.
+        if ('' === $this->getValue()) {
+            return;
         }
-        
-        list($day, $month, $year) = explode('/', $this->getValue());
-        if (!checkdate($month, $day, $year))
-        {
-            throw new RuleException($this, 'set', $this->getValue(), sprintf(self::MSG_INVALID_DATE, $this->getValue(), $this->getFieldName()));
+        $this->validateStringAsDate($this->getValue());
+    }
+
+    private function validateStringAsDate($string)
+    {
+        $amount = substr_count($string, '/');
+        if (2 != $amount) {
+            throw new RuleException($this, 'set', $string, sprintf(self::MSG_INVALID_DATE, $string, $this->getFieldName()));
+        }
+
+        list($day, $month, $year) = explode('/', $string);
+        if (!checkdate($month, $day, $year)) {
+            throw new RuleException($this, 'set', $string, sprintf(self::MSG_INVALID_DATE, $string, $this->getFieldName()));
         }
     }
 
@@ -105,8 +114,8 @@ class Date extends Input
     {
         $inputDate = \DateTime::createFromFormat('d/m/Y', $this->getValue());
         $dateTimeMaxDate = \DateTime::createFromFormat('d/m/Y', $maxDate);
-        
-        if ($inputDate > $dateTimeMaxDate ) {
+
+        if ($inputDate > $dateTimeMaxDate) {
             throw new RuleException ($this, 'maxDate', $this->getValue(), sprintf(self::MSG_MAX_DATE_EXCEEDED, $this->getValue(), $this->getFieldName(), $maxDate));
         }
     }

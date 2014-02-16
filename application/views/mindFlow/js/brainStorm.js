@@ -7,17 +7,32 @@
  */
 
 function BrainStorm($element, callback) {
-    // Variable that contains the Grid Object.
-    var grid;
+    // Variable that contains the Table
+    var table;
 
     // Step content
     var $workspace;
 
-    // Initializing BrainStorm
+    /***********************************/
+    /** Construct                     **/
+    /***********************************/
+
     $workspace = $element;
-    $workspace.empty();
     $workspace.html(builtStepContent());
     builtGrid(callback);
+
+    /***********************************/
+    /** Public functions              **/
+    /***********************************/
+
+    this.close = function (afterFadeOut) {
+        $workspace.fadeOut(
+            function () {
+                $workspace.empty();
+                afterFadeOut();
+            }
+        );
+    };
 
     /***********************************/
     /** Private functions             **/
@@ -61,7 +76,7 @@ function BrainStorm($element, callback) {
         );
 
         // Brainstorm table construction
-        var table = new Table('brainStormGrid', {
+        table = new Table('brainStormGrid', {
             colModel: [
                 {colIndex: 'id'},
                 {colIndex: 'title', classList: ['ftype_contentA']},
@@ -77,19 +92,11 @@ function BrainStorm($element, callback) {
         table.addHeaderElement(headerRow.toHTML());
         table.addFooterElement(footerRow.toHTML());
 
-        // Brainstorm Grid parameters definition
-        var gridParameters = {
-            'url': root_url + 'mindFlow/getIdeas',
-            'extraData': {step: 'brainStorm'},
-            'eventDL': function () {
-                callback();
-                // Initializing page focus on the add input
-                jQuery('#inputNewIdea').focus();
-            }
-        };
-
-        // Brainstorm Grid construction
-        grid = new Grid(table, gridParameters);
+        loadBrainStorm(table, function () {
+            callback();
+            // Initializing page focus on the add input
+            jQuery('#inputNewIdea').focus();
+        });
 
         // Adding Event Listeners
         jQuery('#linkNewIdea').click(function () {
@@ -217,7 +224,7 @@ function BrainStorm($element, callback) {
             url: url,
             data: data
         }).done(function () {
-                grid.table.removeContentId($element.closest('.row').attr('id'));
+                table.removeContentId($element.closest('.row').attr('id'));
             }
         ).fail(function (data) {
                 setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
@@ -249,12 +256,12 @@ function BrainStorm($element, callback) {
         }).done(function (rawData) {
                 var data = jQuery.parseJSON(rawData);
                 var newRow = {
-                    id : data.id,
-                    title : data.title,
-                    date_creation : data.date_creation
+                    id: data.id,
+                    title: data.title,
+                    date_creation: data.date_creation
                 };
 
-                grid.table.addContentData(newRow);
+                table.addContentData(newRow);
                 $input.val('');
             }
         ).fail(function (data) {
@@ -262,4 +269,47 @@ function BrainStorm($element, callback) {
             }
         );
     }
+}
+
+/**
+ * BrainStorm loader
+ * @param table
+ * @param callback
+ */
+function loadBrainStorm(table, callback) {
+    var url = root_url + 'mindFlow/getIdeas';
+    var data = {step: 'brainStorm'};
+
+    jQuery.ajax({
+        type: 'post',
+        url: url,
+        data: data
+    }).done(
+        function (dataList) {
+            var i, data;
+            var jsonObject = jQuery.parseJSON(dataList);
+
+            for (i = 0; i < jsonObject['missions'].length; i++) {
+                data = {
+                    id: jsonObject['missions'][i]['id'],
+                    title: jsonObject['missions'][i]['title'],
+                    date_creation: jsonObject['missions'][i]['date_creation']
+                };
+                table.addContentData(data);
+            }
+            for (i = 0; i < jsonObject['routines'].length; i++) {
+                data = {
+                    id: jsonObject['routines'][i]['id'],
+                    title: jsonObject['routines'][i]['title'],
+                    date_creation: jsonObject['routines'][i]['date_creation']
+                };
+                table.addContentData(data);
+            }
+            callback();
+        }
+    ).fail(
+        function () {
+            setInfoMessage(jQuery('#infoDisplayer'), 'error', 'Data could not be load. Try again later.', 50000);
+        }
+    );
 }

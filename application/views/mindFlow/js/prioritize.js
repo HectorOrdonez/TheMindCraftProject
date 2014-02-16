@@ -18,26 +18,33 @@ function Prioritize($element, callback) {
     const urgentClass = 'urgent';
     /** @type {string} */
     const notUrgentClass = 'notUrgent';
-    /** @type {number} */
-    const importantState= 1;
-    /** @type {number} */
-    const notImportantState = 0;
-    /** @type {number} */
-    const urgentState= 1;
-    /** @type {number} */
-    const notUrgentState = 0;
-
-    // Variable that contains the Grid Object.
-    var grid;
+    
+    // Variable that contains the Table Object.
+    var table;
 
     // Step content
     var $workspace;
 
-    // Initializing Prioritize
+    /***********************************/
+    /** Construct                     **/
+    /***********************************/
+    
     $workspace = $element;
-    $workspace.empty();
     $workspace.html(builtStepContent());
     builtGrid(callback);
+
+    /***********************************/
+    /** Public functions              **/
+    /***********************************/
+
+    this.close = function (afterFadeOut) {
+        $workspace.fadeOut(
+            function () {
+                $workspace.empty();
+                afterFadeOut();
+            }
+        );
+    };
 
     /***********************************/
     /** Private functions             **/
@@ -66,13 +73,14 @@ function Prioritize($element, callback) {
                 new Cell({'html': 'title', 'classList': ['col_title', 'ftype_titleC']}),
                 new Cell({'html': '', 'classList': ['col_important']}),
                 new Cell({'html': '', 'classList': ['col_urgent']}),
+                new Cell({'html': '', 'classList': ['col_actions']}),
                 new Cell({'html': 'input date', 'classList': ['col_date_creation', 'ftype_titleC', 'centered']})
             ],
                 'classList': ['header']
             });
 
         // ApplyTime Table construction
-        var table = new Table('prioritizeGrid', {
+        table = new Table('prioritizeGrid', {
             colModel: [
                 {colIndex: 'id'},
                 {colIndex: 'title', classList: ['ftype_contentA']},
@@ -91,17 +99,7 @@ function Prioritize($element, callback) {
             ]});
         table.addHeaderElement(headerRow.toHTML());
 
-        // ApplyTime Grid parameters definition
-        var gridParameters = {
-            'url': root_url + 'mindFlow/getIdeas',
-            'extraData': {step: 'prioritize'},
-            'eventDL': function () {
-                callback();
-            }
-        };
-
-        // ApplyTime Grid construction
-        grid = new Grid(table, gridParameters);
+        loadPrioritize(table, callback);
 
         $grid.delegate('.importantAction', 'click', function () {
             toggleIdeaImportance(jQuery(this));
@@ -119,7 +117,6 @@ function Prioritize($element, callback) {
         // Declaring parameters
         var $infoDisplayer = jQuery('#infoDisplayer');
         var url = root_url + 'mindFlow/setIdeaImportant';
-        var ideaId = $importanceLink.html();
         var ideaCurrentState = ($importanceLink.hasClass(importantClass))? importantClass : notImportantClass;
         var ideaDesiredState = ($importanceLink.hasClass(importantClass))? notImportantClass : importantClass;
 
@@ -157,7 +154,6 @@ function Prioritize($element, callback) {
         // Declaring parameters
         var $infoDisplayer = jQuery('#infoDisplayer');
         var url = root_url + 'mindFlow/setIdeaUrgent';
-        var ideaId = $urgencyLink.html();
         var ideaCurrentState = ($urgencyLink.hasClass(urgentClass))? urgentClass : notUrgentClass;
         var ideaDesiredState = ($urgencyLink.hasClass(urgentClass))? notUrgentClass : urgentClass;
 
@@ -186,4 +182,52 @@ function Prioritize($element, callback) {
             }
         );
     }
+}
+
+/**
+ * Prioritize loader
+ * @param table
+ * @param callback
+ */
+function loadPrioritize(table, callback) {
+    var url = root_url + 'mindFlow/getIdeas';
+    var data = {step: 'prioritize'};
+
+    jQuery.ajax({
+        type: 'post',
+        url: url,
+        data: data
+    }).done(
+        function (dataList) {
+            var i, data;
+            var jsonObject = jQuery.parseJSON(dataList);
+
+            for (i = 0; i < jsonObject['missions'].length; i++) {
+                data = {
+                    id: jsonObject['missions'][i]['id'],
+                    title: jsonObject['missions'][i]['title'],
+                    date_creation: jsonObject['missions'][i]['date_creation'],
+                    urgent: jsonObject['missions'][i]['urgent'],
+                    important: jsonObject['missions'][i]['important']
+                };
+                table.addContentData(data);
+            }
+            for (i = 0; i < jsonObject['routines'].length; i++) {
+                data = {
+                    id: jsonObject['routines'][i]['id'],
+                    title: jsonObject['routines'][i]['title'],
+                    date_creation: jsonObject['routines'][i]['date_creation'],
+                    urgent: jsonObject['routines'][i]['urgent'],
+                    important: jsonObject['routines'][i]['important']
+                };
+                table.addContentData(data);
+            }
+            
+            callback();
+        }
+    ).fail(
+        function () {
+            setInfoMessage(jQuery('#infoDisplayer'), 'error', 'Data could not be load. Try again later.', 50000);
+        }
+    );
 }

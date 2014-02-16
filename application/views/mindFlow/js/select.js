@@ -2,46 +2,56 @@
  * Project: The Mindcraft Project
  * User: Hector Ordonez
  * Description:
- * Description: Selection JS Library
+ * Description: Select JS Library
  * Date: 11/01/14 14:30
  */
 
-function Selection($element, callback) {
-    /** 
-     * Constants that defines select class and values 
+function Select($element, callback) {
+    /**
+     * Constants that defines select class and values
      */
     /** @type {string} */
     const selectedClass = 'selected';
     /** @type {string} */
     const unSelectedClass = 'unSelected';
-    /** @type {number} */
-    const selectedState= 1;
-    /** @type {number} */
-    const unSelectedState = 0;
 
-    
-    // Variable that contains the Grid Object.
-    var grid;
+    // Variable that contains the table Object.
+    var table;
 
     // Step content
     var $workspace;
 
-    // Initializing Selection
+    /***********************************/
+    /** Construct                     **/
+    /***********************************/
+
     $workspace = $element;
-    $workspace.empty();
     $workspace.html(builtStepContent());
     builtGrid(callback);
+
+    /***********************************/
+    /** Public functions              **/
+    /***********************************/
+
+    this.close = function (afterFadeOut) {
+        $workspace.fadeOut(
+            function () {
+                $workspace.empty();
+                afterFadeOut();
+            }
+        );
+    };
 
     /***********************************/
     /** Private functions             **/
     /***********************************/
 
     /**
-     * Step Content for Selection section
+     * Step Content for Select section
      * @returns {string}
      */
     function builtStepContent() {
-        return "<div class='mindFlowGrid' id='selectionGrid'></div>";
+        return "<div class='mindFlowGrid' id='selectGrid'></div>";
     }
 
     /**
@@ -50,9 +60,9 @@ function Selection($element, callback) {
      */
     function builtGrid(callback) {
         // JQuery variable that stores the grid.
-        var $grid = jQuery('#selectionGrid');
+        var $grid = jQuery('#selectGrid');
 
-        // Selection header construction
+        // Select header construction
         var headerRow = new Row(
             {'cells': [
                 new Cell({'html': 'id', 'classList': ['col_id']}),
@@ -64,7 +74,7 @@ function Selection($element, callback) {
                 'classList': ['header']
             });
 
-        // Selection footer construction
+        // Select footer construction
         var footerRow = new Row(
             {'cells': [
                 new Cell({
@@ -74,19 +84,19 @@ function Selection($element, callback) {
             ], 'classList': ['footer']}
         );
 
-        // Selection Table construction
-        var table = new Table('selectionGrid', {
+        // Select Table construction
+        table = new Table('selectGrid', {
             colModel: [
                 {colIndex: 'id'},
                 {colIndex: 'title', classList: ['ftype_contentA']},
                 {colIndex: 'selected'},
                 {colIndex: 'actions', customContent: function (rowData) {
                     var selectValue = (rowData.selected) ? selectedClass : unSelectedClass;
-                    
+
                     var selectAction = '<div class="action"><a class="selectAction ' + selectValue + '">' + rowData.id + '</a></div>';
                     var editAction = '<div class="action"><a class="editAction">' + rowData.id + '</a></div>';
                     var delAction = '<div class="action"><a class="delAction">' + rowData.id + '</a></div>';
-                    
+
                     return '<div class="actionBox">' + selectAction + editAction + delAction + '</div>';
                 }},
                 {colIndex: 'date_creation', classList: ['ftype_contentA', 'centered']}
@@ -95,19 +105,10 @@ function Selection($element, callback) {
         table.addHeaderElement(headerRow.toHTML());
         table.addFooterElement(footerRow.toHTML());
 
-        // Selection Grid parameters definition
-        var gridParameters = {
-            'url': root_url + 'mindFlow/getIdeas',
-            'extraData': {step: 'select'},
-            'eventDL': function () {
-                callback();
-                // Initializing page focus on the add input
-                jQuery('#inputNewIdea').focus();
-            }
-        };
-
-        // Selection Grid construction
-        grid = new Grid(table, gridParameters);
+        loadSelect(table, function () {
+            callback();
+            jQuery('#inputNewIdea').focus();
+        });
 
         // Adding effects to the grid buttons
         jQuery('#linkNewIdea').click(function () {
@@ -240,7 +241,7 @@ function Selection($element, callback) {
             url: url,
             data: data
         }).done(function () {
-                grid.table.removeContentId($element.closest('.row').attr('id'));
+                table.removeContentId($element.closest('.row').attr('id'));
             }
         ).fail(function (data) {
                 setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
@@ -272,13 +273,13 @@ function Selection($element, callback) {
         }).done(function (rawData) {
                 var data = jQuery.parseJSON(rawData);
                 var newRow = {
-                    id : data.id,
-                    title : data.title,
-                    date_creation : data.date_creation,
-                    selected : data.selected
+                    id: data.id,
+                    title: data.title,
+                    date_creation: data.date_creation,
+                    selected: data.selected
                 };
-                
-                grid.table.addContentData(newRow);
+
+                table.addContentData(newRow);
                 $input.val('');
             }
         ).fail(function (data) {
@@ -289,15 +290,14 @@ function Selection($element, callback) {
 
     /**
      * Selects or un-selects this idea.
-     * 
+     * @param $clickedLink
      */
     function selectIdea($clickedLink) {
         // Declaring parameters
         var $infoDisplayer = jQuery('#infoDisplayer');
         var url = root_url + 'mindFlow/setIdeaSelection';
-        var ideaId = $clickedLink.html();
-        var ideaCurrentState = ($clickedLink.hasClass(selectedClass))? selectedClass : unSelectedClass;
-        var ideaDesiredState = ($clickedLink.hasClass(selectedClass))? unSelectedClass : selectedClass;
+        var ideaCurrentState = ($clickedLink.hasClass(selectedClass)) ? selectedClass : unSelectedClass;
+        var ideaDesiredState = ($clickedLink.hasClass(selectedClass)) ? unSelectedClass : selectedClass;
 
         var data = {
             'id': $clickedLink.html(),
@@ -317,11 +317,57 @@ function Selection($element, callback) {
             }
         ).fail(function (data) {
                 setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
-                
+
                 // Restoring previous visuals
                 $clickedLink.removeClass(ideaDesiredState);
                 $clickedLink.addClass(ideaCurrentState);
             }
         );
     }
+}
+
+/**
+ * Select loader
+ * @param table
+ * @param callback
+ */
+function loadSelect(table, callback) {
+    var url = root_url + 'mindFlow/getIdeas';
+    var data = {step: 'select'};
+
+    jQuery.ajax({
+        type: 'post',
+        url: url,
+        data: data
+    }).done(
+        function (dataList) {
+            var i, data;
+            var jsonObject = jQuery.parseJSON(dataList);
+            
+            for (i = 0; i < jsonObject['missions'].length; i++) {
+                data = {
+                    id: jsonObject['missions'][i]['id'],
+                    title: jsonObject['missions'][i]['title'],
+                    date_creation: jsonObject['missions'][i]['date_creation'],
+                    selected: jsonObject['missions'][i]['selected']
+                };
+                table.addContentData(data);
+            }
+            for (i = 0; i < jsonObject['routines'].length; i++) {
+                data = {
+                    id: jsonObject['routines'][i]['id'],
+                    title: jsonObject['routines'][i]['title'],
+                    date_creation: jsonObject['routines'][i]['date_creation'],
+                    selected: jsonObject['routines'][i]['selected']
+                };
+                table.addContentData(data);
+            }
+
+            callback();
+        }
+    ).fail(
+        function () {
+            setInfoMessage(jQuery('#infoDisplayer'), 'error', 'Data could not be load. Try again later.', 50000);
+        }
+    );
 }

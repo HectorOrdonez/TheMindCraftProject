@@ -19,7 +19,7 @@
     <div id="adminWelcome">
         <div id='captainAdminHere'></div>
         <div class='' id='helloMe'>
-            <span class='ftype_titleA1'>Hello, </span><span class='ftype_titleA2'><?php echo $this->getParameter('userName'); ?></span><span class='ftype_titleA3'>!</span>
+            <span class='ftype_titleA1'>Hello, </span><span class='ftype_titleA2' data-field='username'><?php echo $this->getParameter('userName'); ?></span><span class='ftype_titleA3'>!</span>
         </div>
     </div>
     <div id="adminActions">
