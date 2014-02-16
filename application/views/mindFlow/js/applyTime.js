@@ -384,7 +384,7 @@ function MissionDialog(routineDialog) {
         } else {
             $todoElement.fadeOut(function () {
                 unbindMissionEvents();
-                routineDialog.open('renewed', currentData);
+                routineDialog.open('renewed', assignedTableRow, currentData);
             });
         }
     };

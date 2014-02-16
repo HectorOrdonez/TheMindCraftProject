@@ -90,15 +90,16 @@ class MindFlowService extends Service
                 $response['routines'] = $this->getRoutines($fields, $conditions);
                 break;
             case 'applyTime':
-                $conditions = array('user_id = ?', $userId);
+                $missionConditions = array('selected = ? AND user_id = ?', self::SELECTED_TRUE, $userId);
+                $routineConditions = array('user_id = ?', $userId);
                 $missionFields = array('id', 'title', 'date_todo', 'time_from', 'time_till');
                 $routineFields = array('id', 'title', 'selected', 'frequency_days', 'frequency_weeks', 'date_start', 'date_finish', 'time_from', 'time_till');
 
                 // Getting missions
-                $response['missions'] = $this->getMissions($missionFields, $conditions);
+                $response['missions'] = $this->getMissions($missionFields, $missionConditions);
 
                 // Getting routines
-                $response['routines'] = $this->getRoutines($routineFields, $conditions);
+                $response['routines'] = $this->getRoutines($routineFields, $routineConditions);
                 break;
             default:
                 throw new Exception('Unexpected step ' . $step . ' ');
