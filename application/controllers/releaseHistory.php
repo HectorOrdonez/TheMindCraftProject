@@ -34,12 +34,15 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.291', '13/02/2013', array (
-            '[Debug] - Fixed issue in Settings page where Username could not be changed.',
-            '[Feature] - Documented User model class',
+        $this->_setDevelopmentVersion('0.300', '17/02/2013', array (
+            '[Feature] - Release fully functional version of MindCraft!!'
         ));
         
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.291', '13/02/2013', array (
+            '[Debug] - Fixed issue in Settings page where Username could not be changed.',
+            '[Feature] - Documented User model class',
+        ));
         $this->_addHistoryLog('0.290', '11/02/2013', array (
             '[Refactor] - Database design modified - Idea, Mission and Routines come to play. Refactored models accordingly',
             '[Feature] - ApplyTime step has been implemented and it is just AWESOME!',

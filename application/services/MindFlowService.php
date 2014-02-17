@@ -60,7 +60,7 @@ class MindFlowService extends Service
 
         switch ($step) {
             case 'brainStorm':
-                $conditions = array('selected = ? AND user_id = ?', self::SELECTED_TRUE, $userId);
+                $conditions = array('user_id = ?', $userId);
                 $fields = array('id', 'title', 'date_creation');
 
                 // Getting missions
@@ -70,7 +70,7 @@ class MindFlowService extends Service
                 $response['routines'] = $this->getRoutines($fields, $conditions);
                 break;
             case 'select':
-                $conditions = array('selected = ? AND user_id = ?', self::SELECTED_TRUE, $userId);
+                $conditions = array('user_id = ?', $userId);
                 $fields = array('id', 'title', 'date_creation', 'selected');
 
                 // Getting missions
@@ -442,12 +442,14 @@ class MindFlowService extends Service
         $rawActionsArray = Action::find('all', array(
                 'conditions' => array(
                     'user_id = ? AND
-                    date_todo IS NULL AND (
-                        date_done IS NULL OR 
-                            date_done BETWEEN DATE(NOW() - INTERVAL 1 DAY) AND DATE(NOW() + INTERVAL 1 DAY)
+                    (
+                        date_todo IS NULL AND (
+                            date_done IS NULL OR 
+                                date_done BETWEEN DATE(NOW() - INTERVAL 1 DAY) AND DATE(NOW() + INTERVAL 1 DAY)
+                            )
+                        OR (
+                            date_todo BETWEEN DATE(NOW() - INTERVAL 1 DAY) AND DATE(NOW() + INTERVAL 1 DAY)
                         )
-                    OR (
-                        date_todo BETWEEN DATE(NOW() - INTERVAL 1 DAY) AND DATE(NOW() + INTERVAL 1 DAY)
                     )',
                     $userId
                 ))

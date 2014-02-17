@@ -7,18 +7,6 @@
  */
 
 function Prioritize($element, callback) {
-    /**
-     * Constant that defines important and urgent class and values
-     */
-    /** @type {string} */
-    const importantClass = 'important';
-    /** @type {string} */
-    const notImportantClass = 'notImportant';
-    /** @type {string} */
-    const urgentClass = 'urgent';
-    /** @type {string} */
-    const notUrgentClass = 'notUrgent';
-    
     // Variable that contains the Table Object.
     var table;
 
@@ -28,7 +16,7 @@ function Prioritize($element, callback) {
     /***********************************/
     /** Construct                     **/
     /***********************************/
-    
+
     $workspace = $element;
     $workspace.html(builtStepContent());
     builtGrid(callback);
@@ -87,11 +75,11 @@ function Prioritize($element, callback) {
                 {colIndex: 'important'},
                 {colIndex: 'urgent'},
                 {colIndex: 'actions', customContent: function (rowData) {
-                    var importantValue = (rowData.important) ? importantClass : notImportantClass;
-                    var urgentValue = (rowData.urgent) ? urgentClass : notUrgentClass;
+                    var importantValue = (rowData.important) ? 'mark' : '';
+                    var urgentValue = (rowData.urgent) ? 'mark' : '';
 
-                    var importantAction = '<div class="action"><a class="importantAction ' + importantValue + '">' + rowData.id + '</a></div>';
-                    var urgentAction = '<div class="action"><a class="urgentAction ' + urgentValue + '">' + rowData.id + '</a></div>';
+                    var importantAction = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-important clickable ' + importantValue + '">' + rowData.id + '</a></div>';
+                    var urgentAction = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-urgent clickable' + urgentValue + '">' + rowData.id + '</a></div>';
 
                     return '<div class="actionBox">' + importantAction + urgentAction + '</div>';
                 }},
@@ -101,10 +89,10 @@ function Prioritize($element, callback) {
 
         loadPrioritize(table, callback);
 
-        $grid.delegate('.importantAction', 'click', function () {
+        $grid.delegate('.mindCraft-ui-button-important', 'click', function () {
             toggleIdeaImportance(jQuery(this));
         });
-        $grid.delegate('.urgentAction', 'click', function () {
+        $grid.delegate('.mindCraft-ui-button-urgent', 'click', function () {
             toggleIdeaUrgency(jQuery(this));
         });
     }
@@ -117,17 +105,12 @@ function Prioritize($element, callback) {
         // Declaring parameters
         var $infoDisplayer = jQuery('#infoDisplayer');
         var url = root_url + 'mindFlow/setIdeaImportant';
-        var ideaCurrentState = ($importanceLink.hasClass(importantClass))? importantClass : notImportantClass;
-        var ideaDesiredState = ($importanceLink.hasClass(importantClass))? notImportantClass : importantClass;
+        var marked = $importanceLink.hasClass('mark');
 
         var data = {
             'id': $importanceLink.html(),
-            'important': !($importanceLink.hasClass(importantClass))
+            'important': !(marked)
         };
-
-        // Now, changing the visuals
-        $importanceLink.removeClass(ideaCurrentState);
-        $importanceLink.addClass(ideaDesiredState);
 
         // Request to the Server
         jQuery.ajax({
@@ -135,13 +118,14 @@ function Prioritize($element, callback) {
             url: url,
             data: data
         }).done(function () {
-            }
-        ).fail(function (data) {
+                // Now, changing the visuals
+                if (marked) {
+                    $importanceLink.removeClass('mark');
+                } else {
+                    $importanceLink.addClass('mark');
+                }
+            }).fail(function (data) {
                 setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
-
-                // Restoring previous visuals
-                $importanceLink.removeClass(ideaDesiredState);
-                $importanceLink.addClass(ideaCurrentState);
             }
         );
     }
@@ -150,35 +134,32 @@ function Prioritize($element, callback) {
      * Toggles the Idea urgency.
      *
      */
-    function toggleIdeaUrgency ($urgencyLink) {
+    function toggleIdeaUrgency($urgencyLink) {
         // Declaring parameters
         var $infoDisplayer = jQuery('#infoDisplayer');
         var url = root_url + 'mindFlow/setIdeaUrgent';
-        var ideaCurrentState = ($urgencyLink.hasClass(urgentClass))? urgentClass : notUrgentClass;
-        var ideaDesiredState = ($urgencyLink.hasClass(urgentClass))? notUrgentClass : urgentClass;
+        var marked = $urgencyLink.hasClass('mark');
 
         var data = {
             'id': $urgencyLink.html(),
-            'urgent': !($urgencyLink.hasClass(urgentClass))
+            'urgent': !(marked)
         };
 
-        // Now, changing the visuals
-        $urgencyLink.removeClass(ideaCurrentState);
-        $urgencyLink.addClass(ideaDesiredState);
-        
         // Request to the Server
         jQuery.ajax({
             type: 'post',
             url: url,
             data: data
         }).done(function () {
+                // Now, changing the visuals
+                if (marked) {
+                    $urgencyLink.removeClass('mark');
+                } else {
+                    $urgencyLink.addClass('mark');
+                }
             }
         ).fail(function (data) {
                 setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
-
-                // Restoring previous visuals
-                $urgencyLink.removeClass(ideaDesiredState);
-                $urgencyLink.addClass(ideaCurrentState);
             }
         );
     }
@@ -222,7 +203,7 @@ function loadPrioritize(table, callback) {
                 };
                 table.addContentData(data);
             }
-            
+
             callback();
         }
     ).fail(

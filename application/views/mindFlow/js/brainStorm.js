@@ -82,8 +82,8 @@ function BrainStorm($element, callback) {
                 {colIndex: 'title', classList: ['ftype_contentA']},
                 {colIndex: 'actions', customContent: function (rowData) {
                     var actionBox = '<div class="actionBox">';
-                    var editAction = '<div class="action"><a class="editAction">' + rowData.id + '</a></div>';
-                    var delAction = '<div class="action"><a class="delAction">' + rowData.id + '</a></div>';
+                    var editAction = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-edit multi clickable">' + rowData.id + '</a></div>';
+                    var delAction = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-delete multi clickable">' + rowData.id + '</a></div>';
                     return actionBox + editAction + delAction + '</div>';
                 }},
                 {colIndex: 'date_creation', classList: ['ftype_contentA', 'centered']}
@@ -111,10 +111,10 @@ function BrainStorm($element, callback) {
         $grid.delegate('.content .col_title', 'click', function () {
             editDialog(jQuery(this));
         });
-        $grid.delegate('.editAction', 'click', function () {
+        $grid.delegate('.mindCraft-ui-button-edit', 'click', function () {
             editDialog(jQuery(this).parent().parent().parent().parent().find('.col_title'));
         });
-        $grid.delegate('.delAction', 'click', function () {
+        $grid.delegate('.mindCraft-ui-button-delete', 'click', function () {
             deleteIdea(jQuery(this));
         });
     }

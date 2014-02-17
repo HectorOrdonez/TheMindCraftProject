@@ -120,15 +120,8 @@
 }
 
 .mindFlowGrid .action a {
-    width: 30px;
-    height: 30px;
     display: block;
     font-size: 0;
-    cursor: pointer;
-}
-
-.mindFlowGrid .action a:hover {
-    background-position: -30px 0 !important;
 }
 
 /**********************************************************************************************************************/
@@ -177,15 +170,6 @@
 
 #brainStormGrid .col_date_creation {
     width: 150px;
-}
-
-/** BrainStorm Action icons **/
-#brainStormGrid .action .editAction {
-    background: url('./../../../../public/images/Edit.png') no-repeat;
-}
-
-#brainStormGrid .action .delAction {
-    background: url('./../../../../public/images/Delete.png') no-repeat;
 }
 
 /**********************************************************************************************************************/
@@ -240,35 +224,6 @@
     width: 150px;
 }
 
-/** Select Action icons **/
-#selectGrid .action .editAction {
-    background: url('./../../../../public/images/Edit.png') no-repeat;
-}
-
-#selectGrid .action .delAction {
-    background: url('./../../../../public/images/Delete.png') no-repeat;
-}
-
-#selectGrid .action .selectAction {
-    background: url('./../../../../public/images/SelectArrow.png') no-repeat;
-}
-
-#selectGrid .action .selectAction.unSelected {
-    background-position: 0 0 !important;
-}
-
-#selectGrid .action .selectAction.selected {
-    background-position: 0 -30px !important;
-}
-
-#selectGrid .action:hover .selectAction.unSelected {
-    background-position: -30px 0 !important;
-}
-
-#selectGrid .action:hover .selectAction.selected {
-    background-position: -30px -30px !important;
-}
-
 /**********************************************************************************************************************/
 /**                                          Prioritize section styles                                               **/
 /**********************************************************************************************************************/
@@ -289,47 +244,6 @@
 
 #prioritizeGrid .col_important, #prioritizeGrid .col_urgent {
     display: none;
-}
-
-/** Prioritize Action icons **/
-#prioritizeGrid .action .importantAction {
-    background: url('./../../../../public/images/Important.png') no-repeat;
-}
-
-#prioritizeGrid .action .urgentAction {
-    background: url('./../../../../public/images/Urgent.png') no-repeat;
-}
-
-#prioritizeGrid .action .importantAction.notImportant {
-    background-position: 0 0 !important;
-}
-
-#prioritizeGrid .action .importantAction.important {
-    background-position: -30px 0 !important;
-}
-
-#prioritizeGrid .action:hover .importantAction.notImportant {
-    background-position: 0 0 !important;
-}
-
-#prioritizeGrid .action:hover .importantAction.important {
-    background-position: -30px 0 !important;
-}
-
-#prioritizeGrid .action .urgentAction.notUrgent {
-    background-position: 0 0 !important;
-}
-
-#prioritizeGrid .action .urgentAction.urgent {
-    background-position: -30px 0 !important;
-}
-
-#prioritizeGrid .action:hover .urgentAction.notUrgent {
-    background-position: 0 0 !important;
-}
-
-#prioritizeGrid .action:hover .urgentAction.urgent {
-    background-position: -30px 0 !important;
 }
 
 /**********************************************************************************************************************/
@@ -360,7 +274,7 @@
 }
 
 #applyTimeGrid .action .setRoutineAction {
-    background: url('./../../../../public/images/Routine.png') no-repeat;
+    background: url('../../../../public/images/Circular.png') no-repeat;
 }
 
 /** showRoutinesWrapper style **/
@@ -459,7 +373,7 @@
 }
 
 #setTodoDialogWrapper #moreOftenWrapper #moreOftenAction {
-    background: url('./../../../../public/images/Routine.png') no-repeat;
+    background: url('../../../../public/images/Circular.png') no-repeat;
     width: 30px;
     height: 30px;
     display: block;
@@ -780,6 +694,7 @@
 }
 
 #perFormUnlisted .perFormAction {
+    position: relative !important;
     margin-bottom: 15px;
 }
 #perFormUnlisted .perFormActionTitle{
@@ -799,16 +714,3 @@
     height: 30px;
     margin-top: -15px;
 } 
-
-.perFormAction span.image {
-} 
-
-.perFormAction span.perFormAction-extra-important {
-    background: url('./../../../../public/images/Important.png') no-repeat;
-}
-.perFormAction span.perFormAction-extra-urgent{
-    background: url('./../../../../public/images/Urgent.png') no-repeat;
-}
-.perFormAction span.perFormAction-extra-routine{
-    background: url('./../../../../public/images/Routine.png') no-repeat;
-}

@@ -6,15 +6,7 @@
  * Date: 11/01/14 14:30
  */
 
-function Select($element, callback) {
-    /**
-     * Constants that defines select class and values
-     */
-    /** @type {string} */
-    const selectedClass = 'selected';
-    /** @type {string} */
-    const unSelectedClass = 'unSelected';
-
+function Select($element, callback) {    
     // Variable that contains the table Object.
     var table;
 
@@ -91,11 +83,11 @@ function Select($element, callback) {
                 {colIndex: 'title', classList: ['ftype_contentA']},
                 {colIndex: 'selected'},
                 {colIndex: 'actions', customContent: function (rowData) {
-                    var selectValue = (rowData.selected) ? selectedClass : unSelectedClass;
+                    var selectValue = (rowData.selected) ? 'mark': '';
 
-                    var selectAction = '<div class="action"><a class="selectAction ' + selectValue + '">' + rowData.id + '</a></div>';
-                    var editAction = '<div class="action"><a class="editAction">' + rowData.id + '</a></div>';
-                    var delAction = '<div class="action"><a class="delAction">' + rowData.id + '</a></div>';
+                    var selectAction = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-select multi clickable ' + selectValue + '">' + rowData.id + '</a></div>';
+                    var editAction = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-edit multi clickable">' + rowData.id + '</a></div>';
+                    var delAction = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-delete multi clickable">' + rowData.id + '</a></div>';
 
                     return '<div class="actionBox">' + selectAction + editAction + delAction + '</div>';
                 }},
@@ -125,13 +117,13 @@ function Select($element, callback) {
         $grid.delegate('.content .col_title', 'click', function () {
             editDialog(jQuery(this));
         });
-        $grid.delegate('.editAction', 'click', function () {
+        $grid.delegate('.mindCraft-ui-button-edit', 'click', function () {
             editDialog(jQuery(this).parent().parent().parent().parent().find('.col_title'));
         });
-        $grid.delegate('.delAction', 'click', function () {
+        $grid.delegate('.mindCraft-ui-button-delete', 'click', function () {
             deleteIdea(jQuery(this));
         });
-        $grid.delegate('.selectAction', 'click', function () {
+        $grid.delegate('.mindCraft-ui-button-select', 'click', function () {
             selectIdea(jQuery(this));
         });
     }
@@ -290,23 +282,18 @@ function Select($element, callback) {
 
     /**
      * Selects or un-selects this idea.
-     * @param $clickedLink
+     * @param $selectLink
      */
-    function selectIdea($clickedLink) {
+    function selectIdea($selectLink) {
         // Declaring parameters
         var $infoDisplayer = jQuery('#infoDisplayer');
         var url = root_url + 'mindFlow/setIdeaSelection';
-        var ideaCurrentState = ($clickedLink.hasClass(selectedClass)) ? selectedClass : unSelectedClass;
-        var ideaDesiredState = ($clickedLink.hasClass(selectedClass)) ? unSelectedClass : selectedClass;
+        var marked = ($selectLink.hasClass('mark'));
 
         var data = {
-            'id': $clickedLink.html(),
-            'selected': !($clickedLink.hasClass(selectedClass))
+            'id': $selectLink.html(),
+            'selected': !marked
         };
-
-        // Now, changing the visuals
-        $clickedLink.removeClass(ideaCurrentState);
-        $clickedLink.addClass(ideaDesiredState);
 
         // Request to the Server
         jQuery.ajax({
@@ -314,13 +301,15 @@ function Select($element, callback) {
             url: url,
             data: data
         }).done(function () {
+                // Now, changing the visuals
+                if (marked) {
+                    $selectLink.removeClass('mark');
+                } else {
+                    $selectLink.addClass('mark');
+                }
             }
         ).fail(function (data) {
                 setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
-
-                // Restoring previous visuals
-                $clickedLink.removeClass(ideaDesiredState);
-                $clickedLink.addClass(ideaCurrentState);
             }
         );
     }

@@ -87,7 +87,7 @@
 
     <!-- Helpers -->
     <div id='showRoutinesWrapper'>
-        <span class='mindCraft-button-done'></span>
+        <span class='mindCraft-ui-button mindCraft-ui-button-checkbox'></span>
         <span class='ftype_contentC'>Show all routines</span>
     </div>
 

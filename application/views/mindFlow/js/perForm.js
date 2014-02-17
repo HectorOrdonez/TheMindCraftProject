@@ -215,7 +215,7 @@ function Action(data) {
                     var jsonObject = jQuery.parseJSON(data);
                     self.date_done = jsonObject['date_done'];
                     // Toggling succeed in server-side. Proceeding in client-side.
-                    var $actionDoneButton = jQuery(actionHTMLElement).find('.mindCraft-button-done');
+                    var $actionDoneButton = jQuery(actionHTMLElement).find('.mindCraft-button-checkbox');
 
                     if ($actionDoneButton.hasClass('mark')) {
                         $actionDoneButton.removeClass('mark');
@@ -233,9 +233,10 @@ function Action(data) {
 
     this.setAsDoable = function () {
         var doableElement = document.createElement('span');
-        doableElement.className = (self.date_done == '') ? 'image mindCraft-button-done' : 'image mindCraft-button-done done';
+        var doableClasses = 'mindCraft-ui-button mindCraft-ui-button-checkbox clickable';
+        doableElement.className = (self.date_done == '') ? doableClasses : doableClasses + ' mark';
 
-        jQuery(actionHTMLElement).find('.actionDo').append(doableElement);
+        jQuery(actionHTMLElement).find('.mindCraft-ui-button-checkbox').append(doableElement);
         jQuery(doableElement).click(function () {
             self.toggleDone();
         });
@@ -285,19 +286,19 @@ function Action(data) {
 
     function makePartOfRoutine(actionElement) {
         var routineElement = document.createElement('span');
-        routineElement.className = 'image perFormAction-extra-routine';
+        routineElement.className = 'mindCraft-ui-button mindCraft-ui-button-circular';
         jQuery(actionElement).find('.actionExtras').append(routineElement);
     }
 
     function makeImportant(actionElement) {
         var importantElement = document.createElement('span');
-        importantElement.className = 'image perFormAction-extra-important';
+        importantElement.className = 'mindCraft-ui-button mindCraft-ui-button-important';
         jQuery(actionElement).find('.actionExtras').append(importantElement);
     }
 
     function makeUrgent(actionElement) {
         var urgentElement = document.createElement('span');
-        urgentElement.className = 'image perFormAction-extra-urgent';
+        urgentElement.className = 'mindCraft-ui-button mindCraft-ui-button-urgent';
         jQuery(actionElement).find('.actionExtras').append(urgentElement);
     }
 }

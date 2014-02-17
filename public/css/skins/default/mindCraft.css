@@ -266,12 +266,52 @@ input {
 /**                                                    BUTTONS                                                       **/
 /**********************************************************************************************************************/
 
-.mindCraft-button-done {
+.mindCraft-ui-button {
     width: 30px;
     height: 30px;
     display: inline-block;
-    background: url('./../../../../public/images/Mark.png') no-repeat;
 }
-.mindCraft-button-done.mark {
+
+.mindCraft-ui-button.clickable {
+    cursor: pointer;
+}
+.mindCraft-ui-button.mark {
     background-position: -30px 0 !important;
+}
+
+.mindCraft-ui-button.multi.mark {
+    background-position: 0 -30px !important;
+}
+
+.mindCraft-ui-button.multi:hover {
+    background-position: -30px 0 !important;
+}
+
+.mindCraft-ui-button.multi.mark:hover {
+    background-position: -30px -30px !important;
+}
+
+.mindCraft-ui-button-select {
+    background: url('./../../../../public/images/SelectArrow.png') no-repeat;
+}
+.mindCraft-ui-button-edit {
+    background: url('./../../../../public/images/Edit.png') no-repeat;
+}
+.mindCraft-ui-button-delete {
+    background: url('./../../../../public/images/Delete.png') no-repeat;
+}
+.mindCraft-ui-button-checkbox {
+    background: url('./../../../../public/images/Checkbox.png') no-repeat;
+}
+.mindCraft-ui-button-important {
+    background: url('./../../../../public/images/Important.png') no-repeat;
+}
+.mindCraft-ui-button-urgent{
+    background: url('./../../../../public/images/Urgent.png') no-repeat;
+}
+.mindCraft-ui-button-timing {
+    background: url('./../../../../public/images/Timing.png') no-repeat;
+}
+.mindCraft-ui-button-circular {
+    background: url('./../../../../public/images/Circular.png') no-repeat;
 }

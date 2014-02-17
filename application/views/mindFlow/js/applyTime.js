@@ -208,8 +208,8 @@ function ApplyTime($element, callback) {
                 {colIndex: 'type'},
                 {colIndex: 'title', classList: ['ftype_contentA']},
                 {colIndex: 'actions', customContent: function (row) {
-                    var setTodo = '<div class="action"><a class="setTodoAction">' + row.id + '</a></div>';
-                    var setRoutine = '<div class="action"><a class="setRoutineAction">' + row.id + '</a></div>';
+                    var setTodo = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-timing multi clickable">' + row.id + '</a></div>';
+                    var setRoutine = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-circular multi clickable">' + row.id + '</a></div>';
                     return '<div class="actionBox">' + setTodo + setRoutine + '</div>';
                 }},
                 {colIndex: 'time', classList: ['centered', 'ftype_contentA'], customContent: function (row) {
@@ -229,10 +229,10 @@ function ApplyTime($element, callback) {
         missionDialog = new MissionDialog(routineDialog);
 
         // Add Event Listeners
-        $grid.delegate('.setTodoAction', 'click', function () {
+        $grid.delegate('.mindCraft-ui-button-timing', 'click', function () {
             missionDialog.open(jQuery(this).closest('.row'), getDataFromTable(jQuery(this).html()));
         });
-        $grid.delegate('.setRoutineAction', 'click', function () {
+        $grid.delegate('.mindCraft-ui-button-circular', 'click', function () {
             routineDialog.open('new', jQuery(this).closest('.row'), getDataFromTable(jQuery(this).html()));
         });
     }
