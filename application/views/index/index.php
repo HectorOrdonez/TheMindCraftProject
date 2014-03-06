@@ -14,7 +14,7 @@
     <div id='loginBlock'>
         <form id='loginForm' action="<?php echo _SYSTEM_BASE_URL; ?>index/login" method="POST">
             <label>
-                <input id='loginInputUsername' class='ftype_contentA' type='text' name='username' placeholder="username"/>
+                <input id='loginInputUsername' class='ftype_contentB' type='text' name='username' placeholder="username"/>
             </label>
 
             <div class='errorText'>
@@ -22,7 +22,7 @@
             </div>
 
             <label>
-                <input id='loginInputPassword' class='ftype_contentA' type='password' name='password' placeholder="password"/>
+                <input id='loginInputPassword' class='ftype_contentB' type='password' name='password' placeholder="password"/>
             </label>
 
             <div class='errorText'>

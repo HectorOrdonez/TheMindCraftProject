@@ -194,9 +194,9 @@ function ApplyTime($element, callback) {
             {'cells': [
                 new Cell({'html': 'id', 'classList': ['col_id']}),
                 new Cell({'html': 'type', 'classList': ['col_type']}),
-                new Cell({'html': 'title', 'classList': ['col_title', 'ftype_titleC']}),
+                new Cell({'html': 'title', 'classList': ['col_title', 'ftype_contentA']}),
                 new Cell({'html': '', 'classList': ['col_actions']}),
-                new Cell({'html': 'time', 'classList': ['col_time', 'ftype_titleC', 'centered']})
+                new Cell({'html': 'time', 'classList': ['col_time', 'ftype_contentA', 'centered']})
             ],
                 'classList': ['header']
             });
@@ -206,13 +206,13 @@ function ApplyTime($element, callback) {
             colModel: [
                 {colIndex: 'id'},
                 {colIndex: 'type'},
-                {colIndex: 'title', classList: ['ftype_contentA']},
+                {colIndex: 'title', classList: ['ftype_contentB']},
                 {colIndex: 'actions', customContent: function (row) {
                     var setTodo = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-timing multi clickable">' + row.id + '</a></div>';
                     var setRoutine = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-circular multi clickable">' + row.id + '</a></div>';
                     return '<div class="actionBox">' + setTodo + setRoutine + '</div>';
                 }},
-                {colIndex: 'time', classList: ['centered', 'ftype_contentA'], customContent: function (row) {
+                {colIndex: 'time', classList: ['centered', 'ftype_contentB'], customContent: function (row) {
                     if (row.type != 'mission') {
                         return 'R';
                     }
@@ -558,9 +558,9 @@ function RoutineDialog() {
 
     function switchWeekdaySelection($liElement) {
         if ($liElement.hasClass('selected')) {
-            $liElement.removeClass('selected ftype_contentB');
+            $liElement.removeClass('selected ftype_contentA');
         } else {
-            $liElement.addClass('selected ftype_contentB');
+            $liElement.addClass('selected ftype_contentA');
         }
     }
 
@@ -582,7 +582,7 @@ function RoutineDialog() {
 
         for (var i = 0; i < $liElements.length; i++) {
             if (initSelection[i] == '1') {
-                jQuery($liElements[i]).addClass('selected ftype_contentB');
+                jQuery($liElements[i]).addClass('selected ftype_contentA');
             }
         }
     }

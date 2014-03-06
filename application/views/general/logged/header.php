@@ -43,13 +43,13 @@
         <div class='text'>
             <span class='ftype_logo1'>Mind</span>
             <span class='ftype_logo2'>Craft</span>
-            <span class='ftype_logo3'>&nbsp;!</span>
+            <span class='ftype_logo3'>&nbsp;.</span>
         </div>
     </a>
     <div id='headerPanel'>
 
         <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory">
-            <div class='image'>
+            <div id ='logoImgWrapper' class='image'>
                 <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>LearnMore.png' alt='Learn More'/>
             </div>
             

@@ -45,15 +45,15 @@ body {
 
 /** Font Style - logo **/
 .ftype_logo1 {
-    font: bold 36px Tahoma;
-    color: #dfd9c2;
+    font: 36px Tahoma;
+    color: #b9a889;
 }
 .ftype_logo2 {
-    font: bold 36px Tahoma;
+    font: 36px Tahoma;
     color: #e94f3b;
 }
 .ftype_logo3 {
-    font: bold 36px Tahoma;
+    font: 36px Tahoma;
     color: #2a2724;
 }
 
@@ -68,55 +68,51 @@ body {
 }
 .ftype_titleA3 {
     font: 24px Tahoma;
-    color: #5e5755;
+    color: #2a2724;
 }
 
 /** Font Style - titleB **/
 .ftype_titleB1 {
-    font: bold 16px Tahoma;
+    font: 18px Tahoma;
     color: #b9a889;
 }
 .ftype_titleB2 {
-    font: bold 16px Tahoma;
+    font: 18px Tahoma;
     color: #e94f3b;
 }
 .ftype_titleB3 {
-    font: 16px Tahoma;
-    color: #5e5755;
-}
-
-/** Font Style - titleC **/
-.ftype_titleC {
-    font: bold 16px Tahoma;
-    color: #FFF;
+    font: 18px Tahoma;
+    font: Tahoma;
+    color: #2a2724;
 }
 
 /** Font Style - contentA **/
 .ftype_contentA {
     font: 16px Tahoma;
-    color: #5e5755;
+    color: #ffffff;
 }
+
 /** Font Style - contentB **/
 .ftype_contentB {
     font: 16px Tahoma;
-    color: #FFF;
+    color: #5e5755;
 }
 /** Font Style - contentC **/
 .ftype_contentC {
     font: 16px Tahoma;
-    color: #2a2724;
+    color: #b9a889;
 }
 
-/** Font Style - successA **/
+/** Font Style - success **/
 .ftype_successA {
-    font: italic 12px Tahoma;
-    color: #008b33;
+    font: italic 14px Tahoma;
+    color: #5e5755;
 }
 
-/** Font Style - errorA **/
+/** Font Style - error **/
 .ftype_errorA {
-    font: italic 12px Tahoma;
-    color: #e94f3b;
+    font: italic 14px Tahoma;
+    color: #b9a889;
 }
 
 /*********************************************/
@@ -210,11 +206,11 @@ input {
 }
 .ui-datepicker-prev {
     float: left;
-    background: url('./../../../../public/images/toLeftArrow.png') no-repeat;
+    background: url('./../../../../public/images/ArrowToLeft.png') no-repeat;
 }
 .ui-datepicker-next{
     float: right;
-    background: url('./../../../../public/images/toRightArrow.png') no-repeat;
+    background: url('./../../../../public/images/ArrowToRight.png') no-repeat;
 }
 
 /** Calendar Content **/
@@ -292,7 +288,7 @@ input {
 }
 
 .mindCraft-ui-button-select {
-    background: url('./../../../../public/images/SelectArrow.png') no-repeat;
+    background: url('./../../../../public/images/Postpond.png') no-repeat;
 }
 .mindCraft-ui-button-edit {
     background: url('./../../../../public/images/Edit.png') no-repeat;
@@ -301,7 +297,7 @@ input {
     background: url('./../../../../public/images/Delete.png') no-repeat;
 }
 .mindCraft-ui-button-checkbox {
-    background: url('./../../../../public/images/Checkbox.png') no-repeat;
+    background: url('./../../../../public/images/CheckBox.png') no-repeat;
 }
 .mindCraft-ui-button-important {
     background: url('./../../../../public/images/Important.png') no-repeat;
@@ -313,5 +309,5 @@ input {
     background: url('./../../../../public/images/Timing.png') no-repeat;
 }
 .mindCraft-ui-button-circular {
-    background: url('./../../../../public/images/Circular.png') no-repeat;
+    background: url('./../../../../public/images/Routine.png') no-repeat;
 }

@@ -32,7 +32,7 @@
     bottom: 35px;
     left: 20px;
 
-    background: url('./../../../../../public/images/TMP_admin.png') no-repeat;
+    background: url('../../../../../public/images/Admin.png') no-repeat;
     float:left;
     display: block;
     width: 75px;
@@ -66,9 +66,9 @@
 }
 
 #admin_footer #adminActions .usersManagement {
-    background: url('./../../../../../public/images/TMP_userManagement.png');
+    background: url('./../../../../../public/images/UserManagement.png');
 }
 
 #admin_footer #adminActions .releaseHistory {
-    background: url('./../../../../../public/images/TMP_settings.png');
+    background: url('./../../../../../public/images/ReleaseHistory.png');
 }

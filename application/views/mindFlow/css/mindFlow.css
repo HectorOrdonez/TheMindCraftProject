@@ -48,20 +48,13 @@
 }
 
 #flowMenu .flowOption img {
-    width: 61px;
-    height: 61px;
+    width: 60px;
+    height: 60px;
 }
 
-#flowMenu  .imgBox {
+#flowMenu  .miniFlowOption img {
     width: 43px;
     height: 43px;
-    display: inline-block;
-    overflow: hidden;
-}
-
-#flowMenu .imgBox:hover img {
-    width: 86px;
-    margin-left: -43px;
 }
 
 #flowLine {
@@ -156,6 +149,8 @@
 
 #brainStormGrid #formEditIdea #inputEditIdeaTitle {
     width: calc(100% - 20px);
+    height: 30px;
+    line-height: 30px;
 }
 
 /** Column styles **/
@@ -274,7 +269,7 @@
 }
 
 #applyTimeGrid .action .setRoutineAction {
-    background: url('../../../../public/images/Circular.png') no-repeat;
+    background: url('../../../../public/images/Routine.png') no-repeat;
 }
 
 /** showRoutinesWrapper style **/
@@ -325,6 +320,7 @@
 #setTodoDialogWrapper #timeRangeWrapper #tillSelectionWrapper {
     height: 30px;
     background-color: #2a2724;
+    cursor: pointer;
 }
 #setTodoDialogWrapper #timeRangeWrapper .inputs {
     float: right;
@@ -373,7 +369,7 @@
 }
 
 #setTodoDialogWrapper #moreOftenWrapper #moreOftenAction {
-    background: url('../../../../public/images/Circular.png') no-repeat;
+    background: url('../../../../public/images/Routine.png') no-repeat;
     width: 30px;
     height: 30px;
     display: block;
@@ -433,6 +429,7 @@
     height: 30px;
     line-height: 30px;
     text-align: center;
+    cursor: pointer;
 
     /** Disabling text selection here **/
     -webkit-touch-callout: none;
@@ -458,6 +455,7 @@
     height: 30px;
     line-height: 30px;
     text-align: center;
+    cursor: pointer;
 }
 #setRoutineDialogWrapper #weekdaysSelectionWrapper ul li:nth-child(2n+1) {
     background-color: #dfd9c2;
@@ -514,6 +512,7 @@
 #setRoutineDialogWrapper #timeRangeWrapper #tillSelectionWrapper {
     height: 30px;
     background-color: #2a2724;
+    cursor: pointer;
 }
 #setRoutineDialogWrapper #timeRangeWrapper .inputs {
     float: right;

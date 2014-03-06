@@ -16,12 +16,12 @@ time, mark, audio, video, input {
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 0; /** The purpose of this is to avoid showing not-formatted text **/
     vertical-align: baseline;
 }
 
 html {
     overflow: auto;
+    font-size: 0; /** The purpose of this is to avoid showing not-formatted text **/
 }
 
 html, body {

@@ -48,6 +48,21 @@ jQuery(document).ready(function () {
             queue: false
         });
     });
+
+    // Little options hovering
+    $flowMenu.find('.miniFlowOption img').hover(function () {
+        jQuery(this).transition({
+            scale: 1.33,
+            duration: 150,
+            queue: false
+        });
+    }, function () {
+        jQuery(this).transition({
+            scale: 1,
+            duration: 150,
+            queue: false
+        });
+    });
 });
 
 function loadCurrentStep(callback) {
@@ -95,7 +110,7 @@ function moveFlowToCurrentStep() {
 
     var $pastFlow = jQuery('#pastFlow');
     var $futureFlow = jQuery('#futureFlow');
-    var stepSize = 171;
+    var stepSize = 169;
     var fullSize = 1000;
     var multiplier;
 

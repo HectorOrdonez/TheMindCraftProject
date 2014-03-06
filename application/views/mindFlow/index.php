@@ -41,30 +41,30 @@
                 </div>
             </li>
             <li class='miniFlowOption' id='step21'>
-                <a class='imgBox'>
+                <a>
                     <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>Select.png' alt='Select'/>
                 </a>
 
                 <div class='text'>
-                    <span class='ftype_contentA'>Select!</span>
+                    <span class='ftype_contentB'>Select!</span>
                 </div>
             </li>
             <li class='miniFlowOption' id='step22'>
-                <a class='imgBox'>
+                <a>
                     <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>Prioritize.png' alt='Prioritize'/>
                 </a>
 
                 <div class='text'>
-                    <span class='ftype_contentA'>Prioritize!</span>
+                    <span class='ftype_contentB'>Prioritize!</span>
                 </div>
             </li>
             <li class='miniFlowOption' id='step23'>
-                <a class='imgBox'>
+                <a>
                     <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>ApplyTime.png' alt='ApplyTime'/>
                 </a>
 
                 <div class='text'>
-                    <span class='ftype_contentA'>ApplyTime!</span>
+                    <span class='ftype_contentB'>ApplyTime!</span>
                 </div>
             </li>
             <li class='flowOption' id='step3'>
@@ -107,7 +107,7 @@
 
             <div id='timeRangeWrapper'>
                 <div id='fromSelectionWrapper'>
-                    <div class='text ftype_contentB'>
+                    <div class='text ftype_contentA'>
                         from:
                     </div>
                     <div class='inputs'>
@@ -116,7 +116,7 @@
                     </div>
                 </div>
                 <div id='tillSelectionWrapper'>
-                    <div class='text ftype_contentB'>
+                    <div class='text ftype_contentA'>
                         till:
                     </div>
                     <div class='inputs'>
@@ -140,7 +140,7 @@
             <div class='verticalSpace30'></div>
 
             <div id='submitTodo'>
-                <a class='ftype_titleC'>Apply Time!</a>
+                <a class='ftype_contentA'>Apply Time!</a>
             </div>
 
             <div id='setTodoInfo'></div>
@@ -151,10 +151,10 @@
         <div id='setRoutineDialogWrapper'>
 
             <div id='weeklyRepetitionWrapper'>
-                <span class='left ftype_contentB'>
+                <span class='left ftype_contentA'>
                     Repeat every
                 </span>
-                <span class='right ftype_contentB'>
+                <span class='right ftype_contentA'>
                     week
                 </span>
 
@@ -164,7 +164,7 @@
             <div class='verticalSpace30'></div>
 
             <div id='weekdaysSelectionWrapper'>
-                <p class='ftype_contentB'>
+                <p class='ftype_contentA'>
                     Repeat on:
                 </p>
                 <ul class='weekdays ftype_contentC'>
@@ -182,7 +182,7 @@
 
             <div id='dateRangeWrapper'>
                 <div id='startsSelectionWrapper'>
-                    <label for='startDate' class='text ftype_contentB'>
+                    <label for='startDate' class='text ftype_contentA'>
                         starts:
                     </label>
 
@@ -191,7 +191,7 @@
                     </div>
                 </div>
                 <div id='finishesSelectionWrapper'>
-                    <label for='finishDate' class='text ftype_contentB'>
+                    <label for='finishDate' class='text ftype_contentA'>
                         finishes:
                     </label>
 
@@ -205,7 +205,7 @@
 
             <div id='timeRangeWrapper'>
                 <div id='fromSelectionWrapper'>
-                    <div class='text ftype_contentB'>
+                    <div class='text ftype_contentA'>
                         from:
                     </div>
                     <div class='inputs'>
@@ -214,7 +214,7 @@
                     </div>
                 </div>
                 <div id='tillSelectionWrapper'>
-                    <div class='text ftype_contentB'>
+                    <div class='text ftype_contentA'>
                         till:
                     </div>
                     <div class='inputs'>
@@ -227,7 +227,7 @@
             <div class='verticalSpace30'></div>
 
             <div id='submitRoutine'>
-                <a class='ftype_titleC'>Apply Time!</a>
+                <a class='ftype_contentA'>Apply Time !</a>
             </div>
 
             <div id='setRoutineInfo'></div>
@@ -237,7 +237,7 @@
 
     <div id='perFormLayout'>
         <div class='perFormColumn dayBlock' id='perFormYesterday'>
-            <div class='blockHeader ftype_contentB'>yesterday</div>
+            <div class='blockHeader ftype_contentA'>yesterday</div>
             <ul class='hourList'>
                 <!-- 06:00 -->
                 <li></li>
@@ -280,7 +280,7 @@
         </div>
 
         <div class='perFormColumn timeMarkups'>
-            <ul class='ftype_contentA'>
+            <ul class='ftype_contentB'>
                 <li>6</li>
                 <li>7</li>
                 <li>8</li>
@@ -304,7 +304,7 @@
         </div>
 
         <div class='perFormColumn dayBlock' id='perFormToday'>
-            <div class='blockHeader ftype_contentB'>today</div>
+            <div class='blockHeader ftype_contentA'>today</div>
             <ul class='hourList'>
                 <!-- 06:00 -->
                 <li></li>
@@ -346,7 +346,7 @@
             </ul>
         </div>
         <div class='perFormColumn timeMarkups'>
-            <ul class='ftype_contentA'>
+            <ul class='ftype_contentB'>
                 <li>6</li>
                 <li>7</li>
                 <li>8</li>
@@ -370,7 +370,7 @@
         </div>
 
         <div class='perFormColumn dayBlock' id='perFormTomorrow'>
-            <div class='blockHeader ftype_contentB'>tomorrow</div>
+            <div class='blockHeader ftype_contentA'>tomorrow</div>
             <ul class='hourList'>
                 <!-- 06:00 -->
                 <li></li>

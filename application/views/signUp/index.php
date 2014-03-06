@@ -13,7 +13,7 @@
 
 <div id='signUpBody'>
     <div id='signUpTitle'>
-        <div class='ftype_contentA'>
+        <div class='ftype_contentB'>
             New in here?
             <p id='signUpNow'>
                 SignUp now!
@@ -24,7 +24,7 @@
     <div id='signUpBlock'>
         <form id='signUpForm' action="<?php echo _SYSTEM_BASE_URL; ?>signUp/signUp" method="POST">
             <label>
-                <input id='signUpInputEmail' class='ftype_contentA' type='text' name='mail'
+                <input id='signUpInputEmail' class='ftype_contentB' type='text' name='mail'
                        placeholder="email address"/>
             </label>
 
@@ -33,7 +33,7 @@
             </div>
 
             <label>
-                <input id='signUpInputUsername' class='ftype_contentA' type='text' name='username'
+                <input id='signUpInputUsername' class='ftype_contentB' type='text' name='username'
                        placeholder="username"/>
             </label>
 
@@ -42,7 +42,7 @@
             </div>
 
             <label>
-                <input id='signUpInputPassword' class='ftype_contentA' type='password' name='password'
+                <input id='signUpInputPassword' class='ftype_contentB' type='password' name='password'
                        placeholder="password"/>
             </label>
 
@@ -79,10 +79,10 @@
     <p class='ftype_successA' id='confirmationHeader'>
         You have successfully become a MindCrafter!
     </p>
-    <p class='ftype_contentA'>
+    <p class='ftype_contentB'>
         The MindCraft admins, Hector or Zuzanna, will have to confirm you as User before being able to log in.
     </p>
-    <p class='ftype_contentA'>
+    <p class='ftype_contentB'>
         We'll send you a mail to your e-mail address when that is done!
     </p>
     

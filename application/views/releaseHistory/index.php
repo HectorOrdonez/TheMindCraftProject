@@ -11,7 +11,7 @@
 ?>
 <?php $this->printChunk('header'); ?>
 
-    <div class='ftype_contentA' id='learnMore'>
+    <div class='ftype_contentB' id='learnMore'>
         Learn More will be where you can learn to use this website. Cool, huh?<br />
 
         <div class='verticalSpace15'></div>
@@ -27,10 +27,10 @@
         <a id='showMe'><span class='ftype_titleA1'>Alright, </span><span class='ftype_titleA2'>show me </span><span class='ftype_titleA3'>what you are doing!</span></a>
     </div>
 
-    <div id='websiteHistory'>
+    <div class='ftype_contentB' id='websiteHistory'>
         <h1>
             Version <?=$this->getParameter('developmentVersion')['version']; ?> released
-            on <?=$this->getParameter('developmentVersion')['date']; ?>.
+            on <?=$this->getParameter('developmentVersion')['date']; ?>
         </h1>
 
         <ul>

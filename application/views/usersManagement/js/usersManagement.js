@@ -20,12 +20,12 @@ jQuery().ready(function () {
     var headerRow = new Row(
         {'cells': [
             new Cell({'html': 'Id', 'classList': ['col_id']}),
-            new Cell({'html': 'Username', 'classList': ['col_username', 'ftype_titleC']}),
-            new Cell({'html': 'Mail', 'classList': ['col_mail', 'ftype_titleC']}),
-            new Cell({'html': 'Role', 'classList': ['col_role', 'ftype_titleC', 'centered']}),
-            new Cell({'html': 'State', 'classList': ['col_state', 'ftype_titleC', 'centered']}),
-            new Cell({'html': 'Actions', 'classList': ['col_actions', 'ftype_titleC']}),
-            new Cell({'html': 'Last login', 'classList': ['col_last_login', 'ftype_titleC', 'centered']})
+            new Cell({'html': 'Username', 'classList': ['col_username', 'ftype_contentA']}),
+            new Cell({'html': 'Mail', 'classList': ['col_mail', 'ftype_contentA']}),
+            new Cell({'html': 'Role', 'classList': ['col_role', 'ftype_contentA', 'centered']}),
+            new Cell({'html': 'State', 'classList': ['col_state', 'ftype_contentA', 'centered']}),
+            new Cell({'html': 'Actions', 'classList': ['col_actions', 'ftype_contentA']}),
+            new Cell({'html': 'Last login', 'classList': ['col_last_login', 'ftype_contentA', 'centered']})
         ],
             'classList': ['header']
         });
@@ -34,7 +34,7 @@ jQuery().ready(function () {
     var footerRow = new Row(
         {'cells': [
             new Cell({
-                'html': '<a href="#" id="linkNewUser"></a><form id="formNewUser" action="' + root_url + 'usersManagement/createUser"><input type="text" name="newUsername" class="ftype_contentA" id="inputNewUsername" maxlength="100" /></form>',
+                'html': '<a href="#" id="linkNewUser"></a><form id="formNewUser" action="' + root_url + 'usersManagement/createUser"><input type="text" name="newUsername" class="ftype_contentB" id="inputNewUsername" maxlength="100" /></form>',
                 'classList': ['newUserCell']
             })
         ], 'classList': ['footer']}
@@ -44,10 +44,10 @@ jQuery().ready(function () {
     var table = new Table('usersManagement_grid', {
         colModel: [
             {colIndex: 'id'},
-            {colIndex: 'username', classList: ['ftype_contentA']},
-            {colIndex: 'mail', classList: ['ftype_contentA']},
-            {colIndex: 'role', classList: ['ftype_contentA', 'centered']},
-            {colIndex: 'state', classList: ['ftype_contentA', 'centered']},
+            {colIndex: 'username', classList: ['ftype_contentB']},
+            {colIndex: 'mail', classList: ['ftype_contentB']},
+            {colIndex: 'role', classList: ['ftype_contentB', 'centered']},
+            {colIndex: 'state', classList: ['ftype_contentB', 'centered']},
             {colIndex: 'actions', customContent: function (rowData) {
                 var actionBox = '<div class="actionBox">';
                 var newPassword = '<div class="action"><a class="openNewPasswordDialog">' + rowData.id + '</a></div>';
@@ -57,7 +57,7 @@ jQuery().ready(function () {
             },
                 classList: ['actions']
             },
-            {colIndex: 'last_login', classList: ['last_login', 'ftype_contentA', 'centered']}
+            {colIndex: 'last_login', classList: ['last_login', 'ftype_contentB', 'centered']}
         ]});
 
     table.addHeaderElement(headerRow.toHTML());
@@ -110,22 +110,23 @@ jQuery().ready(function () {
 function openChangePasswordDialog($element) {
     uniqueUserRequest(function (allowNewUniqueRequests) {
         var userId = $element.html();
-        var passwordBox = document.createElement('DIV');
-        passwordBox.setAttribute('id', 'passwordBox');
-        passwordBox.innerHTML = '' +
-            '<div id="passwordDialog">' +
-            '   <form id="formChangePassword" action="' + root_url + 'usersManagement/editUserPassword">' +
+        var passwordDialog = document.createElement('DIV');
+        passwordDialog.setAttribute('id', 'passwordDialog');
+        passwordDialog.innerHTML = '' +
+            '<div class="fullOverlay"></div>' +
+            '<div id="passwordDialogWrapper">' +
+            '    <form id="formChangePassword" action="' + root_url + 'usersManagement/editUserPassword">' +
             '       <input id="inputNewPassword" type="password" name="password" placeholder="Enter a new password" />' +
-            '   </form>' +
-            '   <div class="ftype_errorA" id="passwordDialogInfoDisplayer"></div>' +
-            '</div>';
-        jQuery('.bodyContent').append(passwordBox);
-        var $passwordBox = jQuery('#passwordBox');
-
+            '    </form>' +
+            '    <div class="ftype_errorA" id="passwordDialogInfoDisplayer"></div>' +
+            '</div>' +
+        jQuery('.bodyContent').append(passwordDialog);
+        var $passwordDialog = jQuery('#passwordDialog');
+        
         jQuery('.passwordInnerDialog').click(function (event) {
             event.stopPropagation();
         });
-        $passwordBox.click(function () {
+        $passwordDialog.click(function () {
             closePasswordBox()
         });
         jQuery('body').bind('keyup.editPassword', function (event) {
@@ -136,12 +137,12 @@ function openChangePasswordDialog($element) {
         jQuery('#formChangePassword').keypress(function (event) {
             if (event.which == 13) {
                 event.preventDefault();
-                submitNewPassword(userId, $passwordBox.find('#inputNewPassword').val(), closePasswordBox);
+                submitNewPassword(userId, $passwordDialog.find('#inputNewPassword').val(), closePasswordBox);
             }
         });
 
         // Show Dialog!
-        $passwordBox.fadeIn(function () {
+        $passwordDialog.fadeIn(function () {
             jQuery('#inputNewPassword').focus();
             allowNewUniqueRequests();
         });
@@ -153,16 +154,16 @@ function openChangePasswordDialog($element) {
  */
 function closePasswordBox() {
     // Defining box to close
-    var passwordBox = document.getElementById('passwordBox');
-    var $passwordBox = jQuery('#passwordBox');
+    var passwordDialog = document.getElementById('passwordDialog');
+    var $passwordDialog = jQuery('#passwordDialog');
 
     // Unbinding Escape event
     jQuery('body').unbind('keyup.editPassword');
 
     // Fading out dialog
-    $passwordBox.fadeOut(function () {
+    $passwordDialog.fadeOut(function () {
         // When dialog is faded, remove the dialog completely
-        document.getElementById('loggedContent').removeChild(passwordBox);
+        document.getElementById('loggedContent').removeChild(passwordDialog);
     });
 }
 

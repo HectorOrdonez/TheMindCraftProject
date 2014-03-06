@@ -58,11 +58,11 @@ function Prioritize($element, callback) {
         var headerRow = new Row(
             {'cells': [
                 new Cell({'html': 'id', 'classList': ['col_id']}),
-                new Cell({'html': 'title', 'classList': ['col_title', 'ftype_titleC']}),
+                new Cell({'html': 'title', 'classList': ['col_title', 'ftype_contentA']}),
                 new Cell({'html': '', 'classList': ['col_important']}),
                 new Cell({'html': '', 'classList': ['col_urgent']}),
                 new Cell({'html': '', 'classList': ['col_actions']}),
-                new Cell({'html': 'input date', 'classList': ['col_date_creation', 'ftype_titleC', 'centered']})
+                new Cell({'html': 'input date', 'classList': ['col_date_creation', 'ftype_contentA', 'centered']})
             ],
                 'classList': ['header']
             });
@@ -71,7 +71,7 @@ function Prioritize($element, callback) {
         table = new Table('prioritizeGrid', {
             colModel: [
                 {colIndex: 'id'},
-                {colIndex: 'title', classList: ['ftype_contentA']},
+                {colIndex: 'title', classList: ['ftype_contentB']},
                 {colIndex: 'important'},
                 {colIndex: 'urgent'},
                 {colIndex: 'actions', customContent: function (rowData) {
@@ -83,7 +83,7 @@ function Prioritize($element, callback) {
 
                     return '<div class="actionBox">' + importantAction + urgentAction + '</div>';
                 }},
-                {colIndex: 'date_creation', classList: ['ftype_contentA', 'centered']}
+                {colIndex: 'date_creation', classList: ['ftype_contentB', 'centered']}
             ]});
         table.addHeaderElement(headerRow.toHTML());
 

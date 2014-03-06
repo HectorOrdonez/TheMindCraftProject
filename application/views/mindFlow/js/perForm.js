@@ -215,7 +215,7 @@ function Action(data) {
                     var jsonObject = jQuery.parseJSON(data);
                     self.date_done = jsonObject['date_done'];
                     // Toggling succeed in server-side. Proceeding in client-side.
-                    var $actionDoneButton = jQuery(actionHTMLElement).find('.mindCraft-button-checkbox');
+                    var $actionDoneButton = jQuery(actionHTMLElement).find('.mindCraft-ui-button-checkbox');
 
                     if ($actionDoneButton.hasClass('mark')) {
                         $actionDoneButton.removeClass('mark');
@@ -236,7 +236,7 @@ function Action(data) {
         var doableClasses = 'mindCraft-ui-button mindCraft-ui-button-checkbox clickable';
         doableElement.className = (self.date_done == '') ? doableClasses : doableClasses + ' mark';
 
-        jQuery(actionHTMLElement).find('.mindCraft-ui-button-checkbox').append(doableElement);
+        jQuery(actionHTMLElement).find('.actionDo').append(doableElement);
         jQuery(doableElement).click(function () {
             self.toggleDone();
         });

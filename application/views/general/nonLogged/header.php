@@ -43,7 +43,7 @@
         <div class='text'>
             <span class='ftype_logo1'>Mind</span>
             <span class='ftype_logo2'>Craft</span>
-            <span class='ftype_logo3'>&nbsp;!</span>
+            <span class='ftype_logo3'>&nbsp;.</span>
         </div>
     </a>
     
