@@ -16,15 +16,24 @@
     margin: 0 auto 35px auto;
 }
 
-#header #logo {
-    position: absolute;
-    top: 35px;
-    background: url('../../../../../public/images/Logo.png');
-    width: 300px;
-    height: 70px;
+#header .logo {
+    position: relative;
+    height: 100%;
+    width: 229px;
     float: left;
+}
+#header .logo .image{
+    position: absolute;
+    bottom: 9px;
+    right: 0;
+    width: 70px;
+    height: 70px;
+}
 
-    cursor: pointer;
+#header .logo .text{
+    position: absolute;
+    left: 0;
+    bottom: 0;
 }
 
 /** Right menu **/
@@ -34,33 +43,37 @@
     margin-right: -50px;
 }
 
-#header #headerPanel a {
-    display: block;
+/** Header options **/
+#headerPanel .panelAction {
     float: left;
-
     width: 100px;
-    height: 35px;
-    margin-left: 50px;
+    margin-right: 50px;
 }
 
-#header #headerPanel a:hover {
-    background-position: -100px 0;
+#headerPanel .panelAction .image {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+}
+#headerPanel .panelAction:hover img {
+    position: relative;
+    left: -30px;
 }
 
-#header #headerPanel .learnMore {
-    background: url('../../../../../public/images/LearnMore.png') no-repeat;
+#headerPanel .panelAction .text {
+    position: relative;
+    top: -18px;
+    left: 15px;
 }
 
-#header #headerPanel .signUp {
-    background: url('../../../../../public/images/SignUp.png') no-repeat;
-}
 
 /*********************************************/
 /**                   BODY                  **/
 /*********************************************/
 
 .bodyContent {
-    max-width: 1050px;
+    max-width: 1000px;
     min-height: 200px;
     max-height: 600px;
     margin: 0 auto;

@@ -12,23 +12,18 @@
 <?php $this->printChunk('header'); ?>
 
     <div class='ftype_contentA' id='learnMore'>
-        <p>
-            Learn More will be where you can learn to use this website. Cool, huh?
-        </p>
+        Learn More will be where you can learn to use this website. Cool, huh?<br />
 
         <div class='verticalSpace15'></div>
         
-        <p>
-            Sadly though, right now it is not developed - it is not even developed what the website will do!
-        </p>
+        Sadly though, right now it is not developed - it is not even developed what the website will do!<br />
 
         <div class='verticalSpace15'></div>
-        
-        <p>
-            So a bit of patience here! In the meantime you can see all the updates: time ain't wasted for nothing here!
-        </p>
+
+        So a bit of patience here! In the meantime you can see all the updates: time ain't wasted for nothing here!<br />
         
         <div class='verticalSpace30'></div>
+        
         <a id='showMe'><span class='ftype_titleA1'>Alright, </span><span class='ftype_titleA2'>show me </span><span class='ftype_titleA3'>what you are doing!</span></a>
     </div>
 
