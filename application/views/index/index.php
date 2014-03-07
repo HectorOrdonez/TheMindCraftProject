@@ -32,12 +32,6 @@
             <div class='verticalSpace30'></div>
 
             <div id='loginSubmitBox'>
-
-                <div id='loginSubmitText'>
-                    <span class='ftype_titleA1'>Log</span><span class='ftype_titleA2'>In</span><span
-                        class='ftype_titleA3'>!</span>
-                </div>
-
                 <div id='loginImageBox'>
                     <div id='key'>
                         <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>LogIn1.png' alt='Log In!'/>
@@ -60,7 +54,7 @@
     </div>
 
     <div id='loginConfirmation'>
-        <div class='ftype_successA' id='confirmationTitle'>
+        <div class='ftype_successA'>
             Starting session ...
         </div>
     </div>
