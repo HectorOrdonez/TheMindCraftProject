@@ -72,8 +72,27 @@ function signUp(callback) {
             // Error code 400 means User did something wrong
             400: function (data) {
                 var errors = jQuery.parseJSON(data.responseText);
-                jQuery.each(errors, function (key, value) {
-                    setInfoMessage(jQuery('#' + key + 'Error'), 'error', value, 3000);
+                jQuery.each(errors, function (key, brokenRule) {
+                    var errorMessage;
+                    switch (brokenRule)
+                    {
+                        case 'set':
+                            errorMessage = 'This field is required';
+                            break;
+                        case 'minLength':
+                            errorMessage = 'too short ' + key;
+                            break;
+                        case 'maxLength':
+                            errorMessage = 'too long ' + key;
+                            break;
+                        case 'inUse':
+                            errorMessage = 'this ' + key + ' is already in use';
+                            break;
+                        default:
+                            errorMessage = 'Value not accepted.';
+                            
+                    }
+                    setInfoMessage(jQuery('#' + key + 'Error'), 'error', errorMessage, 3000);
                 });
                 callback();
             },

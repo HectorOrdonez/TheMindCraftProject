@@ -156,15 +156,38 @@ function closeAjaxInProgress(){
  * @param message - Message to display.
  * @param timeout - Time in mils of second that the message will remain displayed.
  */
+var messageTimeout = [];
 function setInfoMessage($infoDiv, type, message, timeout) {
-    $infoDiv.addClass('ftype_' + type + 'A');
-    $infoDiv.html(message);
-
-    setTimeout(function () {
-        $infoDiv.fadeOut(function () {
-            $infoDiv.html('');
-            $infoDiv.removeClass('ftype_' + type + 'A');
-            $infoDiv.fadeIn();
-        });
-    }, timeout);
+    if ($infoDiv.html() == '')
+    {
+        console.log('Setting new Info Message');
+        // No info message. Adding types.
+        $infoDiv.addClass('ftype_' + type + 'A');
+        $infoDiv.html(message);
+        
+        // Setting Timeout
+        var setTimeoutFunction = setTimeout(function () {
+            $infoDiv.fadeOut(function () {
+                $infoDiv.html('');
+                $infoDiv.removeClass('ftype_' + type + 'A');
+                $infoDiv.fadeIn();
+            });
+        }, timeout);
+        
+        // Caching for further info refreshes
+        messageTimeout[$infoDiv] = {
+            'setTimeout': setTimeoutFunction,
+            'previousType': type
+        };
+        
+        
+    } else {
+        console.log('Refreshing Info Message');
+        // Refreshing error message
+        clearInterval(messageTimeout[$infoDiv].setTimeout);
+        $infoDiv.removeClass('ftype_' + messageTimeout[$infoDiv].type + 'A');
+        $infoDiv.html('');
+        
+        setInfoMessage($infoDiv, type, message, timeout);
+    }
 }

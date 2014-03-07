@@ -78,7 +78,7 @@ class signUp extends Controller
         if (false !== $wrongInputs) {
             $errorArray = array();
             foreach ($wrongInputs as $input) {
-                $errorArray[$input->getFieldName()] = $input->getError()->getMessage();
+                $errorArray[$input->getFieldName()] = $input->getError()->getViolatedRule();
             }
             header('HTTP/1.1 400 Can not sign up with these parameters.');
             header('Content-Type: application/json');
@@ -92,11 +92,11 @@ class signUp extends Controller
             if (EXCEPTION_SIGNUP_USERNAME_IN_USE === $e->getCode()) {
                 header("HTTP/1.1 400 " . $e->getMessage());
                 header('Content-Type: application/json');
-                print json_encode(array('username' => $e->getMessage()));
+                print json_encode(array('username' => 'inUse'));
             } else if (EXCEPTION_SIGNUP_MAIL_IN_USE === $e->getCode()) {
                 header("HTTP/1.1 400 " . $e->getMessage());
                 header('Content-Type: application/json');
-                print json_encode(array('mail' => $e->getMessage()));
+                print json_encode(array('mail' => 'inUse'));
             } else {
                 header("HTTP/1.1 500 " . $e->getMessage());
                 print ('Unknown error.');
