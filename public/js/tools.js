@@ -158,7 +158,9 @@ function closeAjaxInProgress(){
  */
 var messageTimeout = [];
 function setInfoMessage($infoDiv, type, message, timeout) {
-    if (typeof(messageTimeout[$infoDiv]) === 'undefined')
+    var infoMessageKey = $infoDiv.selector;
+    
+    if (typeof(messageTimeout[infoMessageKey]) === 'undefined')
     {
         // No info message. Adding types.
         $infoDiv.addClass('ftype_' + type + 'A');
@@ -174,17 +176,16 @@ function setInfoMessage($infoDiv, type, message, timeout) {
         }, timeout);
         
         // Caching for further info refreshes
-        messageTimeout[$infoDiv] = {
+        messageTimeout[infoMessageKey] = {
             'setTimeout': setTimeoutFunction,
             'previousType': type
         };
-        
-        
     } else {
         // Refreshing error message
-        clearInterval(messageTimeout[$infoDiv].setTimeout);
-        $infoDiv.removeClass('ftype_' + messageTimeout[$infoDiv].type + 'A');
+        clearInterval(messageTimeout[infoMessageKey].setTimeout);
+        $infoDiv.removeClass('ftype_' + messageTimeout[infoMessageKey].type + 'A');
         $infoDiv.html('');
+        delete messageTimeout[infoMessageKey];
         
         setInfoMessage($infoDiv, type, message, timeout);
     }
