@@ -16,17 +16,21 @@
 </div>
 
 <div id='admin_footer'>
-    <div id="adminWelcome">
-        <div id='captainAdminHere'></div>
-        <div class='' id='helloMe'>
-            <span class='ftype_titleA1'>Hello, </span><span class='ftype_titleA2' data-field='username'><?php echo $this->getParameter('userName'); ?></span><span class='ftype_titleA3'>!</span>
+    <div id='adminFooterWrapper'>
+        
+        <div id="adminActions">
+            <a class='admin_option usersManagement hoveringShadow' href="<?php echo _SYSTEM_BASE_URL; ?>usersManagement"></a>
+            <a class='admin_option adminSettings hoveringShadow'></a>
+            <a class='admin_option releaseHistory hoveringShadow' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory"></a>
+        </div>
+        
+        <div id="adminWelcome">
+            <div class='' id='helloMe'>
+                <span class='ftype_titleC'>Welcome </span><span class='ftype_titleC' data-field='username'><?php echo $this->getParameter('userName'); ?></span><span class='ftype_titleC'>!</span>
+            </div>
+            <div id='adminLogo'></div>
         </div>
     </div>
-    <div id="adminActions">
-        <a class='admin_option usersManagement' href="<?php echo _SYSTEM_BASE_URL; ?>usersManagement"></a>
-        <a class='admin_option releaseHistory' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory"></a>
-    </div>
 </div>
-
 </body>
 </html>

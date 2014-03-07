@@ -86,6 +86,12 @@ body {
     color: #2a2724;
 }
 
+/** Font Style - titleC **/
+.ftype_titleC {
+    font: 24px Tahoma;
+    color: #fff;
+}
+
 /** Font Style - contentA **/
 .ftype_contentA {
     font: 16px Tahoma;
@@ -310,4 +316,21 @@ input {
 }
 .mindCraft-ui-button-circular {
     background: url('./../../../../public/images/Routine.png') no-repeat;
+}
+
+/**********************************************************************************************************************/
+/**                                                    SHADOWS                                                       **/
+/**********************************************************************************************************************/
+.shadowed, .hoveringShadow {
+    -webkit-filter: drop-shadow(1px 1px 2px #5e5755);
+    filter: url('./shadow.svg#drop-shadow');
+    -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=0, OffY=0, Color='#5e5755')";
+    filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=0, OffY=0, Color='#5e5755')";
+}
+
+.hoveringShadow:hover {
+    -webkit-filter: drop-shadow(0px 0px 6px #b9a889);
+    filter: url('./shadow.svg#drop-hover-shadow');
+    -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=2, OffY=2, Color='#b9a889')";
+    filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=2, OffY=2, Color='#b9a889')";
 }
