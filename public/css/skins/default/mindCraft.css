@@ -121,6 +121,12 @@ body {
     color: #b9a889;
 }
 
+/** Font Style - info **/
+.ftype_infoA {
+    font: italic 14px Tahoma;
+    color: #ffffff;
+}
+
 /*********************************************/
 /**                 INPUTS                  **/
 /*********************************************/
@@ -321,14 +327,14 @@ input {
 /**********************************************************************************************************************/
 /**                                                    SHADOWS                                                       **/
 /**********************************************************************************************************************/
-.shadowed, .hoveringShadow {
+.shadowed {
     -webkit-filter: drop-shadow(1px 1px 2px #5e5755);
     filter: url('./shadow.svg#drop-shadow');
     -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=0, OffY=0, Color='#5e5755')";
     filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=0, OffY=0, Color='#5e5755')";
 }
 
-.hoveringShadow:hover {
+.shadowedOnHover:hover {
     -webkit-filter: drop-shadow(0px 0px 6px #b9a889);
     filter: url('./shadow.svg#drop-hover-shadow');
     -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=2, OffY=2, Color='#b9a889')";

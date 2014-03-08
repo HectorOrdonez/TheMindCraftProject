@@ -152,7 +152,7 @@ function closeAjaxInProgress(){
 /**
  * This function receives a JQuery element where has to be displayed a message.
  * @param $infoDiv - JQuery Element where the message will be displayed.
- * @param type - Type of the message (success / error) that defines the font to be used.
+ * @param type - Type of the message (success | error | info) that defines the font to be used.
  * @param message - Message to display.
  * @param timeout - Time in mils of second that the message will remain displayed.
  */

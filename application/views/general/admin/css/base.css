@@ -75,3 +75,12 @@
 #admin_footer #adminActions .releaseHistory {
     background: url('./../../../../../public/images/ReleaseHistory.png');
 }
+
+/*********************************************/
+/**           Admin Info Displayer          **/
+/*********************************************/
+
+#adminInfoDisplayer {
+    line-height: 45px;
+    float: left;
+}

@@ -49,7 +49,7 @@
     
     <div id='headerPanel'>
 
-        <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory">
+        <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory" id='actionLearnMore'>
             <div class='image'>
                 <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>LearnMore.png' alt='Learn More'/>
             </div>
@@ -60,7 +60,7 @@
             </div>
         </a>
         
-        <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>signUp">
+        <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>signUp" id='actionSignUp'>
             <div class='image'>
                 <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>SignUp.png' alt='Sign Up'/>
             </div>

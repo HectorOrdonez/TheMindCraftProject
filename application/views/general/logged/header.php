@@ -48,8 +48,8 @@
     </a>
     <div id='headerPanel'>
 
-        <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory">
-            <div id ='logoImgWrapper' class='image'>
+        <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory" id='actionLearnMore'>
+            <div class='image'>
                 <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>LearnMore.png' alt='Learn More'/>
             </div>
             
@@ -59,7 +59,7 @@
             </div>
         </a>
 
-        <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>settings">
+        <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>settings" id='actionProFile'>
             <div class='image'>
                 <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>ProFile.png' alt='ProFile'/>
             </div>
@@ -70,7 +70,7 @@
             </div>
         </a>
 
-        <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>index/logout">
+        <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>index/logout" id='actionLogOut'>
             <div class='image'>
                 <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>LogOut.png' alt='LogOut'/>
             </div>
