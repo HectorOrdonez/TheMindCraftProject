@@ -8,6 +8,14 @@
 /** dark grey - 5e5755                      **/
 /** pearl - f4f2ef                          **/
 /** beige - dfd9c2                          **/
+/**                                         **/
+/** Color standards RBA                     **/
+/** black - 42, 39, 36                      **/
+/** red - 233, 79, 59                       **/
+/** mid grey - 185, 168, 137                **/
+/** dark grey - 94, 87, 85                  **/
+/** pearl - 244, 242, 239                   **/
+/** beige - 223, 217, 194                   **/
 /*********************************************/
 
 /**********************************************************************************************************************/
@@ -179,9 +187,9 @@ input {
     top: 0;
     left: 0;
     z-index: 10;
-    background-color: #5e5755;
-    opacity: .90;
-    filter: Alpha(Opacity=90);
+    background-color: #2a2724;
+    opacity: .50;
+    filter: Alpha(Opacity=50);
 }
 
 /*********************************************/
@@ -200,6 +208,11 @@ input {
 .ui-datepicker-header {
     background-color: #2a2724;
 }
+
+.ui-datepicker-calendar thead {
+    display: none;
+}
+
 .ui-datepicker-title {
     font: 16px Tahoma;
     color: #FFF;

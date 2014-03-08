@@ -301,13 +301,19 @@
 #setTodoDialogWrapper {
     position: fixed;
     width: 210px;
-    height: 420px;
+    height: 360px;
+    padding: 30px;
+    background-color: rgba(42, 39, 36, 0.5);
     top: 50%;
     left: 50%;
-    margin-left: -105px;
-    margin-top: -210px;
+    margin-left: -135px; /** width + (padding x2) / 2 **/
+    margin-top: -210px; /** height + (padding x2) / 2 **/ 
     z-index:11;
     display: none;
+}
+
+#setTodoDialogWrapper #datePickerWrapper {
+    height: 210px; /** This forces the date picker to be 210px (30px x 6 weeks + header) even when the amount of weeks the displayed month has is less than 6 **/
 }
 
 #setTodoDialogWrapper #timeRangeWrapper .text {
@@ -319,7 +325,6 @@
 #setTodoDialogWrapper #timeRangeWrapper #fromSelectionWrapper,
 #setTodoDialogWrapper #timeRangeWrapper #tillSelectionWrapper {
     height: 30px;
-    background-color: #2a2724;
     cursor: pointer;
 }
 #setTodoDialogWrapper #timeRangeWrapper .inputs {
@@ -342,42 +347,16 @@
 }
 
 #setTodoDialogWrapper #fromSelectionWrapper .inputs .hours{
-    background-color: #dfd9c2;
+    background: url('../../../../public/images/HourPicker1.png') no-repeat;
 }
 #setTodoDialogWrapper #fromSelectionWrapper .inputs .minutes{
-    background-color: #f4f2ef;
+    background: url('../../../../public/images/HourPicker2.png') no-repeat;
 }
 #setTodoDialogWrapper #tillSelectionWrapper .inputs .hours{
-    background-color: #f4f2ef;
+    background: url('../../../../public/images/HourPicker2.png') no-repeat;
 }
 #setTodoDialogWrapper #tillSelectionWrapper .inputs .minutes{
-    background-color: #dfd9c2;
-}
-
-#setTodoDialogWrapper #moreOftenWrapper {
-    background-color: #FFF;
-    height: 30px;
-}
-
-#setTodoDialogWrapper #moreOftenWrapper .text{
-    text-indent: 5px;
-    line-height: 30px;
-    float: left;
-}
-#setTodoDialogWrapper #moreOftenWrapper .action{
-    float: right;
-}
-
-#setTodoDialogWrapper #moreOftenWrapper #moreOftenAction {
-    background: url('../../../../public/images/Routine.png') no-repeat;
-    width: 30px;
-    height: 30px;
-    display: block;
-    font-size: 0;
-    cursor: pointer;
-}
-#setTodoDialogWrapper #moreOftenWrapper .action .setRoutineAction:hover {
-    background-position: -30px 0 !important;
+    background: url('../../../../public/images/HourPicker1.png') no-repeat;
 }
 
 #setTodoDialogWrapper #submitTodo {
@@ -396,11 +375,13 @@
 #setRoutineDialogWrapper {
     position: fixed;
     width: 210px;
-    height: 420px;
+    height: 360px;
+    padding: 30px;
+    background-color: rgba(42, 39, 36, 0.5);
     top: 50%;
     left: 50%;
-    margin-left: -105px;
-    margin-top: -210px;
+    margin-left: -135px; /** width + (padding x2) / 2 **/
+    margin-top: -210px; /** height + (padding x2) / 2 **/
     z-index:11;
     display: none;
 }
@@ -408,7 +389,6 @@
 #setRoutineDialogWrapper #weeklyRepetitionWrapper {
     height: 30px;
     width: 100%;
-    background-color: #2a2724;
 }
 #setRoutineDialogWrapper #weeklyRepetitionWrapper span.left {
     float: left;
@@ -423,7 +403,7 @@
     text-align: center;
 }
 #setRoutineDialogWrapper #weeklyRepetitionWrapper #weeklyRepetitionSelector {
-    background-color: #dfd9c2;
+    background: url('../../../../public/images/HourPicker1.png') no-repeat;
     float: right;
     width: 30px;
     height: 30px;
@@ -469,7 +449,6 @@
 
 #setRoutineDialogWrapper #dateRangeWrapper #startsSelectionWrapper, #setRoutineDialogWrapper #dateRangeWrapper #finishesSelectionWrapper {
     height: 30px;
-    background-color: #2a2724;
 }
 
 #setRoutineDialogWrapper #dateRangeWrapper label {
@@ -494,11 +473,13 @@
     height: 100%;
 }
 
-#setRoutineDialogWrapper #submitRoutine {
-    height: 30px;
-    line-height: 30px;
+.submitApplyTime {
     width: 100%;
     text-align: center;
+}
+.submitApplyTime a{
+    height: 30px;
+    line-height: 30px;
     cursor: pointer;
 }
 
@@ -511,7 +492,6 @@
 #setRoutineDialogWrapper #timeRangeWrapper #fromSelectionWrapper,
 #setRoutineDialogWrapper #timeRangeWrapper #tillSelectionWrapper {
     height: 30px;
-    background-color: #2a2724;
     cursor: pointer;
 }
 #setRoutineDialogWrapper #timeRangeWrapper .inputs {
@@ -534,16 +514,16 @@
 }
 
 #setRoutineDialogWrapper #fromSelectionWrapper .inputs .hours{
-    background-color: #dfd9c2;
+    background: url('../../../../public/images/HourPicker1.png') no-repeat;
 }
 #setRoutineDialogWrapper #fromSelectionWrapper .inputs .minutes{
-    background-color: #f4f2ef;
+    background: url('../../../../public/images/HourPicker2.png') no-repeat;
 }
 #setRoutineDialogWrapper #tillSelectionWrapper .inputs .hours{
-    background-color: #f4f2ef;
+    background: url('../../../../public/images/HourPicker2.png') no-repeat;
 }
 #setRoutineDialogWrapper #tillSelectionWrapper .inputs .minutes{
-    background-color: #dfd9c2;
+    background: url('../../../../public/images/HourPicker1.png') no-repeat;
 }
 
 /**********************************************************************************************************************/
