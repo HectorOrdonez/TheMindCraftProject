@@ -35,11 +35,51 @@
 <body>
 
 <div id='header'>
-    <div id='logo'></div>
+    <a class='logo' href="<?php echo _SYSTEM_BASE_URL; ?>">
+        <div class='image'>
+            <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>Logo.png' alt='The Mindcraft Project'/>
+        </div>
+
+        <div class='text'>
+            <span class='ftype_logo1'>Mind</span>
+            <span class='ftype_logo2'>Craft</span>
+            <span class='ftype_logo3'>&nbsp;.</span>
+        </div>
+    </a>
     <div id='headerPanel'>
-        <a class='option learnMore' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory"></a>
-        <a class='option profile' href="<?php echo _SYSTEM_BASE_URL; ?>settings"></a>
-        <a class='option logOut' href="<?php echo _SYSTEM_BASE_URL; ?>index/logout"></a>
+
+        <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory" id='actionLearnMore'>
+            <div class='image'>
+                <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>LearnMore.png' alt='Learn More'/>
+            </div>
+            
+            <div class='text'>
+                <span class='ftype_titleB1'>Learn</span>
+                <span class='ftype_titleB2'>More</span>
+            </div>
+        </a>
+
+        <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>settings" id='actionProFile'>
+            <div class='image'>
+                <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>ProFile.png' alt='ProFile'/>
+            </div>
+
+            <div class='text'>
+                <span class='ftype_titleB1'>Pro</span>
+                <span class='ftype_titleB2'>File</span>
+            </div>
+        </a>
+
+        <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>index/logout" id='actionLogOut'>
+            <div class='image'>
+                <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>LogOut.png' alt='LogOut'/>
+            </div>
+
+            <div class='text'>
+                <span class='ftype_titleB1'>Log</span>
+                <span class='ftype_titleB2'>Out</span>
+            </div>
+        </a>
     </div>
 </div>
 

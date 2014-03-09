@@ -101,7 +101,7 @@ class mindFlow extends Controller
         try {
             $inputIdeaName = Input::build('Text', 'title')
                 ->addRule('minLength', 5)
-                ->addRule('maxLength', 200);
+                ->addRule('maxLength', 40);
 
             $inputIdeaName->validate();
 
@@ -134,7 +134,7 @@ class mindFlow extends Controller
                 ->addRule('isInt');
             $inputIdeaName = Input::build('Text', 'title')
                 ->addRule('minLength', 5)
-                ->addRule('maxLength', 200);
+                ->addRule('maxLength', 40);
 
             $inputIdeaId->validate();
             $inputIdeaName->validate();
@@ -475,6 +475,34 @@ class mindFlow extends Controller
             exit($errorMessage);
         } catch (Exception $e) {
             header("HTTP/1.1 500 " . 'Unexpected error: ' . $e->getMessage());
+            exit;
+        }
+    }
+
+    /**
+     * Delete action request.
+     */
+    public function deleteAction()
+    {
+        try {
+            $inputActionId = Input::build('Number', 'id')
+                ->addRule('isInt');
+
+            $inputActionId->validate();
+
+            $this->_service->deleteAction(Session::get('userId'), $inputActionId->getValue());
+
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
             exit;
         }
     }

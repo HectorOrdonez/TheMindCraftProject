@@ -10,14 +10,14 @@ var keyOutside = '30px';
 
 jQuery().ready(function () {
     // Initializing parameters
-    var $loginSubmitText = jQuery('#loginSubmitText');
+    var $loginImageBox = jQuery('#loginImageBox');
     var $loginUpForm = jQuery('#loginForm');
 
     // On page start
     jQuery('#loginInputUsername').focus();
 
     // Adding Event listeners
-    $loginSubmitText.click(function () {
+    $loginImageBox.click(function () {
         userLoginRequest();
     });
 

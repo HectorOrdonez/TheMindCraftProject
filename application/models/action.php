@@ -17,6 +17,7 @@ use \ActiveRecord\Model as Model;
  * @package application\models
  *
  * Magic methods ...
+ * @method static Action find_by_id(\int $id) Returns the Action with given id.
  *
  * Magically accessed attributes ...
  * @property int id Id of this table

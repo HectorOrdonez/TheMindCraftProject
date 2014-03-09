@@ -18,10 +18,4 @@ var root_url = 'http://localhost/projects/themindcraftproject/';
  * On Document Ready...
  */
 jQuery().ready(function () {
-    /**
-     * Sets Logo to be a link to the main page.
-     */
-    jQuery('#logo').click(function() {
-        window.location.href = root_url;
-    });
 });

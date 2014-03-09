@@ -12,7 +12,6 @@
  *  PerForm step, to be implemented.
  *
  * Date: 14/01/14 18:30
- * @todo Implement PerForm page.
  */
 
 namespace application\services;
@@ -540,5 +539,25 @@ class MindFlowService extends Service
             $routine->idea->selected = $setToSelect;
             $routine->idea->save();
         }
+    }
+    /**
+     * Delete action
+     *
+     * @param int $userId User id.
+     * @param int $actionId Action id.
+     * @throws Exception If action to be deleted is not found or not owned by user.
+     */
+    public function deleteAction($userId, $actionId)
+    {
+        /**
+         * @var Action $action
+         */
+        $action = Action::find_by_id($actionId);
+
+        if (is_null($action) OR $userId != $action->user_id) {
+            throw new Exception('The action you are trying to delete does not exist or it is not yours.');
+        }
+
+        $action->delete();
     }
 }

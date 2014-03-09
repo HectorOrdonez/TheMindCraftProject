@@ -11,49 +11,76 @@
 /*********************************************/
 
 #header {
+    position: relative;
     width: 1000px;
     height: 105px;
     margin: 0 auto 35px auto;
 }
 
-#header #logo {
+#header .logo {
     position: absolute;
-    top: 35px;
-    background: url('../../../../../public/images/Logo.png');
-    width: 300px;
-    height: 70px;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 201px;
     float: left;
+}
+#header .logo .image{
+    position: absolute;
+    bottom: 9px;
+    right: 0;
+    width: 70px;
+    height: 70px;
+}
 
-    cursor: pointer;
+#header .logo .text{
+    position: absolute;
+    left: 0;
+    bottom: 0;
 }
 
 /** Right menu **/
 #header #headerPanel {
-    float: right;
-    margin-top: 70px;
-    margin-right: -50px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
-#header #headerPanel a {
-    display: block;
-    float: left;
-
+/** Header options **/
+#headerPanel .panelAction {
+    position: relative;
+    display: inline-block;
+    margin-right: 50px;
     width: 100px;
-    height: 35px;
-    margin-left: 50px;
+    height: 30px;
 }
 
-#header #headerPanel a:hover {
-    background-position: -100px 0;
+#headerPanel .panelAction .image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    overflow-x: hidden;
+}
+#headerPanel .panelAction:hover img {
+    position: relative;
+    left: -30px;
 }
 
-#header #headerPanel .learnMore {
-    background: url('../../../../../public/images/LearnMore.png') no-repeat;
+#headerPanel .panelAction .text {
+    position: absolute;
+    bottom: -3px;
 }
 
-#header #headerPanel .signUp {
-    background: url('../../../../../public/images/SignUp.png') no-repeat;
+#headerPanel #actionLearnMore .text{
+    left: 12px;
 }
+#headerPanel #actionSignUp .text{
+    left: 22px;
+}
+
+
 
 /*********************************************/
 /**                   BODY                  **/
@@ -62,7 +89,7 @@
 .bodyContent {
     max-width: 1050px;
     min-height: 200px;
-    max-height: 600px;
+    max-height: 750px;
     margin: 0 auto;
     overflow: auto;
 }
@@ -72,6 +99,4 @@
 /*********************************************/
 
 #footer {
-    width: auto;
-    height: 100px;
 }

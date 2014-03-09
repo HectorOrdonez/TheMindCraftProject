@@ -14,30 +14,24 @@
     <div id='loginBlock'>
         <form id='loginForm' action="<?php echo _SYSTEM_BASE_URL; ?>index/login" method="POST">
             <label>
-                <input id='loginInputUsername' class='ftype_contentA' type='text' name='username' placeholder="username"/>
+                <input id='loginInputUsername' class='ftype_contentB shadowed' type='text' name='username' placeholder="username"/>
             </label>
 
-            <div class='errorText'>
-                <div id='usernameError'></div>
+            <div class='errorTextWrapper'>
+                <p class='errorText' id='usernameError'></p>
             </div>
 
             <label>
-                <input id='loginInputPassword' class='ftype_contentA' type='password' name='password' placeholder="password"/>
+                <input id='loginInputPassword' class='ftype_contentB shadowed' type='password' name='password' placeholder="password"/>
             </label>
 
-            <div class='errorText'>
-                <div id='passwordError'></div>
+            <div class='errorTextWrapper'>
+                <p class='errorText' id='passwordError'></p>
             </div>
 
             <div class='verticalSpace30'></div>
 
             <div id='loginSubmitBox'>
-
-                <div id='loginSubmitText'>
-                    <span class='ftype_titleA1'>Log</span><span class='ftype_titleA2'>In</span><span
-                        class='ftype_titleA3'>!</span>
-                </div>
-
                 <div id='loginImageBox'>
                     <div id='key'>
                         <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>LogIn1.png' alt='Log In!'/>
@@ -60,7 +54,7 @@
     </div>
 
     <div id='loginConfirmation'>
-        <div class='ftype_successA' id='confirmationTitle'>
+        <div class='ftype_successA'>
             Starting session ...
         </div>
     </div>

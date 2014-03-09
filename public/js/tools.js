@@ -152,19 +152,41 @@ function closeAjaxInProgress(){
 /**
  * This function receives a JQuery element where has to be displayed a message.
  * @param $infoDiv - JQuery Element where the message will be displayed.
- * @param type - Type of the message (success / error) that defines the font to be used.
+ * @param type - Type of the message (success | error | info) that defines the font to be used.
  * @param message - Message to display.
  * @param timeout - Time in mils of second that the message will remain displayed.
  */
+var messageTimeout = [];
 function setInfoMessage($infoDiv, type, message, timeout) {
-    $infoDiv.addClass('ftype_' + type + 'A');
-    $infoDiv.html(message);
-
-    setTimeout(function () {
-        $infoDiv.fadeOut(function () {
-            $infoDiv.html('');
-            $infoDiv.removeClass('ftype_' + type + 'A');
-            $infoDiv.fadeIn();
-        });
-    }, timeout);
+    var infoMessageKey = $infoDiv.selector;
+    
+    if (typeof(messageTimeout[infoMessageKey]) === 'undefined')
+    {
+        // No info message. Adding types.
+        $infoDiv.addClass('ftype_' + type + 'A');
+        $infoDiv.html(message);
+        
+        // Setting Timeout
+        var setTimeoutFunction = setTimeout(function () {
+            $infoDiv.fadeOut(function () {
+                $infoDiv.html('');
+                $infoDiv.removeClass('ftype_' + type + 'A');
+                $infoDiv.fadeIn();
+            });
+        }, timeout);
+        
+        // Caching for further info refreshes
+        messageTimeout[infoMessageKey] = {
+            'setTimeout': setTimeoutFunction,
+            'previousType': type
+        };
+    } else {
+        // Refreshing error message
+        clearInterval(messageTimeout[infoMessageKey].setTimeout);
+        $infoDiv.removeClass('ftype_' + messageTimeout[infoMessageKey].type + 'A');
+        $infoDiv.html('');
+        delete messageTimeout[infoMessageKey];
+        
+        setInfoMessage($infoDiv, type, message, timeout);
+    }
 }

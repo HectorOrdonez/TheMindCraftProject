@@ -194,9 +194,9 @@ function ApplyTime($element, callback) {
             {'cells': [
                 new Cell({'html': 'id', 'classList': ['col_id']}),
                 new Cell({'html': 'type', 'classList': ['col_type']}),
-                new Cell({'html': 'title', 'classList': ['col_title', 'ftype_titleC']}),
+                new Cell({'html': 'title', 'classList': ['col_title', 'ftype_contentA']}),
                 new Cell({'html': '', 'classList': ['col_actions']}),
-                new Cell({'html': 'time', 'classList': ['col_time', 'ftype_titleC', 'centered']})
+                new Cell({'html': 'time', 'classList': ['col_time', 'ftype_contentA', 'centered']})
             ],
                 'classList': ['header']
             });
@@ -206,13 +206,13 @@ function ApplyTime($element, callback) {
             colModel: [
                 {colIndex: 'id'},
                 {colIndex: 'type'},
-                {colIndex: 'title', classList: ['ftype_contentA']},
+                {colIndex: 'title', classList: ['ftype_contentB']},
                 {colIndex: 'actions', customContent: function (row) {
                     var setTodo = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-timing multi clickable">' + row.id + '</a></div>';
                     var setRoutine = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-circular multi clickable">' + row.id + '</a></div>';
                     return '<div class="actionBox">' + setTodo + setRoutine + '</div>';
                 }},
-                {colIndex: 'time', classList: ['centered', 'ftype_contentA'], customContent: function (row) {
+                {colIndex: 'time', classList: ['centered', 'ftype_contentB'], customContent: function (row) {
                     if (row.type != 'mission') {
                         return 'R';
                     }
@@ -226,24 +226,22 @@ function ApplyTime($element, callback) {
 
         // Creating Mission Dialog object
         routineDialog = new RoutineDialog();
-        missionDialog = new MissionDialog(routineDialog);
+        missionDialog = new MissionDialog();
 
         // Add Event Listeners
         $grid.delegate('.mindCraft-ui-button-timing', 'click', function () {
             missionDialog.open(jQuery(this).closest('.row'), getDataFromTable(jQuery(this).html()));
         });
         $grid.delegate('.mindCraft-ui-button-circular', 'click', function () {
-            routineDialog.open('new', jQuery(this).closest('.row'), getDataFromTable(jQuery(this).html()));
+            routineDialog.open(jQuery(this).closest('.row'), getDataFromTable(jQuery(this).html()));
         });
     }
 } // End ApplyTime Object
 
 /**
  * The MissionDialog object
- * @param routineDialog To be opened when clicked on MoreOften button.
- * @constructor
  */
-function MissionDialog(routineDialog) {
+function MissionDialog() {
     var assignedTableRow;
     var $datePicker;
     var $todoElement;
@@ -254,7 +252,6 @@ function MissionDialog(routineDialog) {
     var $tillMinSelector;
     var $applyTimeOverlay;
     var $submitTodo;
-    var $moreOftenAction;
     var self = this;
     var previousData;
     var currentData;
@@ -274,7 +271,6 @@ function MissionDialog(routineDialog) {
         $tillMinSelector = jQuery('#todoTillMinutesSelector');
         $applyTimeOverlay = jQuery('#applyTimeOverlay');
         $submitTodo = jQuery('#submitTodo');
-        $moreOftenAction = jQuery('#moreOftenAction');
         $infoDisplayer = jQuery('#setTodoInfo');
 
         // Initialize date picker
@@ -282,7 +278,6 @@ function MissionDialog(routineDialog) {
             dateFormat: 'dd/mm/yy',
             firstDay: 1,
             showOtherMonths: true,
-            dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
             afterDisplay: function () {
                 // Making odd cells being... odd!
                 var oddHelper = 1;
@@ -316,31 +311,42 @@ function MissionDialog(routineDialog) {
     function bindMissionEvents() {
         // Binding events
         $applyTimeOverlay.click(function () {
-            self.close('full');
+            self.close();
         });
 
         $fromHoursSelector.click(function () {
+            // Sync tillHours selector.
             switchHoursSelector($fromHoursSelector, $fromHoursSelector.html());
             if ($fromHoursSelector.html() == '23') {
                 switchHoursSelector($fromHoursSelector, $fromHoursSelector.html());
+            } else {
+                $tillHoursSelector.html($fromHoursSelector.html());
             }
-            $tillHoursSelector.html($fromHoursSelector.html());
-            switchHoursSelector($tillHoursSelector, $tillHoursSelector.html());
+            $tillHoursSelector.click();
+
+            // Setting fromMinutes accordingly: if now hours are empty, minutes too; if they are not empty, minutes neither.
+            if ($fromHoursSelector.html() == '') {
+                $fromMinSelector.html('');
+            } else if ($fromMinSelector.html() == '') {
+                $fromMinSelector.click();
+            }
         });
 
         $tillHoursSelector.click(function () {
             switchHoursSelector($tillHoursSelector, $tillHoursSelector.html());
+
+            // Setting fromMinutes accordingly: if now hours are empty, minutes too; if they are not empty, minutes neither.
+            if ($tillHoursSelector.html() == '') {
+                $tillMinSelector.html('');
+            } else if ($tillMinSelector.html() == '') {
+                $tillMinSelector.click();
+            }
         });
 
         $dialogElement.find('.inputs .minutes').click(function () {
             switchMinutesSelector(jQuery(this), jQuery(this).html());
         });
 
-        $moreOftenAction.click(function () {
-            currentData.time_from = getTime($fromHoursSelector, $fromMinSelector);
-            currentData.time_till = getTime($tillHoursSelector, $tillMinSelector);
-            self.close('partial');
-        });
         $submitTodo.click(function () {
             self.submit();
         });
@@ -349,7 +355,6 @@ function MissionDialog(routineDialog) {
     function unbindMissionEvents() {
         $applyTimeOverlay.unbind('click');
         $dialogElement.find('.inputs div').unbind('click');
-        $moreOftenAction.unbind('click');
         $submitTodo.unbind('click');
     }
 
@@ -373,20 +378,12 @@ function MissionDialog(routineDialog) {
 
     /**
      * Closes the dialog
-     * @param closureType
      */
-    this.close = function (closureType) {
-        if (closureType == 'full') {
-            $dialogElement.fadeOut(function () {
-                unbindMissionEvents();
-                $todoElement.css('display', 'none');
-            });
-        } else {
-            $todoElement.fadeOut(function () {
-                unbindMissionEvents();
-                routineDialog.open('renewed', assignedTableRow, currentData);
-            });
-        }
+    this.close = function () {
+        $dialogElement.fadeOut(function () {
+            unbindMissionEvents();
+            $todoElement.css('display', 'none');
+        });
     };
 
     /**
@@ -482,7 +479,6 @@ function RoutineDialog() {
             dateFormat: 'dd/mm/yy',
             firstDay: 1,
             showOtherMonths: true,
-            dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
             afterDisplay: function () {
                 // Making odd cells being... odd!
                 var oddHelper = 1;
@@ -558,9 +554,9 @@ function RoutineDialog() {
 
     function switchWeekdaySelection($liElement) {
         if ($liElement.hasClass('selected')) {
-            $liElement.removeClass('selected ftype_contentB');
+            $liElement.removeClass('selected ftype_contentA');
         } else {
-            $liElement.addClass('selected ftype_contentB');
+            $liElement.addClass('selected ftype_contentA');
         }
     }
 
@@ -574,7 +570,7 @@ function RoutineDialog() {
 
     function initWeekdaysSelector($element, content) {
         if (null == content) {
-            content = '1111100';
+            content = '0000000';
         }
 
         var initSelection = content.split('');
@@ -582,7 +578,7 @@ function RoutineDialog() {
 
         for (var i = 0; i < $liElements.length; i++) {
             if (initSelection[i] == '1') {
-                jQuery($liElements[i]).addClass('selected ftype_contentB');
+                jQuery($liElements[i]).addClass('selected ftype_contentA');
             }
         }
     }
@@ -593,16 +589,32 @@ function RoutineDialog() {
         });
 
         $fromHoursSelector.click(function () {
+            // Sync tillHours selector.
             switchHoursSelector($fromHoursSelector, $fromHoursSelector.html());
             if ($fromHoursSelector.html() == '23') {
                 switchHoursSelector($fromHoursSelector, $fromHoursSelector.html());
+            } else {
+                $tillHoursSelector.html($fromHoursSelector.html());
             }
-            $tillHoursSelector.html($fromHoursSelector.html());
-            switchHoursSelector($tillHoursSelector, $tillHoursSelector.html());
+            $tillHoursSelector.click();
+
+            // Setting fromMinutes accordingly: if now hours are empty, minutes too; if they are not empty, minutes neither.
+            if ($fromHoursSelector.html() == '') {
+                $fromMinSelector.html('');
+            } else if ($fromMinSelector.html() == '') {
+                $fromMinSelector.click();
+            }
         });
 
         $tillHoursSelector.click(function () {
             switchHoursSelector($tillHoursSelector, $tillHoursSelector.html());
+
+            // Setting fromMinutes accordingly: if now hours are empty, minutes too; if they are not empty, minutes neither.
+            if ($tillHoursSelector.html() == '') {
+                $tillMinSelector.html('');
+            } else if ($tillMinSelector.html() == '') {
+                $tillMinSelector.click();
+            }
         });
 
         $dialogElement.find('.inputs .minutes').click(function () {
@@ -632,11 +644,10 @@ function RoutineDialog() {
 
     /**
      * Opens the dialog
-     * @param openingType When RoutineDialog is opened by MissionDialog, the overlay is already there.
      * @param tableRow Related row, to be updated if MissionDialog updates the idea.
      * @param data Current idea data
      */
-    this.open = function (openingType, tableRow, data) {
+    this.open = function (tableRow, data) {
         assignedTableRow = tableRow;
 
         setRoutineParameters(data);
@@ -644,12 +655,8 @@ function RoutineDialog() {
         bindRoutineEvents();
 
         // Show dialog
-        if (openingType == 'new') {
-            $routineElement.css('display', 'block');
-            $dialogElement.fadeIn();
-        } else {
-            $routineElement.fadeIn();
-        }
+        $routineElement.css('display', 'block');
+        $dialogElement.fadeIn();
     };
 
 

@@ -1,8 +1,4 @@
-/** RESET CSS **/
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
+/** Standardizing CSS **/
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -20,17 +16,20 @@ time, mark, audio, video, input {
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
-    font: inherit;
     vertical-align: baseline;
 }
 
 html {
     overflow: auto;
+    font-size: 0; /** The purpose of this is to avoid showing not-formatted text **/
 }
 
 html, body {
     height: 100%;
+}
+
+a {
+    text-decoration: none;
 }
 
 /* HTML5 display-role reset for older browsers */

@@ -12,9 +12,9 @@
 <?php $this->printChunk('header'); ?>
 
     <div id='welcome'>
-        <span class='ftype_titleA1'>Welcome </span><span
-            class='ftype_titleA2'><?php echo $this->getParameter('userName'); ?></span><span
-            class='ftype_titleA3'>!</span>
+        <span class='ftype_titleA1'>Welcome </span>
+        <span class='ftype_titleA2'><?php echo $this->getParameter('userName'); ?></span>
+        <span class='ftype_titleA3'>!</span>
     </div>
 
     <div id='mainMenu'>
@@ -28,18 +28,20 @@
                 </a>
 
                 <div class='text'>
-                    <span class='ftype_titleA1'>Brain</span><span class='ftype_titleA2'>Storm</span><span
-                        class='ftype_titleA3'>!</span>
+                    <span class='ftype_titleA1'>Brain</span>
+                    <span class='ftype_titleA2'>Storm</span>
+                    <span class='ftype_titleA3'>!</span>
                 </div>
             </div>
             <div class='action workOut'>
-                <a href="<?php echo _SYSTEM_BASE_URL; ?>mindFlow/index/step2">
+                <a href="<?php echo _SYSTEM_BASE_URL; ?>mindFlow/index/step21">
                     <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>WorkOut.png' alt='WorkOut'/>
                 </a>
 
                 <div class='text'>
-                    <span class='ftype_titleA1'>Work</span><span class='ftype_titleA2'>Out</span><span
-                        class='ftype_titleA3'>!</span>
+                    <span class='ftype_titleA1'>Work</span>
+                    <span class='ftype_titleA2'>Out</span>
+                    <span class='ftype_titleA3'>!</span>
                 </div>
             </div>
             <div class='action perForm'>
@@ -48,8 +50,9 @@
                 </a>
 
                 <div class='text'>
-                    <span class='ftype_titleA1'>Per</span><span class='ftype_titleA2'>Form</span><span
-                        class='ftype_titleA3'>!</span>
+                    <span class='ftype_titleA1'>Per</span>
+                    <span class='ftype_titleA2'>Form</span>
+                    <span class='ftype_titleA3'>!</span>
                 </div>
             </div>
         </div>

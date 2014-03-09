@@ -23,6 +23,10 @@ jQuery(document).ready(function () {
     // Flow menu click
     $flowMenu.find('a').click(function () {
         var selectedStep = jQuery(this).parent().attr('id');
+        if (selectedStep == 'step2'){
+            selectedStep = 'step21';
+        }
+        
         if (currentStep == selectedStep) {
             return;
         }
@@ -36,6 +40,21 @@ jQuery(document).ready(function () {
 
     // Big options hovering
     $flowMenu.find('.flowOption img').hover(function () {
+        jQuery(this).transition({
+            scale: 1.33,
+            duration: 150,
+            queue: false
+        });
+    }, function () {
+        jQuery(this).transition({
+            scale: 1,
+            duration: 150,
+            queue: false
+        });
+    });
+
+    // Little options hovering
+    $flowMenu.find('.miniFlowOption img').hover(function () {
         jQuery(this).transition({
             scale: 1.33,
             duration: 150,
@@ -62,7 +81,6 @@ function loadCurrentStep(callback) {
             case 'step1':
                 mindFlowGrid = new BrainStorm($stepContent, afterLoadCallback);
                 break;
-            case 'step2':
             case 'step21':
                 mindFlowGrid = new Select($stepContent, afterLoadCallback);
                 break;
@@ -95,7 +113,7 @@ function moveFlowToCurrentStep() {
 
     var $pastFlow = jQuery('#pastFlow');
     var $futureFlow = jQuery('#futureFlow');
-    var stepSize = 171;
+    var stepSize = 166.5;
     var fullSize = 1000;
     var multiplier;
 
@@ -103,8 +121,6 @@ function moveFlowToCurrentStep() {
         case 'step1':
             multiplier = 0;
             break;
-        case 'step2':
-            currentStep = 'step21';
         case 'step21':
             multiplier = 2;
             break;

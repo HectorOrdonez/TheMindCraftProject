@@ -37,7 +37,7 @@ function PerForm($element, callback) {
 
     $workspace = $element;
     $perFormLayout = jQuery('#perFormLayout');
-    $unlistedLoc = jQuery('#perFormUnlisted');
+    $unlistedLoc = jQuery('#perFormPool');
     $yesterdayLoc = jQuery('#perFormYesterday');
     $todayLoc = jQuery('#perFormToday');
     $tomorrowLoc = jQuery('#perFormTomorrow');
@@ -119,7 +119,9 @@ function PerForm($element, callback) {
         
         if (actionDateTime == '') {
             action.setAsDoable();
-            action.showOn($unlistedLoc);
+            action.showImportance();
+            action.showUrgency();
+            action.showOnPool($unlistedLoc);
             return;
         }
 
@@ -132,21 +134,21 @@ function PerForm($element, callback) {
 
         if (actionDateTime < today) {
             action.setAsDoable();
-            action.setPosition();
-            action.showOn($yesterdayLoc);
+            action.showOnDay($yesterdayLoc);
             return;
         }
 
         if (actionDateTime < tomorrow) {
             action.setAsDoable();
-            action.setPosition();
-            action.showOn($todayLoc);
+            action.showImportance();
+            action.showUrgency();
+            action.showRoutineAction();
+            action.showOnDay($todayLoc);
             return;
         }
 
         if (actionDateTime < afterTomorrow) {
-            action.setPosition();
-            action.showOn($tomorrowLoc);
+            action.showOnDay($tomorrowLoc);
             return;
         }
 
@@ -197,10 +199,26 @@ function Action(data) {
     /** Public functions              **/
     /***********************************/
 
-    this.showOn = function ($location) {
+    /**
+     * Appends the action html to the given day location and, after, sets the position.
+     * @param $location
+     */
+    this.showOnDay = function ($location) {
         jQuery(actionHTMLElement).appendTo($location);
+        setPosition();
     };
 
+    /**
+     * Appends the action html to the action pool.
+     * @param $pool
+     */
+    this.showOnPool = function ($pool) {
+        jQuery(actionHTMLElement).appendTo($pool);
+    };
+
+    /**
+     * Requests the action done state to be toggled to the Server.
+     */
     this.toggleDone = function () {
         uniqueUserRequest(function (callback) {
             var url = root_url + 'mindFlow/toggleActionDoneState';
@@ -215,7 +233,7 @@ function Action(data) {
                     var jsonObject = jQuery.parseJSON(data);
                     self.date_done = jsonObject['date_done'];
                     // Toggling succeed in server-side. Proceeding in client-side.
-                    var $actionDoneButton = jQuery(actionHTMLElement).find('.mindCraft-button-checkbox');
+                    var $actionDoneButton = jQuery(actionHTMLElement).find('.mindCraft-ui-button-checkbox');
 
                     if ($actionDoneButton.hasClass('mark')) {
                         $actionDoneButton.removeClass('mark');
@@ -231,74 +249,168 @@ function Action(data) {
         });
     };
 
+    /**
+     * Adds a checkbox to the Action to toggle its done status.
+     */
     this.setAsDoable = function () {
+        var actionDo = document.createElement('div');
+        actionDo.className = 'actionDo';
+            
         var doableElement = document.createElement('span');
         var doableClasses = 'mindCraft-ui-button mindCraft-ui-button-checkbox clickable';
         doableElement.className = (self.date_done == '') ? doableClasses : doableClasses + ' mark';
-
-        jQuery(actionHTMLElement).find('.mindCraft-ui-button-checkbox').append(doableElement);
+        
+        actionDo.appendChild(doableElement);
+        
+        jQuery(actionDo).insertBefore(jQuery(actionHTMLElement).find('.perFormActionId'));
+        
         jQuery(doableElement).click(function () {
             self.toggleDone();
         });
     };
 
-    this.setPosition = function () {
-        var timeFromQuarters = timeToQuarters(self.time_from);
-        var timeTillQuarters = timeToQuarters(self.time_till);
-        var timeDuration = timeTillQuarters - timeFromQuarters;
-
-        jQuery(actionHTMLElement).css('top', baseHeight + timeFromQuarters * heightPerUnitPosition);
-        jQuery(actionHTMLElement).css('height', timeDuration * heightPerUnitPosition);
+    /**
+     * Makes the importance icon to be shown, if this action is important.
+     */
+    this.showImportance = function () {
+        if (self.important) {
+            makeImportant();
+        }
     };
 
+    /**
+     * Makes the urgency icon to be shown, if this action is urgency.
+     */
+    this.showUrgency = function () {
+        if (self.urgent) {
+            makeUrgent();
+        }
+    };
+    
+    /**
+     * Makes the routine icon to be shown, if this action is part of a routine.
+     */
+    this.showRoutineAction = function () {
+        if (self.routine_id) {
+            makeRoutineAction();
+        }
+    };
+
+    /**
+     * Destroys the action element.
+     */
     this.destroy = function () {
         jQuery(actionHTMLElement).remove();
+    };
+
+    /**
+     * Requests this action to be deleted to the Server.
+     */
+    this.delete = function () {
+        var $infoDisplayer = jQuery('#infoDisplayer');
+        var url = root_url + 'mindFlow/deleteAction';
+        var data = {
+            'id': self.id
+        };
+
+        jQuery.ajax({
+            type: 'post',
+            url: url,
+            data: data
+        }).done(function () {
+                self.destroy();
+            }
+        ).fail(function (data) {
+                setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
+            }
+        );
     };
 
     /***********************************/
     /** Private functions             **/
     /***********************************/
 
+    /**
+     * Builds and return the action html.
+     * @returns {HTMLElement}
+     */
     function buildActionHTML() {
+        // Action element
         var actionElement = document.createElement('div');
         actionElement.className = 'perFormAction';
         actionElement.innerHTML = "" +
             "<div class='perFormActionId'></div>" +
-            "<div class='actionDo'></div>" +
-            "<div class='perFormActionTitle'><span class='ftype_contentC'>" + self.title + "    </span></div>" +
-            "<div class='actionExtras'>" +
-            "</div>";
-
-        if (self.important) {
-            makeImportant(actionElement);
-        }
-
-        if (self.urgent) {
-            makeUrgent(actionElement);
-        }
-
-        if (self.routine_id) {
-            makePartOfRoutine(actionElement);
-        }
-
+            "<div class='actionExtras'></div>" +
+            "<div class='actionDelete'></div>" +
+            "<div class='actionTitle'><div class='titleTextWrapper'></div></div>";
+        
+        // Title element 
+        var titleElement = document.createElement('span');
+        titleElement.className = 'ftype_contentB';
+        titleElement.innerHTML = self.title;
+        
+        // Delete element
+        var deleteElement = document.createElement('span');
+        deleteElement.className = 'mindCraft-ui-button mindCraft-ui-button-delete clickable';
+        
+        // Coupling components
+        jQuery(actionElement).find('.titleTextWrapper').append(titleElement);
+        jQuery(actionElement).find('.actionDelete').append(deleteElement);
+        
+        // Attaching listeners
+        jQuery(actionElement).find('.actionTitle').click(function(){
+            jQuery(deleteElement).parent().toggle();
+            toggleFullTextDisplay();
+        });
+        
+        jQuery(deleteElement).click(function(){
+            self.delete();
+        });
+        
         return actionElement;
     }
+    
+    function toggleFullTextDisplay()
+    {
+        jQuery(actionHTMLElement).toggleClass('fullText');
+    }
 
-    function makePartOfRoutine(actionElement) {
+    /**
+     * Positions this action in the day.
+     */
+    function setPosition () {
+        var timeFromQuarters = timeToQuarters(self.time_from);
+        var timeTillQuarters = timeToQuarters(self.time_till);
+        var timeDuration = timeTillQuarters - timeFromQuarters;
+
+        jQuery(actionHTMLElement).css('top', baseHeight + timeFromQuarters * heightPerUnitPosition);
+        jQuery(actionHTMLElement).css('height', timeDuration * heightPerUnitPosition);
+    }
+
+    /**
+     * Displays the routine icon.
+     */
+    function makeRoutineAction() {
         var routineElement = document.createElement('span');
         routineElement.className = 'mindCraft-ui-button mindCraft-ui-button-circular';
-        jQuery(actionElement).find('.actionExtras').append(routineElement);
+        jQuery(actionHTMLElement).find('.actionExtras').append(routineElement);
     }
 
-    function makeImportant(actionElement) {
+    /**
+     * Displays the important icon.
+     */
+    function makeImportant() {
         var importantElement = document.createElement('span');
         importantElement.className = 'mindCraft-ui-button mindCraft-ui-button-important';
-        jQuery(actionElement).find('.actionExtras').append(importantElement);
+        jQuery(actionHTMLElement).find('.actionExtras').append(importantElement);
     }
 
-    function makeUrgent(actionElement) {
+    /**
+     * Displays the urgent icon.
+     */
+    function makeUrgent() {
         var urgentElement = document.createElement('span');
         urgentElement.className = 'mindCraft-ui-button mindCraft-ui-button-urgent';
-        jQuery(actionElement).find('.actionExtras').append(urgentElement);
+        jQuery(actionHTMLElement).find('.actionExtras').append(urgentElement);
     }
 }

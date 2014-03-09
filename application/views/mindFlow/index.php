@@ -41,30 +41,30 @@
                 </div>
             </li>
             <li class='miniFlowOption' id='step21'>
-                <a class='imgBox'>
+                <a>
                     <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>Select.png' alt='Select'/>
                 </a>
 
                 <div class='text'>
-                    <span class='ftype_contentA'>Select!</span>
+                    <span class='ftype_contentB'>Select!</span>
                 </div>
             </li>
             <li class='miniFlowOption' id='step22'>
-                <a class='imgBox'>
+                <a>
                     <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>Prioritize.png' alt='Prioritize'/>
                 </a>
 
                 <div class='text'>
-                    <span class='ftype_contentA'>Prioritize!</span>
+                    <span class='ftype_contentB'>Prioritize!</span>
                 </div>
             </li>
             <li class='miniFlowOption' id='step23'>
-                <a class='imgBox'>
+                <a>
                     <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>ApplyTime.png' alt='ApplyTime'/>
                 </a>
 
                 <div class='text'>
-                    <span class='ftype_contentA'>ApplyTime!</span>
+                    <span class='ftype_contentB'>ApplyTime!</span>
                 </div>
             </li>
             <li class='flowOption' id='step3'>
@@ -107,40 +107,29 @@
 
             <div id='timeRangeWrapper'>
                 <div id='fromSelectionWrapper'>
-                    <div class='text ftype_contentB'>
+                    <div class='text ftype_contentA'>
                         from:
                     </div>
                     <div class='inputs'>
-                        <div class='hours ftype_contentC' id='todoFromHoursSelector'></div>
-                        <div class='minutes ftype_contentC' id='todoFromMinutesSelector'></div>
+                        <div class='hours ftype_contentB' id='todoFromHoursSelector'></div>
+                        <div class='minutes ftype_contentB' id='todoFromMinutesSelector'></div>
                     </div>
                 </div>
                 <div id='tillSelectionWrapper'>
-                    <div class='text ftype_contentB'>
+                    <div class='text ftype_contentA'>
                         till:
                     </div>
                     <div class='inputs'>
-                        <div class='hours ftype_contentC' id='todoTillHoursSelector'></div>
-                        <div class='minutes ftype_contentC' id='todoTillMinutesSelector'></div>
+                        <div class='hours ftype_contentB' id='todoTillHoursSelector'></div>
+                        <div class='minutes ftype_contentB' id='todoTillMinutesSelector'></div>
                     </div>
                 </div>
             </div>
 
             <div class='verticalSpace30'></div>
 
-            <div id='moreOftenWrapper'>
-                <div class='text ftype_contentC'>
-                    More often?
-                </div>
-                <div class='action'>
-                    <a id='moreOftenAction'></a>
-                </div>
-            </div>
-
-            <div class='verticalSpace30'></div>
-
-            <div id='submitTodo'>
-                <a class='ftype_titleC'>Apply Time!</a>
+            <div class='submitApplyTime' id='submitTodo'>
+                <a class='ftype_contentA'>Apply Time!</a>
             </div>
 
             <div id='setTodoInfo'></div>
@@ -151,23 +140,23 @@
         <div id='setRoutineDialogWrapper'>
 
             <div id='weeklyRepetitionWrapper'>
-                <span class='left ftype_contentB'>
+                <span class='left ftype_contentA'>
                     Repeat every
                 </span>
-                <span class='right ftype_contentB'>
+                <span class='right ftype_contentA'>
                     week
                 </span>
 
-                <div class='ftype_contentC' id='weeklyRepetitionSelector'></div>
+                <div class='ftype_contentB' id='weeklyRepetitionSelector'></div>
             </div>
 
             <div class='verticalSpace30'></div>
 
             <div id='weekdaysSelectionWrapper'>
-                <p class='ftype_contentB'>
+                <p class='ftype_contentA'>
                     Repeat on:
                 </p>
-                <ul class='weekdays ftype_contentC'>
+                <ul class='weekdays ftype_contentB'>
                     <li>M</li>
                     <li>T</li>
                     <li>W</li>
@@ -182,21 +171,21 @@
 
             <div id='dateRangeWrapper'>
                 <div id='startsSelectionWrapper'>
-                    <label for='startDate' class='text ftype_contentB'>
+                    <label for='startDate' class='text ftype_contentA'>
                         starts:
                     </label>
 
                     <div class='datePickerWrapper'>
-                        <input class='ftype_contentC' type='text' id='startDate'/>
+                        <input class='ftype_contentB' type='text' id='startDate'/>
                     </div>
                 </div>
                 <div id='finishesSelectionWrapper'>
-                    <label for='finishDate' class='text ftype_contentB'>
+                    <label for='finishDate' class='text ftype_contentA'>
                         finishes:
                     </label>
 
                     <div class='datePickerWrapper'>
-                        <input class='ftype_contentC' type='text' id='finishDate'/>
+                        <input class='ftype_contentB' type='text' id='finishDate'/>
                     </div>
                 </div>
             </div>
@@ -205,29 +194,29 @@
 
             <div id='timeRangeWrapper'>
                 <div id='fromSelectionWrapper'>
-                    <div class='text ftype_contentB'>
+                    <div class='text ftype_contentA'>
                         from:
                     </div>
                     <div class='inputs'>
-                        <div class='hours ftype_contentC' id='routineFromHoursSelector'></div>
-                        <div class='minutes ftype_contentC' id='routineFromMinutesSelector'></div>
+                        <div class='hours ftype_contentB' id='routineFromHoursSelector'></div>
+                        <div class='minutes ftype_contentB' id='routineFromMinutesSelector'></div>
                     </div>
                 </div>
                 <div id='tillSelectionWrapper'>
-                    <div class='text ftype_contentB'>
+                    <div class='text ftype_contentA'>
                         till:
                     </div>
                     <div class='inputs'>
-                        <div class='hours ftype_contentC' id='routineTillHoursSelector'></div>
-                        <div class='minutes ftype_contentC' id='routineTillMinutesSelector'></div>
+                        <div class='hours ftype_contentB' id='routineTillHoursSelector'></div>
+                        <div class='minutes ftype_contentB' id='routineTillMinutesSelector'></div>
                     </div>
                 </div>
             </div>
 
             <div class='verticalSpace30'></div>
 
-            <div id='submitRoutine'>
-                <a class='ftype_titleC'>Apply Time!</a>
+            <div class='submitApplyTime' id='submitRoutine'>
+                <a class='ftype_contentA'>Apply Time !</a>
             </div>
 
             <div id='setRoutineInfo'></div>
@@ -237,7 +226,7 @@
 
     <div id='perFormLayout'>
         <div class='perFormColumn dayBlock' id='perFormYesterday'>
-            <div class='blockHeader ftype_contentB'>yesterday</div>
+            <div class='blockHeader ftype_contentA'>yesterday</div>
             <ul class='hourList'>
                 <!-- 06:00 -->
                 <li></li>
@@ -275,12 +264,13 @@
                 <li></li>
                 <!-- 23:00 -->
                 <li></li>
-                <!-- 00:00 not added as does not need a line -->
+                <!-- 00:00 -->
+                <li></li>
             </ul>
         </div>
 
         <div class='perFormColumn timeMarkups'>
-            <ul class='ftype_contentA'>
+            <ul class='ftype_contentB'>
                 <li>6</li>
                 <li>7</li>
                 <li>8</li>
@@ -304,7 +294,7 @@
         </div>
 
         <div class='perFormColumn dayBlock' id='perFormToday'>
-            <div class='blockHeader ftype_contentB'>today</div>
+            <div class='blockHeader ftype_contentA'>today</div>
             <ul class='hourList'>
                 <!-- 06:00 -->
                 <li></li>
@@ -342,11 +332,12 @@
                 <li></li>
                 <!-- 23:00 -->
                 <li></li>
-                <!-- 00:00 not added as does not need a line -->
+                <!-- 00:00 -->
+                <li></li>
             </ul>
         </div>
         <div class='perFormColumn timeMarkups'>
-            <ul class='ftype_contentA'>
+            <ul class='ftype_contentB'>
                 <li>6</li>
                 <li>7</li>
                 <li>8</li>
@@ -370,7 +361,7 @@
         </div>
 
         <div class='perFormColumn dayBlock' id='perFormTomorrow'>
-            <div class='blockHeader ftype_contentB'>tomorrow</div>
+            <div class='blockHeader ftype_contentA'>tomorrow</div>
             <ul class='hourList'>
                 <!-- 06:00 -->
                 <li></li>
@@ -408,11 +399,12 @@
                 <li></li>
                 <!-- 23:00 -->
                 <li></li>
-                <!-- 00:00 not added as does not need a line -->
+                <!-- 00:00 -->
+                <li></li>
             </ul>
         </div>
 
-        <div class='perFormColumn' id='perFormUnlisted'>
+        <div class='perFormColumn' id='perFormPool'>
             <div class='blockHeader'></div>
         </div>
     </div>
