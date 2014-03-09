@@ -34,11 +34,31 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.300', '17/02/2013', array (
-            '[Feature] - Release fully functional version of MindCraft!!'
+        $this->_setDevelopmentVersion('0.310', '09/03/2013', array (
+            'This update contains a lot of modifications and some fixes. It is going to be the final update before releasing it as "Alpha" version to some friends who will help identify bugs and give feedback.',
+            '[Feature] - Added Favicon.',
+            '[Feature] - New Font types, updated in previous ones.',
+            '[Feature] - PerForm step actions, when clicked on title, display a delete image and change its layout to display all the text.',
+            '[Feature] - Action delete, triggered when User clicks delete image in the PerForm step actions.',
+            '[Visual improvement] - Improved Apply Time set time and routine dialog visuals.',
+            '[Visual improvement] - Updated the visuals of many images.',
+            '[Visual improvement] - Improved Admin footer.',
+            '[Functionality improvement] - Changed time frame setters in Apply Time dialog, improved the way they synchronize each other.',
+            '[Functionality improvement] - SignUp and Index errors now they are displayed even when multiple errors are sent at once (multiple login tries)',
+            '[Feature] - Added Favicon.',
+            '[Feature] - Added Favicon.',
+            '[Feature] - Added Favicon.',
+            '[Model update] - Idea and Actions now have a maximum length of 40.',
+            '[Debug] - Added non-cache headers in index login and logout in order to avoid Chrome redirect caching issue.',
+            '[Debug] - Set http://themindcraftproject.org as the principal page, and adding a redirection to it from http://www.themindcraftproject.org. This fixes an issue not allowing to log in to users using an unexpected url.',
+            '[Debug] - Fixed issue causing the "Done" checkbox not to be displayed in the PerForm step.',
+            '[Etc] - Many, many other changes, including comments, fixes, checks, visual improvements, etc.'   
         ));
         
         // Setting Historical Log of releases
+        $this->_addHistoryLog('0.300', '17/02/2013', array (
+            '[Feature] - Release fully functional version of MindCraft!!'
+        ));
         $this->_addHistoryLog('0.291', '13/02/2013', array (
             '[Debug] - Fixed issue in Settings page where Username could not be changed.',
             '[Feature] - Documented User model class',
