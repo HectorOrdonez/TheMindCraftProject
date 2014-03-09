@@ -60,9 +60,13 @@
 #generalError {
     text-align: center;
 }
-.errorText {
+.errorTextWrapper {
     height: 30px;
 }
+.errorText {
+    line-height: 30px;
+}
+
 
 /** Styles for the Login confirmation **/
 

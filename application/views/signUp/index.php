@@ -24,30 +24,27 @@
     <div id='signUpBlock'>
         <form id='signUpForm' action="<?php echo _SYSTEM_BASE_URL; ?>signUp/signUp" method="POST">
             <label>
-                <input id='signUpInputEmail' class='ftype_contentB' type='text' name='mail'
-                       placeholder="email address"/>
+                <input id='signUpInputEmail' class='ftype_contentB shadowed' type='text' name='mail' placeholder="email address"/>
             </label>
 
-            <div class='errorText'>
-                <div id='mailError'></div>
+            <div class='errorTextWrapper'>
+                <p class='errorText' id='mailError'></p>
             </div>
 
             <label>
-                <input id='signUpInputUsername' class='ftype_contentB' type='text' name='username'
-                       placeholder="username"/>
+                <input id='signUpInputUsername' class='ftype_contentB shadowed' type='text' name='username' placeholder="username"/>
             </label>
 
-            <div class='errorText'>
-                <div id='usernameError'></div>
+            <div class='errorTextWrapper'>
+                <p class='errorText' id='usernameError'></p>
             </div>
 
             <label>
-                <input id='signUpInputPassword' class='ftype_contentB' type='password' name='password'
-                       placeholder="password"/>
+                <input id='signUpInputPassword' class='ftype_contentB shadowed' type='password' name='password' placeholder="password"/>
             </label>
 
-            <div class='errorText'>
-                <div id='passwordError'></div>
+            <div class='errorTextWrapper'>
+                <p class='errorText' id='passwordError'></p>
             </div>
 
             <div class='verticalSpace30'></div>

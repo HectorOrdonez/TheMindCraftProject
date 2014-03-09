@@ -17,16 +17,16 @@
                 <input id='loginInputUsername' class='ftype_contentB shadowed' type='text' name='username' placeholder="username"/>
             </label>
 
-            <div class='errorText'>
-                <div id='usernameError'></div>
+            <div class='errorTextWrapper'>
+                <p class='errorText' id='usernameError'></p>
             </div>
 
             <label>
                 <input id='loginInputPassword' class='ftype_contentB shadowed' type='password' name='password' placeholder="password"/>
             </label>
 
-            <div class='errorText'>
-                <div id='passwordError'></div>
+            <div class='errorTextWrapper'>
+                <p class='errorText' id='passwordError'></p>
             </div>
 
             <div class='verticalSpace30'></div>
