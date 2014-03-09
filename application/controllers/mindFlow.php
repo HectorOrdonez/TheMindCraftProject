@@ -478,4 +478,32 @@ class mindFlow extends Controller
             exit;
         }
     }
+
+    /**
+     * Delete action request.
+     */
+    public function deleteAction()
+    {
+        try {
+            $inputActionId = Input::build('Number', 'id')
+                ->addRule('isInt');
+
+            $inputActionId->validate();
+
+            $this->_service->deleteAction(Session::get('userId'), $inputActionId->getValue());
+
+        } catch (InputException $iEx) {
+            $errorMessage = 'Input error: ' . $iEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (RuleException $rEx) {
+            $errorMessage = 'Invalid data: ' . $rEx->getMessage();
+            header("HTTP/1.1 400 {$errorMessage}");
+            exit($errorMessage);
+        } catch (\Exception $e) {
+            header('HTTP/1.1 500 Unexpected error.');
+            print $e->getMessage();
+            exit;
+        }
+    }
 }

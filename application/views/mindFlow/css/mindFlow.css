@@ -665,6 +665,7 @@
 .perFormAction .actionTitle{
     overflow: hidden;
     height: 100%;
+    cursor: pointer;
 }
 
 #perFormYesterday .perFormAction .actionTitle:before,
@@ -696,4 +697,14 @@
 .perFormAction .actionExtras {
     float: right;
     height: 100%;
+}
+.perFormAction .actionDelete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    background-color: inherit; /** In order to hide other buttons like importance or urgency. **/
+    
+    display: none;
 }
