@@ -26,6 +26,10 @@ ErrorDocument 404 http://localhost/projects/themindcraftproject/error/resourceNo
 # Error pages for fatal errors redirection - Internal Server Error
 ErrorDocument 500 http://localhost/projects/themindcraftproject/error/internalServerError
 
+# Redirecting in case request starts with www.
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1 [R=301,L]
+
 # Allowing access to Index.
 RewriteRule ^(index.php) index.php [QSA,L]
 
@@ -40,16 +44,16 @@ RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
 ######################
 ##### PRODUCTION #####
 ######################
-
+# 
 # php_flag display_errors on
 # php_value error_reporting 32767
-#
+# 
 # # RewriteEngine tells Apache to process Rewrite commands.
 # RewriteEngine On
-#
+# 
 # # RewriteBase defines what is going to be the base url. So localhost/index.php becomes localhost/hecnel/index.php
 # RewriteBase /
-#
+# 
 # # Error pages for fatal errors redirection - Authentication failed
 # ErrorDocument 401 http://www.themindcraftproject.org/error/authFailed
 # # Error pages for fatal errors redirection - Forbidden access
@@ -58,13 +62,17 @@ RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
 # ErrorDocument 404 http://www.themindcraftproject.org/error/resourceNotFound
 # # Error pages for fatal errors redirection - Internal Server Error
 # ErrorDocument 500 http://www.themindcraftproject.org/error/internalServerError
-#
+# 
+# # Redirecting in case request starts with www.
+# RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+# RewriteRule ^(.*)$ http://%1 [R=301,L]
+# 
 # # Allowing access to Index.
 # RewriteRule ^(index.php) index.php [QSA,L]
-#
+# 
 # # Forbidding access to PHP files.
 # RewriteRule ^(.+)\.php - [F,L]
-#
+# 
 # # Redirecting requests if not to a file or link.
 # RewriteCond %{REQUEST_FILENAME} !-f
 # RewriteCond %{REQUEST_FILENAME} !-l

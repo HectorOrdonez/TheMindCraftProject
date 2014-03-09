@@ -12,7 +12,7 @@
  * @type {string}
  */
 var root_url = 'http://localhost/projects/themindcraftproject/';
-// var root_url = 'http://www.themindcraftproject.org/';
+// var root_url = 'http://themindcraftproject.org/';
 
 /**
  * On Document Ready...
