@@ -595,61 +595,21 @@
     text-align: center;
 }
 
-/** Action block styles **/
-#perFormYesterday .perFormAction,
-#perFormToday .perFormAction,
-#perFormTomorrow .perFormAction {
-    position: absolute;
-}
-#perFormPool .perFormAction {
-    position: relative;
-    margin-bottom: 15px;
-}
+/**********************************************************************************************************************/
+/**                                          PerForm > Action styles                                                 **/
+/**********************************************************************************************************************/
 
+/** General **/
 .perFormAction {
+    display: block;
     width: 100%;
-    height: 30px;
-    line-height: 30px;
     z-index: 2;
     text-align: center;
 
     -moz-box-shadow: 2px 2px 5px #b9a889;
     -webkit-box-shadow: 2px 2px 5px #b9a889;
-    box-shadow: 2px 2px 5px #b9a889;    
+    box-shadow: 2px 2px 5px #b9a889;
 }
-
-#perFormYesterday .perFormAction {
-    background-color: #5e5755;
-}
-
-#perFormTomorrow .perFormAction {
-    background-color: #b9a889;
-}
-
-/** Pair today actions **/
-
-#perFormToday .perFormAction:nth-child(2n+1) {
-    background-color: #dfd9c2;
-}
-
-/** Odd today actions **/
-#perFormToday .perFormAction {
-    background-color: #f4f2ef;
-}
-
-/** Pair unlisted actions **/
-
-#perFormPool .perFormAction:nth-child(2n+1) {
-    background-color: #dfd9c2;
-}
-
-/** Odd unlisted actions **/
-#perFormPool .perFormAction {
-    background-color: #f4f2ef;
-}
-
-/** Inner Action styles **/
-
 .perFormAction .actionDo {
     float: left;
     width: 30px;
@@ -662,12 +622,69 @@
     margin-top: -15px;
 }
 
+.perFormAction .actionExtras {
+    float: right;
+    height: 100%;
+}
+.perFormAction .actionDelete {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -15px;
+    width: 30px;
+    height: 30px;
+    background-color: inherit; /** In order to hide other buttons like importance or urgency. **/
+    display: none;
+}
+
 .perFormAction .actionTitle{
     overflow: hidden;
     height: 100%;
     cursor: pointer;
 }
+.perFormAction .actionTitle .titleTextWrapper {
+    line-height: 30px;
+}
 
+.perFormAction .actionTitle .titleTextWrapper span {
+    line-height: 30px;
+}
+
+/** Column-specific styles **/
+#perFormYesterday .perFormAction {
+    background-color: #5e5755;
+    position: absolute;
+}
+
+#perFormToday .perFormAction {
+    background-color: #f4f2ef;
+    position: absolute;
+}
+
+#perFormTomorrow .perFormAction {
+    background-color: #b9a889; /** Only applied in Odds, as pair ones are overrides later **/
+    position: absolute;
+}
+
+#perFormPool .perFormAction {
+    background-color: #f4f2ef;  /** Only applied in Odds, as pair ones are overrides later **/
+    position: relative;
+    height: 30px;
+    margin-bottom: 15px;
+}
+
+/** Pair today actions **/
+#perFormToday .perFormAction:nth-child(2n+1) {
+    background-color: #dfd9c2;
+}
+
+/** Pair unlisted actions **/
+
+#perFormPool .perFormAction:nth-child(2n+1) {
+    background-color: #dfd9c2;
+}
+
+/** Hack for text vertical alignment **/
 #perFormYesterday .perFormAction .actionTitle:before,
 #perFormToday .perFormAction .actionTitle:before,
 #perFormTomorrow .perFormAction .actionTitle:before {
@@ -675,14 +692,15 @@
     display: inline-block;
     height: 100%;
     vertical-align: middle;
-    margin-right: -0.25em
 }
+
 #perFormYesterday .perFormAction .actionTitle .titleTextWrapper,
 #perFormToday .perFormAction .actionTitle .titleTextWrapper,
 #perFormTomorrow .perFormAction .actionTitle .titleTextWrapper {
     display: inline-block;
     vertical-align: middle;
 }
+
 #perFormPool .perFormAction .actionTitle .titleTextWrapper span {
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -690,21 +708,26 @@
     overflow: hidden;
 }
 
-.perFormAction .actionTitle .titleTextWrapper span {
-    line-height: 30px;
+/** FullText Actions **/
+#perFormPool .perFormAction.fullText {
+    height: auto;
 }
 
-.perFormAction .actionExtras {
-    float: right;
-    height: 100%;
-}
-.perFormAction .actionDelete {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 30px;
+#perFormPool .perFormAction.fullText .actionDo {
     height: 30px;
-    background-color: inherit; /** In order to hide other buttons like importance or urgency. **/
-    
+}
+#perFormPool  .perFormAction.fullText .actionDo span {
+    position: absolute;
+    left: 0;
+}
+
+.perFormAction.fullText .actionExtras span {
     display: none;
+}
+
+.perFormAction.fullText .actionTitle {
+    padding-right: 30px;
+}
+.perFormAction.fullText .actionTitle span {
+    white-space: normal !important;
 }

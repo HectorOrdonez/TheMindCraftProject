@@ -360,6 +360,7 @@ function Action(data) {
         // Attaching listeners
         jQuery(actionElement).find('.actionTitle').click(function(){
             jQuery(deleteElement).parent().toggle();
+            toggleFullTextDisplay();
         });
         
         jQuery(deleteElement).click(function(){
@@ -367,6 +368,11 @@ function Action(data) {
         });
         
         return actionElement;
+    }
+    
+    function toggleFullTextDisplay()
+    {
+        jQuery(actionHTMLElement).toggleClass('fullText');
     }
 
     /**
