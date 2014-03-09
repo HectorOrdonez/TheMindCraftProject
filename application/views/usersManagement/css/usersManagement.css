@@ -72,7 +72,7 @@
 }
 
 #usersManagement_grid .actions .openNewPasswordDialog {
-    background: url('./../../../../public/images/TMP_settings.png') no-repeat;
+    background: url('./../../../../public/images/Edit.png') no-repeat;
 }
 
 #usersManagement_grid .actions .deleteUser {

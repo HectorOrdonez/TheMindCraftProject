@@ -264,7 +264,8 @@
                 <li></li>
                 <!-- 23:00 -->
                 <li></li>
-                <!-- 00:00 not added as does not need a line -->
+                <!-- 00:00 -->
+                <li></li>
             </ul>
         </div>
 
@@ -331,30 +332,50 @@
                 <li></li>
                 <!-- 23:00 -->
                 <li></li>
-                <!-- 00:00 not added as does not need a line -->
+                <!-- 00:00 -->
+                <li></li>
             </ul>
         </div>
         <div class='perFormColumn timeMarkups'>
             <ul class='ftype_contentB'>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-                <li>10</li>
-                <li>11</li>
-                <li>12</li>
-                <li>13</li>
-                <li>14</li>
-                <li>15</li>
-                <li>16</li>
-                <li>17</li>
-                <li>18</li>
-                <li>19</li>
-                <li>20</li>
-                <li>21</li>
-                <li>22</li>
-                <li>23</li>
-                <li>00</li>
+                <!-- 06:00 -->
+                <li></li>
+                <!-- 07:00 -->
+                <li></li>
+                <!-- 08:00 -->
+                <li></li>
+                <!-- 09:00 -->
+                <li></li>
+                <!-- 10:00 -->
+                <li></li>
+                <!-- 11:00 -->
+                <li></li>
+                <!-- 12:00 -->
+                <li></li>
+                <!-- 13:00 -->
+                <li></li>
+                <!-- 14:00 -->
+                <li></li>
+                <!-- 15:00 -->
+                <li></li>
+                <!-- 16:00 -->
+                <li></li>
+                <!-- 17:00 -->
+                <li></li>
+                <!-- 18:00 -->
+                <li></li>
+                <!-- 19:00 -->
+                <li></li>
+                <!-- 20:00 -->
+                <li></li>
+                <!-- 21:00 -->
+                <li></li>
+                <!-- 22:00 -->
+                <li></li>
+                <!-- 23:00 -->
+                <li></li>
+                <!-- 00:00 -->
+                <li></li>
             </ul>
         </div>
 
@@ -397,11 +418,12 @@
                 <li></li>
                 <!-- 23:00 -->
                 <li></li>
-                <!-- 00:00 not added as does not need a line -->
+                <!-- 00:00 -->
+                <li></li>
             </ul>
         </div>
 
-        <div class='perFormColumn' id='perFormUnlisted'>
+        <div class='perFormColumn' id='perFormPool'>
             <div class='blockHeader'></div>
         </div>
     </div>

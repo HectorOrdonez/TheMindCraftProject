@@ -37,7 +37,7 @@ function PerForm($element, callback) {
 
     $workspace = $element;
     $perFormLayout = jQuery('#perFormLayout');
-    $unlistedLoc = jQuery('#perFormUnlisted');
+    $unlistedLoc = jQuery('#perFormPool');
     $yesterdayLoc = jQuery('#perFormYesterday');
     $todayLoc = jQuery('#perFormToday');
     $tomorrowLoc = jQuery('#perFormTomorrow');
@@ -119,6 +119,9 @@ function PerForm($element, callback) {
         
         if (actionDateTime == '') {
             action.setAsDoable();
+            action.showImportance();
+            action.showUrgency();
+            
             action.showOn($unlistedLoc);
             return;
         }
@@ -139,6 +142,10 @@ function PerForm($element, callback) {
 
         if (actionDateTime < tomorrow) {
             action.setAsDoable();
+            action.showImportance();
+            action.showUrgency();
+            action.showRoutineAction();
+            
             action.setPosition();
             action.showOn($todayLoc);
             return;
@@ -232,14 +239,35 @@ function Action(data) {
     };
 
     this.setAsDoable = function () {
+        var actionDo = document.createElement('div');
+        actionDo.className = 'actionDo';
+            
         var doableElement = document.createElement('span');
         var doableClasses = 'mindCraft-ui-button mindCraft-ui-button-checkbox clickable';
         doableElement.className = (self.date_done == '') ? doableClasses : doableClasses + ' mark';
-
-        jQuery(actionHTMLElement).find('.actionDo').append(doableElement);
+        
+        actionDo.appendChild(doableElement);
+        
+        jQuery(actionDo).insertBefore(jQuery(actionHTMLElement).find('.perFormActionId'));
+        
         jQuery(doableElement).click(function () {
             self.toggleDone();
         });
+    };
+    this.showImportance = function () {
+        if (self.important) {
+            makeImportant();
+        }
+    };
+    this.showUrgency = function () {
+        if (self.urgent) {
+            makeUrgent();
+        }
+    };
+    this.showRoutineAction = function () {
+        if (self.routine_id) {
+            makeRoutineAction();
+        }
     };
 
     this.setPosition = function () {
@@ -264,41 +292,27 @@ function Action(data) {
         actionElement.className = 'perFormAction';
         actionElement.innerHTML = "" +
             "<div class='perFormActionId'></div>" +
-            "<div class='actionDo'></div>" +
-            "<div class='perFormActionTitle'><span class='ftype_contentC'>" + self.title + "    </span></div>" +
-            "<div class='actionExtras'>" +
-            "</div>";
-
-        if (self.important) {
-            makeImportant(actionElement);
-        }
-
-        if (self.urgent) {
-            makeUrgent(actionElement);
-        }
-
-        if (self.routine_id) {
-            makePartOfRoutine(actionElement);
-        }
-
+            "<div class='actionExtras'></div>" + 
+            "<div class='actionTitle'><div class='titleTextWrapper'><span class='ftype_contentB'>" + self.title + "    </span></div></div>";
+        
         return actionElement;
     }
 
-    function makePartOfRoutine(actionElement) {
+    function makeRoutineAction() {
         var routineElement = document.createElement('span');
         routineElement.className = 'mindCraft-ui-button mindCraft-ui-button-circular';
-        jQuery(actionElement).find('.actionExtras').append(routineElement);
+        jQuery(actionHTMLElement).find('.actionExtras').append(routineElement);
     }
 
-    function makeImportant(actionElement) {
+    function makeImportant() {
         var importantElement = document.createElement('span');
         importantElement.className = 'mindCraft-ui-button mindCraft-ui-button-important';
-        jQuery(actionElement).find('.actionExtras').append(importantElement);
+        jQuery(actionHTMLElement).find('.actionExtras').append(importantElement);
     }
 
-    function makeUrgent(actionElement) {
+    function makeUrgent() {
         var urgentElement = document.createElement('span');
         urgentElement.className = 'mindCraft-ui-button mindCraft-ui-button-urgent';
-        jQuery(actionElement).find('.actionExtras').append(urgentElement);
+        jQuery(actionHTMLElement).find('.actionExtras').append(urgentElement);
     }
 }

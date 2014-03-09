@@ -101,7 +101,7 @@ class mindFlow extends Controller
         try {
             $inputIdeaName = Input::build('Text', 'title')
                 ->addRule('minLength', 5)
-                ->addRule('maxLength', 200);
+                ->addRule('maxLength', 40);
 
             $inputIdeaName->validate();
 
@@ -134,7 +134,7 @@ class mindFlow extends Controller
                 ->addRule('isInt');
             $inputIdeaName = Input::build('Text', 'title')
                 ->addRule('minLength', 5)
-                ->addRule('maxLength', 200);
+                ->addRule('maxLength', 40);
 
             $inputIdeaId->validate();
             $inputIdeaName->validate();

@@ -558,7 +558,7 @@
 }
 
 #perFormYesterday {
-    width: 200px;
+    width: 175px;
 }
 
 #perFormToday {
@@ -569,11 +569,11 @@
     width: 140px;
 }
 
-#perFormUnlisted {
+#perFormPool {
     margin-left: 30px;
-    width: 170px;
+    width: 195px;
 }
-#perFormUnlisted .blockHeader {
+#perFormPool .blockHeader {
     background-color: transparent;
 }
 
@@ -596,8 +596,17 @@
 }
 
 /** Action block styles **/
-.perFormAction {
+#perFormYesterday .perFormAction,
+#perFormToday .perFormAction,
+#perFormTomorrow .perFormAction {
     position: absolute;
+}
+#perFormPool .perFormAction {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.perFormAction {
     width: 100%;
     height: 30px;
     line-height: 30px;
@@ -630,66 +639,61 @@
 
 /** Pair unlisted actions **/
 
-#perFormUnlisted .perFormAction:nth-child(2n+1) {
+#perFormPool .perFormAction:nth-child(2n+1) {
     background-color: #dfd9c2;
 }
 
 /** Odd unlisted actions **/
-#perFormUnlisted .perFormAction {
+#perFormPool .perFormAction {
     background-color: #f4f2ef;
 }
 
-
 /** Inner Action styles **/
 
-.perFormActionTitle {
-    position: absolute;
-    top: 50%;
-    margin-top: -15px;
-    left: 50%;
+.perFormAction .actionDo {
+    float: left;
+    width: 30px;
+    height: 100%;
 }
 
-.perFormActionTitle span {
-    display: block;
-    white-space: nowrap;
+.perFormAction .actionDo span, .perFormAction .actionExtras span {
+    position: relative;
+    top: 50%;
+    margin-top: -15px;
+}
+
+.perFormAction .actionTitle{
     overflow: hidden;
+    height: 100%;
+}
+
+#perFormYesterday .perFormAction .actionTitle:before,
+#perFormToday .perFormAction .actionTitle:before,
+#perFormTomorrow .perFormAction .actionTitle:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -0.25em
+}
+#perFormYesterday .perFormAction .actionTitle .titleTextWrapper,
+#perFormToday .perFormAction .actionTitle .titleTextWrapper,
+#perFormTomorrow .perFormAction .actionTitle .titleTextWrapper {
+    display: inline-block;
+    vertical-align: middle;
+}
+#perFormPool .perFormAction .actionTitle .titleTextWrapper span {
     text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    overflow: hidden;
+}
+
+.perFormAction .actionTitle .titleTextWrapper span {
     line-height: 30px;
 }
 
-#perFormToday .perFormActionTitle{
-    width: 300px;
-    margin-left: -150px;
-}
-
-#perFormYesterday .perFormActionTitle{
-    width: 160px;
-    margin-left: -70px;
-}
-
-#perFormTomorrow .perFormActionTitle{
-    width: 120px;
-    margin-left: -60px;
-}
-
-#perFormUnlisted .perFormAction {
-    position: relative !important;
-    margin-bottom: 15px;
-}
-#perFormUnlisted .perFormActionTitle{
-    width: 120px;
-    margin-left: -50px;
-}
-
-.perFormAction .actionDo {
-    left: 0;
-} 
 .perFormAction .actionExtras {
-    right: 0;
+    float: right;
+    height: 100%;
 }
-.perFormAction .actionDo, .perFormAction .actionExtras {
-    position: absolute;
-    top: 50%;
-    height: 30px;
-    margin-top: -15px;
-} 
