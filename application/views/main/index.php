@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class='action workOut'>
-                <a href="<?php echo _SYSTEM_BASE_URL; ?>mindFlow/index/step2">
+                <a href="<?php echo _SYSTEM_BASE_URL; ?>mindFlow/index/step21">
                     <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>WorkOut.png' alt='WorkOut'/>
                 </a>
 
