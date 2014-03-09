@@ -30,6 +30,10 @@
     <?php foreach ($this->getJs() as $js) : ?><script src='<?php echo $js; ?>'></script>
     <?php endforeach; ?>
 
+    <!-- Favicon -->
+    <link rel="shortcut icon" href='<?php echo _SYSTEM_BASE_URL; ?>public/images/Favicon.png' type="image/icon">
+    <link rel="icon" href='<?php echo _SYSTEM_BASE_URL; ?>public/images/Favicon.png' type="image/icon">
+
 </head>
 
 <body>
