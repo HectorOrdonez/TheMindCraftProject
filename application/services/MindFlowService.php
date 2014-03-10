@@ -450,10 +450,9 @@ class MindFlowService extends Service
                     'user_id = ? AND
                     (
                         date_todo IS NULL AND (
-                            date_done IS NULL OR 
-                                date_done BETWEEN DATE(NOW() - INTERVAL 1 DAY) AND DATE(NOW() + INTERVAL 1 DAY)
-                            )
-                        OR (
+                                date_done IS NULL OR
+                                date_done = DATE(NOW())
+                        ) OR (
                             date_todo BETWEEN DATE(NOW() - INTERVAL 1 DAY) AND DATE(NOW() + INTERVAL 1 DAY)
                         )
                     )',
