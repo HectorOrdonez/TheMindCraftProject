@@ -59,24 +59,26 @@ class MindFlowService extends Service
 
         switch ($step) {
             case 'brainStorm':
-                $conditions = array('user_id = ?', $userId);
+                $missionConditions = array('user_id = ?', $userId);
+                $routineConditions = array('user_id = ? AND (selected = ? OR last_update is NULL)', $userId, self::SELECTED_TRUE);
                 $fields = array('id', 'title', 'date_creation');
 
                 // Getting missions
-                $response['missions'] = $this->getMissions($fields, $conditions);
+                $response['missions'] = $this->getMissions($fields, $missionConditions);
 
                 // Getting routines
-                $response['routines'] = $this->getRoutines($fields, $conditions);
+                $response['routines'] = $this->getRoutines($fields, $routineConditions);
                 break;
             case 'select':
-                $conditions = array('user_id = ?', $userId);
+                $missionConditions = array('user_id = ?', $userId);
+                $routineConditions = array('user_id = ? AND (selected = ? OR last_update is NULL)', $userId, self::SELECTED_TRUE);
                 $fields = array('id', 'title', 'date_creation', 'selected');
 
                 // Getting missions
-                $response['missions'] = $this->getMissions($fields, $conditions);
+                $response['missions'] = $this->getMissions($fields, $missionConditions);
 
                 // Getting routines
-                $response['routines'] = $this->getRoutines($fields, $conditions);
+                $response['routines'] = $this->getRoutines($fields, $routineConditions);
                 break;
             case 'prioritize':
                 $conditions = array('selected = ? AND user_id = ?', self::SELECTED_TRUE, $userId);
