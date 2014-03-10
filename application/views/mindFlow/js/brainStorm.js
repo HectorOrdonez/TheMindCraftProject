@@ -260,8 +260,15 @@ function BrainStorm($element, callback) {
                     title: data.title,
                     date_creation: data.date_creation
                 };
-
                 table.addContentData(newRow);
+                
+                /**
+                 * Scrolling down the workspace, if necessary.
+                 */
+                var workspace = jQuery($workspace).find('.workspace').get(0);
+                workspace.scrollTop = workspace.scrollHeight;
+                
+                // Resetting the input
                 $input.val('');
             }
         ).fail(function (data) {

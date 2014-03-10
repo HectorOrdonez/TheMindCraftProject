@@ -30,10 +30,10 @@ body {
 /**********************************************************************************************************************/
 
 /** Row Height **/
-.workspace .row {
+.workbench .row {
     height: 30px;
 }
-.workspace .cell {
+.workbench .cell {
     line-height: 30px;
 }
 
@@ -147,8 +147,8 @@ input {
 /**         TABLE, ROWS AND CELLS           **/
 /*********************************************/
 
-/** Table workspace **/
-.workspace {
+/** Workbench **/
+.workbench {
     -moz-box-shadow: 2px 2px 5px #b9a889;
     -webkit-box-shadow: 2px 2px 5px #b9a889;
     box-shadow: 2px 2px 5px #b9a889;
@@ -170,12 +170,12 @@ input {
 }
 
 /** Rows of the header section **/
-.workspace .header {
+.workbench .header {
     background-color: #2a2724;
 }
 
 /** Rows of the footer section **/
-.workspace .footer {
+.workbench .footer {
     background-color: #f4f2ef;
 }
 

@@ -270,8 +270,15 @@ function Select($element, callback) {
                     date_creation: data.date_creation,
                     selected: data.selected
                 };
-
                 table.addContentData(newRow);
+
+                /**
+                 * Scrolling down the workspace, if necessary.
+                 */
+                var workspace = jQuery($workspace).find('.workspace').get(0);
+                workspace.scrollTop = workspace.scrollHeight;
+
+                // Resetting the input
                 $input.val('');
             }
         ).fail(function (data) {

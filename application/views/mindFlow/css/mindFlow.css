@@ -90,29 +90,36 @@
 
 /** Grids **/
 .mindFlowGrid {
-    width: 950px;
-    margin: 0 auto;
-    max-height: 330px;
-    overflow-y: auto;
     padding: 5px;
 }
 
+.mindFlowGrid .workbench{
+    width: 965px;
+    margin: 0 auto;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.mindFlowGrid .workspace {
+    max-height: 440px; /** Workbench height - header and footer **/ 
+}
+
 /** Id columns are always hidden here **/
-.mindFlowGrid .row .col_id {
+.workbench .row .col_id {
     display: none;
 }
 
 /** Action column styles **/
-.mindFlowGrid .actionBox {
+.workbench .actionBox {
     position: relative;
 }
 
-.mindFlowGrid .actionBox div {
+.workbench .actionBox div {
     float: left;
     width: 45px;
 }
 
-.mindFlowGrid .action a {
+.workbench .action a {
     display: block;
     font-size: 0;
 }
