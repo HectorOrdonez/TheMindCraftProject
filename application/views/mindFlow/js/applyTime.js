@@ -127,7 +127,6 @@ function ApplyTime($element, callback) {
      */
     function toggleShowRoutines($showRoutines) {
         uniqueUserRequest(function (callback) {
-            var i;
             var $mark = $showRoutines.find('span').first();
             var toggleTo = ($mark.hasClass('mark')) ? 'hide' : 'show';
 
@@ -140,8 +139,9 @@ function ApplyTime($element, callback) {
                 url: url,
                 data: data
             }).done(function () {
+                    var ideaId;
                     if (toggleTo == 'show') {
-                        for (var ideaId in applyTimeData) {
+                        for (ideaId in applyTimeData) {
                             if (applyTimeData[ideaId].type == 'routine' && applyTimeData[ideaId].selected == false) {
                                 applyTimeData[ideaId].selected = true;
 
@@ -155,7 +155,7 @@ function ApplyTime($element, callback) {
                         }
                         $mark.addClass('mark');
                     } else {
-                        for (var ideaId in applyTimeData) {
+                        for (ideaId in applyTimeData) {
                             if (applyTimeData[ideaId].type == 'routine' && applyTimeData[ideaId].selected == true) {
                                 applyTimeData[ideaId].selected = false;
                                 table.removeContentId(findRowByIdeaId($workspace, ideaId));
@@ -579,6 +579,8 @@ function RoutineDialog() {
         for (var i = 0; i < $liElements.length; i++) {
             if (initSelection[i] == '1') {
                 jQuery($liElements[i]).addClass('selected ftype_contentA');
+            } else {
+                jQuery($liElements[i]).removeClass('selected ftype_contentA');
             }
         }
     }
