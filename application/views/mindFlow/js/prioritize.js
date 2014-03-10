@@ -79,7 +79,7 @@ function Prioritize($element, callback) {
                     var urgentValue = (rowData.urgent) ? 'mark' : '';
 
                     var importantAction = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-important clickable ' + importantValue + '">' + rowData.id + '</a></div>';
-                    var urgentAction = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-urgent clickable' + urgentValue + '">' + rowData.id + '</a></div>';
+                    var urgentAction = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-urgent clickable ' + urgentValue + '">' + rowData.id + '</a></div>';
 
                     return '<div class="actionBox">' + importantAction + urgentAction + '</div>';
                 }},
