@@ -646,8 +646,10 @@
     line-height: 30px;
 }
 
-.perFormAction .actionTitle .titleTextWrapper span {
+.perFormAction .actionTitle .titleTextWrapper p {
     line-height: 30px;
+    word-break: break-all; /** Fixes issues with long words **/
+    word-wrap: break-word;
 }
 
 /** Column-specific styles **/
@@ -701,7 +703,7 @@
     vertical-align: middle;
 }
 
-#perFormPool .perFormAction .actionTitle .titleTextWrapper span {
+#perFormPool .perFormAction .actionTitle .titleTextWrapper p {
     text-overflow: ellipsis;
     white-space: nowrap;
     display: block;
@@ -713,10 +715,10 @@
     height: auto;
 }
 
-#perFormPool .perFormAction.fullText .actionDo {
+.perFormAction.fullText .actionDo {
     height: 30px;
 }
-#perFormPool  .perFormAction.fullText .actionDo span {
+.perFormAction.fullText .actionDo span {
     position: absolute;
     left: 0;
 }
@@ -728,6 +730,6 @@
 .perFormAction.fullText .actionTitle {
     padding-right: 30px;
 }
-.perFormAction.fullText .actionTitle span {
+.perFormAction.fullText .actionTitle .titleTextWrapper p {
     white-space: normal !important;
 }

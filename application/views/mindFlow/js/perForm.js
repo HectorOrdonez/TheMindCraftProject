@@ -345,7 +345,7 @@ function Action(data) {
             "<div class='actionTitle'><div class='titleTextWrapper'></div></div>";
         
         // Title element 
-        var titleElement = document.createElement('span');
+        var titleElement = document.createElement('p');
         titleElement.className = 'ftype_contentB';
         titleElement.innerHTML = self.title;
         
