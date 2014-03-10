@@ -115,9 +115,10 @@ class MindFlowService extends Service
      *
      * @param $fields
      * @param $conditions
+     * @param $order
      * @return array
      */
-    private function getMissions($fields, $conditions)
+    private function getMissions($fields, $conditions, $order = 'id')
     {
         $response = array();
 
@@ -126,7 +127,9 @@ class MindFlowService extends Service
          */
         $rawMissionsArray = Mission::all(array(
             'joins' => array('idea'),
-            'conditions' => $conditions));
+            'conditions' => $conditions,
+            'order' => $order)
+        );
 
         foreach ($rawMissionsArray as $mission) {
             $response[] = $mission->toArray($fields);
@@ -140,9 +143,10 @@ class MindFlowService extends Service
      *
      * @param $fields
      * @param $conditions
+     * @param $order
      * @return array
      */
-    private function getRoutines($fields, $conditions)
+    private function getRoutines($fields, $conditions, $order = 'id')
     {
         $response = array();
 
@@ -151,7 +155,8 @@ class MindFlowService extends Service
          */
         $rawRoutinesArray = Routine::all(array(
                 'joins' => array('idea'),
-                'conditions' => $conditions)
+                'conditions' => $conditions,
+                'order' => $order)
         );
 
         foreach ($rawRoutinesArray as $routine) {
@@ -453,7 +458,8 @@ class MindFlowService extends Service
                         )
                     )',
                     $userId
-                ))
+                ),
+                'order' => 'time_from')
         );
 
         foreach ($rawActionsArray as $action) {

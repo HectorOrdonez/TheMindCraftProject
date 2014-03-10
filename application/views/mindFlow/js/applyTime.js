@@ -277,6 +277,7 @@ function MissionDialog() {
         $datePicker.datepicker({
             dateFormat: 'dd/mm/yy',
             firstDay: 1,
+            defaultDate: new Date(),
             showOtherMonths: true,
             afterDisplay: function () {
                 // Making odd cells being... odd!
@@ -296,7 +297,9 @@ function MissionDialog() {
         currentData = jQuery.extend({}, previousData);
         currentData.type = 'mission';
         var startDate = getDateFromString(previousData.date_todo);
-        $datePicker.datepicker("setDate", startDate);
+        if (startDate != '') {
+            $datePicker.datepicker("setDate", startDate);
+        }
 
         initTimeSelector('hours', $fromHoursSelector, previousData.time_from);
         initTimeSelector('minutes', $fromMinSelector, previousData.time_from);
