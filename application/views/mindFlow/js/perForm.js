@@ -318,7 +318,9 @@ function Action(data) {
             url: url,
             data: data
         }).done(function () {
-                self.destroy();
+                jQuery(actionHTMLElement).fadeOut(function(){
+                    self.destroy();
+                });
             }
         ).fail(function (data) {
                 setInfoMessage($infoDisplayer, 'error', data.statusText, 2000);
@@ -401,7 +403,7 @@ function Action(data) {
      */
     function makeImportant() {
         var importantElement = document.createElement('span');
-        importantElement.className = 'mindCraft-ui-button mindCraft-ui-button-important';
+        importantElement.className = 'mindCraft-ui-button mindCraft-ui-button-important mark';
         jQuery(actionHTMLElement).find('.actionExtras').append(importantElement);
     }
 
@@ -410,7 +412,7 @@ function Action(data) {
      */
     function makeUrgent() {
         var urgentElement = document.createElement('span');
-        urgentElement.className = 'mindCraft-ui-button mindCraft-ui-button-urgent';
+        urgentElement.className = 'mindCraft-ui-button mindCraft-ui-button-urgent mark';
         jQuery(actionHTMLElement).find('.actionExtras').append(urgentElement);
     }
 }
