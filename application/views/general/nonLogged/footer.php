@@ -15,5 +15,9 @@
 <div id='footer'>
 </div>
 
+<!-- JS Libraries -->
+<?php foreach ($this->getJs() as $js) : ?><script src='<?php echo $js; ?>'></script>
+<?php endforeach; ?>
+
 </body>
 </html>

@@ -34,7 +34,12 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.310', '09/03/2013', array (
+        $this->_setDevelopmentVersion('0.311', '10/03/2013', array (
+            '[Performance improvement] - Placed All Javascript libraries at bottom of the page, just before the body closes.'
+        )); 
+        
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.310', '09/03/2013', array (
             'This update contains a lot of modifications and some fixes. It is going to be the final update before releasing it as "Alpha" version to some friends who will help identify bugs and give feedback.',
             '[Feature] - Added Favicon.',
             '[Feature] - New Font types, updated in previous ones.',
@@ -52,10 +57,8 @@ class releaseHistory extends Controller
             '[Debug] - Added non-cache headers in index login and logout in order to avoid Chrome redirect caching issue.',
             '[Debug] - Set http://themindcraftproject.org as the principal page, and adding a redirection to it from http://www.themindcraftproject.org. This fixes an issue not allowing to log in to users using an unexpected url.',
             '[Debug] - Fixed issue causing the "Done" checkbox not to be displayed in the PerForm step.',
-            '[Etc] - Many, many other changes, including comments, fixes, checks, visual improvements, etc.'   
+            '[Etc] - Many, many other changes, including comments, fixes, checks, visual improvements, etc.'
         ));
-        
-        // Setting Historical Log of releases
         $this->_addHistoryLog('0.300', '17/02/2013', array (
             '[Feature] - Release fully functional version of MindCraft!!'
         ));
