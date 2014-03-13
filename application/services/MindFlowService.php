@@ -126,9 +126,9 @@ class MindFlowService extends Service
          * @var Mission[] $rawMissionsArray
          */
         $rawMissionsArray = Mission::all(array(
-            'joins' => array('idea'),
-            'conditions' => $conditions,
-            'order' => $order)
+                'joins' => array('idea'),
+                'conditions' => $conditions,
+                'order' => $order)
         );
 
         foreach ($rawMissionsArray as $mission) {
@@ -436,6 +436,19 @@ class MindFlowService extends Service
         }
     }
 
+    /**
+     * Builds a list of actions to display.
+     * 
+     * The filter is as follows:
+     * 1 - Gets the actions of this user.
+     * 2 - Gets the actions with completed time frame and date_todo between yesterday and tomorrow.     * 
+     * 3 - Gets the actions with uncompleted time frame and
+     *  3.1 - date_todo is either not defined or today.
+     *  3.2 - action is not done or it is done today.
+     * 
+     * @param $userId
+     * @return array
+     */
     public function getActions($userId)
     {
         $this->generateActions($userId);
@@ -447,13 +460,16 @@ class MindFlowService extends Service
          */
         $rawActionsArray = Action::find('all', array(
                 'conditions' => array(
-                    'user_id = ? AND
-                    (
-                        date_todo IS NULL AND (
-                                date_done IS NULL OR
-                                date_done = DATE(NOW())
-                        ) OR (
+                    'user_id = ? AND (
+                        (
+                            time_from IS NOT NULL AND
+                            time_till IS NOT NULL AND
                             date_todo BETWEEN DATE(NOW() - INTERVAL 1 DAY) AND DATE(NOW() + INTERVAL 1 DAY)
+                        ) OR ( 
+                            time_from IS NULL AND 
+                            time_till IS NULL AND
+                            (date_todo IS NULL or date_todo = DATE(NOW())) AND
+                            (date_done IS NULL or date_done = DATE(NOW()))
                         )
                     )',
                     $userId
@@ -547,6 +563,7 @@ class MindFlowService extends Service
             $routine->idea->save();
         }
     }
+
     /**
      * Delete action
      *

@@ -13,12 +13,6 @@ function PerForm($element, callback) {
     var $workspace;
     var $perFormLayout;
 
-    // PerForm column locations
-    var $unlistedLoc;
-    var $yesterdayLoc;
-    var $todayLoc;
-    var $tomorrowLoc;
-
     // Date helpers
     var yesterday;
     var today;
@@ -37,10 +31,6 @@ function PerForm($element, callback) {
 
     $workspace = $element;
     $perFormLayout = jQuery('#perFormLayout');
-    $unlistedLoc = jQuery('#perFormPool');
-    $yesterdayLoc = jQuery('#perFormYesterday');
-    $todayLoc = jQuery('#perFormToday');
-    $tomorrowLoc = jQuery('#perFormTomorrow');
 
     initDates();
     buildLayout();
@@ -117,14 +107,23 @@ function PerForm($element, callback) {
         var actionDateTime = getDateTimeFromString(action.date_todo, action.time_from);
         var errMsg;
         
+        // Actions without fully constructed to do datetime are sent to the action pool  
         if (actionDateTime == '') {
-            action.setAsDoable();
-            action.showImportance();
-            action.showUrgency();
-            action.showOnPool($unlistedLoc);
+            var dateDone = getDateFromString(action.date_done);
+            
+            // Action pool only accept undone actions or today's done actions  
+            if (action.isDone() && (dateDone < yesterday || dateDone > tomorrow))
+            {                
+                errMsg = 'This action [' + action.id + '] is already done yesterday or before.';
+                setInfoMessage($infoDisplayer, 'error', errMsg, 5000);
+                console.error(errMsg);
+                return;
+            }
+            action.showOnPool();
             return;
         }
 
+        // Actions which date to do them is past beyond yesterday are not supposed to be sent.
         if (actionDateTime < yesterday) {
             errMsg = 'This action [' + action.id + '] is set to be done in the past beyond yesterday';
             setInfoMessage($infoDisplayer, 'error', errMsg, 5000);
@@ -132,26 +131,25 @@ function PerForm($element, callback) {
             return;
         }
 
+        // Actions which date to do them is before today are sent to Yesterday's column.
         if (actionDateTime < today) {
-            action.setAsDoable();
-            action.showOnDay($yesterdayLoc);
+            action.showOnYesterday();
             return;
         }
 
+        // Actions which date to do them is before tomorrow are sent to today's column.
         if (actionDateTime < tomorrow) {
-            action.setAsDoable();
-            action.showImportance();
-            action.showUrgency();
-            action.showRoutineAction();
-            action.showOnDay($todayLoc);
+            action.showOnToday();
             return;
         }
 
+        // Actions which date to do them is before after tomorrow are sent to Tomorrow's column.
         if (actionDateTime < afterTomorrow) {
-            action.showOnDay($tomorrowLoc);
+            action.showOnTomorrow();
             return;
         }
 
+        // Actions which date to do are not in any of the previous conditions are beyond tomorrow, and are not supposed to be sent.
         errMsg = 'This action [' + action.id + '] is set to be done in the future beyond tomorrow.';
         setInfoMessage($infoDisplayer, 'error', errMsg, 5000);
         console.error(errMsg);
@@ -200,20 +198,51 @@ function Action(data) {
     /***********************************/
 
     /**
-     * Appends the action html to the given day location and, after, sets the position.
-     * @param $location
+     * Appends the action html to yesterday's column, configures the action and, after, sets the position.
      */
-    this.showOnDay = function ($location) {
+    this.showOnYesterday = function () {
+        var $location = jQuery('#perFormYesterday');
+        
+        self.setAsDoable();
+        jQuery(actionHTMLElement).appendTo($location);
+        setPosition();
+    };
+
+    /**
+     * Appends the action html to today's column, configures the action and, after, sets the position.
+     */
+    this.showOnToday = function () {
+        var $location = jQuery('#perFormToday');
+        
+        self.setAsDoable();
+        self.showImportance();
+        self.showUrgency();
+        self.showRoutineAction();
+        jQuery(actionHTMLElement).appendTo($location);
+        setPosition();
+    };
+
+    /**
+     * Appends the action html to tomorrow's column, configures the action and, after, sets the position.
+     */
+    this.showOnTomorrow = function () {
+        var $location = jQuery('#perFormTomorrow');
+        
         jQuery(actionHTMLElement).appendTo($location);
         setPosition();
     };
 
     /**
      * Appends the action html to the action pool.
-     * @param $pool
      */
-    this.showOnPool = function ($pool) {
-        jQuery(actionHTMLElement).appendTo($pool);
+    this.showOnPool = function () {
+        var $location = jQuery('#perFormPool');
+        
+        self.setAsDoable();
+        self.showImportance();
+        self.showUrgency();
+        
+        jQuery(actionHTMLElement).appendTo($location);
     };
 
     /**
@@ -267,6 +296,13 @@ function Action(data) {
         jQuery(doableElement).click(function () {
             self.toggleDone();
         });
+    };
+
+    /**
+     * Returns whether this action is done or not.
+     */
+    this.isDone = function () {
+        return (self.date_done != '');
     };
 
     /**
