@@ -6,7 +6,10 @@
  */
 
 /** Sets the language and the number format of the application. **/
-/** **/ setlocale(LC_NUMERIC, 'es_ES');
+setlocale(LC_NUMERIC, 'es_ES');
+
+/** Informs the System about which setup use **/
+define ('_PRODUCTION', FALSE);
 
 /** Base path of the website. **/
 if (_PRODUCTION === TRUE) {
@@ -15,9 +18,6 @@ if (_PRODUCTION === TRUE) {
     //define ('_SYSTEM_BASE_URL', 'http://192.168.1.55/projects/themindcraftproject/');
     define ('_SYSTEM_BASE_URL', 'http://localhost/projects/themindcraftproject/');
 }
-
-/** Informs the System about which setup use **/
-define ('_PRODUCTION', FALSE);
 
 /**
  * Default controllers and methods for index and error page.
