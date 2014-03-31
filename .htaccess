@@ -30,11 +30,22 @@ ErrorDocument 500 http://localhost/projects/themindcraftproject/error/internalSe
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
 RewriteRule ^(.*)$ http://%1 [R=301,L]
 
-# Allowing access to Index.
-RewriteRule ^(index.php) index.php [QSA,L]
+# Denies access to all php files to everyone.
+<Files *.php> 
+    deny from all
+</Files>
 
-# Forbidding access to PHP files.
-RewriteRule ^(.+)\.php - [F,L]
+# Exception to previous rule - index.php is allowed by everyone.
+<Files "index.php">
+    Allow From All
+</Files>
+
+# Exception to previous rule - CronJobManager.php is allowed by server.
+<Files "CronJobManager.php">
+    Order Deny,Allow
+    Deny From All
+    Allow From 127.0.0.1
+</Files>
 
 # Redirecting requests if not to a file or link.
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -44,7 +55,7 @@ RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
 ######################
 ##### PRODUCTION #####
 ######################
-# 
+
 # php_flag display_errors on
 # php_value error_reporting 32767
 # 
@@ -67,11 +78,22 @@ RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
 # RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
 # RewriteRule ^(.*)$ http://%1 [R=301,L]
 # 
-# # Allowing access to Index.
-# RewriteRule ^(index.php) index.php [QSA,L]
+# # Denies access to all php files to everyone.
+# <Files *.php> 
+#     deny from all
+# </Files>
 # 
-# # Forbidding access to PHP files.
-# RewriteRule ^(.+)\.php - [F,L]
+# # Exception to previous rule - index.php is allowed by everyone.
+# <Files "index.php">
+#     Allow From All
+# </Files>
+# 
+# # Exception to previous rule - CronJobManager.php is allowed by server.
+# <Files "CronJobManager.php">
+#     Order Deny,Allow
+#     Deny From All
+#     Allow From 127.0.0.1
+# </Files>
 # 
 # # Redirecting requests if not to a file or link.
 # RewriteCond %{REQUEST_FILENAME} !-f

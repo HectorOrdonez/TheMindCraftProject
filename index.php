@@ -41,7 +41,7 @@ function __autoload($class)
  * Initializing ActiveRecord
  */
 ActiveRecord\Config::initialize(function ($cfg) {
-    $cfg->set_model_directory('application/models');
+    $cfg->set_model_directory(_SYSTEM_ROOT_PATH . join(DIRECTORY_SEPARATOR, array('application', 'models')));
     $cfg->set_connections(array('development' => DB_TYPE . '://' . DB_USER . ':' . DB_PASS . '@' . DB_HOST . '/' . DB_NAME));
 });
 
