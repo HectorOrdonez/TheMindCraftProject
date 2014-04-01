@@ -232,8 +232,8 @@ class Bootstrap
      */
     private function _setController()
     {
-        $controller = 'application\controllers\\' . $this->_url[self::URL_CONTROLLER];
-        $requestedControllerPath = _SYSTEM_ROOT_PATH . str_replace('\\', '/', $controller) . '.php';
+        $controller = join(DIRECTORY_SEPARATOR, array('application', 'controllers', $this->_url[self::URL_CONTROLLER]));
+        $requestedControllerPath = _SYSTEM_ROOT_PATH . str_replace(DIRECTORY_SEPARATOR, '/', $controller) . '.php';
 
         if (file_exists($requestedControllerPath)) {
             $this->_controller = new $controller();

@@ -17,7 +17,7 @@ use \ActiveRecord\Model as Model;
  * @package application\models
  *
  * Magic methods 
- * @method static Mission find_by_id(\int $id) Returns the Mission with given idea_id
+ * @method static Mission find_by_pk(\int $id) Returns the Mission with given idea_id
  *
  * Magically accessed attributes
  * @property int idea_id Id

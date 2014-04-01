@@ -1,0 +1,5 @@
+This file is created in order to have the containing folder committed.
+
+DO NOT REMOVE ! ! ! 
+
+Some systems do not synchronize empty folders.

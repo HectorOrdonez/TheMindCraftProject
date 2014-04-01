@@ -211,6 +211,6 @@ class View
             throw new ViewException(sprintf(self::CHUNK_NOT_SET, $name), Exception::FATAL_EXCEPTION);
         }
         
-        require _SYSTEM_ROOT_PATH . "application/views/{$this->_chunks[$name]}.php";
+        require _SYSTEM_ROOT_PATH . join(DIRECTORY_SEPARATOR, array('application', 'views', $this->_chunks[$name] .'.php'));
     }
 }
