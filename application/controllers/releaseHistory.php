@@ -34,14 +34,17 @@ class releaseHistory extends Controller
         parent::__construct();
 
         // Setting version under construction
-        $this->_setDevelopmentVersion('0.312', '10/03/2013', array (
+        $this->_setDevelopmentVersion('0.32', '01/04/2013', array (
+            '[Feature] - Now Routines generate actions for two weeks time ahead, being updated without the User having to go to PerForm step.',
+        )); 
+        
+        // Setting Historical Log of releases
+        $this->_addHistoryLog('0.312', '10/03/2013', array (
             '[Debug] - Fixed several issues.',
             '[Feature] - Added fading out to Actions deleted.',
             '[Feature] - BrainStorm and Select does not show unselected routines if they passed already the PerForm step.',
             '[Core Update] - New GridElements version. Refactored styles to adapt to changes. Implemented, thanks to the update, a scroll to the table workspace.'
-        )); 
-        
-        // Setting Historical Log of releases
+        ));
         $this->_addHistoryLog('0.311', '10/03/2013', array (
             '[Performance improvement] - Placed All Javascript libraries at bottom of the page, just before the body closes.'
         ));

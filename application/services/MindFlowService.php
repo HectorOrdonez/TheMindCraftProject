@@ -455,7 +455,7 @@ class MindFlowService extends Service
         foreach ($routines as $routine) {
             if ($routine->isGenerationNeeded())
             {
-                
+                $routine->generateActions();
             }
             $routine->idea->setSelect(Idea::SELECTED_FALSE);
         }
