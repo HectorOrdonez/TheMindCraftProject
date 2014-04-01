@@ -24,7 +24,7 @@ if (_PRODUCTION === TRUE) {
  */
 define ('_DEFAULT_CONTROLLER', 'index');
 define ('_DEFAULT_METHOD', 'index');
-define ('_ERROR_CONTROLLER', 'Error');
+define ('_ERROR_CONTROLLER', 'error');
 define ('_EXCEPTION_METHOD', 'exception');
 
 /**
@@ -39,6 +39,11 @@ define ('EXCEPTION_LOGIN_USER_NOT_ACTIVE', 1004);
 /** CONFIG SETTINGS FOR HECNEL                                **/
 /** CHANGE OF THIS SETTING MIGHT LEAD TO UNEXPECTED BEHAVIOR. **/
 /***************************************************************/
+
+/**
+ * Namespace separator
+ */
+define ('_NAMESPACE_SEPARATOR', '\\');
 
 /**
  * Root path of the project in the server.

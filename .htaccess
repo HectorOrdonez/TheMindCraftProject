@@ -66,13 +66,13 @@ RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
 # RewriteBase /
 # 
 # # Error pages for fatal errors redirection - Authentication failed
-# ErrorDocument 401 http://www.themindcraftproject.org/error/authFailed
+# ErrorDocument 401 error/authFailed
 # # Error pages for fatal errors redirection - Forbidden access
-# ErrorDocument 403 http://www.themindcraftproject.org/error/accessForbidden
+# ErrorDocument 403 error/accessForbidden
 # # Error pages for fatal errors redirection - Page not found
-# ErrorDocument 404 http://www.themindcraftproject.org/error/resourceNotFound
+# ErrorDocument 404 error/resourceNotFound
 # # Error pages for fatal errors redirection - Internal Server Error
-# ErrorDocument 500 http://www.themindcraftproject.org/error/internalServerError
+# ErrorDocument 500 error/internalServerError
 # 
 # # Redirecting in case request starts with www.
 # RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]

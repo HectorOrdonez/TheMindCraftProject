@@ -51,7 +51,7 @@ class Bootstrap
      * In case of an error the following controller will be load.
      * If the error is a Application exception, use the Exception Method specified.
      */
-    private $_ERROR_CONTROLLER = 'Error';
+    private $_ERROR_CONTROLLER = 'error';
     private $_EXCEPTION_METHOD = 'exception';
 
     /**
@@ -232,8 +232,8 @@ class Bootstrap
      */
     private function _setController()
     {
-        $controller = join(DIRECTORY_SEPARATOR, array('application', 'controllers', $this->_url[self::URL_CONTROLLER]));
-        $requestedControllerPath = _SYSTEM_ROOT_PATH . str_replace(DIRECTORY_SEPARATOR, '/', $controller) . '.php';
+        $controller = join(_NAMESPACE_SEPARATOR, array('application', 'controllers', $this->_url[self::URL_CONTROLLER]));
+        $requestedControllerPath = _SYSTEM_ROOT_PATH . str_replace(_NAMESPACE_SEPARATOR, DIRECTORY_SEPARATOR, $controller) . '.php';
 
         if (file_exists($requestedControllerPath)) {
             $this->_controller = new $controller();

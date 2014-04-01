@@ -36,6 +36,7 @@ class releaseHistory extends Controller
         // Setting version under construction
         $this->_setDevelopmentVersion('0.32', '01/04/2013', array (
             '[Feature] - Now Routines generate actions for two weeks time ahead, being updated without the User having to go to PerForm step.',
+            '[Core Update] - Updated TheMindcraftProject Hecnel Framework to Version 3.011.',
         )); 
         
         // Setting Historical Log of releases
