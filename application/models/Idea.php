@@ -11,6 +11,7 @@ namespace application\models;
 
 use ActiveRecord\ActiveRecordException;
 use \ActiveRecord\Model as Model;
+use engine\drivers\Exception;
 
 /**
  * Class Idea
@@ -32,9 +33,15 @@ use \ActiveRecord\Model as Model;
  */
 class Idea extends Model
 {
-    const MISSION_TYPE = 'mission';
-    const ROUTINE_TYPE = 'routine';
-    
+    const TYPE_MISSION = 'mission';
+    const TYPE_ROUTINE = 'routine';
+    const IMPORTANT_TRUE = 1;
+    const IMPORTANT_FALSE = 0;
+    const URGENT_TRUE = 1;
+    const URGENT_FALSE = 0;
+    const SELECTED_TRUE = 1;
+    const SELECTED_FALSE = 0;
+
     public static $table_name = 'idea'; // Table name
 
     static $belongs_to = array(
@@ -77,23 +84,87 @@ class Idea extends Model
     }
 
     /**
+     * Sets the selected state as requested.
+     * @param $selectState
+     */
+    public function setSelect($selectState)
+    {
+        $this->selected = $selectState;
+        $this->save();
+    }
+
+    /**
      * When deleting an Idea, its related Mission or Routine is deleted too.
      * @return bool|void
      * @throws \ActiveRecord\ActiveRecordException
      */
     public function delete()
     {
-        if (self::MISSION_TYPE === $this->type)
-        {
+        if (self::TYPE_MISSION === $this->type) {
             $mission = Mission::find_by_pk($this->id);
             $mission->delete();
-        } else if (self::ROUTINE_TYPE === $this->type)
-        {
+        } else if (self::TYPE_ROUTINE === $this->type) {
             $routine = Routine::find_by_pk($this->id);
             $routine->delete();
         } else {
             throw new ActiveRecordException("Requested Idea to be deleted {$this->id} does not seem to have a Mission or a Routine related.");
         }
         parent::delete();
+    }
+
+    /**
+     * Makes sure that this idea is a mission.
+     * In case is not, the related routine is deleted and a new mission with same parameters is created.
+     *
+     * @return Mission Requested Mission object.
+     * @throws Exception
+     */
+    public function convertIdeaToMission()
+    {
+        if (self::TYPE_MISSION === $this->type) {
+            return Mission::find_by_pk($this->id);
+        } else if (self::TYPE_ROUTINE === $this->type) {
+            $newMission = Mission::create(array('idea_id' => $this->id));
+
+            /**
+             * @var Routine $routineToDelete
+             */
+            $routineToDelete = Routine::find_by_pk($this->id);
+            $routineToDelete->delete();
+
+            $this->type = self::TYPE_MISSION;
+            $this->save();
+            return $newMission;
+        } else {
+            throw new Exception('Unknown Idea type.');
+        }
+    }
+
+    /**
+     * Makes sure that this idea is a routine.
+     * In case is not, the related mission is deleted and a new routine with same parameters is created.
+     *
+     * @return Routine Requested Routine object.
+     * @throws Exception
+     */
+    public function convertIdeaToRoutine()
+    {
+        if (self::TYPE_MISSION === $this->type) {
+            $newRoutine = Routine::create(array('idea_id' => $this->id));
+
+            /**
+             * @var Mission $missionToDelete
+             */
+            $missionToDelete = Mission::find_by_pk($this->id);
+            $missionToDelete->delete();
+
+            $this->type = self::TYPE_ROUTINE;
+            $this->save();
+            return $newRoutine;
+        } else if (self::TYPE_ROUTINE === $this->type) {
+            return Routine::find_by_pk($this->id);
+        } else {
+            throw new Exception('Unknown Idea type.', Exception::FATAL_EXCEPTION);
+        }
     }
 }
