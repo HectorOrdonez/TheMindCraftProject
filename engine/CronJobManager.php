@@ -21,7 +21,7 @@ require_once './../engine/php-activerecord/ActiveRecord.php';
 function __autoload($class)
 {
     // The required class uses \ as directory separator (because of the namespace usage. This needs to be replaced with the real directory separator.
-    $class = str_replace('\\', DIRECTORY_SEPARATOR, $class);
+    $class = str_replace(_NAMESPACE_SEPARATOR, DIRECTORY_SEPARATOR, $class);
 
     // Constructing the file path
     $file = _SYSTEM_ROOT_PATH . $class . '.php';

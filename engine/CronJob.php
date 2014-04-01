@@ -17,8 +17,6 @@ use engine\drivers\Exception;
  */
 class CronJob
 {
-    private static $namespaceRoute = 'engine\drivers\CronJobs\\';
-    
     // This is not an instantiable class.
     private function __construct()
     {
@@ -34,11 +32,11 @@ class CronJob
      */
     public static function build(CronJobModel $cronJobModel)
     {
-        $class = self::$namespaceRoute . $cronJobModel->driver;
+        $class = join(_NAMESPACE_SEPARATOR, array('engine', 'drivers', 'CronJobs', $cronJobModel->driver));
         
         if (!class_exists($class, true))
         {
-            throw new Exception('The CronJob ' . $cronJobModel->name . ' does not exist', Exception::DANGER_EXCEPTION);
+            throw new Exception('The CronJob ' . $cronJobModel->name . ' does not exist as Class: [' . $class . '].' , Exception::DANGER_EXCEPTION);
         }
         
         return new $class($cronJobModel);

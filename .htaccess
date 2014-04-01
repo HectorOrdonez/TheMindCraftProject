@@ -88,13 +88,12 @@ RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
 #     Allow From All
 # </Files>
 # 
-# # Exception to previous rule - CronJobManager.php is allowed by server.
+# # Exception to previous rule - CronJobManager.php is allowed by everyone
 # <Files "CronJobManager.php">
-#     Order Deny,Allow
-#     Deny From All
-#     Allow From 127.0.0.1
+#     Allow From All
 # </Files>
 # 
+# # Exception to previous rule - index.php is allowed by everyone.
 # # Redirecting requests if not to a file or link.
 # RewriteCond %{REQUEST_FILENAME} !-f
 # RewriteCond %{REQUEST_FILENAME} !-l
