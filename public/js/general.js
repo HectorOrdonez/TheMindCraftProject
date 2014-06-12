@@ -11,7 +11,7 @@
  * Definition of the Root Url to use in links.
  * @type {string}
  */
-var root_url = 'http://localhost/projects/themindcraftproject/';
+var root_url = 'http://localhost/themindcraftproject/';
 // var root_url = 'http://themindcraftproject.org/';
 
 /**
