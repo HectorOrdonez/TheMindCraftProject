@@ -52,7 +52,12 @@ function Table(tableId, parameters) {
     var tableLocation = document.getElementById(tableId) || 'undefined';
 
     /**
-     * TBody Element. From here all the rows will hang.
+     * All table container. Here header, workspace and footer will be appended.
+     * @type {HTMLElement}
+     */
+    var workbench;
+    /**
+     * The content container Element. Content rows will be appended here.
      * @type {HTMLElement}
      */
     var workspace;
@@ -123,7 +128,7 @@ function Table(tableId, parameters) {
         rowElement.setAttribute('id', headerId);
 
         // Append header to the workspace
-        workspace.appendChild(rowElement);
+        jQuery(rowElement).insertBefore(workspace);
 
         // Add row to the contentRows.
         headerRows[headerId] = rowElement;
@@ -143,15 +148,7 @@ function Table(tableId, parameters) {
         // Set Id of the element
         rowElement.setAttribute('id', contentId);
         if (contentLength() == 0) {
-            if (footerLength() == 0) {
-                // In case there are no content rows and the footer is not defined, add the row in the last position of
-                // the workspace.
-                workspace.appendChild(rowElement);
-            } else {
-                // In case there are no content rows but there are footer rows defined, add the row before the first
-                // footer row.
-                workspace.insertBefore(rowElement, footerRows['footer_1']);
-            }
+            workspace.appendChild(rowElement);
         } else {
             // In case there are content rows, search for the last content row and add the row before the next element
             // of the last content row (this means - add the row after the last content row)
@@ -178,7 +175,7 @@ function Table(tableId, parameters) {
         rowElement.setAttribute('id', footerId);
 
         // Append header to the workspace
-        workspace.appendChild(rowElement);
+        jQuery(rowElement).insertAfter(workspace);
 
         // Add row to the contentRows.
         footerRows[footerId] = rowElement;
@@ -309,11 +306,16 @@ function Table(tableId, parameters) {
      * Builds the TBody element, sets it up and appends it to the table element.
      */
     function initializeBasics() {
-        var tableWrapper = document.createElement('div');
-        tableWrapper.setAttribute('id', tableId + '_workspace');
-        tableWrapper.classList.add('workspace');
-        tableLocation.appendChild(tableWrapper);
-        workspace = tableWrapper;
+        workbench = document.createElement('div');
+        workbench.setAttribute('id', tableId + '_workbench');
+        workbench.classList.add('workbench');
+        tableLocation.appendChild(workbench);
+        
+        workspace = document.createElement('div');
+        workspace.setAttribute('id', tableId + '_workspace');
+        workspace.classList.add('workspace');
+        
+        workbench.appendChild(workspace);
     }
 
     /**

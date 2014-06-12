@@ -28,9 +28,13 @@
 }
 
 /** Styles for the error section **/
-#signUpBlock .errorText {
+.errorTextWrapper {
     height: 30px;
 }
+.errorText {
+    line-height: 30px;
+}
+
 
 /** Styles for the bottom box, which contains the SignUp! text, the images and their containers **/
 #signUpSubmitBox {
@@ -69,13 +73,6 @@
 #signUpped {
     right: 0;
 }
-
-
-
-
-
-
-
 
 /** Styles for the Sign Up confirmation **/
 #signUpConfirmation {

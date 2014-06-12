@@ -25,20 +25,51 @@
     <!-- CSS Stylesheets -->
     <?php foreach ($this->getCss() as $css) : ?><link rel='stylesheet' href='<?php echo $css; ?>'/>
     <?php endforeach; ?>
-
-    <!-- JS Libraries -->
-    <?php foreach ($this->getJs() as $js) : ?><script src='<?php echo $js; ?>'></script>
-    <?php endforeach; ?>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href='<?php echo _SYSTEM_BASE_URL; ?>public/images/Favicon.png' type="image/icon">
+    <link rel="icon" href='<?php echo _SYSTEM_BASE_URL; ?>public/images/Favicon.png' type="image/icon">
 
 </head>
 
 <body>
 
 <div id='header'>
-    <div id='logo'></div>
+    <a class='logo' href="<?php echo _SYSTEM_BASE_URL; ?>">
+        <div class='image'>
+            <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>Logo.png' alt='The Mindcraft Project'/>
+        </div>
+
+        <div class='text'>
+            <span class='ftype_logo1'>Mind</span>
+            <span class='ftype_logo2'>Craft</span>
+            <span class='ftype_logo3'>&nbsp;.</span>
+        </div>
+    </a>
+    
     <div id='headerPanel'>
-        <a class='option learnMore' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory"></a>
-        <a class='option signUp' href="<?php echo _SYSTEM_BASE_URL; ?>signUp"></a>
+
+        <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>releaseHistory" id='actionLearnMore'>
+            <div class='image'>
+                <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>LearnMore.png' alt='Learn More'/>
+            </div>
+
+            <div class='text'>
+                <span class='ftype_titleB1'>Learn</span>
+                <span class='ftype_titleB2'>More</span>
+            </div>
+        </a>
+        
+        <a class='panelAction' href="<?php echo _SYSTEM_BASE_URL; ?>signUp" id='actionSignUp'>
+            <div class='image'>
+                <img src='<?php echo _SYSTEM_BASE_URL . 'public/images/'; ?>SignUp.png' alt='Sign Up'/>
+            </div>
+            
+            <div class='text'>
+                <span class='ftype_titleB1'>Sign</span>
+                <span class='ftype_titleB2'>Up</span>
+            </div>
+        </a>
     </div>
 </div>
 

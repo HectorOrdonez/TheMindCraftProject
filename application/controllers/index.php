@@ -43,6 +43,7 @@ class index extends Controller
     {
         $logged = Session::get('isUserLoggedIn');
         if ($logged === TRUE) {
+            header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
             header('location: ' . _SYSTEM_BASE_URL . 'main');
             exit;
         }
@@ -56,6 +57,7 @@ class index extends Controller
     {
         $logged = Session::get('isUserLoggedIn');
         if ($logged === TRUE) {
+            header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
             header('location: ' . _SYSTEM_BASE_URL . 'main');
             exit;
         }
@@ -110,6 +112,7 @@ class index extends Controller
     public function logout()
     {
         Session::destroy();
+        header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
         header('location: ' . _SYSTEM_BASE_URL . 'index');
         exit;
     }

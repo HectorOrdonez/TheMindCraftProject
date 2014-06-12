@@ -58,10 +58,10 @@ function Select($element, callback) {
         var headerRow = new Row(
             {'cells': [
                 new Cell({'html': 'id', 'classList': ['col_id']}),
-                new Cell({'html': 'title', 'classList': ['col_title', 'ftype_titleC']}),
+                new Cell({'html': 'title', 'classList': ['col_title', 'ftype_contentA']}),
                 new Cell({'html': '', 'classList': ['col_selected']}),
                 new Cell({'html': '', 'classList': ['col_actions']}),
-                new Cell({'html': 'input date', 'classList': ['col_date_creation', 'ftype_titleC', 'centered']})
+                new Cell({'html': 'input date', 'classList': ['col_date_creation', 'ftype_contentA', 'centered']})
             ],
                 'classList': ['header']
             });
@@ -70,7 +70,7 @@ function Select($element, callback) {
         var footerRow = new Row(
             {'cells': [
                 new Cell({
-                    'html': '<a href="#" id="linkNewIdea"></a><form id="formNewIdea"><input type="text" name="title" class="ftype_contentA" id="inputNewIdea" maxlength="100" /></form>',
+                    'html': '<a href="#" id="linkNewIdea"></a><form id="formNewIdea"><input type="text" name="title" class="ftype_contentB" id="inputNewIdea" maxlength="100" /></form>',
                     'classList': ['newIdeaCell']
                 })
             ], 'classList': ['footer']}
@@ -80,7 +80,7 @@ function Select($element, callback) {
         table = new Table('selectGrid', {
             colModel: [
                 {colIndex: 'id'},
-                {colIndex: 'title', classList: ['ftype_contentA']},
+                {colIndex: 'title', classList: ['ftype_contentB']},
                 {colIndex: 'selected'},
                 {colIndex: 'actions', customContent: function (rowData) {
                     var selectValue = (rowData.selected) ? 'mark': '';
@@ -91,7 +91,7 @@ function Select($element, callback) {
 
                     return '<div class="actionBox">' + selectAction + editAction + delAction + '</div>';
                 }},
-                {colIndex: 'date_creation', classList: ['ftype_contentA', 'centered']}
+                {colIndex: 'date_creation', classList: ['ftype_contentB', 'centered']}
             ]});
 
         table.addHeaderElement(headerRow.toHTML());
@@ -270,8 +270,15 @@ function Select($element, callback) {
                     date_creation: data.date_creation,
                     selected: data.selected
                 };
-
                 table.addContentData(newRow);
+
+                /**
+                 * Scrolling down the workspace, if necessary.
+                 */
+                var workspace = jQuery($workspace).find('.workspace').get(0);
+                workspace.scrollTop = workspace.scrollHeight;
+
+                // Resetting the input
                 $input.val('');
             }
         ).fail(function (data) {

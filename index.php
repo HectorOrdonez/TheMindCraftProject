@@ -22,7 +22,7 @@ require_once 'engine/php-activerecord/ActiveRecord.php';
 function __autoload($class)
 {
     // The required class uses \ as directory separator (because of the namespace usage. This needs to be replaced with the real directory separator.
-    $class = str_replace('\\', DIRECTORY_SEPARATOR, $class);
+    $class = str_replace(_NAMESPACE_SEPARATOR, DIRECTORY_SEPARATOR, $class);
 
     // Constructing the file path
     $file = _SYSTEM_ROOT_PATH . $class . '.php';
@@ -41,7 +41,7 @@ function __autoload($class)
  * Initializing ActiveRecord
  */
 ActiveRecord\Config::initialize(function ($cfg) {
-    $cfg->set_model_directory('application/models');
+    $cfg->set_model_directory(_SYSTEM_ROOT_PATH . join(DIRECTORY_SEPARATOR, array('application', 'models')));
     $cfg->set_connections(array('development' => DB_TYPE . '://' . DB_USER . ':' . DB_PASS . '@' . DB_HOST . '/' . DB_NAME));
 });
 

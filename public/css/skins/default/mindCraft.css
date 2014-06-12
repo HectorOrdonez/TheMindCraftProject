@@ -8,13 +8,21 @@
 /** dark grey - 5e5755                      **/
 /** pearl - f4f2ef                          **/
 /** beige - dfd9c2                          **/
+/**                                         **/
+/** Color standards RBA                     **/
+/** black - 42, 39, 36                      **/
+/** red - 233, 79, 59                       **/
+/** mid grey - 185, 168, 137                **/
+/** dark grey - 94, 87, 85                  **/
+/** pearl - 244, 242, 239                   **/
+/** beige - 223, 217, 194                   **/
 /*********************************************/
 
 /**********************************************************************************************************************/
 /**                                               BODY BACKGROUND                                                    **/
 /**********************************************************************************************************************/
 body {
-    background: url('./../../../../public/images/NiceSnow.png');
+    background: url('../../../images/Background.jpg');
 }
 
 /**********************************************************************************************************************/
@@ -22,10 +30,10 @@ body {
 /**********************************************************************************************************************/
 
 /** Row Height **/
-.workspace .row {
+.workbench .row {
     height: 30px;
 }
-.workspace .cell {
+.workbench .cell {
     line-height: 30px;
 }
 
@@ -45,15 +53,15 @@ body {
 
 /** Font Style - logo **/
 .ftype_logo1 {
-    font: bold 36px Tahoma;
-    color: #dfd9c2;
+    font: 36px Tahoma;
+    color: #b9a889;
 }
 .ftype_logo2 {
-    font: bold 36px Tahoma;
+    font: 36px Tahoma;
     color: #e94f3b;
 }
 .ftype_logo3 {
-    font: bold 36px Tahoma;
+    font: 36px Tahoma;
     color: #2a2724;
 }
 
@@ -68,62 +76,70 @@ body {
 }
 .ftype_titleA3 {
     font: 24px Tahoma;
-    color: #5e5755;
+    color: #2a2724;
 }
 
 /** Font Style - titleB **/
 .ftype_titleB1 {
-    font: bold 16px Tahoma;
+    font: 18px Tahoma;
     color: #b9a889;
 }
 .ftype_titleB2 {
-    font: bold 16px Tahoma;
+    font: 18px Tahoma;
     color: #e94f3b;
 }
 .ftype_titleB3 {
-    font: 16px Tahoma;
-    color: #5e5755;
+    font: 18px Tahoma;
+    font: Tahoma;
+    color: #2a2724;
 }
 
 /** Font Style - titleC **/
 .ftype_titleC {
-    font: bold 16px Tahoma;
-    color: #FFF;
+    font: 24px Tahoma;
+    color: #fff;
 }
 
 /** Font Style - contentA **/
 .ftype_contentA {
     font: 16px Tahoma;
-    color: #5e5755;
+    color: #ffffff;
 }
+
 /** Font Style - contentB **/
 .ftype_contentB {
     font: 16px Tahoma;
-    color: #FFF;
+    color: #2a2724;
 }
 /** Font Style - contentC **/
 .ftype_contentC {
     font: 16px Tahoma;
-    color: #2a2724;
+    color: #b9a889;
 }
 
-/** Font Style - successA **/
+/** Font Style - success **/
 .ftype_successA {
-    font: italic 12px Tahoma;
-    color: #008b33;
+    font: italic 14px Tahoma;
+    color: #5e5755;
 }
 
-/** Font Style - errorA **/
+/** Font Style - error **/
 .ftype_errorA {
-    font: italic 12px Tahoma;
-    color: #e94f3b;
+    font: italic 14px Tahoma;
+    color: #b9a889;
+}
+
+/** Font Style - info **/
+.ftype_infoA {
+    font: italic 14px Tahoma;
+    color: #ffffff;
 }
 
 /*********************************************/
 /**                 INPUTS                  **/
 /*********************************************/
 input {
-    background-color: #f4f2ef;
+    background-color: #fff;
     color: #b2b2b1;
 }
 
@@ -131,8 +147,8 @@ input {
 /**         TABLE, ROWS AND CELLS           **/
 /*********************************************/
 
-/** Table workspace **/
-.workspace {
+/** Workbench **/
+.workbench {
     -moz-box-shadow: 2px 2px 5px #b9a889;
     -webkit-box-shadow: 2px 2px 5px #b9a889;
     box-shadow: 2px 2px 5px #b9a889;
@@ -154,12 +170,12 @@ input {
 }
 
 /** Rows of the header section **/
-.workspace .header {
+.workbench .header {
     background-color: #2a2724;
 }
 
 /** Rows of the footer section **/
-.workspace .footer {
+.workbench .footer {
     background-color: #f4f2ef;
 }
 
@@ -171,9 +187,9 @@ input {
     top: 0;
     left: 0;
     z-index: 10;
-    background-color: #5e5755;
-    opacity: .90;
-    filter: Alpha(Opacity=90);
+    background-color: #2a2724;
+    opacity: .50;
+    filter: Alpha(Opacity=50);
 }
 
 /*********************************************/
@@ -192,6 +208,11 @@ input {
 .ui-datepicker-header {
     background-color: #2a2724;
 }
+
+.ui-datepicker-calendar thead {
+    display: none;
+}
+
 .ui-datepicker-title {
     font: 16px Tahoma;
     color: #FFF;
@@ -210,11 +231,11 @@ input {
 }
 .ui-datepicker-prev {
     float: left;
-    background: url('./../../../../public/images/toLeftArrow.png') no-repeat;
+    background: url('./../../../../public/images/ArrowToLeft.png') no-repeat;
 }
 .ui-datepicker-next{
     float: right;
-    background: url('./../../../../public/images/toRightArrow.png') no-repeat;
+    background: url('./../../../../public/images/ArrowToRight.png') no-repeat;
 }
 
 /** Calendar Content **/
@@ -292,7 +313,7 @@ input {
 }
 
 .mindCraft-ui-button-select {
-    background: url('./../../../../public/images/SelectArrow.png') no-repeat;
+    background: url('./../../../../public/images/Postpond.png') no-repeat;
 }
 .mindCraft-ui-button-edit {
     background: url('./../../../../public/images/Edit.png') no-repeat;
@@ -301,7 +322,7 @@ input {
     background: url('./../../../../public/images/Delete.png') no-repeat;
 }
 .mindCraft-ui-button-checkbox {
-    background: url('./../../../../public/images/Checkbox.png') no-repeat;
+    background: url('./../../../../public/images/CheckBox.png') no-repeat;
 }
 .mindCraft-ui-button-important {
     background: url('./../../../../public/images/Important.png') no-repeat;
@@ -313,5 +334,22 @@ input {
     background: url('./../../../../public/images/Timing.png') no-repeat;
 }
 .mindCraft-ui-button-circular {
-    background: url('./../../../../public/images/Circular.png') no-repeat;
+    background: url('./../../../../public/images/Routine.png') no-repeat;
+}
+
+/**********************************************************************************************************************/
+/**                                                    SHADOWS                                                       **/
+/**********************************************************************************************************************/
+.shadowed {
+    -webkit-filter: drop-shadow(1px 1px 2px #5e5755);
+    filter: url('./shadow.svg#drop-shadow');
+    -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=0, OffY=0, Color='#5e5755')";
+    filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=0, OffY=0, Color='#5e5755')";
+}
+
+.shadowedOnHover:hover {
+    -webkit-filter: drop-shadow(0px 0px 6px #b9a889);
+    filter: url('./shadow.svg#drop-hover-shadow');
+    -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=2, OffY=2, Color='#b9a889')";
+    filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=2, OffY=2, Color='#b9a889')";
 }

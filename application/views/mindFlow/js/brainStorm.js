@@ -58,9 +58,9 @@ function BrainStorm($element, callback) {
         var headerRow = new Row(
             {'cells': [
                 new Cell({'html': 'id', 'classList': ['col_id']}),
-                new Cell({'html': 'title', 'classList': ['col_title', 'ftype_titleC']}),
+                new Cell({'html': 'title', 'classList': ['col_title', 'ftype_contentA']}),
                 new Cell({'html': '', 'classList': ['col_actions']}),
-                new Cell({'html': 'input date', 'classList': ['col_date_creation', 'ftype_titleC', 'centered']})
+                new Cell({'html': 'input date', 'classList': ['col_date_creation', 'ftype_contentA', 'centered']})
             ],
                 'classList': ['header']
             });
@@ -69,7 +69,7 @@ function BrainStorm($element, callback) {
         var footerRow = new Row(
             {'cells': [
                 new Cell({
-                    'html': '<a href="#" id="linkNewIdea"></a><form id="formNewIdea"><input type="text" name="title" class="ftype_contentA" id="inputNewIdea"  maxlength="100" /></form>',
+                    'html': '<a href="#" id="linkNewIdea"></a><form id="formNewIdea"><input type="text" name="title" class="ftype_contentB" id="inputNewIdea"  maxlength="100" /></form>',
                     'classList': ['newIdeaCell']
                 })
             ], 'classList': ['footer']}
@@ -79,14 +79,14 @@ function BrainStorm($element, callback) {
         table = new Table('brainStormGrid', {
             colModel: [
                 {colIndex: 'id'},
-                {colIndex: 'title', classList: ['ftype_contentA']},
+                {colIndex: 'title', classList: ['ftype_contentB']},
                 {colIndex: 'actions', customContent: function (rowData) {
                     var actionBox = '<div class="actionBox">';
                     var editAction = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-edit multi clickable">' + rowData.id + '</a></div>';
                     var delAction = '<div class="action"><a class="mindCraft-ui-button mindCraft-ui-button-delete multi clickable">' + rowData.id + '</a></div>';
                     return actionBox + editAction + delAction + '</div>';
                 }},
-                {colIndex: 'date_creation', classList: ['ftype_contentA', 'centered']}
+                {colIndex: 'date_creation', classList: ['ftype_contentB', 'centered']}
             ]});
 
         table.addHeaderElement(headerRow.toHTML());
@@ -139,7 +139,7 @@ function BrainStorm($element, callback) {
         var previousTitle = $titleCell.html();                          // Previous title, to restore in case no changes are required.
         var editableContent = '' +
             '<form id="formEditIdea">' +
-            '<input type="text" name="title" id="inputEditIdeaTitle" value="" maxlength="100"/>' +
+            '<input type="text" name="title" class="ftype_contentB" id="inputEditIdeaTitle" value="" maxlength="100"/>' +
             '</form>';                                                  // The cell content to offer User the edit input
 
         // Removing actions temporally 
@@ -260,8 +260,15 @@ function BrainStorm($element, callback) {
                     title: data.title,
                     date_creation: data.date_creation
                 };
-
                 table.addContentData(newRow);
+                
+                /**
+                 * Scrolling down the workspace, if necessary.
+                 */
+                var workspace = jQuery($workspace).find('.workspace').get(0);
+                workspace.scrollTop = workspace.scrollHeight;
+                
+                // Resetting the input
                 $input.val('');
             }
         ).fail(function (data) {

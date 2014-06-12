@@ -42,6 +42,12 @@ function Admin() {
      */
     var noPendingUsersWarning;
 
+    /**
+     * JQuery object that contains the div in which the admin messages have to be displayed
+     * @type {*}
+     */
+    var $adminInfo = jQuery('#adminInfoDisplayer');
+
 
     /*****************************************************************************************************************/
     /** Admin construction                                                                                          **/
@@ -70,7 +76,7 @@ function Admin() {
         }).done(function (rawData) {
                 var data = jQuery.parseJSON(rawData);
                 if (data.pendingUsersAmount > 0) {
-                    openPendingUsersDialog(data.pendingUsersAmount);
+                    setInfoMessage($adminInfo, 'info', data.pendingUsersAmount + ' new user(s) pending...', 50000);
                 }
             }
         );
@@ -78,21 +84,5 @@ function Admin() {
         setTimeout(function () {
             checkForPendingUsers();
         }, checkPendingUsersEvery);
-    }
-
-    /**
-     * Opens the pending Users dialog with the specified amount.
-     * @param amount
-     */
-    function openPendingUsersDialog(amount) {
-        var element = document.createElement('div');
-        element.title = 'Pending Users';
-        element.innerHTML = 'There are ' + amount + ' new Users waiting to be activated.';
-        element.id = 'pendingUsersDialog';
-
-        // Add link to the dialog that, if clicked, closes the dialog and sets the "noPendingUsersWarning" to true.
-
-        document.body.appendChild(element);
-        jQuery('#pendingUsersDialog').dialog({draggable: false});
     }
 }

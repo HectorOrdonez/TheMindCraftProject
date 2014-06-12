@@ -12,7 +12,6 @@
  *  PerForm step, to be implemented.
  *
  * Date: 14/01/14 18:30
- * @todo Implement PerForm page.
  */
 
 namespace application\services;
@@ -27,15 +26,6 @@ use engine\drivers\Exception;
 
 class MindFlowService extends Service
 {
-    const TYPE_MISSION = 'mission';
-    const TYPE_ROUTINE = 'routine';
-    const SELECTED_TRUE = 1;
-    const SELECTED_FALSE = 0;
-    const IMPORTANT_TRUE = 1;
-    const IMPORTANT_FALSE = 0;
-    const URGENT_TRUE = 1;
-    const URGENT_FALSE = 0;
-
     /**
      * Service constructor of MindFlow logic.
      */
@@ -60,27 +50,29 @@ class MindFlowService extends Service
 
         switch ($step) {
             case 'brainStorm':
-                $conditions = array('user_id = ?', $userId);
+                $missionConditions = array('user_id = ?', $userId);
+                $routineConditions = array('user_id = ? AND (selected = ? OR last_update is NULL)', $userId, Idea::SELECTED_TRUE);
                 $fields = array('id', 'title', 'date_creation');
 
                 // Getting missions
-                $response['missions'] = $this->getMissions($fields, $conditions);
+                $response['missions'] = $this->getMissions($fields, $missionConditions);
 
                 // Getting routines
-                $response['routines'] = $this->getRoutines($fields, $conditions);
+                $response['routines'] = $this->getRoutines($fields, $routineConditions);
                 break;
             case 'select':
-                $conditions = array('user_id = ?', $userId);
+                $missionConditions = array('user_id = ?', $userId);
+                $routineConditions = array('user_id = ? AND (selected = ? OR last_update is NULL)', $userId, Idea::SELECTED_TRUE);
                 $fields = array('id', 'title', 'date_creation', 'selected');
 
                 // Getting missions
-                $response['missions'] = $this->getMissions($fields, $conditions);
+                $response['missions'] = $this->getMissions($fields, $missionConditions);
 
                 // Getting routines
-                $response['routines'] = $this->getRoutines($fields, $conditions);
+                $response['routines'] = $this->getRoutines($fields, $routineConditions);
                 break;
             case 'prioritize':
-                $conditions = array('selected = ? AND user_id = ?', self::SELECTED_TRUE, $userId);
+                $conditions = array('selected = ? AND user_id = ?', Idea::SELECTED_TRUE, $userId);
                 $fields = array('id', 'title', 'date_creation', 'important', 'urgent');
 
                 // Getting missions
@@ -90,7 +82,7 @@ class MindFlowService extends Service
                 $response['routines'] = $this->getRoutines($fields, $conditions);
                 break;
             case 'applyTime':
-                $missionConditions = array('selected = ? AND user_id = ?', self::SELECTED_TRUE, $userId);
+                $missionConditions = array('selected = ? AND user_id = ?', Idea::SELECTED_TRUE, $userId);
                 $routineConditions = array('user_id = ?', $userId);
                 $missionFields = array('id', 'title', 'date_todo', 'time_from', 'time_till');
                 $routineFields = array('id', 'title', 'selected', 'frequency_days', 'frequency_weeks', 'date_start', 'date_finish', 'time_from', 'time_till');
@@ -114,9 +106,10 @@ class MindFlowService extends Service
      *
      * @param $fields
      * @param $conditions
+     * @param $order
      * @return array
      */
-    private function getMissions($fields, $conditions)
+    private function getMissions($fields, $conditions, $order = 'id')
     {
         $response = array();
 
@@ -124,8 +117,10 @@ class MindFlowService extends Service
          * @var Mission[] $rawMissionsArray
          */
         $rawMissionsArray = Mission::all(array(
-            'joins' => array('idea'),
-            'conditions' => $conditions));
+                'joins' => array('idea'),
+                'conditions' => $conditions,
+                'order' => $order)
+        );
 
         foreach ($rawMissionsArray as $mission) {
             $response[] = $mission->toArray($fields);
@@ -139,9 +134,10 @@ class MindFlowService extends Service
      *
      * @param $fields
      * @param $conditions
+     * @param $order
      * @return array
      */
-    private function getRoutines($fields, $conditions)
+    private function getRoutines($fields, $conditions, $order = 'id')
     {
         $response = array();
 
@@ -150,7 +146,8 @@ class MindFlowService extends Service
          */
         $rawRoutinesArray = Routine::all(array(
                 'joins' => array('idea'),
-                'conditions' => $conditions)
+                'conditions' => $conditions,
+                'order' => $order)
         );
 
         foreach ($rawRoutinesArray as $routine) {
@@ -236,7 +233,7 @@ class MindFlowService extends Service
     public function setIdeaSelectionState($userId, $ideaId, $selectionState)
     {
         // Parsing boolean to num
-        $selectedValue = ('true' === $selectionState) ? self::SELECTED_TRUE : self::SELECTED_FALSE;
+        $selectedValue = ('true' === $selectionState) ? Idea::SELECTED_TRUE : Idea::SELECTED_FALSE;
 
         /**
          * @var Idea $idea
@@ -262,7 +259,7 @@ class MindFlowService extends Service
     public function setIdeaImportantState($userId, $ideaId, $importantState)
     {
         // Parsing boolean to num
-        $importantValue = ('true' === $importantState) ? self::IMPORTANT_TRUE : self::IMPORTANT_FALSE;
+        $importantValue = ('true' === $importantState) ? Idea::IMPORTANT_TRUE : Idea::IMPORTANT_FALSE;
 
         /**
          * @var Idea $idea
@@ -288,7 +285,7 @@ class MindFlowService extends Service
     public function setIdeaUrgentState($userId, $ideaId, $urgentState)
     {
         // Parsing boolean to num
-        $urgentValue = ('true' === $urgentState) ? self::URGENT_TRUE : self::URGENT_FALSE;
+        $urgentValue = ('true' === $urgentState) ? Idea::URGENT_TRUE : Idea::URGENT_FALSE;
 
         /**
          * @var Idea $idea
@@ -325,7 +322,10 @@ class MindFlowService extends Service
             throw new Exception('The idea which Date and/or Time you are trying to set does not exist or it is not yours.');
         }
 
-        $mission = $this->convertIdeaToMission($idea);
+        // Making sure the idea is a mission
+        $mission = $idea->convertIdeaToMission();
+
+        // Resetting the time related properties
         $mission->date_todo = $dateTodo;
         $mission->time_from = $timeFrom;
         $mission->time_till = $timeTill;
@@ -357,79 +357,38 @@ class MindFlowService extends Service
             throw new Exception('The idea which Date and/or Time you are trying to set does not exist or it is not yours.');
         }
 
-        $routine = $this->convertIdeaToRoutine($idea);
+        // Making sure the idea is a routine
+        $routine = $idea->convertIdeaToRoutine();
+        
+        // Resetting the time related properties
         $routine->frequency_days = $inputRoutineFrequencyDays;
         $routine->frequency_weeks = $inputRoutineFrequencyWeeks;
         $routine->date_start = $dateStart;
         $routine->date_finish = $dateFinish;
         $routine->time_from = $timeFrom;
         $routine->time_till = $timeTill;
+        
+        // Resetting actions as they have to be regenerated.
+        $routine->resetActions();
+        
+        // Un-setting the last_update, in order to force the routine to generate actions again. 
         $routine->last_update = null;
         $routine->save();
     }
 
     /**
-     * Receives an idea whose type is unknown.
-     * Converts it, if required, into a Mission and returns it.
-     *
-     * @param Idea $idea Idea to be returned as Mission.
-     * @return Mission What is requested.
-     * @throws Exception If idea's type is unknown.
+     * Builds a list of actions to display.
+     * 
+     * The filter is as follows:
+     * 1 - Gets the actions of this user.
+     * 2 - Gets the actions with completed time frame and date_todo between yesterday and tomorrow.     * 
+     * 3 - Gets the actions with uncompleted time frame and
+     *  3.1 - date_todo is either not defined or today.
+     *  3.2 - action is not done or it is done today.
+     * 
+     * @param $userId
+     * @return array
      */
-    private function convertIdeaToMission(Idea $idea)
-    {
-        // Get Idea type 
-        $ideaType = $idea->type;
-
-        switch ($ideaType) {
-            case self::TYPE_MISSION:
-                return Mission::find_by_pk($idea->id);
-                break;
-            case self::TYPE_ROUTINE:
-                $newMission = Mission::create(array('idea_id' => $idea->id));
-                $routineToDelete = Routine::find_by_pk($idea->id);
-                $routineToDelete->delete();
-
-                $idea->type = self::TYPE_MISSION;
-                $idea->save();
-                return $newMission;
-                break;
-            default:
-                throw new Exception('Unknown Idea type.');
-        }
-    }
-
-    /**
-     * Receives an idea whose type is unknown.
-     * Converts it, if required, into a Routine and returns it.
-     *
-     * @param Idea $idea Idea to be returned as Routine.
-     * @return Routine What is requested.
-     * @throws Exception If idea's type is unknown.
-     */
-    private function convertIdeaToRoutine(Idea $idea)
-    {
-        // Get Idea type 
-        $ideaType = $idea->type;
-
-        switch ($ideaType) {
-            case self::TYPE_MISSION:
-                $newRoutine = Routine::create(array('idea_id' => $idea->id));
-                $missionToDelete = Mission::find_by_pk($idea->id);
-                $missionToDelete->delete();
-
-                $idea->type = self::TYPE_ROUTINE;
-                $idea->save();
-                return $newRoutine;
-                break;
-            case self::TYPE_ROUTINE:
-                return Routine::find_by_pk($idea->id);
-                break;
-            default:
-                throw new Exception('Unknown Idea type.');
-        }
-    }
-
     public function getActions($userId)
     {
         $this->generateActions($userId);
@@ -441,18 +400,21 @@ class MindFlowService extends Service
          */
         $rawActionsArray = Action::find('all', array(
                 'conditions' => array(
-                    'user_id = ? AND
-                    (
-                        date_todo IS NULL AND (
-                            date_done IS NULL OR 
-                                date_done BETWEEN DATE(NOW() - INTERVAL 1 DAY) AND DATE(NOW() + INTERVAL 1 DAY)
-                            )
-                        OR (
+                    'user_id = ? AND (
+                        (
+                            time_from IS NOT NULL AND
+                            time_till IS NOT NULL AND
                             date_todo BETWEEN DATE(NOW() - INTERVAL 1 DAY) AND DATE(NOW() + INTERVAL 1 DAY)
+                        ) OR ( 
+                            time_from IS NULL AND 
+                            time_till IS NULL AND
+                            (date_todo IS NULL or date_todo = DATE(NOW())) AND
+                            (date_done IS NULL or date_done = DATE(NOW()))
                         )
                     )',
                     $userId
-                ))
+                ),
+                'order' => 'time_from')
         );
 
         foreach ($rawActionsArray as $action) {
@@ -471,7 +433,7 @@ class MindFlowService extends Service
         $missions = Mission::all(array(
             'joins' => array('idea'),
             'conditions' => array(
-                'selected = ? AND user_id = ?', self::SELECTED_TRUE, $userId
+                'selected = ? AND user_id = ?', Idea::SELECTED_TRUE, $userId
             )));
 
         foreach ($missions as $mission) {
@@ -484,11 +446,18 @@ class MindFlowService extends Service
          */
         $routines = Routine::all(array(
                 'joins' => array('idea'),
-                'conditions' => array('user_id = ?', $userId))
+                'conditions' => array(
+                    'selected = ? AND user_id = ?', Idea::SELECTED_TRUE, $userId
+                )
+            )
         );
 
         foreach ($routines as $routine) {
-            $routine->generateAction();
+            if ($routine->isGenerationNeeded())
+            {
+                $routine->generateActions();
+            }
+            $routine->idea->setSelect(Idea::SELECTED_FALSE);
         }
     }
 
@@ -524,7 +493,7 @@ class MindFlowService extends Service
 
     public function toggleShowRoutines($userId, $to)
     {
-        $setToSelect = ($to == 'show') ? self::SELECTED_TRUE : self::SELECTED_FALSE;
+        $setToSelect = ($to == 'show') ? Idea::SELECTED_TRUE : Idea::SELECTED_FALSE;
 
         /**
          * @var Routine[] $routinesList
@@ -540,5 +509,26 @@ class MindFlowService extends Service
             $routine->idea->selected = $setToSelect;
             $routine->idea->save();
         }
+    }
+
+    /**
+     * Delete action
+     *
+     * @param int $userId User id.
+     * @param int $actionId Action id.
+     * @throws Exception If action to be deleted is not found or not owned by user.
+     */
+    public function deleteAction($userId, $actionId)
+    {
+        /**
+         * @var Action $action
+         */
+        $action = Action::find_by_id($actionId);
+
+        if (is_null($action) OR $userId != $action->user_id) {
+            throw new Exception('The action you are trying to delete does not exist or it is not yours.');
+        }
+
+        $action->delete();
     }
 }
