@@ -15,16 +15,16 @@ php_value error_reporting 32767
 RewriteEngine On
 
 # RewriteBase defines what is going to be the base url. So localhost/index.php becomes localhost/hecnel/index.php
-RewriteBase /projects/themindcraftproject
+RewriteBase /themindcraftproject
 
 # Error pages for fatal errors redirection - Authentication failed
-ErrorDocument 401 http://localhost/projects/themindcraftproject/error/authFailed
+ErrorDocument 401 http://localhost/themindcraftproject/error/authFailed
 # Error pages for fatal errors redirection - Forbidden access
-ErrorDocument 403 http://localhost/projects/themindcraftproject/error/accessForbidden
+ErrorDocument 403 http://localhost/themindcraftproject/error/accessForbidden
 # Error pages for fatal errors redirection - Page not found
-ErrorDocument 404 http://localhost/projects/themindcraftproject/error/resourceNotFound
+ErrorDocument 404 http://localhost/themindcraftproject/error/resourceNotFound
 # Error pages for fatal errors redirection - Internal Server Error
-ErrorDocument 500 http://localhost/projects/themindcraftproject/error/internalServerError
+ErrorDocument 500 http://localhost/themindcraftproject/error/internalServerError
 
 # Allowing access to Index.
 RewriteRule ^(index.php) index.php [QSA,L]
