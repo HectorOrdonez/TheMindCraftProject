@@ -11,12 +11,15 @@ setlocale(LC_NUMERIC, 'es_ES');
 // Informs the System about which setup use
 define ('_PRODUCTION', FALSE);
 
+// Sets the default timezone
+date_default_timezone_set('utc');
+
 // Base path of the website.
 if (_PRODUCTION === TRUE) {
     define ('_SYSTEM_BASE_URL', 'http://www.themindcraftproject.org/');
 } else {
     //define ('_SYSTEM_BASE_URL', 'http://192.168.1.55/projects/themindcraftproject/');
-    define ('_SYSTEM_BASE_URL', 'http://localhost/projects/themindcraftproject/');
+    define ('_SYSTEM_BASE_URL', 'http://localhost/themindcraftproject/');
 }
 
 // Root path of the project in the server.

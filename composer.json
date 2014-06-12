@@ -1,0 +1,14 @@
+{
+    "name": "Hector/themindcraftproject",
+    "description": "The MindCraft Project",
+    "require": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "authors": [
+        {
+            "name": "Hector",
+            "email": "hjavierog@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
