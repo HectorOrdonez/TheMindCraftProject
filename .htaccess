@@ -15,37 +15,22 @@ php_value error_reporting 32767
 RewriteEngine On
 
 # RewriteBase defines what is going to be the base url. So localhost/index.php becomes localhost/hecnel/index.php
-RewriteBase /projects/themindcraftproject
+RewriteBase /themindcraftproject
 
 # Error pages for fatal errors redirection - Authentication failed
-ErrorDocument 401 http://localhost/projects/themindcraftproject/error/authFailed
+ErrorDocument 401 http://localhost/themindcraftproject/error/authFailed
 # Error pages for fatal errors redirection - Forbidden access
-ErrorDocument 403 http://localhost/projects/themindcraftproject/error/accessForbidden
+ErrorDocument 403 http://localhost/themindcraftproject/error/accessForbidden
 # Error pages for fatal errors redirection - Page not found
-ErrorDocument 404 http://localhost/projects/themindcraftproject/error/resourceNotFound
+ErrorDocument 404 http://localhost/themindcraftproject/error/resourceNotFound
 # Error pages for fatal errors redirection - Internal Server Error
-ErrorDocument 500 http://localhost/projects/themindcraftproject/error/internalServerError
+ErrorDocument 500 http://localhost/themindcraftproject/error/internalServerError
 
-# Redirecting in case request starts with www.
-RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-RewriteRule ^(.*)$ http://%1 [R=301,L]
+# Allowing access to Index.
+RewriteRule ^(index.php) index.php [QSA,L]
 
-# Denies access to all php files to everyone.
-<Files *.php> 
-    deny from all
-</Files>
-
-# Exception to previous rule - index.php is allowed by everyone.
-<Files "index.php">
-    Allow From All
-</Files>
-
-# Exception to previous rule - CronJobManager.php is allowed by server.
-<Files "CronJobManager.php">
-    Order Deny,Allow
-    Deny From All
-    Allow From 127.0.0.1
-</Files>
+# Forbidding access to PHP files.
+RewriteRule ^(.+)\.php - [F,L]
 
 # Redirecting requests if not to a file or link.
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -58,42 +43,28 @@ RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
 
 # php_flag display_errors on
 # php_value error_reporting 32767
-# 
+#
 # # RewriteEngine tells Apache to process Rewrite commands.
 # RewriteEngine On
-# 
+#
 # # RewriteBase defines what is going to be the base url. So localhost/index.php becomes localhost/hecnel/index.php
 # RewriteBase /
-# 
+#
 # # Error pages for fatal errors redirection - Authentication failed
-# ErrorDocument 401 error/authFailed
+# ErrorDocument 401 http://www.themindcraftproject.org/error/authFailed
 # # Error pages for fatal errors redirection - Forbidden access
-# ErrorDocument 403 error/accessForbidden
+# ErrorDocument 403 http://www.themindcraftproject.org/error/accessForbidden
 # # Error pages for fatal errors redirection - Page not found
-# ErrorDocument 404 error/resourceNotFound
+# ErrorDocument 404 http://www.themindcraftproject.org/error/resourceNotFound
 # # Error pages for fatal errors redirection - Internal Server Error
-# ErrorDocument 500 error/internalServerError
-# 
-# # Redirecting in case request starts with www.
-# RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-# RewriteRule ^(.*)$ http://%1 [R=301,L]
-# 
-# # Denies access to all php files to everyone.
-# <Files *.php> 
-#     deny from all
-# </Files>
-# 
-# # Exception to previous rule - index.php is allowed by everyone.
-# <Files "index.php">
-#     Allow From All
-# </Files>
-# 
-# # Exception to previous rule - CronJobManager.php is allowed by everyone
-# <Files "CronJobManager.php">
-#     Allow From All
-# </Files>
-# 
-# # Exception to previous rule - index.php is allowed by everyone.
+# ErrorDocument 500 http://www.themindcraftproject.org/error/internalServerError
+#
+# # Allowing access to Index.
+# RewriteRule ^(index.php) index.php [QSA,L]
+#
+# # Forbidding access to PHP files.
+# RewriteRule ^(.+)\.php - [F,L]
+#
 # # Redirecting requests if not to a file or link.
 # RewriteCond %{REQUEST_FILENAME} !-f
 # RewriteCond %{REQUEST_FILENAME} !-l
